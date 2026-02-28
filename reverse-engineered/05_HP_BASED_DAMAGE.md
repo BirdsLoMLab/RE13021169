@@ -147,16 +147,32 @@ Step 6: Final = Clamped_DMG / PvP_Factor (divide back DOWN)
 
 ## Does Total DMG Bonus/RES Affect HP Damage?
 
-**IMPORTANT FINDING:** HP damage from `_calHpHurt` is sent with type `Hurt` (line 195812). In the Unit.addDamage switch (line 449270-449285), `Hurt` is in the damage case that gets divided by `injuryReduce`.
+**YES — Total DMG Bonus/RES DOES affect HP-based damage.**
 
-However, Total DMG Bonus/RES is applied in the **BuffVampire.calDamage** function, which is called separately. The HP damage itself does NOT go through the Total DMG Bonus/RES calculation within `_calHpHurt`. It would only be affected if the calling skill pipeline applies it elsewhere.
+HP damage from `_calHpHurt` calls `healthTarget()` with `HealthType.Hurt` (line 195812):
+```javascript
+this.runner.healthTarget(t, l, d.Hurt, !1, this.config.id);
+```
 
-Looking at the BuffSkillValue.onBegin flow:
-1. `_calHpHurt` is called first (line 195870)
-2. If it returns `true`, the function exits — Total DMG Bonus/RES is NOT applied
-3. Total DMG Bonus/RES is applied via BuffVampire (life steal), not to the HP damage itself
+`HealthType.Hurt` (ID 1) is in `NeedAddDamHurtList` (game_script.js line 4779). Inside `healthTarget()` (game_script.js line 7229), the Total DMG multiplier is applied:
+```javascript
+if (NeedAddDamHurtList.includes(healthType) && attacker != target) {
+    multiplier = max(1 + total_dam_add - total_dam_def, 0.20);
+    damage = round(damage * multiplier);
+}
+```
 
-**CONCLUSION: Total DMG Bonus/RES does NOT directly affect HP-based damage.**
+### HP-Based Damage Full Pipeline:
+```
+1. hp_dmg = roundInt(hp_value × skill_percent)
+2. hp_dmg = roundInt(hp_dmg × pvp_factor)           [multiply UP for clamping]
+3. Clamp against base ATK damage (if _limit exists)
+4. healthTarget() applies Total DMG multiplier:
+   hp_dmg = round(hp_dmg × max(1 + total_dam_add - total_dam_def, 0.20))
+5. At Unit.addDamage: final = max(roundInt(hp_dmg / pvp_factor), 1)  [divide DOWN]
+```
+
+**CORRECTION:** The earlier analysis missed that `healthTarget()` universally applies `total_dam_add/def` to all damage types in `NeedAddDamHurtList`, including `Hurt`. See section 07 for full details.
 
 ---
 

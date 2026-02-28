@@ -250,10 +250,11 @@ if _limit exists:
     max_dmg = roundInt(base_atk × _limit[1])
     hp_dmg = clamp(hp_dmg, min_dmg, max_dmg)
 healthTarget(target, hp_dmg, Hurt)
+→ In healthTarget: hp_dmg = round(hp_dmg × max(1 + total_dam_add - total_dam_def, 0.20))
 → At Unit.addDamage: final = max(roundInt(hp_dmg / injuryReduce), 1)  [divide DOWN]
 ```
 
-**Total DMG Bonus/RES does NOT affect HP-based damage.**
+**Total DMG Bonus/RES DOES affect HP-based damage** — `Hurt` is in `NeedAddDamHurtList`.
 
 ---
 
@@ -399,7 +400,15 @@ damage += bonus
 
 ## 14. Damage Application Pipeline
 
-### Complete Order (Unit.addDamage, Line 449270)
+### Complete Order
+
+#### In healthTarget() (game_script.js line 7229):
+```
+0. Total DMG Bonus/Res (if healthType in NeedAddDamHurtList && attacker != target):
+   damage = round(damage × max(1 + total_dam_add - total_dam_def, 0.20))
+```
+
+#### In Unit.addDamage (Line 449270):
 ```
 1. runningToPart check → skip if transitioning
 2. PvP reduction: damage = max(roundInt(damage / injuryReduce), 1)
@@ -449,7 +458,7 @@ damage += bonus
 |---|-------|---------------|------------|
 | 1 | **DEF_COE** | Not mentioned | DEF × (1 + def_coe) in ALL formulas |
 | 2 | **Skill Crit Exponent** | `Skill × (1+SCRIT)^0.98` | `(Skill × (1+SCRIT))^0.98` |
-| 3 | **Total DMG Scope** | Final layer on all damage | Only in BuffVampire & Spirit |
+| 3 | **Total DMG Scope** | Final layer on all damage | CONFIRMED — universal via healthTarget() |
 | 4 | **Total DMG Floor** | Unknown | 0.20 (20%) |
 | 5 | **Pal ATK Source** | Unclear | Uses PARENT player's ATK |
 | 6 | **Shield/Heal Decay** | Unknown specifics | Global: 40% / 30% (level-independent) |

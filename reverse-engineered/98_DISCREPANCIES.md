@@ -21,12 +21,12 @@ All differences between code behavior and community documentation / known formul
 **Impact:** For large damage values, this produces significantly different results.
 **Lines:** 195885, 192786
 
-### 3. Total DMG Bonus/RES Has Limited Scope
+### 3. Total DMG Bonus/RES — Universal Scope CONFIRMED
 **Community docs:** Applied as "final layer" to all damage
-**Actual code:** Applied ONLY through BuffVampire (life steal) and Spirit damage contexts
-**Normal attacks, combo, counter, and skill damage use `resist` (ID 1021) via calHurt(), NOT total_dam_add/def**
-**Impact:** Total DMG Bonus/RES may have less impact than community believes if it only affects life steal calculations and spirit damage.
-**Lines:** 196756-196758, 431464-431467
+**Actual code:** CONFIRMED — applied in `SkillRunner.healthTarget()` (game_script.js line 7229) to ALL 13 damage types in `NeedAddDamHurtList` (Hurt, Hurt_Crit, Hurt_Double, Hurt_Counter, Real_Damage, Hurt_Bleed, SpiritToPlayer, etc.)
+**This is a universal final multiplier** after all buff modifiers and before DEFER_DAMAGE. Also applied separately in BuffVampire for life steal heal amounts.
+**Impact:** Community understanding is correct — this IS a final layer on all damage. In PvE where mobs have 0 total_dam_def, any total_dam_add is pure multiplicative gain.
+**Lines:** game_script.js line 7229 (healthTarget), line 4779 (NeedAddDamHurtList)
 
 ### 4. Total DMG Floor Value
 **Community docs:** Floor unknown
