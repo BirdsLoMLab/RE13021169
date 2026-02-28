@@ -121,17 +121,39 @@ healthType = Hurt_Crit
 
 ---
 
-## Step 7: healthTarget → Queue Damage
+## Step 7: Total DMG Bonus/Res (in healthTarget)
 
-The damage value 15059 is queued as a health action with type `Hurt_Crit`.
+**Code:** game_script.js line 7229
+
+This is applied inside `SkillRunner.healthTarget()` to all damage types in `NeedAddDamHurtList` (which includes Hurt_Crit).
+
+```
+Assume: attacker total_dam_add = 0.3, defender total_dam_def = 0.1
+
+multiplier = max(1 + 0.3 - 0.1, 0.20)
+           = max(1.2, 0.20)
+           = 1.2
+
+damage = round(15059 × 1.2) = round(18070.8) = 18071
+```
+
+If both players have 0 total_dam_add/def (common in basic PvP), multiplier = 1.0 and damage is unchanged: 15059.
 
 ---
 
-## Step 8: Damage Application (Unit.addDamage)
+## Step 8: healthTarget → Queue Damage
+
+The damage value (18071 with Total DMG, or 15059 without) is queued as a health action with type `Hurt_Crit`.
+
+---
+
+## Step 9: Damage Application (Unit.addDamage)
 
 **Code:** Lines 449270-449330
 
-### Step 8a: PvP Reduction
+Using 18071 (with Total DMG example) or 15059 (without). Below uses 15059 for continuity with original example.
+
+### Step 9a: PvP Reduction
 ```
 W = Math.max(roundInt(15059 / 25.0), 1)
   = Math.max(roundInt(602.36), 1)
@@ -139,7 +161,7 @@ W = Math.max(roundInt(15059 / 25.0), 1)
   = 602
 ```
 
-### Step 8b: Shield Absorption
+### Step 9b: Shield Absorption
 ```
 Defender has 500 shield HP.
 Shield absorbs: min(500, 602) = 500
@@ -147,12 +169,12 @@ Remaining damage: roundInt(602 - 500) = 102
 Shield depleted: shieldHp = 0
 ```
 
-### Step 8c: Block Check
+### Step 9c: Block Check
 ```
 Assume no block buffs. damage_through = 102
 ```
 
-### Step 8d: HP Reduction
+### Step 9d: HP Reduction
 ```
 defender.currenHp = roundInt(currenHp - 102)
 ```
@@ -164,16 +186,18 @@ defender.currenHp = roundInt(currenHp - 102)
 ```
 ATK=10000, DEF=5000, def_coe=0.1, att_dam=2.5, att_resist=0.3
 resist=0.15, crit_dam=1.8, crit_def=0.8, PvP_factor=25.0, Shield=500
+total_dam_add=0, total_dam_def=0 (for this example)
 
-1. Hit check         → Crit
-2. Armor/Block       → No proc
-3. Base damage       → roundInt(max(roundInt(10000-5500),1) × round(2.5×0.7)) = 7875
-4. DMG Resistance    → roundInt(roundInt(7875 × 0.85) × 1) = 6693
-5. Crit multiplier   → roundInt(6693 × 2.25) = 15059
-6. Buff modifiers    → 15059 (no buffs)
-7. PvP reduction     → max(roundInt(15059 / 25), 1) = 602
-8. Shield absorb     → 602 - 500 = 102 through to HP
-9. HP reduction      → currenHp -= 102
+1. Hit check          → Crit
+2. Armor/Block        → No proc
+3. Base damage        → roundInt(max(roundInt(10000-5500),1) × round(2.5×0.7)) = 7875
+4. DMG Resistance     → roundInt(roundInt(7875 × 0.85) × 1) = 6693
+5. Crit multiplier    → roundInt(6693 × 2.25) = 15059
+6. Buff modifiers     → 15059 (no buffs)
+7. Total DMG Boost/Res → round(15059 × max(1+0-0, 0.20)) = 15059 (×1.0)
+8. PvP reduction      → max(roundInt(15059 / 25), 1) = 602
+9. Shield absorb      → 602 - 500 = 102 through to HP
+10. HP reduction      → currenHp -= 102
 ```
 
 **Pre-PvP damage: 15,059**
@@ -195,7 +219,9 @@ resist=0.15, crit_dam=1.8, crit_def=0.8, PvP_factor=25.0, Shield=500
         ↓
 [boss_dam, FRAGILE_EFFECT, EXTRA_DAMAGE, GIANT_SLAYER] → buff modifiers
         ↓
-[healthTarget → Unit.addDamage]
+[healthTarget: total_dam_add, total_dam_def] → × max(1 + add - def, 0.20)  ★ FINAL DMG LAYER
+        ↓
+[Unit.addDamage]
         ↓
 [÷ injuryReduce] → PvP reduction
         ↓
