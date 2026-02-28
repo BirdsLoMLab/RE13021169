@@ -269,31 +269,31 @@
 | 12 | Battle Flow & Normal Attack | SkillHandleNormal, turn sequence |
 | 13 | FixMath & Rounding | round(), roundInt(), clamp() |
 
-### Game Systems (14-22)
+### Game Systems (14-24)
 | Doc | Title | Key Topics |
 |-----|-------|------------|
 | 14 | Class/Job System | ConfigJobs, job_figure, model, wakeup |
 | 15 | Equipment System | 5 equip slots, upgrade, enchant |
-| 16 | Pet/Pal System | getPetFactAttrValue, stat inheritance |
-| 17 | Pet/Pal System (detailed) | Battle loading, combat formulas |
+| 16 | Sailing/Season System | Ships, cannons, season buffs |
+| 17 | Pet/Pal System | Battle loading, stat inheritance, combat formulas |
 | 18 | Avian/Bird System | ConfigFly, hatching, breeding |
 | 19 | Spirit System | spiritNormalHit, affix system |
 | 20 | Mount System | Cosmetic + stat baking, abilities |
 | 21 | Hero/Angel System | ConfigAngel, angel_skill enhancements |
-| 22 | Sailing/Season System | Ships, cannons, season buffs |
-
-### Reference & Encyclopedia (23-31)
-| Doc | Title | Key Topics |
-|-----|-------|------------|
+| 22 | Skill Effect System | SkillType, skill handlers, effect triggers |
 | 23 | Item/Goods System | ConfigGoods, item types |
 | 24 | Relic System | ConfigRelic, relic effects |
-| 25 | Buff Encyclopedia | All 46+ BuffGroupTypes, 80 buff classes |
-| 26 | Skill Effect System | EffectTriggerType cascades |
-| 27 | Fate System | ConfigFate, fate mechanics |
-| 28 | Path to Divinity | ConfigPath_affix, path mechanics |
-| 29 | Statue System | ConfigStatue_attr/level/pos |
-| 30 | Ring System | ConfigRing, ring levels |
-| 31 | Config Table Reference | Master catalog of all 711 tables |
+
+### Reference & Encyclopedia (25-31)
+| Doc | Title | Key Topics |
+|-----|-------|------------|
+| 25 | Buff Encyclopedia | All 46 BuffGroupTypes, 80 buff classes, damage pipeline |
+| 26 | Skill Effect & Triggers | EffectTriggerType cascades, StateTrigerType, cascade flow |
+| 27 | Fate System | ConfigFate, gacha, fusion, passive skills |
+| 28 | Path to Divinity | ConfigPath_affix, talent tree, attribute caps |
+| 29 | Statue System | ConfigStatue_attr/level/pos, reroll/lock |
+| 30 | Ring System | ConfigRing, ring levels, path connection |
+| 31 | Config Table Reference | Master catalog of all 711 tables, XOR tables |
 
 ### Meta (97-99)
 | Doc | Title |
