@@ -1,0 +1,27 @@
+{
+  "className": "ConfigQuiz_dice",
+  "tableName": "Quiz_dice",
+  "sourceLine": 254448,
+  "mainKey": "dice_point",
+  "indexedKeys": {
+    "dice_point": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "dice_point",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

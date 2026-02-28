@@ -1,0 +1,12 @@
+{
+  "name": "AIEvent",
+  "sourceLine": 278608,
+  "values": {
+    "Invalid": 0,
+    "Valid": 1
+  },
+  "reverseMap": {
+    "0": "Invalid",
+    "1": "Valid"
+  }
+}

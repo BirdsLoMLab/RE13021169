@@ -1,0 +1,14 @@
+{
+  "name": "ShipEquipChangeType",
+  "sourceLine": 422690,
+  "values": {
+    "UPDATE": 1,
+    "ADD": 2,
+    "DELETE": 3
+  },
+  "reverseMap": {
+    "1": "UPDATE",
+    "2": "ADD",
+    "3": "DELETE"
+  }
+}

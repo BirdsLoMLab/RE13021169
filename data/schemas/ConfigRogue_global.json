@@ -1,0 +1,41 @@
+{
+  "className": "ConfigRogue_global",
+  "tableName": "Rogue_global",
+  "sourceLine": 256073,
+  "mainKey": "key",
+  "indexedKeys": {
+    "key": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "key",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "info_type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "info",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "desc",
+      "index": 3,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

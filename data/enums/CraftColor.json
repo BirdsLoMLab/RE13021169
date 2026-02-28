@@ -1,0 +1,14 @@
+{
+  "name": "CraftColor",
+  "sourceLine": 37993,
+  "values": {
+    "Blue": 1,
+    "Red": 2,
+    "yellow": 3
+  },
+  "reverseMap": {
+    "1": "Blue",
+    "2": "Red",
+    "3": "yellow"
+  }
+}

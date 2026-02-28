@@ -1,0 +1,27 @@
+{
+  "className": "ConfigGlobalzone",
+  "tableName": "Globalzone",
+  "sourceLine": 237649,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "zone",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

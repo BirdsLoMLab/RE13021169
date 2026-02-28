@@ -1,0 +1,28 @@
+{
+  "name": "MarioColliderTag",
+  "sourceLine": 117706,
+  "values": {
+    "Ground": 0,
+    "Player": 1,
+    "Coin": 2,
+    "Senser1": 3,
+    "Senser2": 4,
+    "Ceil": 5,
+    "Box": 6,
+    "JumpBoard": 7,
+    "Enemy": 8,
+    "End": 10
+  },
+  "reverseMap": {
+    "0": "Ground",
+    "1": "Player",
+    "2": "Coin",
+    "3": "Senser1",
+    "4": "Senser2",
+    "5": "Ceil",
+    "6": "Box",
+    "7": "JumpBoard",
+    "8": "Enemy",
+    "10": "End"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "className": "ConfigPac_man_cha",
+  "tableName": "Pac_man_cha",
+  "sourceLine": 249694,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "monster",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "Buff",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "start_point",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "turning_point",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

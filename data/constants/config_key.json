@@ -1,0 +1,29 @@
+{
+  "CONFIG_KEY": 24455,
+  "source_line": 184611,
+  "source_text": "t(\"CONFIG_KEY\", 24455)",
+  "binary_decode_info": {
+    "_description": "Binary config data decoding from BaseConfig.loadBufferData (line ~184627)",
+    "decode_steps": [
+      "1. Create ByteArray from raw buffer",
+      "2. XOR each byte: bytes[i] = 255 & ~(32 ^ byte)  -- bitwise NOT of (32 XOR byte), masked to 8 bits",
+      "3. Uncompress the ByteArray (zlib/deflate decompression)",
+      "4. Read int (entry count)",
+      "5. For each entry: JSON.parse(readString()) to get data row"
+    ],
+    "xor_key": 32,
+    "xor_formula": "decoded_byte = (~(32 ^ original_byte)) & 0xFF",
+    "xor_formula_equivalent": "decoded_byte = (32 ^ original_byte) ^ 0xFF",
+    "compression": "zlib/deflate (ByteArray.uncompress)"
+  },
+  "text_load_info": {
+    "_description": "Text-based config loading from BaseConfig.loadData (line ~184616)",
+    "steps": [
+      "1. splice(0, 1) to remove first element (header/version)",
+      "2. Iterate remaining entries",
+      "3. Create class instance from each data entry",
+      "4. Deep freeze each entry",
+      "5. Index by keys into mapBykey"
+    ]
+  }
+}

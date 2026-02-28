@@ -1,0 +1,324 @@
+{
+  "name": "Pet/Pal System",
+  "description": "Companion creatures (Pals) that fight alongside the player in combat. Pals inherit the player's ATK and apply their own damage multipliers. They are equipped to position slots, leveled up, and enhanced through talent and proficiency systems. Pal combat damage is calculated using the parent player's ATK rather than the pal's own ATK stat.",
+  "source_lines": {
+    "ConfigPet": 252193,
+    "ConfigPetlevel": 252287,
+    "ConfigPetrace": 252643,
+    "ConfigPet_talent": 252111,
+    "ConfigPet_proficiency": 252044,
+    "ConfigPet_pos": 251997,
+    "setPlayerPets_server": "187544-187562",
+    "setPlayerPets_client": "199092-199107",
+    "getPetFactAttrValue_server": "187495-187505",
+    "getPetFactAttrValue_client": "370660-370666",
+    "getPetFactAttrValue_client2": "111767-111773",
+    "pet_damage_calc": "192868-192880",
+    "PetEventDefine": 369693,
+    "PetQuality_enum": 369707,
+    "PetTalentIcon": 369709
+  },
+  "config_tables": [
+    {
+      "class_name": "ConfigPet",
+      "table_name": "Pet",
+      "source_line": 252193,
+      "main_key": "id",
+      "field_count": 12,
+      "description": "Master pet definition table. Each pet has a unique ID, quality tier, unit model reference, and optional talent slots.",
+      "fields": {
+        "id": { "type": "number", "description": "Pet unique ID" },
+        "name": { "type": "string_ref", "description": "Pet display name" },
+        "icon": { "type": "number", "description": "Icon asset ID" },
+        "desc": { "type": "number", "description": "Description text ID" },
+        "quality": { "type": "number", "description": "Quality/rarity tier (1=White, 2=Green, 3=Blue, 4=Purple, 5=Orange, 6=Red, 7=Multicolor)" },
+        "type": { "type": "optional_array", "description": "Pet type/category array" },
+        "unitId": { "type": "number", "description": "Unit config ID for battle model and base stats" },
+        "talent": { "type": "optional_array", "description": "Talent slots array, format: [[talent_type_id, base_star_count], ...]" },
+        "power": { "type": "number", "description": "Base combat power contribution" },
+        "if_activity": { "type": "number", "description": "Activity-gated availability flag (0 = always available)" },
+        "if_season": { "type": "number", "description": "Season-gated availability flag" },
+        "open_time": { "type": "optional_array", "description": "Time-gated availability window" }
+      }
+    },
+    {
+      "class_name": "ConfigPetlevel",
+      "table_name": "Petlevel",
+      "source_line": 252287,
+      "main_key": "id",
+      "indexed_keys": { "id": 0, "level": 1 },
+      "uses_config_key": true,
+      "field_count": 64,
+      "description": "Per-pet per-level stat table. Contains all combat stats at each level. Stats use XOR encoding. Looked up by (pet_id, level).",
+      "fields": {
+        "id": { "type": "number", "description": "Pet ID" },
+        "level": { "type": "number", "description": "Pet level" },
+        "expend": { "type": "optional_array", "description": "Level-up cost array, format: [[item_id, amount], ...]" },
+        "ownEffect": { "type": "optional_array", "description": "Effects applied to pet itself" },
+        "desc": { "type": "string_ref", "description": "Skill description at this level" },
+        "desc_parm": { "type": "optional_array", "description": "Description format parameters" },
+        "equipEffect": { "type": "optional_array", "description": "Skill effect when equipped, format: [[skill_id, skill_level]]" },
+        "equipEffect1": { "type": "optional_array", "description": "Secondary equip effect" },
+        "partner_dam": { "type": "xor_number", "description": "Pal damage multiplier (base 10000 = 1x)" },
+        "def": { "type": "xor_number", "description": "Defense stat" },
+        "hp": { "type": "xor_number", "description": "HP stat" },
+        "att_range": { "type": "xor_number", "description": "Attack range" },
+        "detection_range": { "type": "xor_number", "description": "Detection range" },
+        "att_speed": { "type": "xor_number", "description": "Attack speed (divide by 100 for display)" },
+        "crit_rate": { "type": "xor_number", "description": "Critical hit rate" },
+        "crit_dam": { "type": "xor_number", "description": "Critical damage multiplier" },
+        "crit_def": { "type": "xor_number", "description": "Critical defense" },
+        "boss_dam": { "type": "xor_number", "description": "Boss damage bonus" },
+        "double_hit": { "type": "xor_number", "description": "Combo attack chance" },
+        "hit": { "type": "xor_number", "description": "Hit/accuracy" },
+        "miss": { "type": "xor_number", "description": "Evasion/miss rate" },
+        "speed": { "type": "xor_number", "description": "Movement speed" },
+        "vertigo": { "type": "xor_number", "description": "Stun chance" },
+        "suspend": { "type": "xor_number", "description": "Suspend/airborne chance" },
+        "target_num": { "type": "xor_number", "description": "Number of targets" },
+        "double_hit_dam": { "type": "xor_number", "description": "Combo damage multiplier" },
+        "skill_dam_extra": { "type": "xor_number", "description": "Skill damage extra" },
+        "power_recovery": { "type": "xor_number", "description": "Power/energy recovery" },
+        "att_hpsteal": { "type": "xor_number", "description": "Attack HP steal" },
+        "skill_hpsteal": { "type": "xor_number", "description": "Skill HP steal" },
+        "power": { "type": "xor_number", "description": "Combat power at this level" },
+        "skill_crit_rate": { "type": "xor_number", "description": "Skill critical rate" },
+        "skill_crit_dam": { "type": "xor_number", "description": "Skill critical damage" },
+        "hp_recovery": { "type": "xor_number", "description": "HP recovery rate" },
+        "counter": { "type": "xor_number", "description": "Counter-attack chance" },
+        "att_resist": { "type": "xor_number", "description": "Attack resistance" },
+        "skill_resist": { "type": "xor_number", "description": "Skill resistance" },
+        "partner_resist": { "type": "xor_number", "description": "Pal damage resistance" },
+        "resist": { "type": "xor_number", "description": "General resistance" },
+        "suspend_def": { "type": "xor_number", "description": "Suspend/airborne defense" },
+        "vertigo_def": { "type": "xor_number", "description": "Stun defense" },
+        "att_hpsteal_def": { "type": "xor_number", "description": "Attack HP steal defense" },
+        "skill_hpsteal_def": { "type": "xor_number", "description": "Skill HP steal defense" },
+        "vertigo_times": { "type": "xor_number", "description": "Stun duration modifier" },
+        "vertigo_res": { "type": "xor_number", "description": "Stun resistance" },
+        "counter_dam": { "type": "xor_number", "description": "Counter-attack damage" },
+        "double_hit_def": { "type": "xor_number", "description": "Combo defense" },
+        "counter_def": { "type": "xor_number", "description": "Counter-attack defense" },
+        "counter_suspend": { "type": "xor_number", "description": "Counter suspend chance" },
+        "ignore_double_hit": { "type": "xor_number", "description": "Ignore combo attack" },
+        "ignore_counter": { "type": "xor_number", "description": "Ignore counter-attack" },
+        "boss_def": { "type": "xor_number", "description": "Boss damage defense" },
+        "hpsteal_rate": { "type": "xor_number", "description": "HP steal rate" },
+        "hpsteal_amount": { "type": "xor_number", "description": "HP steal amount" },
+        "ignore_hpsteal": { "type": "xor_number", "description": "Ignore HP steal" },
+        "hpsteal_res": { "type": "xor_number", "description": "HP steal resistance" },
+        "pve_dam": { "type": "xor_number", "description": "PvE damage bonus" },
+        "pve_resist": { "type": "xor_number", "description": "PvE resistance" },
+        "shield_time_extra": { "type": "xor_number", "description": "Shield duration bonus" },
+        "shield_hp_extra": { "type": "xor_number", "description": "Shield HP bonus" },
+        "skillbuff_time_all": { "type": "xor_number", "description": "All skill buff duration" },
+        "control_res": { "type": "xor_number", "description": "Crowd control resistance" },
+        "total_dam_add": { "type": "xor_number", "description": "Total damage increase" },
+        "total_dam_def": { "type": "xor_number", "description": "Total damage reduction" }
+      }
+    },
+    {
+      "class_name": "ConfigPetrace",
+      "table_name": "Petrace",
+      "source_line": 252643,
+      "main_key": "id",
+      "field_count": 2,
+      "description": "Pet race/type categories. Simple lookup for race names.",
+      "fields": {
+        "id": { "type": "number", "description": "Race/type ID" },
+        "name": { "type": "string_ref", "description": "Race display name" }
+      }
+    },
+    {
+      "class_name": "ConfigPet_talent",
+      "table_name": "Pet_talent",
+      "source_line": 252111,
+      "main_key": "id",
+      "indexed_keys": { "id": 0, "all_star": 1 },
+      "field_count": 9,
+      "description": "Pet talent definitions. Talents are unlocked at specific star thresholds (all_star) and provide stat effects and power bonuses.",
+      "fields": {
+        "id": { "type": "number", "description": "Talent ID" },
+        "all_star": { "type": "number", "description": "Star level required to unlock this talent tier" },
+        "name": { "type": "string_ref", "description": "Talent name" },
+        "effect_des": { "type": "optional_array", "description": "Effect description template array" },
+        "desc_parm1": { "type": "optional_array", "description": "Description parameters for effect" },
+        "effect": { "type": "optional_array", "description": "Stat effect array applied by this talent" },
+        "power_des": { "type": "optional_array", "description": "Power description template array" },
+        "desc_parm2": { "type": "optional_array", "description": "Description parameters for power" },
+        "power": { "type": "optional_array", "description": "Power bonus array" }
+      }
+    },
+    {
+      "class_name": "ConfigPet_proficiency",
+      "table_name": "Pet_proficiency",
+      "source_line": 252044,
+      "main_key": "id",
+      "indexed_keys": { "id": 0, "level": 1 },
+      "field_count": 7,
+      "description": "Pet proficiency levels. Each proficiency type (worker_type) can be leveled up to grant extra stars and attribute bonuses. Proficiency EXP is accumulated to advance levels.",
+      "fields": {
+        "id": { "type": "number", "description": "Proficiency type ID (1-7, matching talent type icons)" },
+        "level": { "type": "number", "description": "Proficiency level" },
+        "extra_star": { "type": "number", "description": "Additional stars granted at this proficiency level" },
+        "exp": { "type": "number", "description": "Cumulative EXP threshold for this level" },
+        "addexp": { "type": "number", "description": "Additional EXP contribution value" },
+        "own_attrs": { "type": "optional_array", "description": "Attribute bonuses, format: [[attr_id, value], ...]" },
+        "power": { "type": "number", "description": "Combat power from proficiency" }
+      }
+    },
+    {
+      "class_name": "ConfigPet_pos",
+      "table_name": "Pet_pos",
+      "source_line": 251997,
+      "main_key": "id",
+      "field_count": 3,
+      "description": "Pet equipment position slots. Up to 6 positions available, each with unlock conditions.",
+      "fields": {
+        "id": { "type": "number", "description": "Position slot ID (1-6)" },
+        "condition": { "type": "optional_array", "description": "Unlock condition array (type-based: 1=role level, 2=task progress, 3=chapter)" },
+        "desc": { "type": "string_ref", "description": "Position description / lock message" }
+      }
+    }
+  ],
+  "mechanics": {
+    "battle_loading": {
+      "function": "setPlayerPets",
+      "description": "Loads equipped pets into the battle unit array during combat initialization.",
+      "process": [
+        "1. Get list of equipped pets (pet_list or getWearPetList())",
+        "2. Load attribute definitions from configAttribute.getDataByList('module', 1)",
+        "3. For each pet with pet_id != 0:",
+        "   a. Look up ConfigPet by pet_id to get unitId",
+        "   b. Look up ConfigPetlevel by (pet_id, pet_level) to get stat values",
+        "   c. Create new battle unit with attribs dictionary",
+        "   d. For each attribute in module=1: baseValue = getPetFactAttrValue(bonusData, petlevel[attr.key], pet_id, attr.id)",
+        "4. INHERIT stats from parent player unit (player.units[0]):",
+        "   - hp = player.hp",
+        "   - att = player.att (ATK)",
+        "   - partner_dam_extra = player.partner_dam_extra",
+        "   - skill_dam_extra = player.skill_dam_extra (server version only)",
+        "   - skill_crit_rate = player.skill_crit_rate (server version only)",
+        "   - skill_crit_dam = player.skill_crit_dam (server version only)",
+        "   - boss_dam = player.boss_dam (server version only)",
+        "5. Set idleIndex = pet_pos + 1 (position slot determines battle index)",
+        "6. Push unit to player's units array"
+      ]
+    },
+    "getPetFactAttrValue": {
+      "description": "Core formula that calculates final attribute values for pets, applying proficiency and talent bonuses with group-based multiplicative scaling.",
+      "algorithm": [
+        "1. Start with base value from ConfigPetlevel config (e.g., partner_dam at current level)",
+        "2. Add pet-specific attribute bonus: getPetAttrByAttrId(bonusMap, petId, attrId)",
+        "3. Add global (shared) attribute bonus: getPetAttrByAttrId(bonusMap, 0, attrId)",
+        "4. Look up attribute group multipliers: configAttribute.getDataByList('group', attrId)",
+        "5. If no group multipliers exist, return the additive result",
+        "6. For EACH group multiplier entry:",
+        "   a. Sum pet-specific + global group bonus for that group's attr",
+        "   b. Convert to multiplier: round(bonus / 10000) + 1",
+        "   c. Multiply running total: result = roundInt(result * multiplier)",
+        "7. Return final value"
+      ],
+      "formula_pseudocode": "result = base + petBonus[petId][attrId] + petBonus[0][attrId]\nfor each groupAttr in configAttribute.getGroupList(attrId):\n  groupBonus = petBonus[petId][groupAttr.id] + petBonus[0][groupAttr.id]\n  multiplier = round(groupBonus / 10000) + 1\n  result = roundInt(result * multiplier)\nreturn result",
+      "notes": [
+        "The bonusMap (petCfgIdToAttr) is populated from server data via updatePetAttrInfo(petId, attrList)",
+        "petCfgIdToAttr[petId] stores {attrId: value} pairs",
+        "petCfgIdToAttr[0] stores global bonuses shared across all pets",
+        "Group-based scaling is MULTIPLICATIVE, not additive - each group multiplier compounds",
+        "Values use base 10000 scale (10000 = 100% = 1x multiplier)"
+      ]
+    },
+    "pet_combat_damage": {
+      "description": "Pal damage uses the PARENT player's ATK, not the pal's own ATK stat. The pal's partner_dam acts as a multiplier on the parent's attack.",
+      "basic_attack_formula": "base_raw = max(roundInt(PARENT_ATK - target_DEF * (1 + DEF_COE)), 1)\npal_mult = round(PARTNER_DAM * PARTNER_DAM_EXTRA)\nresistance = calSuppressAndInspire(target, parent, PARTNER_RESIST)\npal_dmg = roundInt(base_raw * round(pal_mult * round(1 - resistance)))\nif CRIT: pal_dmg *= max(1.5, round(CRIT_DAM / max(0.5, CRIT_DEF)))\nresult = max(1, pal_dmg)",
+      "combo_attack_formula": "base_raw = max(roundInt(PARENT_ATK - DEF * (1 + DEF_COE)), 1)\npal_mult = round(PARTNER_DAM * PARTNER_DAM_EXTRA)\npal_base = roundInt(base_raw * pal_mult) * round(1 - resistance)\npal_combo = roundInt(roundInt(pal_base) * DOUBLE_HIT_DAM)",
+      "key_attributes": [
+        { "name": "partner_dam", "attr_id": 1040, "owner": "Pal", "description": "Pal's base damage multiplier from ConfigPetlevel (base 10000)" },
+        { "name": "partner_dam_extra", "attr_id": 1047, "owner": "Player (inherited)", "description": "Player's pal damage bonus multiplier" },
+        { "name": "partner_resist", "attr_id": 1020, "owner": "Target", "description": "Target's pal damage resistance" },
+        { "name": "att", "attr_id": 1001, "owner": "Player (inherited)", "description": "ATK inherited from parent player" },
+        { "name": "hp", "attr_id": 1002, "owner": "Player (inherited)", "description": "HP inherited from parent player" },
+        { "name": "att_speed", "attr_id": 1003, "owner": "Pal", "description": "Attack speed (displayed as value/100, e.g., 150 = 1.50)" },
+        { "name": "double_hit", "attr_id": null, "owner": "Pal", "description": "Combo/double hit chance" },
+        { "name": "double_hit_dam", "attr_id": null, "owner": "Pal", "description": "Combo damage multiplier" }
+      ],
+      "display_formulas": {
+        "attack_display": "Math.floor(partner_dam) / 10000 (shows as multiplier, e.g., 1.5x)",
+        "attack_speed_display": "Math.floor(att_speed / 100) / 100 (shows as seconds)"
+      }
+    },
+    "position_system": {
+      "description": "Pets are equipped to numbered position slots (1-6). Each slot has unlock conditions.",
+      "max_positions": 6,
+      "condition_types": {
+        "1": "ROLE_LEVEL - requires player to reach a specific level",
+        "2": "TASK_PROGRESS - requires completion of specific tasks",
+        "3": "CHAPTER - requires reaching a specific chapter"
+      },
+      "battle_index": "idleIndex = pet_pos + 1 (position slot determines the unit's combat ordering)"
+    },
+    "talent_system": {
+      "description": "Each pet has talent slots defined in ConfigPet.talent. Talents are grouped by type and unlock at star thresholds.",
+      "talent_types": {
+        "1": { "icon": "jy_icon_tfzz01", "description": "Type 1 talent" },
+        "2": { "icon": "jy_icon_tfjs01", "description": "Type 2 talent" },
+        "3": { "icon": "jy_icon_tfzd01", "description": "Type 3 talent" },
+        "4": { "icon": "jy_icon_tfwk01", "description": "Type 4 talent" },
+        "5": { "icon": "jy_icon_tfyj01", "description": "Type 5 talent" },
+        "6": { "icon": "jy_icon_tfjg01", "description": "Type 6 talent" },
+        "7": { "icon": "jy_icon_tingche", "description": "Type 7 talent (parking/idle)" }
+      },
+      "star_system": {
+        "max_stars_per_talent": 5,
+        "total_stars": "base_stars (from ConfigPet.talent[type]) + extra_stars (from ConfigPet_proficiency)"
+      }
+    },
+    "proficiency_system": {
+      "description": "Each talent type has a proficiency track with EXP progression. Higher proficiency grants extra stars and attribute bonuses.",
+      "data_structure": "Player pet data stores proficiency as array: [{worker_type: type_id, proficiency_lv: level, proficiency_exp: exp}, ...]",
+      "exp_calculation": "progress = current_exp - current_level_threshold; needed = next_level_threshold - current_level_threshold",
+      "attribute_display": "own_attrs array from ConfigPet_proficiency shows bonuses as [[attr_id, value], ...]"
+    },
+    "level_system": {
+      "description": "Pets are leveled using materials defined in ConfigPetlevel.expend",
+      "upgrade_check": "configPetlevel.getDataByKeys('id', petId, 'level', currentLevel + 1).expend[0] gives [item_id, amount]",
+      "max_level_check": "If no next level config exists, pet is at max level for current state"
+    },
+    "compose_system": {
+      "description": "Max-level pets can be composed/merged to create higher quality pets via ConfigMix.",
+      "process": [
+        "1. Pet must be at max level (no next level in ConfigPetlevel)",
+        "2. Look up ConfigMix using the material item ID from the last level's expend",
+        "3. ConfigMix provides: cost amount and required quality of sacrifice pet",
+        "4. Need another pet of quality = ConfigMix.quality + 1",
+        "5. Pay the ConfigMix.cost amount of the material"
+      ]
+    },
+    "quality_tiers": {
+      "1": "WHITE",
+      "2": "GREEN",
+      "3": "BLUE",
+      "4": "PURPLE",
+      "5": "ORANGE",
+      "6": "RED",
+      "7": "MULTICOLOR"
+    }
+  },
+  "events": {
+    "PET_INFO_UPDATE": "Pet info changed",
+    "PET_LIST_UPDATE": "Pet list changed",
+    "PET_POS_UNLOCK": "New pet slot unlocked",
+    "PET_INFO_ADD": "New pet acquired",
+    "PET_INFO_VIEW_SELECT_WEAR": "Pet selected for equipping",
+    "PET_ATTR_UPDATE": "Pet attributes recalculated",
+    "PET_TAB_INFO_UPDATE": "Pet tab info changed",
+    "PET_CUR_TAB_CHANGE": "Current pet tab switched"
+  },
+  "network_protocol": {
+    "note": "Pet system uses the PetControl class for network requests (reqPetSetPos, reqPetLevUp)",
+    "key_operations": [
+      "reqPetSetPos(petId, posId) - equip/unequip pet to position (0 = unequip)",
+      "reqPetLevUp(petId) - level up a pet"
+    ]
+  }
+}

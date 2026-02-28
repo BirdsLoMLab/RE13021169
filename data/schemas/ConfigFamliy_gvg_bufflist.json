@@ -1,0 +1,41 @@
+{
+  "className": "ConfigFamliy_gvg_bufflist",
+  "tableName": "Famliy_gvg_bufflist",
+  "sourceLine": 230912,
+  "mainKey": "buff_id",
+  "indexedKeys": {
+    "buff_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "buff_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skill_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "buff_desc",
+      "index": 2,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "target",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

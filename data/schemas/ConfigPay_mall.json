@@ -1,0 +1,315 @@
+{
+  "className": "ConfigPay_mall",
+  "tableName": "Pay_mall",
+  "sourceLine": 251688,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "type": 2
+  },
+  "usesConfigKey": false,
+  "fieldCount": 43,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pre_id",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "next_id",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bundle_group",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "mutually_exclusive",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "rmb_price",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "price",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "cost_level",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pid",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "ios_pid",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "h5_pid",
+      "index": 12,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "hw_pid",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "amazon_pid",
+      "index": 14,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "galaxy_pid",
+      "index": 15,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "cata_pid",
+      "index": 16,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "tt_pid",
+      "index": 17,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 18,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reset",
+      "index": 19,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "buy_times",
+      "index": 20,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "buy_condition",
+      "index": 21,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "conditon",
+      "index": 22,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "push_number",
+      "index": 23,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "push_continue",
+      "index": 24,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "push_reset",
+      "index": 25,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "get",
+      "index": 26,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "ratio",
+      "index": 27,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pic_back",
+      "index": 28,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "gem_value",
+      "index": 29,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "show",
+      "index": 30,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "online",
+      "index": 31,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "tab_id",
+      "index": 32,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon_name",
+      "index": 33,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pop_up",
+      "index": 34,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "push_level",
+      "index": 35,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "recharge_only",
+      "index": 36,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "discount_only",
+      "index": 37,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "txt",
+      "index": 38,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "desc",
+      "index": 39,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "inlet_icon",
+      "index": 40,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "language_id",
+      "index": 41,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "extra_reward",
+      "index": 42,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

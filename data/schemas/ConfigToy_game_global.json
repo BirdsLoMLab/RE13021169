@@ -1,0 +1,20 @@
+{
+  "className": "ConfigToy_game_global",
+  "tableName": "Toy_game_global",
+  "sourceLine": 266215,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 1,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

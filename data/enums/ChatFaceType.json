@@ -1,0 +1,12 @@
+{
+  "name": "ChatFaceType",
+  "sourceLine": 207954,
+  "values": {
+    "Normal": 1,
+    "Spine": 2
+  },
+  "reverseMap": {
+    "1": "Normal",
+    "2": "Spine"
+  }
+}

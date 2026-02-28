@@ -1,0 +1,24 @@
+{
+  "name": "TaskType",
+  "sourceLine": 443964,
+  "values": {
+    "Main": 1,
+    "Daily": 2,
+    "AdventureTitle": 3,
+    "Marry": 6,
+    "RebetTunble": 7,
+    "FlyPet": 10,
+    "Achievement": 9,
+    "KungfuRace": 8
+  },
+  "reverseMap": {
+    "1": "Main",
+    "2": "Daily",
+    "3": "AdventureTitle",
+    "6": "Marry",
+    "7": "RebetTunble",
+    "10": "FlyPet",
+    "9": "Achievement",
+    "8": "KungfuRace"
+  }
+}

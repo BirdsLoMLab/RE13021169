@@ -1,0 +1,12 @@
+{
+  "name": "AnimationType",
+  "sourceLine": 436722,
+  "values": {
+    "UI": 0,
+    "BATTLE": 1
+  },
+  "reverseMap": {
+    "0": "UI",
+    "1": "BATTLE"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "GameState",
+  "sourceLine": 339707,
+  "values": {
+    "WaitLogin": 0,
+    "LoginCentering": 1,
+    "Logining": 2,
+    "Disconnect": 3,
+    "Reconnecting": 4,
+    "EnterLoading": 5,
+    "Runing": 6
+  },
+  "reverseMap": {
+    "0": "WaitLogin",
+    "1": "LoginCentering",
+    "2": "Logining",
+    "3": "Disconnect",
+    "4": "Reconnecting",
+    "5": "EnterLoading",
+    "6": "Runing"
+  }
+}

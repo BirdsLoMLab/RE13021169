@@ -1,0 +1,27 @@
+{
+  "className": "ConfigSpirit_attrbonus_slot",
+  "tableName": "Spirit_attrbonus_slot",
+  "sourceLine": 262379,
+  "mainKey": "slot_id",
+  "indexedKeys": {
+    "slot_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "slot_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "affix_group",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

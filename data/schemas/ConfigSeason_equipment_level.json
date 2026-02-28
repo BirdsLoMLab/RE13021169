@@ -1,0 +1,42 @@
+{
+  "className": "ConfigSeason_equipment_level",
+  "tableName": "Season_equipment_level",
+  "sourceLine": 257792,
+  "mainKey": "part",
+  "indexedKeys": {
+    "part": 0,
+    "level": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "part",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "basic",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "price",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

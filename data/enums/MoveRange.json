@@ -1,0 +1,15 @@
+{
+  "name": "MoveRange",
+  "sourceLine": 272753,
+  "values": {
+    "Top": 700,
+    "Bottom": -640,
+    "Left": -700,
+    "Right": 700
+  },
+  "reverseMap": {
+    "700": "Right",
+    "-640": "Bottom",
+    "-700": "Left"
+  }
+}

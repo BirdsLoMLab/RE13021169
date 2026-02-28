@@ -1,0 +1,26 @@
+{
+  "name": "SocketCode",
+  "sourceLine": 435615,
+  "values": {
+    "Connect": 0,
+    "Disconnect": 1,
+    "Exception": 2,
+    "ExceptionOnConnect": 3,
+    "SendError": 4,
+    "ExceptionOnReceive": 5,
+    "TimeoutDisconnect": 6,
+    "DisconnectByServer": 7,
+    "ServerNotResponse": 8
+  },
+  "reverseMap": {
+    "0": "Connect",
+    "1": "Disconnect",
+    "2": "Exception",
+    "3": "ExceptionOnConnect",
+    "4": "SendError",
+    "5": "ExceptionOnReceive",
+    "6": "TimeoutDisconnect",
+    "7": "DisconnectByServer",
+    "8": "ServerNotResponse"
+  }
+}

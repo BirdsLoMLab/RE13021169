@@ -1,0 +1,62 @@
+{
+  "className": "ConfigWork_team",
+  "tableName": "Work_team",
+  "sourceLine": 268762,
+  "mainKey": "team",
+  "indexedKeys": {
+    "team": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 7,
+  "fields": [
+    {
+      "name": "team",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "system",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type_name",
+      "index": 2,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "team_name",
+      "index": 3,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "talent",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_pet_work",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "desc",
+      "index": 6,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

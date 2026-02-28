@@ -1,0 +1,12 @@
+{
+  "name": "RecordSource",
+  "sourceLine": 278594,
+  "values": {
+    "default": 0,
+    "chatShare": 1
+  },
+  "reverseMap": {
+    "0": "default",
+    "1": "chatShare"
+  }
+}

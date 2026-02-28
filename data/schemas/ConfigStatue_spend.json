@@ -1,0 +1,27 @@
+{
+  "className": "ConfigStatue_spend",
+  "tableName": "Statue_spend",
+  "sourceLine": 263389,
+  "mainKey": "lock_quantity",
+  "indexedKeys": {
+    "lock_quantity": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "lock_quantity",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "spend",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

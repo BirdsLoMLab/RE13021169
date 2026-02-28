@@ -1,0 +1,41 @@
+{
+  "className": "ConfigMount_abilitycost",
+  "tableName": "Mount_abilitycost",
+  "sourceLine": 247770,
+  "mainKey": "total_level",
+  "indexedKeys": {
+    "total_level": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "total_level",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "cost",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "success_rate",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "success_guaranteed",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

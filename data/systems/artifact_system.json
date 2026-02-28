@@ -1,0 +1,340 @@
+{
+  "system_name": "Artifact System (ShenQi)",
+  "description": "The artifact system provides a weapon-like cosmetic+stat item (the artifact itself) plus a gem sub-system with slots, set bonuses, and attribute contribution. Artifacts have their own leveling, skin unlocking, and skill mechanics. The gem sub-system is a rune/relic-like system where gems have main attrs, sub attrs, quality, set affiliation, and leveling.",
+
+  "artifact_config": {
+    "config_class": "ConfigArtifact",
+    "table_name": "Artifact",
+    "source_line": 219703,
+    "main_key": "id",
+    "description": "Defines individual artifact items (weapons/relics). Each artifact has visual properties, quality, and time-gated availability.",
+    "fields": {
+      "id": "Unique artifact ID",
+      "name": "Artifact name (string_ref)",
+      "path": "Resource path identifier",
+      "icon": "Main icon ID",
+      "icon_small": "Small icon ID",
+      "icon_group": "Icon group for resource loading",
+      "quality": "Quality tier",
+      "open_time": "Optional time-gate array for availability [[start, end], ...]",
+      "fashion": "Optional fashion/appearance data",
+      "fashion_eff": "Optional fashion effect data",
+      "position": "Display position offsets",
+      "back_location_adjust": "Back location adjustment for model rendering",
+      "scale": "Display scale",
+      "animation": "Animation ID",
+      "if_activity": "Whether this artifact is activity-specific",
+      "sort": "Sort order value"
+    }
+  },
+
+  "artifact_level": {
+    "config_class": "ConfigArtifact_level",
+    "table_name": "Artifact_level",
+    "source_line": 219471,
+    "main_key": "level",
+    "description": "Defines the artifact's global leveling system. Leveling up the artifact grants attribute bonuses and unlocks new artifact items.",
+    "fields": {
+      "level": "Artifact level (sequential)",
+      "expend_exp": "EXP required to reach this level",
+      "expend_goods": "Optional goods cost array [[item_id, amount], ...]",
+      "attr": "Attribute bonuses at this level [[attr_id, value], ...]",
+      "base_skill": "Base skills unlocked at this level [[skill_id, level], ...]",
+      "unlock": "Artifact ID unlocked at this level (0 = no unlock)",
+      "power": "Combat power at this level"
+    },
+    "leveling_logic": {
+      "source_line": 179319,
+      "code": "var a = configArtifact_level.getDataByKey(IS(t).curLevel + 1).expend_exp; if (e >= (a -= IS(t).curexp)) /* can level up */",
+      "exp_item": "Item ID 1017 is the artifact EXP material",
+      "protocol": "artifact.artifact_levup_c2s with {type, cost}"
+    },
+    "unlock_check": {
+      "source_line": 179309,
+      "description": "Artifacts are unlocked when the player's artifact level >= the level defined in ConfigArtifact_level.unlock for that artifact's ID"
+    }
+  },
+
+  "artifact_skin": {
+    "config_class": "ConfigArtifact_skin",
+    "table_name": "Artifact_skin",
+    "source_line": 219639,
+    "indexed_keys": ["artifact_id", "skin_level"],
+    "description": "Defines skin/awakening levels for each artifact. Unlocking skins grants additional skills and attributes.",
+    "fields": {
+      "artifact_id": "Artifact ID reference",
+      "skin_level": "Skin level (0 = base unlock, 1+ = awakening tiers)",
+      "expend": "Cost to unlock this skin level [[item_id, amount], ...]",
+      "skin_skill": "Skills granted at this skin level [[skill_id, level], ...]",
+      "attr": "Attribute bonuses at this skin level [[attr_id, value], ...]",
+      "power": "Combat power at this skin level"
+    },
+    "states": {
+      "source_line": 179308,
+      "state_values": {
+        "1": "Locked (not yet obtainable or insufficient materials)",
+        "2": "Unlocked (owned, not currently equipped)",
+        "3": "Max level (fully upgraded)",
+        "4": "Currently equipped",
+        "5": "Can unlock now (has materials)"
+      }
+    }
+  },
+
+  "artifact_usage": {
+    "description": "Players equip one artifact at a time (artifact_id), and can optionally use a different artifact appearance (use_look).",
+    "protocols": {
+      "equip": "artifact.artifact_use_c2s with {use: artifact_id, use_look: appearance_id}",
+      "use_skill": "artifact.artifact_use_skill_c2s with {skill_use: skill_id}"
+    },
+    "visual_integration": {
+      "source_line": 187466,
+      "code": "if (t.figure.artifact_figure > 0) u = t.figure.artifact_figure",
+      "description": "The artifact figure overrides the weapon visual if set"
+    },
+    "shenqi_reference": "In code, artifacts are often referred to as 'shenqi' (Chinese for 'divine weapon')"
+  },
+
+  "gem_system": {
+    "description": "The artifact gem system is a sub-system where players equip up to 6 gems in dedicated slots. Each gem has a main attribute, sub attributes, quality, set affiliation, and can be leveled up. Gems contribute stats independently from the artifact itself.",
+
+    "gem_slots": {
+      "total": 6,
+      "source_line": 179334,
+      "code": "for (var r = 1; r < 7; r++) /* iterate gem slots 1-6 */"
+    },
+
+    "gem_data_structure": {
+      "description": "Each gem has the following server-side data fields",
+      "fields": {
+        "id": "Unique gem instance ID",
+        "quality": "Quality tier (same EquipQuality enum as equipment)",
+        "suit": "Set affiliation ID (references ConfigArtifact_gemsets)",
+        "lv": "Current gem level",
+        "base_attr": "Main attribute [{k: attr_id, v: value}]",
+        "rand_attr": "Sub attributes [{k: attr_id, v: value}, ...]",
+        "pos": "Current slot position (0 = unequipped)",
+        "is_lock": "Lock status (1 = locked from auto-split)",
+        "is_new": "New flag for red dot notification"
+      }
+    },
+
+    "gem_slot_config": {
+      "config_class": "ConfigArtifact_gemslot",
+      "table_name": "Artifact_gemslot",
+      "source_line": 219430,
+      "description": "Defines each gem slot and its allowed main attribute group.",
+      "fields": {
+        "id": "Slot ID (1-6)",
+        "main_attr_group": "Allowed main attribute group for this slot (references ConfigArtifact_gemattr.group_id)"
+      }
+    },
+
+    "gem_quality": {
+      "config_class": "ConfigArtifact_gemquality",
+      "table_name": "Artifact_gemquality",
+      "source_line": 219262,
+      "description": "Defines properties for each gem quality tier.",
+      "fields": {
+        "id": "Quality ID",
+        "max_level": "Maximum level a gem of this quality can reach",
+        "mainattr_groups": "Possible main attribute groups for this quality",
+        "viceattr_num": "Range of sub-attribute count [min, max]",
+        "viceattr_group": "Sub-attribute group ID for random selection",
+        "quality_exp": "Base EXP value when used as upgrade fodder",
+        "frame": "UI frame resource ID",
+        "color": "Display color name (string_ref)"
+      }
+    },
+
+    "gem_attributes": {
+      "config_class": "ConfigArtifact_gemattr",
+      "table_name": "Artifact_gemattr",
+      "source_line": 219078,
+      "indexed_keys": ["id", "attr_id"],
+      "description": "Defines the attributes available for gems, their value ranges, and upgrade scaling.",
+      "fields": {
+        "id": "Unique gemattr ID",
+        "group_id": "Attribute group (used by gemslot and gemquality to determine available attrs)",
+        "attr_id": "The actual game attribute ID (references ConfigAttribute)",
+        "pro": "Probability weight for random selection",
+        "initial_value": "Initial value range [min, max] for this attribute when generated",
+        "upgrade_value": "Value gained per level up [min, max]",
+        "power_rate": "Combat power coefficient for this attribute",
+        "color": "Color range for value quality display [min_good, max_good]"
+      },
+      "color_grading": {
+        "source_line": 179467,
+        "description": "Gem attribute values are color-coded by quality. The value range is divided into 6 tiers, mapped to colors from green (worst) to pink (best).",
+        "tier_colors": {
+          "0": "#398760 (green - lowest)",
+          "1": "#5377b0 (blue)",
+          "2": "#9954b6 (purple)",
+          "3": "#ce5913 (orange)",
+          "4": "#d93535 (red)",
+          "5-6": "#e13a95 (pink - highest)"
+        }
+      }
+    },
+
+    "gem_generation": {
+      "config_class": "ConfigArtifact_gemgenerate",
+      "table_name": "Artifact_gemgenerate",
+      "source_line": 219152,
+      "description": "Defines gem generation parameters for different sources (dungeons, boxes, etc.).",
+      "fields": {
+        "id": "Generation source ID",
+        "quality_possible": "Possible qualities with weights [[quality, weight], ...]",
+        "slot_possible": "Possible slot restrictions [[slot_id, weight], ...]",
+        "set_possible": "Possible set affiliations [[set_id, weight], ...]"
+      }
+    },
+
+    "gem_leveling": {
+      "config_class": "ConfigArtifact_gemlevel",
+      "table_name": "Artifact_gemlevel",
+      "source_line": 219206,
+      "indexed_keys": ["quality", "level"],
+      "description": "Defines EXP requirements and special events per quality and level.",
+      "fields": {
+        "quality": "Gem quality tier",
+        "level": "Gem level",
+        "exp": "EXP required to reach this level",
+        "is_strengthen": "Whether a sub-attribute is strengthened at this level (1 = yes)",
+        "weaken": "Weaken flag (unused or special mechanic)"
+      },
+      "upgrade_protocol": {
+        "source_line": 179125,
+        "message": "artifact_gem.artifact_gem_up_c2s",
+        "params": {
+          "gem_id": "Target gem to upgrade",
+          "use_list": "List of gem IDs to consume as fodder",
+          "item_list": "List of EXP items to consume",
+          "lock_attr": "Sub-attribute index to lock/protect during upgrade"
+        }
+      }
+    },
+
+    "gem_sets": {
+      "config_class": "ConfigArtifact_gemsets",
+      "table_name": "Artifact_gemsets",
+      "source_line": 219335,
+      "description": "Defines gem set bonuses. When 2 or 4 gems from the same set are equipped, set bonuses activate.",
+      "fields": {
+        "id": "Set ID",
+        "name": "Set name (string_ref)",
+        "icon": "Set icon ID",
+        "get_way": "Description of how to obtain this set",
+        "bonus2_desc": "Description of the 2-piece bonus",
+        "bonus2_attr": "2-piece attribute bonus [[attr_id, value], ...]",
+        "bonus2_skill": "2-piece skill bonus [[skill_id, level], ...]",
+        "bonus2_power": "2-piece combat power value",
+        "bonus4_desc": "Description of the 4-piece bonus",
+        "bonus4_attr": "4-piece attribute bonus [[attr_id, value], ...]",
+        "bonus4_skill": "4-piece skill bonus [[skill_id, level], ...]",
+        "bonus4_power": "4-piece combat power value"
+      },
+      "set_counting_logic": {
+        "source_line": 179360,
+        "code": "getStoneSuitInfo: for each pos_list entry, get gem info, count suit matches. Returns {suit_id: count, ...}",
+        "activation": "2-piece and 4-piece bonuses check independently: if (b[y] >= 4) add bonus4_attr; if (b[y] >= 2) add bonus2_attr",
+        "activation_line": 179518
+      }
+    },
+
+    "gem_attribute_aggregation": {
+      "source_line": 179370,
+      "function": "getAllGemAttr()",
+      "description": "Aggregates all gem attributes across equipped gems. Base_attr values are summed by attr_id, rand_attr values are summed separately, then merged.",
+      "code_summary": "For each equipped gem: sum base_attr[0] by key, sum each rand_attr by key. Merge rand_attr sums into base_attr sums where keys match. Return combined array."
+    },
+
+    "gem_tabs": {
+      "description": "Like equipment, gems support multiple loadout tabs/presets.",
+      "protocols": {
+        "choose_tab": "artifact_gem.artifact_gem_choose_tab_c2s",
+        "rename_tab": "artifact_gem.artifact_gem_change_tab_name_c2s",
+        "choose_suit": "artifact_gem.artifact_gem_choose_suit_c2s"
+      }
+    },
+
+    "gem_operations": {
+      "wear": "artifact_gem.artifact_gem_wear_c2s - equip/unequip gem to slot",
+      "upgrade": "artifact_gem.artifact_gem_up_c2s - level up gem using fodder",
+      "split": "artifact_gem.artifact_gem_split_c2s - dismantle gems for materials",
+      "lock": "artifact_gem.artifact_gem_lock_c2s - toggle lock status",
+      "subtract": "artifact_gem.artifact_gem_sub_c2s - reduce gem (reductant)",
+      "source_line": 179063
+    }
+  },
+
+  "gem_chapter": {
+    "config_class": "ConfigArtifact_gem_chapter",
+    "table_name": "Artifact_gem_chapter",
+    "source_line": 218989,
+    "indexed_keys": ["id", "index"],
+    "description": "Defines dungeon chapters for acquiring gems. Each chapter has requirements, monster waves, and gem rewards.",
+    "fields": {
+      "id": "Chapter ID",
+      "index": "Stage index within chapter",
+      "power": "Recommended combat power",
+      "level": "Level requirement",
+      "map": "Map ID for the dungeon",
+      "part_type": "Part type identifier",
+      "interval": "Wave interval timing [[time1, count1], ...]",
+      "monster_refresh1": "Monster spawn data [[monster_id, count, ...], ...]",
+      "time": "Time limit in seconds",
+      "reward": "Reward data [[item_id, amount], ...]",
+      "bossModel": "Boss model ID for preview"
+    }
+  },
+
+  "preview_chapter": {
+    "config_class": "ConfigArtifact_preview_chapter",
+    "table_name": "Artifact_preview_chapter",
+    "source_line": 219540,
+    "description": "Preview battle chapters for testing artifact appearances before unlocking.",
+    "note": "Similar structure to gem_chapter but includes 'part' and 'next_part' fields for multi-stage previews."
+  },
+
+  "stat_contribution_flow": {
+    "description": "Artifact stats contribute to total player power through multiple channels",
+    "channels": [
+      {
+        "channel": "Artifact Level Attributes",
+        "description": "Global attributes from ConfigArtifact_level.attr at current level",
+        "source": "artifact_level"
+      },
+      {
+        "channel": "Artifact Level Skills",
+        "description": "Base skills from ConfigArtifact_level.base_skill",
+        "source": "artifact_level"
+      },
+      {
+        "channel": "Artifact Skin Attributes",
+        "description": "Per-artifact attributes from ConfigArtifact_skin.attr at current skin_level",
+        "source": "artifact_skin"
+      },
+      {
+        "channel": "Artifact Skin Skills",
+        "description": "Skills from ConfigArtifact_skin.skin_skill at current skin_level",
+        "source": "artifact_skin"
+      },
+      {
+        "channel": "Gem Base Attributes",
+        "description": "Main attribute from each equipped gem's base_attr",
+        "source": "gem_system"
+      },
+      {
+        "channel": "Gem Sub Attributes",
+        "description": "Random attributes from each equipped gem's rand_attr",
+        "source": "gem_system"
+      },
+      {
+        "channel": "Gem Set Bonuses",
+        "description": "Attribute and skill bonuses from 2-piece and 4-piece set bonuses",
+        "source": "gem_sets"
+      }
+    ]
+  }
+}

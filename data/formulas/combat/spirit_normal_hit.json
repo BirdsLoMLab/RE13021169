@@ -1,0 +1,73 @@
+{
+  "name": "spiritNormalHit",
+  "sourceLine": 322981,
+  "description": "Calculates spirit (guardian spirit) damage. Has two modes: Spirit vs Spirit (direct calculation) and Spirit vs Player (scales parent's damage formulas by config coefficients).",
+  "parameters": {
+    "attacker": "Spirit unit performing the attack",
+    "defender": "Unit being attacked"
+  },
+  "attributes_used": {
+    "attacker": ["spirit_dam_add", "att"],
+    "defender": ["spirit_dam_def", "spirit_dam_def_final"]
+  },
+  "config_used": {
+    "configSpirit_level": "Looked up by (spirit_id, spirit_level) from attacker.data.spiritInfo; provides att_dam coefficient array"
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get spirit damage add",
+      "formula": "spirit_dam_add = attacker.spirit_dam_add"
+    },
+    {
+      "step": 2,
+      "description": "Branch based on defender type",
+      "branches": {
+        "Spirit vs Spirit (defender is Spirit)": {
+          "description": "Direct spirit damage calculation",
+          "formula": "dmg = round(ATK * (spirit_dam_add - spirit_dam_def + 1) * (1 - spirit_dam_def_final))",
+          "attributes": {
+            "ATK": "attacker.att",
+            "spirit_dam_def": "defender.spirit_dam_def",
+            "spirit_dam_def_final": "defender.spirit_dam_def_final"
+          }
+        },
+        "Spirit vs Player (defender is not Spirit)": {
+          "description": "Uses configSpirit_level to get scaling coefficients, then computes parent player's damage from four formulas and scales each by a coefficient",
+          "sub_steps": [
+            {
+              "step": "2a",
+              "description": "Look up att_dam config array from configSpirit_level using spirit_id and spirit_level",
+              "formula": "config = configSpirit_level.getDataByKeys('spirit_id', spiritInfo[0], 'spirit_level', spiritInfo[1]); coefficients = config.att_dam (array of [key, value] pairs)"
+            },
+            {
+              "step": "2b",
+              "description": "Build coefficient map from att_dam array",
+              "formula": "A = { key: value for each [key, value] in config.att_dam }",
+              "note": "Keys are: 1=normalDoubleHurt, 2=normalCounterHurt, 3=normalHurt, 4=SkillHurt"
+            },
+            {
+              "step": "2c",
+              "description": "Calculate each damage component using parent (player) as attacker, with crit_flag=1 (no crit) and usePierceResist=false",
+              "formulas": {
+                "combo_dmg": "round(normalDoubleHurt(parent, defender, 1, false) * A[1] / 10000)",
+                "counter_dmg": "round(normalCounterHurt(parent, defender, 1, false) * A[2] / 10000)",
+                "basic_dmg": "round(normalHurt(parent, defender, 1, false) * A[3] / 10000)",
+                "skill_dmg": "round(SkillHurt(parent, defender, 1, false) * A[4] / 10000)"
+              }
+            },
+            {
+              "step": "2d",
+              "description": "Sum all components",
+              "formula": "dmg = round(combo_dmg + counter_dmg + basic_dmg + skill_dmg)"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "simplified_formula": {
+    "spirit_vs_spirit": "round(ATK * (spirit_dam_add - spirit_dam_def + 1) * (1 - spirit_dam_def_final))",
+    "spirit_vs_player": "round(normalDoubleHurt(parent, def, 1, false)*A[1]/10000 + normalCounterHurt(parent, def, 1, false)*A[2]/10000 + normalHurt(parent, def, 1, false)*A[3]/10000 + SkillHurt(parent, def, 1, false)*A[4]/10000)"
+  }
+}

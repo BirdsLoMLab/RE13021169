@@ -1,0 +1,10 @@
+{
+  "name": "ActivityGroup",
+  "sourceLine": 35881,
+  "values": {
+    "Ranking": 4
+  },
+  "reverseMap": {
+    "4": "Ranking"
+  }
+}

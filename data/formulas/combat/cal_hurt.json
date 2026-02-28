@@ -1,0 +1,32 @@
+{
+  "name": "calHurt",
+  "sourceLine": 322831,
+  "description": "Applies final damage resistance layer including PvE damage bonus and general/PvE damage resistance. Called by all damage formulas after base damage calculation.",
+  "parameters": {
+    "dmg": "Input damage value (integer)",
+    "defender": "Unit receiving damage",
+    "attacker": "Unit dealing damage"
+  },
+  "attributes_used": {
+    "attacker": ["pve_dam"],
+    "defender": ["resist", "pve_resist"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Apply PvE damage bonus from attacker",
+      "formula": "dmg = roundInt(dmg * round(1 + pve_dam))"
+    },
+    {
+      "step": 2,
+      "description": "Apply general damage resistance and PvE damage resistance from defender",
+      "formula": "dmg = roundInt(roundInt(dmg * round(1 - resist)) * round(1 - pve_resist))"
+    },
+    {
+      "step": 3,
+      "description": "Floor at 1",
+      "formula": "dmg = max(1, dmg)"
+    }
+  ],
+  "simplified_formula": "max(1, roundInt(roundInt(roundInt(dmg * round(1 + pve_dam)) * round(1 - resist)) * round(1 - pve_resist)))"
+}

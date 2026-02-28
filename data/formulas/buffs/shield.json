@@ -1,0 +1,87 @@
+{
+  "className": "BuffShield",
+  "sourceFile": "BuffShield.ts",
+  "sourceLine": 195173,
+  "buffMapKey": "shield",
+  "description": "Creates an absorption shield on the target. Shield HP is added to the unit's shieldHp pool and absorbs incoming damage. Shield amount is based on attribute values, with optional decay and sub-buff application. Interacts with STATE_TRIGER(Shield) and shield_hp_extra.",
+  "internalEnums": {
+    "ShieldSourceType": {
+      "Attack": 1,
+      "Target": 2,
+      "note": "Bitfield in _hpType for determining attribute source (caster vs target)"
+    }
+  },
+  "configParams": {
+    "param1": {
+      "field": "_hpType",
+      "description": "Bitfield: 1=Attack(read from caster), 2=Target(read from target). Used in calType 0 to pick source."
+    },
+    "param2": {
+      "field": "_calType",
+      "description": "Shield calculation type (0-3). Determines base shield value."
+    },
+    "param3": {
+      "field": "_attribId",
+      "description": "AttribDefine ID for calType 0 (attribute-based shield)"
+    },
+    "param4": {
+      "field": "_isDec",
+      "description": "If 0, apply shieldDecay multiplier. Otherwise no decay applied."
+    },
+    "param5": {
+      "field": "sub-buff arrays",
+      "description": "param5[0] = array of [buffId, skillParScale] pairs to apply on shield creation. param5[1] = array of [buffId, duration, skillParScale] to apply on shield destruction."
+    }
+  },
+  "calTypes": {
+    "type_0": {
+      "name": "Attribute-based",
+      "formula": "value = (hpType & Target) ? target.getAttrib(attribId) : caster.getAttrib(attribId)"
+    },
+    "type_1": {
+      "name": "ATK minus DEF",
+      "formula": "value = max(roundInt(ATK_caster - DEF_target * (1 + DEF_COE_target)), 1)",
+      "attributes_used": ["att (caster)", "def (target)", "def_coe (target)"]
+    },
+    "type_2": {
+      "name": "HP Difference",
+      "formula": "value = roundInt(caster.getAttrib(hp) - target.currentHp)",
+      "attributes_used": ["hp (caster)", "currentHp (target)"]
+    },
+    "type_3": {
+      "name": "Target Current HP",
+      "formula": "value = roundInt(target.currentHp)",
+      "attributes_used": ["currentHp (target)"]
+    }
+  },
+  "shieldFormula": {
+    "steps": [
+      "1. Calculate base value from calType",
+      "2. shieldHp = roundInt(baseValue * skillPar)",
+      "3. shieldHp = roundInt(shieldHp * round(1 + target.getAttrib(shield_hp_extra)))",
+      "4. If _isDec == 0: shieldHp = roundInt(shieldHp * battleMain.shieldDecay)",
+      "5. Add to owner.data.shieldHp"
+    ],
+    "formula_combined": "shield = roundInt(roundInt(baseValue * skillPar) * (1 + shield_hp_extra)) * (isDec == 0 ? shieldDecay : 1)"
+  },
+  "onShieldAction": {
+    "description": "Called when shield absorbs damage. Returns amount absorbed.",
+    "formula": "absorbed = min(shieldValue, incomingDamage); shieldHp -= absorbed; if shieldValue <= 0: stop buff",
+    "notes": "Shield HP is tracked both on buff instance (_value) and unit data (owner.data.shieldHp)"
+  },
+  "onDestroy": {
+    "description": "When shield expires or is fully depleted",
+    "steps": [
+      "Stop all sub-buffs created during onBegin",
+      "Subtract remaining _value from owner.data.shieldHp (clamp to 0)",
+      "Apply param5[1] destruction buffs if defined"
+    ]
+  },
+  "interactions": {
+    "STATE_TRIGER_Shield": "Triggers STATE_TRIGER with Shield state on creation",
+    "shield_hp_extra": "Bonus shield HP multiplier from target attributes",
+    "shield_time_extra": "Duration extension applied in addBuff (SkillRunner), not in BuffShield itself",
+    "shieldDecay": "Global battle decay factor for shields (applied when _isDec == 0)"
+  },
+  "attributesUsed": ["att", "def", "def_coe", "hp", "shield_hp_extra"]
+}

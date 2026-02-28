@@ -1,0 +1,55 @@
+{
+  "name": "checkDizz",
+  "sourceLine": 322947,
+  "description": "Checks if a stun (vertigo/dizz) effect triggers on the target. Uses a power curve correction similar to miss correction.",
+  "parameters": {
+    "attacker": "Unit performing the attack",
+    "defender": "Unit being attacked"
+  },
+  "attributes_used": {
+    "attacker": ["vertigo"],
+    "defender": ["vertigo_def"]
+  },
+  "config_used": {
+    "vertigo_correct": "Power curve exponent for stun correction (divided by 10000)"
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get stun stats",
+      "formula": "vertigo = attacker.vertigo, vertigo_def = defender.vertigo_def"
+    },
+    {
+      "step": 2,
+      "description": "Calculate raw stun chance",
+      "formula": "base = max(0, round(vertigo - vertigo_def))"
+    },
+    {
+      "step": 3,
+      "description": "Early exit if no chance",
+      "formula": "if base <= 0: return false"
+    },
+    {
+      "step": 4,
+      "description": "Apply vertigo correction power curve",
+      "formula": "corrected = round(pow(round(100 * base), round(vertigo_correct / 10000)) / 100)",
+      "note": "Same power curve structure as miss correction in checkHit"
+    },
+    {
+      "step": 5,
+      "description": "Convert to probability (out of 10000)",
+      "formula": "probability = roundInt(10000 * corrected)"
+    },
+    {
+      "step": 6,
+      "description": "Early exit if corrected chance rounds to 0",
+      "formula": "if probability <= 0: return false"
+    },
+    {
+      "step": 7,
+      "description": "Roll and compare",
+      "formula": "roll = randomInt(0, 10000); return (roll <= probability)"
+    }
+  ],
+  "simplified_formula": "triggers if randomInt(0, 10000) <= roundInt(10000 * pow(100 * max(0, vertigo - vertigo_def), vertigo_correct/10000) / 100)"
+}

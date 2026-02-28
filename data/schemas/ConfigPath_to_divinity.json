@@ -1,0 +1,41 @@
+{
+  "className": "ConfigPath_to_divinity",
+  "tableName": "Path_to_divinity",
+  "sourceLine": 251523,
+  "mainKey": "trunk_id",
+  "indexedKeys": {
+    "trunk_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "trunk_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "tree_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "sensor_node_list",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "raceStage",
+  "sourceLine": 335943,
+  "values": {
+    "Sign": 1,
+    "Rank": 2,
+    "Ready": 3,
+    "Circle": 4,
+    "Knockout": 5,
+    "Show": 6
+  },
+  "reverseMap": {
+    "1": "Sign",
+    "2": "Rank",
+    "3": "Ready",
+    "4": "Circle",
+    "5": "Knockout",
+    "6": "Show"
+  }
+}

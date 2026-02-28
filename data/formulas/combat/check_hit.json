@@ -1,0 +1,68 @@
+{
+  "name": "checkHit",
+  "sourceLine": 322896,
+  "description": "Determines whether an attack misses, hits normally, or critically hits. Uses a weighted random roll across three outcomes: Miss, Normal, and Crit.",
+  "parameters": {
+    "attacker": "Unit performing the attack",
+    "defender": "Unit receiving the attack",
+    "ignoreMiss": "boolean, default false — if true, miss rate is forced to 0"
+  },
+  "attributes_used": {
+    "attacker": ["hit", "crit_rate"],
+    "defender": ["miss", "ignore_crit_rate"]
+  },
+  "config_used": {
+    "battle_up_limit[0][1]": "PvP miss rate cap (from ConfigGlobal)",
+    "miss_correct": "Power curve exponent for miss correction (from ConfigGlobal)",
+    "chapterType": "Determines if current battle is PvE (no PvP cap applied)"
+  },
+  "return_values": {
+    "0": "Miss — attack misses entirely",
+    "1": "Normal — standard hit",
+    "2": "Crit — critical hit"
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get accuracy and evasion stats",
+      "formula": "accuracy = attacker.hit, evasion = ignoreMiss ? 0 : defender.miss"
+    },
+    {
+      "step": 2,
+      "description": "Get crit rate after reduction",
+      "formula": "crit_rate = attacker.crit_rate, ignore_crit = defender.ignore_crit_rate, effective_crit = max(crit_rate - ignore_crit, 0)"
+    },
+    {
+      "step": 3,
+      "description": "Calculate raw miss chance",
+      "formula": "raw_miss = max(round(evasion - accuracy), 0)"
+    },
+    {
+      "step": 4,
+      "description": "Apply power curve correction to miss chance",
+      "formula": "corrected_miss = round(pow(round(100 * raw_miss), round(miss_correct / 10000)) / 100)",
+      "note": "miss_correct is a global config value; dividing by 10000 converts from basis points. The power curve compresses high miss rates."
+    },
+    {
+      "step": 5,
+      "description": "Apply PvP miss cap (only in PvP battles)",
+      "formula": "pvp_cap = round(battle_up_limit[0][1] / 10000); if (not PvE): final_miss = min(corrected_miss, pvp_cap); else: final_miss = corrected_miss"
+    },
+    {
+      "step": 6,
+      "description": "Build weighted probability ranges (out of 10000)",
+      "formula": "ranges[Miss] = roundInt(10000 * final_miss), ranges[Normal] = ranges[Miss] + roundInt(round(1 - final_miss) * round(1 - effective_crit) * 10000), ranges[Crit] = ranges[Normal] + roundInt(round(1 - final_miss) * effective_crit * 10000)"
+    },
+    {
+      "step": 7,
+      "description": "Roll random number and determine outcome",
+      "formula": "rand = randomInt(0, 10000); if rand <= ranges[Miss]: return Miss(0); else if rand <= ranges[Normal]: return Normal(1); else: return Crit(2)"
+    }
+  ],
+  "notes": [
+    "The three outcomes (Miss/Normal/Crit) partition the 0-10000 range",
+    "Due to rounding, the sum of ranges may not exactly equal 10000; any remainder falls into Crit",
+    "In PvE battles (determined by chapterType config), the PvP miss cap is not applied",
+    "The power curve correction (step 4) means raw_miss is scaled non-linearly — e.g., with miss_correct=5000 (exponent 0.5), a 25% raw miss becomes ~50% after correction (sqrt)"
+  ]
+}

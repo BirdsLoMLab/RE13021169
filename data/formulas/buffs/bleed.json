@@ -1,0 +1,107 @@
+{
+  "className": "BuffBleed",
+  "sourceFile": "BuffBleed.ts",
+  "sourceLine": 192751,
+  "buffMapKey": "bleed",
+  "description": "Bleed damage buff with 8 distinct damage calculation types. Deals damage on begin, supports crit, armor, boss damage, and clamping. Interacts with EXTRA_DAMAGE, GIANT_SLAYER, VAMPIRE, and RECORD_DAMAGE systems.",
+  "configParams": {
+    "param1": {
+      "field": "_type",
+      "description": "Bleed type (0-6, 10). Determines the damage formula used.",
+      "default": 0
+    },
+    "param2": {
+      "field": "_attribId",
+      "description": "AttribDefine ID used for type 10 (attribute-based bleed)"
+    },
+    "param3": {
+      "field": "_isTarget",
+      "description": "If 1, type 10 reads attribute from target instead of caster"
+    },
+    "param5": {
+      "field": "_limit",
+      "description": "Array of [minMultiplier, maxMultiplier] for damage clamping based on base ATK damage. Empty = no clamp.",
+      "default": []
+    }
+  },
+  "skillPar": "Passed multiplier from buff application (used as damage coefficient in several types)",
+  "bleedTypes": {
+    "type_0": {
+      "name": "Normal ATK Bleed",
+      "formula": "baseDamage = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1); damage = round(baseDamage * ATK_DAM); damage = round(damage * getSkillFactAttrValue(skillPar, skillId, active_skilldamage_par)); if target is Boss and BOSS_DAM > 0: damage = roundInt(damage * round(1 + BOSS_DAM)); finalDamage = calHurt(damage, target, caster)",
+      "attributes_used": ["att", "def", "def_coe", "att_dam", "boss_dam", "active_skilldamage_par"],
+      "healthType": "Hurt_Bleed",
+      "can_crit": false,
+      "interacts_with": ["EXTRA_DAMAGE", "GIANT_SLAYER", "VAMPIRE", "RECORD_DAMAGE"]
+    },
+    "type_1": {
+      "name": "Target Current HP% Bleed",
+      "formula": "baseDamage = round(target.currentHp * skillPar); damage = round(baseDamage * injuryReduce)",
+      "attributes_used": ["currentHp (target)"],
+      "healthType": "Hurt_Bleed",
+      "can_crit": false,
+      "notes": "Does NOT interact with EXTRA_DAMAGE (special exemption at line 192829)"
+    },
+    "type_2": {
+      "name": "Skill Damage Bleed",
+      "formula": "baseDamage = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1); damage = roundInt(baseDamage * SKILL_DAM_EXTRA * skillPar); resistPar = calArmorAndBlock(target, caster, SKILL_RESIST, skill_resist); damage = calHurt(roundInt(damage * max(0, round(1 - resistPar))), target, caster); if checkSkillCrit(caster): damage = roundInt(damage * round(1 + SKILL_CRIT_DAM)); damage = roundInt(pow(damage, 0.98)); healthType = Hurt_Bleed_Crit",
+      "attributes_used": ["att", "def", "def_coe", "skill_dam_extra", "skill_resist", "skill_crit_dam"],
+      "healthType": "Hurt_Bleed (or Hurt_Bleed_Crit)",
+      "can_crit": true,
+      "crit_type": "skill_crit",
+      "interacts_with": ["EXTRA_DAMAGE", "VAMPIRE", "RECORD_DAMAGE"]
+    },
+    "type_3": {
+      "name": "Normal ATK Bleed with Armor + Crit",
+      "formula": "baseDamage = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1); damage = round(baseDamage * ATK_DAM); damage = round(damage * getSkillFactAttrValue(skillPar, skillId, active_skilldamage_par)); if target is Boss and BOSS_DAM > 0: damage = roundInt(damage * round(1 + BOSS_DAM)); resistPar = calArmorAndBlock(target, caster, ATT_RESIST, skill_resist); finalDamage = calHurt(roundInt(damage * max(0, round(1 - resistPar))), target, caster); if checkHit == Cirt: critMul = max(1.5, round(CRIT_DAM / max(0.5, CRIT_DEF))); finalDamage = roundInt(finalDamage * critMul); healthType = Hurt_Bleed_Crit",
+      "attributes_used": ["att", "def", "def_coe", "att_dam", "boss_dam", "active_skilldamage_par", "att_resist", "crit_dam", "crit_def"],
+      "healthType": "Hurt_Bleed (or Hurt_Bleed_Crit)",
+      "can_crit": true,
+      "crit_type": "normal_crit",
+      "interacts_with": ["EXTRA_DAMAGE", "VAMPIRE", "RECORD_DAMAGE"]
+    },
+    "type_4": {
+      "name": "Double Hit Bleed",
+      "formula": "baseDamage = max(roundInt(roundInt(ATK - DEF * (1 + DEF_COE)) * DOUBLE_HIT_DAM), 1); damage = round(baseDamage * getSkillFactAttrValue(skillPar, skillId, active_skilldamage_par)); if target is Boss and BOSS_DAM > 0: damage = roundInt(damage * round(1 + BOSS_DAM)); resistPar = calArmorAndBlock(target, caster, DOUBLE_HIT_DEF, double_hit_def); finalDamage = calHurt(roundInt(damage * max(0, round(1 - resistPar))), target, caster); if checkHit == Cirt: critMul = max(1.5, round(CRIT_DAM / max(0.5, CRIT_DEF))); finalDamage *= critMul",
+      "attributes_used": ["att", "def", "def_coe", "double_hit_dam", "double_hit_def", "boss_dam", "active_skilldamage_par", "crit_dam", "crit_def"],
+      "healthType": "Hurt_Bleed (or Hurt_Bleed_Crit)",
+      "can_crit": true,
+      "crit_type": "normal_crit"
+    },
+    "type_5": {
+      "name": "Counter Bleed",
+      "formula": "baseDamage = max(roundInt(roundInt(ATK - DEF * (1 + DEF_COE)) * COUNTER_DAM), 1); damage = round(baseDamage * getSkillFactAttrValue(skillPar, skillId, active_skilldamage_par)); if target is Boss and BOSS_DAM > 0: damage = roundInt(damage * round(1 + BOSS_DAM)); resistPar = calArmorAndBlock(target, caster, COUNTER_DEF, counter_def); finalDamage = calHurt(roundInt(damage * max(0, round(1 - resistPar))), target, caster); if checkHit == Cirt: critMul = max(1.5, round(CRIT_DAM / max(0.5, CRIT_DEF))); finalDamage *= critMul",
+      "attributes_used": ["att", "def", "def_coe", "counter_dam", "counter_def", "boss_dam", "active_skilldamage_par", "crit_dam", "crit_def"],
+      "healthType": "Hurt_Bleed (or Hurt_Bleed_Crit)",
+      "can_crit": true,
+      "crit_type": "normal_crit"
+    },
+    "type_6": {
+      "name": "Target Max HP% Bleed",
+      "formula": "baseDamage = round(target.getAttrib(hp) * skillPar); damage = round(baseDamage * injuryReduce)",
+      "attributes_used": ["hp (target max)"],
+      "healthType": "Hurt_Bleed",
+      "can_crit": false,
+      "interacts_with": ["EXTRA_DAMAGE", "VAMPIRE", "RECORD_DAMAGE"]
+    },
+    "type_10": {
+      "name": "Attribute-based Bleed",
+      "formula": "baseDamage = (_isTarget ? target : caster).getAttrib(_attribId); damage = round(baseDamage * skillPar); damage = round(damage * injuryReduce)",
+      "attributes_used": ["configurable via param2 (_attribId)"],
+      "healthType": "Hurt_Bleed",
+      "can_crit": false,
+      "interacts_with": ["EXTRA_DAMAGE", "VAMPIRE", "RECORD_DAMAGE"]
+    }
+  },
+  "damageClamping": {
+    "description": "When _limit array is non-empty [min, max], damage is clamped to [baseDMG * min, baseDMG * max]",
+    "formula": "baseDMG = roundInt(max(roundInt(ATK - DEF * (1 + DEF_COE)), 1) * ATK_DAM); clampMin = roundInt(baseDMG * limit[0]); clampMax = roundInt(baseDMG * limit[1]); damage = clamp(damage, clampMin, clampMax)",
+    "type6_special": "For type 6 with Partner units: uses parent ATK, and ATK_DAM is multiplied by partner_dam * partner_dam_extra"
+  },
+  "postDamageInteractions": {
+    "EXTRA_DAMAGE": "Applied to all types except type 1. Multiplies final damage via ExtraDamage buffs on caster.",
+    "RECORD_DAMAGE": "Adds recordDamage bonus: damage = roundInt(damage * round(1 + round(recordDamage / 10000)))",
+    "GIANT_SLAYER": "Applied only to type 0. Applies HP-difference bonus damage.",
+    "VAMPIRE": "Triggers life steal for matching caster/parent. Passes final clamped damage."
+  }
+}

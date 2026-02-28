@@ -1,0 +1,808 @@
+{
+  "description": "Complete mapping of BuffGroupType enum values to implementing buff classes. The 'group' field in ConfigBuff sets the buffType used for getBuffByType() lookups. The 'action' field in ConfigBuff determines which class instantiates the buff via buffMap.",
+  "sourceLines": {
+    "buffMap_registration": 332125,
+    "BuffGroupType_enum": 278632,
+    "ConfigBuff_schema": 222479,
+    "addBuff_factory": 431489,
+    "buffType_assignment": 192065
+  },
+  "notes": [
+    "buffType = config.group (BuffGroupType value) - used for runtime buff querying via getBuffByType()",
+    "action = config.action (string key) - used for instantiation via buffMap[action](config)",
+    "Multiple action types can share the same group value",
+    "A buff class may not correspond to any group if it is not queried by type at runtime"
+  ],
+  "groupTypeToClasses": {
+    "HURT (1)": {
+      "buffGroupType": 1,
+      "description": "Generic hurt/damage buffs. The base type for damage-dealing buffs.",
+      "primaryClasses": [
+        {
+          "className": "BuffBleed",
+          "buffMapKey": "bleed",
+          "sourceLine": 192751,
+          "description": "8-type bleed damage system"
+        },
+        {
+          "className": "BuffSkillValue",
+          "buffMapKey": "skill_value",
+          "sourceLine": 195729,
+          "description": "Primary skill damage with 11 calculation sub-types"
+        },
+        {
+          "className": "BuffSkillHpHurt",
+          "buffMapKey": "hp_hurt",
+          "sourceLine": 195493,
+          "description": "HP-percentage based damage with resistance"
+        },
+        {
+          "className": "BuffDotDamage",
+          "buffMapKey": "dotdamage",
+          "sourceLine": 193836,
+          "description": "Damage over time"
+        }
+      ]
+    },
+    "CTR (3)": {
+      "buffGroupType": 3,
+      "description": "Control effects (stun, dizz, bound, frozen, taunt, ban)",
+      "primaryClasses": [
+        {
+          "className": "BuffDizz",
+          "buffMapKey": "dizz",
+          "sourceLine": 193649,
+          "description": "Stun/dizziness control effect"
+        },
+        {
+          "className": "BuffBound",
+          "buffMapKey": "bound",
+          "sourceLine": 192938,
+          "description": "Root/bind control effect"
+        },
+        {
+          "className": "BuffFrozen",
+          "buffMapKey": "frozen",
+          "sourceLine": 194018,
+          "description": "Freeze control effect"
+        },
+        {
+          "className": "BuffTaunt",
+          "buffMapKey": "taunt",
+          "sourceLine": 196226,
+          "description": "Taunt/aggro control effect"
+        },
+        {
+          "className": "BuffBanAct",
+          "buffMapKey": "ban_act",
+          "sourceLine": 192645,
+          "description": "Action ban control"
+        },
+        {
+          "className": "BuffBanSkill",
+          "buffMapKey": "ban_skill",
+          "sourceLine": 192691,
+          "description": "Skill ban control"
+        }
+      ]
+    },
+    "ADD (4)": {
+      "buffGroupType": 4,
+      "description": "Attribute modification buffs",
+      "primaryClasses": [
+        {
+          "className": "BuffAttrib",
+          "buffMapKey": "attrib",
+          "sourceLine": 192380,
+          "description": "Add/modify unit attributes"
+        },
+        {
+          "className": "BuffAttribContinue",
+          "buffMapKey": "attrib_continue",
+          "sourceLine": 192517,
+          "description": "Continuous attribute modification"
+        },
+        {
+          "className": "BuffAttribConvert",
+          "buffMapKey": "attrib_convert",
+          "sourceLine": 192564,
+          "description": "Convert one attribute to another"
+        },
+        {
+          "className": "BuffAttackAdd",
+          "buffMapKey": "attack_add",
+          "sourceLine": 192315,
+          "description": "Attack attribute addition"
+        }
+      ]
+    },
+    "TRAP_FOLLOW (10)": {
+      "buffGroupType": 10,
+      "description": "Trap-following buffs",
+      "primaryClasses": [
+        {
+          "className": "BuffTrap",
+          "buffMapKey": "trap",
+          "sourceLine": 196418,
+          "description": "Trap placement and following"
+        }
+      ]
+    },
+    "SHIELD (20)": {
+      "buffGroupType": 20,
+      "description": "Shield creation and absorption",
+      "primaryClasses": [
+        {
+          "className": "BuffShield",
+          "buffMapKey": "shield",
+          "sourceLine": 195173,
+          "description": "Creates absorption shield with 4 calculation types"
+        },
+        {
+          "className": "BuffBreakShield",
+          "buffMapKey": "break_shield",
+          "sourceLine": 192973,
+          "description": "Shield-breaking mechanic"
+        }
+      ]
+    },
+    "NORMAL_ACT_NUM_TRIGGER (30)": {
+      "buffGroupType": 30,
+      "description": "Triggers based on normal attack count",
+      "primaryClasses": [
+        {
+          "className": "BuffAddBuffToTarget",
+          "buffMapKey": "addbuff_to_target",
+          "sourceLine": 192167,
+          "description": "Adds buffs to target based on normal action count trigger"
+        }
+      ]
+    },
+    "BULLET_NUM (40)": {
+      "buffGroupType": 40,
+      "description": "Bullet/projectile count modification",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillDoubleHitNum",
+          "buffMapKey": "double_hit_num",
+          "sourceLine": 195366,
+          "description": "Modify double-hit bullet count"
+        }
+      ]
+    },
+    "USE_SKILL_NORMAL_ADD (50)": {
+      "buffGroupType": 50,
+      "description": "Buffs that trigger when using normal skills",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillEffect",
+          "buffMapKey": "skill_effect",
+          "sourceLine": 195397,
+          "description": "Trigger effects on skill use"
+        }
+      ]
+    },
+    "SKILL_DAMAGE_ADD (60)": {
+      "buffGroupType": 60,
+      "description": "Flat skill damage bonus added during damage pipeline",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillDamageAdd",
+          "buffMapKey": "skill_damage_add",
+          "sourceLine": 195338,
+          "description": "Adds flat bonus damage based on ATK or HP threshold"
+        }
+      ]
+    },
+    "SHARE_DAMAGE (70)": {
+      "buffGroupType": 70,
+      "description": "Splash/shared damage distribution",
+      "primaryClasses": [
+        {
+          "className": "BuffShareDamage",
+          "buffMapKey": "sharedamage",
+          "sourceLine": 195114,
+          "description": "Distributes damage to nearby enemies"
+        }
+      ]
+    },
+    "ATTRIB_CONDITION (80)": {
+      "buffGroupType": 80,
+      "description": "Conditional attribute buffs that check state before applying",
+      "primaryClasses": [
+        {
+          "className": "BuffAttribCondition",
+          "buffMapKey": "attrib_condition",
+          "sourceLine": 192431,
+          "description": "Apply attributes conditionally based on state checks"
+        }
+      ]
+    },
+    "DESTROY_WHEN_NORMAL_AFTER (90)": {
+      "buffGroupType": 90,
+      "description": "Buffs destroyed after normal attack",
+      "primaryClasses": [
+        {
+          "className": "BuffTrigerByUType",
+          "buffMapKey": "triger_by_uType",
+          "sourceLine": 196460,
+          "description": "Trigger buffs based on unit type, destroyed after normal"
+        }
+      ]
+    },
+    "NORMAL_BULLET_NUM (100)": {
+      "buffGroupType": 100,
+      "description": "Normal attack bullet count modification",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillDoubleHitNum",
+          "buffMapKey": "double_hit_num",
+          "sourceLine": 195366,
+          "description": "Also used for normal bullet count"
+        }
+      ]
+    },
+    "STATE_TRIGER (110)": {
+      "buffGroupType": 110,
+      "description": "State-triggered buff reactions (crit, shield, etc.)",
+      "primaryClasses": [
+        {
+          "className": "BuffStateTrigger",
+          "buffMapKey": "statetrigger",
+          "sourceLine": 196181,
+          "description": "Triggers buff application on specific state changes"
+        }
+      ]
+    },
+    "DELAY_DEMAGE (120)": {
+      "buffGroupType": 120,
+      "description": "Delayed damage application",
+      "primaryClasses": [
+        {
+          "className": "BuffDelayDamage",
+          "buffMapKey": "delaydamage",
+          "sourceLine": 193560,
+          "description": "Delays damage application"
+        }
+      ]
+    },
+    "ADDBUFF_TOPET (130)": {
+      "buffGroupType": 130,
+      "description": "Add buffs to pet/summon",
+      "primaryClasses": [
+        {
+          "className": "BuffPetConvert",
+          "buffMapKey": "pet_convert",
+          "sourceLine": 194651,
+          "description": "Convert and apply buffs to pet units"
+        }
+      ]
+    },
+    "HP_CHANGE_TRIGER (140)": {
+      "buffGroupType": 140,
+      "description": "Triggers on HP change events",
+      "primaryClasses": [
+        {
+          "className": "BuffHpChangeTrigger",
+          "buffMapKey": "hpchange_trigger",
+          "sourceLine": 194229,
+          "description": "Trigger buffs when HP changes by threshold"
+        }
+      ]
+    },
+    "AddBuffTrigger (150)": {
+      "buffGroupType": 150,
+      "description": "Triggers when any buff is added to the unit",
+      "primaryClasses": [
+        {
+          "className": "BuffAddBuffTrigger",
+          "buffMapKey": "addbuff_trigger",
+          "sourceLine": 192229,
+          "description": "React to buff application events"
+        }
+      ]
+    },
+    "UnitCallDamageAdd (160)": {
+      "buffGroupType": 160,
+      "description": "Bonus damage for summoned unit attacks",
+      "primaryClasses": [
+        {
+          "className": "BuffUnitCallDamageAdd",
+          "buffMapKey": "unit_call_damage_add",
+          "sourceLine": 196657,
+          "description": "Extra damage for summoned/called units"
+        }
+      ]
+    },
+    "DOUBLE_TRIGGER (170)": {
+      "buffGroupType": 170,
+      "description": "Double trigger mechanic (trigger twice)",
+      "primaryClasses": [
+        {
+          "className": "BuffDoubleTrigger",
+          "buffMapKey": "double_trigger",
+          "sourceLine": 193905,
+          "description": "Triggers an action twice"
+        }
+      ]
+    },
+    "TOTAL_DAMAGE_TRIGGER (180)": {
+      "buffGroupType": 180,
+      "description": "Triggers when cumulative damage reaches threshold",
+      "primaryClasses": [
+        {
+          "className": "BuffTotalDamageTrigger",
+          "buffMapKey": "total_damage_trigger",
+          "sourceLine": 196388,
+          "description": "Monitors total damage taken and triggers buffs at threshold"
+        }
+      ]
+    },
+    "USE_SKILL_ADD (190)": {
+      "buffGroupType": 190,
+      "description": "Buffs applied on skill use",
+      "primaryClasses": [
+        {
+          "className": "BuffUseSkillAdd",
+          "buffMapKey": "use_skill_add",
+          "sourceLine": 196698,
+          "description": "Add buffs when using specific skills"
+        }
+      ]
+    },
+    "FRAGILE_EFFECT (200)": {
+      "buffGroupType": 200,
+      "description": "Fragile flat bonus damage effect",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillFragileAdd",
+          "buffMapKey": "fragile_effect",
+          "sourceLine": 195450,
+          "description": "Adds flat bonus damage based on attribute or current HP"
+        }
+      ]
+    },
+    "TRIGGER_BULLET (210)": {
+      "buffGroupType": 210,
+      "description": "Trigger additional bullets/projectiles",
+      "primaryClasses": [
+        {
+          "className": "BuffTriggerBullet",
+          "buffMapKey": "trigger_bullet",
+          "sourceLine": 196499,
+          "description": "Fires additional bullets on trigger"
+        }
+      ]
+    },
+    "SKILL_COUNTER (220)": {
+      "buffGroupType": 220,
+      "description": "Skill counter mechanic",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillCounter",
+          "buffMapKey": "skill_counter",
+          "sourceLine": 195286,
+          "description": "Count skill uses for trigger mechanics"
+        }
+      ]
+    },
+    "IMMUNE_DEATH (230)": {
+      "buffGroupType": 230,
+      "description": "Death immunity / survive lethal damage",
+      "primaryClasses": [
+        {
+          "className": "BuffImmuneDeath",
+          "buffMapKey": "immune_death",
+          "sourceLine": 194405,
+          "description": "Prevents death and sets HP to threshold"
+        }
+      ]
+    },
+    "BLOCK (240)": {
+      "buffGroupType": 240,
+      "description": "Damage block/reduction based on HP ratio tiers",
+      "primaryClasses": [
+        {
+          "className": "BuffBlock",
+          "buffMapKey": "block",
+          "sourceLine": 192912,
+          "description": "Tiered damage reduction based on damage-to-HP ratio"
+        }
+      ]
+    },
+    "DESTROY_WHEN_SKILL_AFTER (270)": {
+      "buffGroupType": 270,
+      "description": "Buffs destroyed after skill use",
+      "primaryClasses": [
+        {
+          "className": "BuffDoubleSkill",
+          "buffMapKey": "double_skill",
+          "sourceLine": 193836,
+          "description": "Double skill execution, destroyed after"
+        }
+      ]
+    },
+    "TRIGGER_AND_STAY (280)": {
+      "buffGroupType": 280,
+      "description": "Trigger effect and remain active",
+      "primaryClasses": [
+        {
+          "className": "BuffTriggerBySkillParam",
+          "buffMapKey": "trigger_by_skill_param",
+          "sourceLine": 196593,
+          "description": "Trigger based on skill parameters, stays active"
+        }
+      ]
+    },
+    "SKILL_REAL_DAMAGE (290)": {
+      "buffGroupType": 290,
+      "description": "True/real damage as percentage of skill damage",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillRealDamage",
+          "buffMapKey": "skill_real_damage",
+          "sourceLine": 195603,
+          "description": "Deals additional true damage as percentage of dealt damage"
+        }
+      ]
+    },
+    "REMAKE_HP (320)": {
+      "buffGroupType": 320,
+      "description": "HP remake / resurrection mechanic",
+      "primaryClasses": [
+        {
+          "className": "BuffRemake",
+          "buffMapKey": "remake",
+          "sourceLine": 194994,
+          "description": "Resurrect or remake HP on death trigger"
+        }
+      ]
+    },
+    "IGNORE_BUFFIDS (330)": {
+      "buffGroupType": 330,
+      "description": "Ignore/block specific buff IDs from being applied",
+      "primaryClasses": [
+        {
+          "className": "BuffIgnoreIds",
+          "buffMapKey": "ignore_buff",
+          "sourceLine": 194369,
+          "description": "Prevents specific buff IDs from being applied"
+        }
+      ]
+    },
+    "SKILL_RETURN (340)": {
+      "buffGroupType": 340,
+      "description": "Skill reflection/return mechanic",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillReturn",
+          "buffMapKey": "skill_return",
+          "sourceLine": 195660,
+          "description": "Reflects/returns specific skills back to caster"
+        }
+      ]
+    },
+    "CURRENT_HP (350)": {
+      "buffGroupType": 350,
+      "description": "Fixed/overridden current HP tracking",
+      "primaryClasses": [
+        {
+          "className": "BuffCurrentHp",
+          "buffMapKey": "current_hp",
+          "sourceLine": 193455,
+          "description": "Provides fixed HP ratio for calculations (used by EXTRA_DAMAGE type 2)"
+        }
+      ]
+    },
+    "SKILL_BUFFTIME_ADD (360)": {
+      "buffGroupType": 360,
+      "description": "Extend buff durations",
+      "primaryClasses": [
+        {
+          "className": "BuffSkillBuffTimeAdd",
+          "buffMapKey": "skill_bufftime_add",
+          "sourceLine": 195249,
+          "description": "Adds additional time to buff durations"
+        }
+      ]
+    },
+    "IGNORE_COPY (370)": {
+      "buffGroupType": 370,
+      "description": "Prevent buff copying",
+      "primaryClasses": [
+        {
+          "className": "BuffCopyIgnore",
+          "buffMapKey": "ignore_copy",
+          "sourceLine": 193257,
+          "description": "Marks unit as immune to buff copying"
+        }
+      ]
+    },
+    "VAMPIRE (380)": {
+      "buffGroupType": 380,
+      "description": "Life steal / Vampire healing from damage dealt",
+      "primaryClasses": [
+        {
+          "className": "BuffVampire",
+          "buffMapKey": "vampire",
+          "sourceLine": 196745,
+          "description": "Life steal with total damage multiplier and HP cap"
+        }
+      ]
+    },
+    "GIANT_SLAYER (390)": {
+      "buffGroupType": 390,
+      "description": "Bonus damage based on target-owner HP difference",
+      "primaryClasses": [
+        {
+          "className": "BuffGiantSlayer",
+          "buffMapKey": "giantslayer",
+          "sourceLine": 194151,
+          "description": "HP-difference scaling bonus damage"
+        }
+      ]
+    },
+    "DEFER_DAMAGE (400)": {
+      "buffGroupType": 400,
+      "description": "Deferred/delayed damage absorption and release",
+      "primaryClasses": [
+        {
+          "className": "BuffDeferDamage",
+          "buffMapKey": "defer_damage",
+          "sourceLine": 193523,
+          "description": "Absorbs percentage of damage, releases over time"
+        }
+      ]
+    },
+    "EXTRA_DAMAGE (410)": {
+      "buffGroupType": 410,
+      "description": "Extra damage multiplier applied post-calculation",
+      "primaryClasses": [
+        {
+          "className": "BuffExtraDamage",
+          "buffMapKey": "extra_damage",
+          "sourceLine": 193971,
+          "description": "Multiplicative damage bonus with HP-loss scaling"
+        }
+      ]
+    },
+    "TIME_REVERSAL (420)": {
+      "buffGroupType": 420,
+      "description": "Time reversal / HP restoration to past state",
+      "primaryClasses": [
+        {
+          "className": "BuffTimeReversal",
+          "buffMapKey": "time_reversal",
+          "sourceLine": 196324,
+          "description": "Records HP over time, restores to past HP on trigger"
+        }
+      ]
+    },
+    "RECORD_DAMAGE (430)": {
+      "buffGroupType": 430,
+      "description": "Record damage taken over time, trigger buffs at threshold",
+      "primaryClasses": [
+        {
+          "className": "BuffRecordDamage",
+          "buffMapKey": "record_damage",
+          "sourceLine": 194849,
+          "description": "Accumulates damage taken, triggers buff application at threshold or timer"
+        }
+      ]
+    },
+    "REDUCE_HEAL (440)": {
+      "buffGroupType": 440,
+      "description": "Healing reduction/amplification",
+      "primaryClasses": [
+        {
+          "className": "BuffReduceHeal",
+          "buffMapKey": "reduce_heal",
+          "sourceLine": 194971,
+          "description": "Reduces or amplifies healing received"
+        }
+      ]
+    },
+    "SPECIAL_EXTRA_BULLET_NUM (450)": {
+      "buffGroupType": 450,
+      "description": "Special extra bullet mechanic with trigger rate",
+      "primaryClasses": [
+        {
+          "className": "BuffSpecialExtralBullet",
+          "buffMapKey": "special_extra_bullet_num",
+          "sourceLine": 196028,
+          "description": "Adds extra bullets with probability trigger and sub-buffs"
+        }
+      ]
+    },
+    "DAMAGE_TRIGGER (460)": {
+      "buffGroupType": 460,
+      "description": "Trigger buffs based on cumulative damage taken (HP% threshold)",
+      "primaryClasses": [
+        {
+          "className": "BuffTriggerByDamage",
+          "buffMapKey": "trigger_by_damage",
+          "sourceLine": 196549,
+          "description": "Accumulates damage, triggers buff list at HP% threshold with loop control"
+        }
+      ]
+    }
+  },
+  "buffClassesWithNoGroupType": {
+    "description": "These buff classes exist in buffMap but are not assigned a specific BuffGroupType. They operate as standalone utility buffs.",
+    "classes": [
+      {
+        "className": "BuffAction",
+        "buffMapKey": "action",
+        "sourceLine": 192074,
+        "description": "Generic buff action"
+      },
+      {
+        "className": "BuffAddBuffByMultiplyingPower",
+        "buffMapKey": "add_buff_by_multiplying_power",
+        "sourceLine": 192135,
+        "description": "Applies buffs conditionally based on HP vs ATK multiplier"
+      },
+      {
+        "className": "BuffAddByCondition",
+        "buffMapKey": "add_buff_by_condition",
+        "sourceLine": 192272,
+        "description": "Conditional buff application"
+      },
+      {
+        "className": "BuffCallSpirit",
+        "buffMapKey": "call_spirit",
+        "sourceLine": 193014,
+        "description": "Summon spirit unit"
+      },
+      {
+        "className": "BuffCallUnit",
+        "buffMapKey": "call_unit",
+        "sourceLine": 193116,
+        "description": "Summon/call unit"
+      },
+      {
+        "className": "BuffCheck",
+        "buffMapKey": "check",
+        "sourceLine": 193154,
+        "description": "Check conditions and apply effects"
+      },
+      {
+        "className": "BuffClear",
+        "buffMapKey": "clear",
+        "sourceLine": 193216,
+        "description": "Clear/remove buffs"
+      },
+      {
+        "className": "BuffCopyUnit",
+        "buffMapKey": "copy_unit",
+        "sourceLine": 193290,
+        "description": "Copy unit attributes/buffs"
+      },
+      {
+        "className": "BuffDirectKill",
+        "buffMapKey": "direct_kill",
+        "sourceLine": 193600,
+        "description": "Instant kill mechanic"
+      },
+      {
+        "className": "BuffDoubleSkill",
+        "buffMapKey": "double_skill",
+        "sourceLine": 193836,
+        "description": "Execute a skill twice"
+      },
+      {
+        "className": "BuffHpAlter",
+        "buffMapKey": "hp_alter",
+        "sourceLine": 194177,
+        "description": "HP alteration (heal/damage)"
+      },
+      {
+        "className": "BuffHpTrigger",
+        "buffMapKey": "hp_trigger",
+        "sourceLine": 194307,
+        "description": "Trigger on HP threshold"
+      },
+      {
+        "className": "BuffInvincible",
+        "buffMapKey": "invincible",
+        "sourceLine": 194477,
+        "description": "Invincibility state"
+      },
+      {
+        "className": "BuffNotControlled",
+        "buffMapKey": "not_controll",
+        "sourceLine": 194512,
+        "description": "Immune to control effects"
+      },
+      {
+        "className": "BuffNotGetDamage",
+        "buffMapKey": "not_get_damage",
+        "sourceLine": 194547,
+        "description": "Immune to damage"
+      },
+      {
+        "className": "BuffPauseCd",
+        "buffMapKey": "pause_cd",
+        "sourceLine": 194582,
+        "description": "Pause cooldown timers"
+      },
+      {
+        "className": "BuffRandomBuff",
+        "buffMapKey": "random_buff",
+        "sourceLine": 194703,
+        "description": "Apply random buff from pool"
+      },
+      {
+        "className": "BuffRandomSkillTrigger",
+        "buffMapKey": "random_skill_trigger",
+        "sourceLine": 194768,
+        "description": "Trigger random skill"
+      },
+      {
+        "className": "BuffRecoverPower",
+        "buffMapKey": "recover_power",
+        "sourceLine": 194893,
+        "description": "Recover energy/power"
+      },
+      {
+        "className": "BuffResetCd",
+        "buffMapKey": "reset_cd",
+        "sourceLine": 195054,
+        "description": "Reset skill cooldowns"
+      },
+      {
+        "className": "BuffSkillParse",
+        "buffMapKey": "parse_skill",
+        "sourceLine": 195535,
+        "description": "Parse and execute skill"
+      },
+      {
+        "className": "BuffSound",
+        "buffMapKey": "sound",
+        "sourceLine": 195975,
+        "description": "Play sound effect"
+      },
+      {
+        "className": "BuffSpeedRandom",
+        "buffMapKey": "speed_random_buff",
+        "sourceLine": 196056,
+        "description": "Random speed modification"
+      },
+      {
+        "className": "BuffSpeedTrigger",
+        "buffMapKey": "speed_trigger",
+        "sourceLine": 196105,
+        "description": "Speed-based trigger mechanic"
+      },
+      {
+        "className": "BuffThrowHit",
+        "buffMapKey": "throw_hit",
+        "sourceLine": 196264,
+        "description": "Throw/knockback hit effect"
+      }
+    ]
+  },
+  "completeBuffMapKeys": [
+    "action", "add_buff_by_condition", "add_buff_by_multiplying_power",
+    "addbuff_to_target", "addbuff_trigger", "attack_add", "attrib",
+    "attrib_condition", "attrib_continue", "attrib_convert", "ban_act",
+    "ban_skill", "bleed", "block", "bound", "break_shield", "call_spirit",
+    "call_unit", "check", "clear", "copy_unit", "current_hp", "defer_damage",
+    "delaydamage", "direct_kill", "dizz", "dotdamage", "double_hit_num",
+    "double_skill", "double_trigger", "extra_damage", "fragile_effect",
+    "frozen", "giantslayer", "hpchange_trigger", "hp_alter", "hp_hurt",
+    "hp_trigger", "ignore_buff", "ignore_copy", "immune_death", "invincible",
+    "not_controll", "not_get_damage", "parse_skill", "pause_cd", "pet_convert",
+    "random_buff", "random_skill_trigger", "record_damage", "recover_power",
+    "reduce_heal", "remake", "reset_cd", "sharedamage", "shield",
+    "skill_bufftime_add", "skill_counter", "skill_damage_add", "skill_effect",
+    "skill_real_damage", "skill_return", "skill_value", "sound",
+    "special_extra_bullet_num", "speed_random_buff", "speed_trigger",
+    "statetrigger", "taunt", "throw_hit", "time_reversal",
+    "total_damage_trigger", "trap", "triger_by_uType", "trigger_bullet",
+    "trigger_by_damage", "trigger_by_skill_param", "unit_call_damage_add",
+    "use_skill_add", "vampire"
+  ],
+  "totalBuffMapEntries": 80,
+  "totalBuffGroupTypes": 46
+}

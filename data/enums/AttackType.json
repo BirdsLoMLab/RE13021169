@@ -1,0 +1,14 @@
+{
+  "name": "AttackType",
+  "sourceLine": 278623,
+  "values": {
+    "Miss": 0,
+    "Normal": 1,
+    "Cirt": 2
+  },
+  "reverseMap": {
+    "0": "Miss",
+    "1": "Normal",
+    "2": "Cirt"
+  }
+}

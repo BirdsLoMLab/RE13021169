@@ -1,0 +1,60 @@
+{
+  "name": "SkillHurt",
+  "sourceLine": 322967,
+  "description": "Calculates skill damage. Uses skill_dam_extra as the damage multiplier and skill_resist as the base resistance. NOTE: pierce/block (calArmorAndBlock) is called with double_hit_def as the attribute key instead of skill_resist — this may be a bug or intentional design.",
+  "parameters": {
+    "attacker": "Unit performing the skill attack",
+    "defender": "Unit receiving the skill attack",
+    "crit_flag": "1 = no crit, 2 = crit (from checkHit)",
+    "usePierceResist": "boolean, default true — whether to apply pierce/block"
+  },
+  "attributes_used": {
+    "attacker": ["att", "crit_dam", "skill_dam_extra"],
+    "defender": ["def", "def_coe", "crit_def", "skill_resist", "double_hit_def"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get base stats",
+      "formula": "ATK = attacker.att, DEF = defender.def, DEF_COE = defender.def_coe"
+    },
+    {
+      "step": 2,
+      "description": "Calculate base damage with defense coefficient",
+      "formula": "baseDmg = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1)"
+    },
+    {
+      "step": 3,
+      "description": "Get skill resistance value",
+      "formula": "resistance = defender.skill_resist"
+    },
+    {
+      "step": 4,
+      "description": "Apply pierce/block if enabled (uses double_hit_def attribute key for up_limit lookup)",
+      "formula": "if (usePierceResist): resistance = calArmorAndBlock(defender, attacker, skill_resist, i.double_hit_def)",
+      "note": "BUG/QUIRK: The attribute key passed is double_hit_def, not skill_resist. This means the up_limit cap is read from double_hit_def's config, and pierce/block probability triggers are based on the same armor_pen/block stats."
+    },
+    {
+      "step": 5,
+      "description": "Apply skill multiplier and resistance",
+      "formula": "dmg = roundInt(baseDmg * skill_dam_extra) * round(1 - resistance), dmg = roundInt(dmg)"
+    },
+    {
+      "step": 6,
+      "description": "Apply calHurt (DMG RES + PvE bonuses)",
+      "formula": "dmg = calHurt(dmg, defender, attacker)"
+    },
+    {
+      "step": 7,
+      "description": "Apply critical damage if applicable",
+      "formula": "if (crit_flag != 1): dmg = roundInt(dmg * max(1.5, round(crit_dam / crit_def)))",
+      "note": "crit_def has floor of 0.5 (50%)"
+    },
+    {
+      "step": 8,
+      "description": "Floor at 1",
+      "formula": "dmg = max(1, dmg)"
+    }
+  ],
+  "simplified_formula": "max(1, calHurt(roundInt(max(roundInt(ATK - DEF*(1+DEF_COE)), 1) * skill_dam_extra * round(1 - pierce_block(skill_resist, key=double_hit_def))), defender, attacker) * crit_multiplier)"
+}

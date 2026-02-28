@@ -1,0 +1,20 @@
+{
+  "name": "EPvpShareType",
+  "sourceLine": 206831,
+  "values": {
+    "default": 0,
+    "farmBattle": 1,
+    "roleSolo": 2,
+    "crossPvp": 3,
+    "parkingBattle": 4,
+    "slaveBattle": 5
+  },
+  "reverseMap": {
+    "0": "default",
+    "1": "farmBattle",
+    "2": "roleSolo",
+    "3": "crossPvp",
+    "4": "parkingBattle",
+    "5": "slaveBattle"
+  }
+}

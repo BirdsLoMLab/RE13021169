@@ -1,0 +1,27 @@
+{
+  "className": "ConfigLeague_gve_chapter_rank",
+  "tableName": "League_gve_chapter_rank",
+  "sourceLine": 241739,
+  "mainKey": "rank_damage",
+  "indexedKeys": {
+    "rank_damage": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "rank_damage",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward_rank",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "className": "BuffExtraDamage",
+  "sourceFile": "BuffExtraDamage.ts",
+  "sourceLine": 193971,
+  "buffMapKey": "extra_damage",
+  "description": "Passive buff that multiplies outgoing damage. Applied after base damage calculation in BuffBleed and BuffSkillValue pipelines. Supports flat percentage bonus, HP-loss scaling, and fixed-HP-loss scaling.",
+  "configParams": {
+    "param1": {
+      "field": "_calType",
+      "description": "Calculation type (0-2). Determines how the damage multiplier is computed."
+    },
+    "param2": {
+      "field": "_activeType",
+      "description": "Activation filter. 0 = always active. 1 = only active for skills in _skillList."
+    },
+    "param5": {
+      "field": "_skillList",
+      "description": "Array of skill IDs. If _activeType == 1, buff only applies to these skills.",
+      "default": []
+    }
+  },
+  "skillPar": "Base multiplier coefficient for damage scaling",
+  "calTypes": {
+    "type_0": {
+      "name": "Flat Percentage Bonus",
+      "formula": "finalDamage = round(damage * (1 + skillPar))",
+      "description": "Simple multiplicative damage bonus"
+    },
+    "type_1": {
+      "name": "HP Loss Scaling (Current HP)",
+      "formula": "hpLostRatio = round((maxHp - currentHp) / maxHp); finalDamage = round(damage * (1 + hpLostRatio * skillPar))",
+      "description": "More damage the more HP the owner has lost. Uses actual current HP.",
+      "attributes_used": ["hp (owner max)", "currentHp (owner)"]
+    },
+    "type_2": {
+      "name": "HP Loss Scaling (Fixed HP via CURRENT_HP buff)",
+      "formula": "fixedHp = currentHp; if CURRENT_HP buff exists: fixedHp = round(CURRENT_HP.getFixHp() * maxHp); hpLostRatio = round((maxHp - fixedHp) / maxHp); finalDamage = round(damage * (1 + hpLostRatio * skillPar))",
+      "description": "Same as type 1 but uses the CURRENT_HP buff's fixed HP value instead of actual current HP. Allows decoupled HP tracking.",
+      "attributes_used": ["hp (owner max)", "currentHp (owner)"],
+      "interactions": ["CURRENT_HP buff"]
+    }
+  },
+  "calledBy": [
+    "BuffBleed (all types except type 1)",
+    "BuffSkillValue (skill_damage_path step 13)",
+    "BuffSkillRealDamage (for real damage calculations)"
+  ],
+  "attributesUsed": ["hp", "currentHp"]
+}

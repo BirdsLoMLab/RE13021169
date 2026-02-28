@@ -1,0 +1,20 @@
+{
+  "className": "ConfigWordFilter",
+  "tableName": "WordFilter",
+  "sourceLine": 268665,
+  "mainKey": "content",
+  "indexedKeys": {
+    "content": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 1,
+  "fields": [
+    {
+      "name": "content",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

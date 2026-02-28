@@ -1,0 +1,20 @@
+{
+  "name": "ObjType",
+  "sourceLine": 162819,
+  "values": {
+    "Player": 0,
+    "Enemy": 1,
+    "Prop": 2,
+    "Bullet": 3,
+    "Wall": 4,
+    "Boss": 5
+  },
+  "reverseMap": {
+    "0": "Player",
+    "1": "Enemy",
+    "2": "Prop",
+    "3": "Bullet",
+    "4": "Wall",
+    "5": "Boss"
+  }
+}

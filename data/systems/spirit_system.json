@@ -1,0 +1,223 @@
+{
+  "system": "Spirit / Guardian Spirit System",
+  "description": "Guardian spirits are summoned combat entities with their own HP/ATK scaling, skill sets, affix-based bonus systems, crafting, and a dedicated damage formula (spiritNormalHit)",
+  "config_tables": {
+    "ConfigSpirit": {
+      "source_line": 262760,
+      "table_name": "Spirit",
+      "main_key": "spirit_id",
+      "field_count": 14,
+      "key_fields": {
+        "spirit_id": "Spirit unique ID",
+        "mame": "Display name (note: typo in original - 'mame' not 'name')",
+        "quality": "Quality/rarity tier",
+        "spirit_part_amount": "Part/fragment amount array for assembly",
+        "unit": "Unit config ID for battle model",
+        "path": "Model asset path",
+        "model_scale": "Model scale (primary)",
+        "model_scale2": "Model scale (secondary)",
+        "icon": "Icon asset ID",
+        "icon_move": "Animated icon array",
+        "icon_small": "Small icon asset ID",
+        "icon_group": "Icon group ID",
+        "bullet": "Projectile/bullet type",
+        "order": "Display sort order"
+      }
+    },
+    "ConfigSpirit_level": {
+      "source_line": 262673,
+      "table_name": "Spirit_level",
+      "main_key": "spirit_id",
+      "indexed_keys": ["spirit_id", "spirit_level"],
+      "field_count": 10,
+      "key_fields": {
+        "spirit_id": "Spirit ID",
+        "spirit_level": "Spirit level",
+        "expend": "Level-up cost array",
+        "spirit_attr": "Spirit's own attribute bonuses array [[attr_id, value], ...]",
+        "character_attr": "Player attribute bonuses array",
+        "slot_amount": "Number of affix slots available",
+        "skill1": "Primary skill set array [[skill_id, skill_lv], ...]",
+        "skill2": "Secondary skill set array",
+        "att_dam": "Attack damage ratios array [[type, ratio], ...] for spiritNormalHit",
+        "power": "Combat power"
+      }
+    },
+    "ConfigSpirit_craft": {
+      "source_line": 262467,
+      "table_name": "Spirit_craft",
+      "main_key": "id",
+      "field_count": 6,
+      "key_fields": {
+        "id": "Craft recipe ID",
+        "quality": "Recipe quality",
+        "craft_type": "Crafting type",
+        "spirit_target_id": "Target spirit IDs array",
+        "main_craft_material": "Primary material requirements",
+        "minor_craft_material": "Secondary material requirements"
+      }
+    },
+    "ConfigSpirit_craft_target": {
+      "source_line": 262420,
+      "table_name": "Spirit_craft_target",
+      "main_key": "spirit_level",
+      "field_count": 3,
+      "key_fields": {
+        "spirit_level": "Spirit level requirement",
+        "spirit_group": "Group of available targets at this level",
+        "material_level": "Material level requirement"
+      }
+    },
+    "ConfigSpirit_affix_group": {
+      "source_line": 262266,
+      "table_name": "Spirit_affix_group",
+      "main_key": "affix_group",
+      "field_count": 4,
+      "key_fields": {
+        "affix_group": "Affix group ID",
+        "name": "Group display name",
+        "icon": "Group icon",
+        "icon_group": "Icon group ID"
+      }
+    },
+    "ConfigSpirit_attrbonus_affix": {
+      "source_line": 262317,
+      "table_name": "Spirit_attrbonus_affix",
+      "main_key": "affix_id",
+      "field_count": 6,
+      "key_fields": {
+        "affix_id": "Affix unique ID",
+        "affix_group": "Which group this affix belongs to",
+        "quality": "Affix quality/rarity",
+        "attr_id": "Attribute ID this affix modifies",
+        "value": "Value range array (min/max or tiers)",
+        "power_rate": "Power contribution rate"
+      }
+    },
+    "ConfigSpirit_attrbonus_slot": {
+      "source_line": 262379,
+      "table_name": "Spirit_attrbonus_slot",
+      "main_key": "slot_id",
+      "field_count": 2,
+      "key_fields": {
+        "slot_id": "Slot position ID",
+        "affix_group": "Which affix group this slot draws from"
+      }
+    },
+    "ConfigSpirit_draw": {
+      "source_line": 262583,
+      "table_name": "Spirit_draw",
+      "main_key": "id",
+      "field_count": 11,
+      "key_fields": {
+        "id": "Draw/gacha ID",
+        "name": "Banner name",
+        "type": "Draw type",
+        "banner": "Banner asset",
+        "normal": "Normal pool flag",
+        "must": "Guaranteed pull thresholds",
+        "cost": "Pull cost array",
+        "free_chance_num": "Number of free pulls",
+        "prob": "Probability distribution array"
+      }
+    },
+    "ConfigSpirit_draw_prob": {
+      "description": "Probability tables for spirit drawing/gacha"
+    }
+  },
+  "battle_loading": {
+    "function": "setPlayerSpirit",
+    "game_script_lines": {
+      "server_data_version": "187576-187578",
+      "client_local_version": "199122-199124"
+    },
+    "server_version": {
+      "code": "t.setPlayerSpirit = function(t, e) { t.spirit = e }",
+      "description": "Spirit data is stored as [spirit_id, spirit_level] array on the player list. The spirit info comes from ext data keys 12 and 13."
+    },
+    "client_version": {
+      "code": "e.setPlayerSpirit = function(e) { var t = IS(B).getCurSpirit(); null != t && (e.spirit = [t.config_id, t.level]) }",
+      "description": "Gets current spirit from GuardianSpiritDataCache and stores [config_id, level]"
+    },
+    "ext_key_mapping": {
+      "12": "spirit[0] = spirit_id",
+      "13": "spirit[1] = spirit_level"
+    }
+  },
+  "combat_mechanics": {
+    "spirit_damage_function": {
+      "function_name": "spiritNormalHit",
+      "code_location": "Lines 322981-323007",
+      "description": "Spirit damage calculation with two branches: Spirit-vs-Spirit and Spirit-vs-Normal"
+    },
+    "spirit_vs_spirit": {
+      "code_location": "Lines 322984-322988",
+      "formula": "damage = round(ATT * (spirit_dam_add - spirit_dam_def + 1) * (1 - spirit_dam_def_final))",
+      "variables": {
+        "ATT": "Spirit's ATK stat",
+        "spirit_dam_add": "Spirit's damage addition",
+        "spirit_dam_def": "Target's spirit damage defense",
+        "spirit_dam_def_final": "Target's final spirit damage defense (percentage)"
+      }
+    },
+    "spirit_vs_normal": {
+      "code_location": "Lines 322989-323004",
+      "formula": "Uses att_dam ratios from ConfigSpirit_level to scale player's damage types",
+      "process": [
+        "1. Look up ConfigSpirit_level by spiritInfo[0] (spirit_id) and spiritInfo[1] (spirit_level)",
+        "2. Parse att_dam array into ratio map: { type_id: ratio }",
+        "3. Calculate base player damages (noCrit):",
+        "   h = normalHurt(parent, target, 1, false) * att_dam[1] / 10000",
+        "   M = normalDoubleHurt(parent, target, 1, false) * att_dam[2] / 10000",
+        "   I = normalCounterHurt(parent, target, 1, false) * att_dam[3] / 10000",
+        "   x = skillDamageHurt(parent, target, 1, false) * att_dam[4] / 10000",
+        "4. Sum: damage = round(h + M + I + x)"
+      ],
+      "att_dam_keys": {
+        "1": "Normal hit ratio (/ 10000)",
+        "2": "Double hit / combo ratio (/ 10000)",
+        "3": "Counter hit ratio (/ 10000)",
+        "4": "Skill damage ratio (/ 10000)"
+      }
+    },
+    "spirit_unit_creation": {
+      "code_location": "Lines 193065-193094",
+      "process": [
+        "1. Create unit with base attributes from unit config",
+        "2. Apply spirit_attr from ConfigSpirit_level:",
+        "   For each [attr_id, value] in spirit_attr: set attrib baseValue",
+        "3. Apply parent attribute inheritance if _attribs specified",
+        "4. Calculate HP: base_hp + round(spirit_hp * (1 + spirit_hp_add))",
+        "5. Calculate ATK: base_att + round(spirit_att * (1 + spirit_att_add))",
+        "6. Load skill1 from ConfigSpirit_level as active skills",
+        "7. Store spiritInfo = [spirit_id, spirit_level] on unit data"
+      ]
+    },
+    "key_attributes": [
+      {"name": "spirit_dam_add", "owner": "Spirit", "description": "Spirit's base damage addition value"},
+      {"name": "spirit_dam_def", "owner": "Target", "description": "Target's defense against spirit damage"},
+      {"name": "spirit_dam_def_final", "owner": "Target", "description": "Target's final spirit damage reduction (percentage)"},
+      {"name": "spirit_hp", "owner": "Spirit", "description": "Spirit HP bonus added to base"},
+      {"name": "spirit_hp_add", "owner": "Spirit", "description": "Spirit HP percentage multiplier"},
+      {"name": "spirit_att", "owner": "Spirit", "description": "Spirit ATK bonus added to base"},
+      {"name": "spirit_att_add", "owner": "Spirit", "description": "Spirit ATK percentage multiplier"},
+      {"name": "spirit_att_dam", "owner": "Spirit", "description": "Spirit attack damage attribute"}
+    ]
+  },
+  "affix_system": {
+    "description": "Spirits have affix slots that provide bonus attributes. Slots are unlocked by spirit level (slot_amount).",
+    "slot_config": "ConfigSpirit_attrbonus_slot: maps slot_id to affix_group",
+    "affix_config": "ConfigSpirit_attrbonus_affix: defines per-affix stats (attr_id, value range, quality, power_rate)",
+    "group_config": "ConfigSpirit_affix_group: groups affixes by category (name, icon)"
+  },
+  "crafting_system": {
+    "description": "Spirits can be crafted using materials. ConfigSpirit_craft defines recipes, ConfigSpirit_craft_target defines level-gated target options.",
+    "craft_config": "ConfigSpirit_craft",
+    "target_config": "ConfigSpirit_craft_target"
+  },
+  "draw_gacha_system": {
+    "description": "Spirits can be obtained through a gacha/draw system with banners, probabilities, and guaranteed pulls.",
+    "draw_config": "ConfigSpirit_draw",
+    "prob_config": "ConfigSpirit_draw_prob"
+  }
+}

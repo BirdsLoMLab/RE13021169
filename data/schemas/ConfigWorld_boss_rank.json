@@ -1,0 +1,28 @@
+{
+  "className": "ConfigWorld_boss_rank",
+  "tableName": "World_boss_rank",
+  "sourceLine": 268936,
+  "mainKey": "rank",
+  "indexedKeys": {
+    "rank": 0,
+    "reward_rank": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "rank",
+      "index": 0,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward_rank",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

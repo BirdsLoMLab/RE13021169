@@ -1,0 +1,123 @@
+{
+  "name": "HP Steal Functions",
+  "sourceLine": 322883,
+  "description": "Three related functions for HP steal (lifesteal) mechanics: normal attack HP steal, percentage-based HP steal, and skill HP steal. Also includes the trigger check for percentage-based HP steal.",
+  "functions": {
+    "normailHpsteal": {
+      "sourceLine": 322883,
+      "description": "Calculates HP stolen from normal attack damage",
+      "parameters": {
+        "attacker": "Unit that dealt the damage",
+        "defender": "Unit that received the damage",
+        "damage": "The damage dealt"
+      },
+      "attributes_used": {
+        "attacker": ["att_hpsteal"],
+        "defender": ["att_hpsteal_def"]
+      },
+      "formula_steps": [
+        {
+          "step": 1,
+          "description": "Calculate effective steal rate",
+          "formula": "rate = roundInt(att_hpsteal - att_hpsteal_def)"
+        },
+        {
+          "step": 2,
+          "description": "Floor at 0",
+          "formula": "rate = max(0, rate)"
+        },
+        {
+          "step": 3,
+          "description": "Apply to damage",
+          "formula": "heal = roundInt(damage * rate)"
+        }
+      ],
+      "simplified_formula": "roundInt(damage * max(0, roundInt(att_hpsteal - att_hpsteal_def)))"
+    },
+    "normailHpsteal1": {
+      "sourceLine": 322886,
+      "description": "Calculates percentage-based HP steal (based on max HP, not damage). Triggered by checkNormailHpsteal1.",
+      "parameters": {
+        "unit": "The unit performing the HP steal (steals from own max HP pool)"
+      },
+      "attributes_used": {
+        "unit": ["hpsteal_amount", "ignore_hpsteal", "hp"]
+      },
+      "formula_steps": [
+        {
+          "step": 1,
+          "description": "Get steal amount and ignore factor",
+          "formula": "amount = hpsteal_amount, ignore = ignore_hpsteal"
+        },
+        {
+          "step": 2,
+          "description": "Calculate effective rate",
+          "formula": "effective = round(amount * max(0, round(1 - ignore)))"
+        },
+        {
+          "step": 3,
+          "description": "Apply to max HP",
+          "formula": "heal = roundInt(maxHP * effective)",
+          "note": "maxHP is retrieved via getAttribByInt(hp)"
+        }
+      ],
+      "simplified_formula": "roundInt(maxHP * round(hpsteal_amount * max(0, round(1 - ignore_hpsteal))))"
+    },
+    "skillHpsteal": {
+      "sourceLine": 322892,
+      "description": "Calculates HP stolen from skill damage",
+      "parameters": {
+        "attacker": "Unit that dealt the skill damage",
+        "defender": "Unit that received the skill damage",
+        "damage": "The skill damage dealt"
+      },
+      "attributes_used": {
+        "attacker": ["skill_hpsteal"],
+        "defender": ["skill_hpsteal_def"]
+      },
+      "formula_steps": [
+        {
+          "step": 1,
+          "description": "Calculate effective steal rate",
+          "formula": "rate = max(0, round(skill_hpsteal - skill_hpsteal_def))"
+        },
+        {
+          "step": 2,
+          "description": "Apply to damage",
+          "formula": "heal = roundInt(damage * rate)"
+        }
+      ],
+      "simplified_formula": "roundInt(damage * max(0, round(skill_hpsteal - skill_hpsteal_def)))"
+    },
+    "checkNormailHpsteal1": {
+      "sourceLine": 322962,
+      "description": "Checks if the percentage-based HP steal (normailHpsteal1) triggers",
+      "parameters": {
+        "attacker": "Unit that may trigger HP steal",
+        "defender": "Opposing unit"
+      },
+      "attributes_used": {
+        "attacker": ["hpsteal_rate"],
+        "defender": ["hpsteal_res"]
+      },
+      "formula_steps": [
+        {
+          "step": 1,
+          "description": "Calculate effective trigger rate",
+          "formula": "rate = roundInt(max(0, 10000 * round(hpsteal_rate - hpsteal_res)))"
+        },
+        {
+          "step": 2,
+          "description": "Early exit if no chance",
+          "formula": "if rate <= 0: return false"
+        },
+        {
+          "step": 3,
+          "description": "Roll and compare",
+          "formula": "roll = randomInt(0, 10000); return (roll <= rate)"
+        }
+      ],
+      "simplified_formula": "triggers if randomInt(0, 10000) <= roundInt(max(0, 10000 * round(hpsteal_rate - hpsteal_res)))"
+    }
+  }
+}

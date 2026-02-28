@@ -1,0 +1,40 @@
+{
+  "name": "UnitConfig",
+  "sourceLine": 278642,
+  "values": {
+    "ANIMATOR_IDLE": "idle",
+    "ANIMATOR_MOVE": "run",
+    "ANIMATOR_HIT": "hit",
+    "ANIMATOR_BORN": "born",
+    "ANIMATOR_WIN": "win",
+    "ANIMATOR_STUN": "stun",
+    "ANIMATOR_DEAD": "dead",
+    "ANIMATOR_JIFEI": "jifei",
+    "ANIMATOR_CHUXIAN": "chuxian",
+    "HATE_WARRING_CAST": 1,
+    "HATE_WARRING_TARGET": 2,
+    "HATE_HURT_CAST": 4,
+    "HATE_HURT_TARGET": 8,
+    "HATE_SKILL_CAST": 16,
+    "HATE_SKILL_TARGET": 32,
+    "HATE_WARRING_EFFECT": 64
+  },
+  "reverseMap": {
+    "idle": "ANIMATOR_IDLE",
+    "run": "ANIMATOR_MOVE",
+    "hit": "ANIMATOR_HIT",
+    "born": "ANIMATOR_BORN",
+    "win": "ANIMATOR_WIN",
+    "stun": "ANIMATOR_STUN",
+    "dead": "ANIMATOR_DEAD",
+    "jifei": "ANIMATOR_JIFEI",
+    "chuxian": "ANIMATOR_CHUXIAN",
+    "1": "HATE_WARRING_CAST",
+    "2": "HATE_WARRING_TARGET",
+    "4": "HATE_HURT_CAST",
+    "8": "HATE_HURT_TARGET",
+    "16": "HATE_SKILL_CAST",
+    "32": "HATE_SKILL_TARGET",
+    "64": "HATE_WARRING_EFFECT"
+  }
+}

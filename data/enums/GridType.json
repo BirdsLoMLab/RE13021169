@@ -1,0 +1,20 @@
+{
+  "name": "GridType",
+  "sourceLine": 22504,
+  "values": {
+    "Empty": 0,
+    "Block": 1,
+    "Point": 2,
+    "AddSpeed": 3,
+    "Heal": 4,
+    "Immortal": 5
+  },
+  "reverseMap": {
+    "0": "Empty",
+    "1": "Block",
+    "2": "Point",
+    "3": "AddSpeed",
+    "4": "Heal",
+    "5": "Immortal"
+  }
+}

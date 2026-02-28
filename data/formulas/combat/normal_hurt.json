@@ -1,0 +1,71 @@
+{
+  "name": "normalHurt",
+  "sourceLine": 322756,
+  "description": "Calculates basic attack damage for players, pals, and cannons",
+  "parameters": {
+    "attacker": "Unit performing the attack",
+    "defender": "Unit receiving the attack",
+    "crit_flag": "1 = no crit, 2 = crit (from checkHit)",
+    "usePierceResist": "boolean, default true — whether to apply pierce/block"
+  },
+  "attributes_used": {
+    "attacker": ["att", "crit_dam", "att_dam", "partner_dam", "partner_dam_extra"],
+    "defender": ["def", "def_coe", "crit_def", "att_resist", "partner_resist", "season_cannon_att_def"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get base stats",
+      "formula": "ATK = attacker.att, DEF = defender.def, DEF_COE = defender.def_coe"
+    },
+    {
+      "step": 2,
+      "description": "Calculate base damage with defense coefficient",
+      "formula": "baseDmg = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1)"
+    },
+    {
+      "step": 3,
+      "description": "Get multiplier and resistance based on unit type",
+      "branches": {
+        "Partner (Pal)": {
+          "ATK": "parent.att (inherits player ATK)",
+          "multiplier": "partner_dam * parent.partner_dam_extra",
+          "resistance": "calSuppressAndInspire(defender.partner_resist)"
+        },
+        "Gun (Cannon)": {
+          "multiplier": "partner_dam (cannon damage)",
+          "resistance": "calSuppressAndInspire(defender.season_cannon_att_def)"
+        },
+        "Player": {
+          "multiplier": "att_dam (basic ATK multiplier)",
+          "resistance": "calArmorAndBlock(defender.att_resist)"
+        }
+      }
+    },
+    {
+      "step": 4,
+      "description": "Apply multiplier and resistance",
+      "formula": "dmg = roundInt(baseDmg * round(multiplier * round(1 - resistance)))"
+    },
+    {
+      "step": 5,
+      "description": "Apply calHurt (DMG RES + PvE bonuses)",
+      "formula": "dmg = calHurt(dmg, defender, attacker)"
+    },
+    {
+      "step": 6,
+      "description": "Apply critical damage if applicable",
+      "formula": "if (crit_flag != 1): dmg = roundInt(dmg * max(1.5, round(crit_dam / crit_def)))",
+      "note": "crit_def has floor of 0.5 (50%)"
+    },
+    {
+      "step": 7,
+      "description": "Floor at 1",
+      "formula": "dmg = max(1, dmg)"
+    }
+  ],
+  "simplified_formula": {
+    "player": "max(1, calHurt(roundInt(max(roundInt(ATK - DEF*(1+DEF_COE)), 1) * round(att_dam * round(1 - pierce_block(att_resist)))), defender, attacker) * crit_multiplier)",
+    "pal": "max(1, calHurt(roundInt(max(roundInt(parentATK - DEF*(1+DEF_COE)), 1) * round(partner_dam * partner_dam_extra * round(1 - suppress_inspire(partner_resist)))), defender, attacker) * crit_multiplier)"
+  }
+}

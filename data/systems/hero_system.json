@@ -1,0 +1,185 @@
+{
+  "system": "Hero / Angel (Guardian Spirit) System",
+  "description": "Angels (Guardian Spirits) are companion units that provide passive stat bonuses, battle skills, and development effects. They are organized into an array formation with typed slots, can be star-upgraded, and summoned via a gacha draw system.",
+  "configTables": {
+    "ConfigAngel": {
+      "sourceLine": 218577,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "description": "Base angel definitions: identity, quality tier, type class, and visual assets.",
+      "fields": {
+        "id": { "type": "number", "description": "Unique angel identifier" },
+        "name": { "type": "string_ref", "description": "Localized angel name" },
+        "quality": { "type": "number", "description": "Rarity tier (e.g. 1=common .. 5=legendary)" },
+        "type": { "type": "number", "description": "Angel type class; maps to Angel_array slot filtering" },
+        "desc": { "type": "string_ref", "description": "Localized description text" },
+        "image": { "type": "number", "description": "Primary portrait asset ID" },
+        "image2": { "type": "number", "description": "Secondary portrait asset ID" },
+        "image3": { "type": "number", "description": "Icon asset ID (used in skill display)" },
+        "open_time": { "type": "optional_array", "description": "Time-gated availability window [start, end]" }
+      }
+    },
+    "ConfigAngel_star": {
+      "sourceLine": 218461,
+      "mainKey": "id",
+      "indexedKeys": ["id", "star"],
+      "fieldCount": 16,
+      "description": "Per-star-level data for each angel. Controls stat bonuses, battle skills unlocked at each star, develop effects, and upgrade costs.",
+      "fields": {
+        "id": { "type": "number", "description": "Angel ID (FK to ConfigAngel)" },
+        "star": { "type": "number", "description": "Star level (1, 2, 3, ...)" },
+        "expend": { "type": "optional_array", "description": "Upgrade cost items [[itemId, count], ...]" },
+        "frame": { "type": "number", "description": "UI frame asset for this star level" },
+        "attr": { "type": "optional_array", "description": "Stat bonuses granted at this star [[attrId, value], ...]" },
+        "skill1_type": { "type": "number", "description": "Skill slot 1 type category (1=active, 2=passive, 3=aura)" },
+        "battle_skill1": { "type": "optional_array", "description": "Skill slot 1 data [[skillId, skillLevel], ...]; references ConfigSkill_level" },
+        "battle_skill1_cost": { "type": "number", "description": "Energy cost to cast skill 1 in battle" },
+        "skill2_type": { "type": "number", "description": "Skill slot 2 type category" },
+        "battle_skill2": { "type": "number", "description": "Skill slot 2 ID; references ConfigAngel_skill" },
+        "battle_skill2_cost": { "type": "number", "description": "Energy cost to cast skill 2 in battle" },
+        "develop_effect": { "type": "optional_array", "description": "Development passive effect data" },
+        "develop_desc": { "type": "string_ref", "description": "Development effect description template" },
+        "develop_desc_num": { "type": "optional_array", "description": "Numeric parameters for develop_desc formatting" },
+        "develop_cost": { "type": "number", "description": "Energy cost for the development slot in formation" },
+        "power": { "type": "number", "description": "Combat power contribution at this star level" }
+      }
+    },
+    "ConfigAngel_skill": {
+      "sourceLine": 218397,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "description": "Angel-specific skill definitions. Slot 2 skills are looked up here; slot 1 skills use the standard ConfigSkill/ConfigSkill_level system.",
+      "fields": {
+        "id": { "type": "number", "description": "Unique angel skill ID" },
+        "skill_name": { "type": "string_ref", "description": "Localized skill name" },
+        "skill_effect": { "type": "optional_array", "description": "Skill effect IDs triggered by this skill" },
+        "skillPar": { "type": "optional_array", "description": "Skill parameters (damage coefficients, etc.)" },
+        "skill_dec": { "type": "string_ref", "description": "Skill description template" },
+        "desc_parm": { "type": "optional_array", "description": "Numeric parameters for desc formatting" }
+      }
+    },
+    "ConfigAngel_develop": {
+      "sourceLine": 218064,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "description": "Development effect macro definitions. Maps IDs to server-side macro types.",
+      "fields": {
+        "id": { "type": "number", "description": "Development effect ID" },
+        "serv_macro": { "type": "number", "description": "Server macro type identifier" },
+        "desc": { "type": "string_ref", "description": "Description of the development effect" }
+      }
+    },
+    "ConfigAngel_array": {
+      "sourceLine": 218018,
+      "mainKey": "type",
+      "indexedKeys": ["type", "pos"],
+      "fieldCount": 3,
+      "description": "Angel formation layout. Defines which angel types can be placed in which slots.",
+      "fields": {
+        "type": { "type": "number", "description": "Array/formation type" },
+        "pos": { "type": "number", "description": "Slot position within the formation" },
+        "pos_type": { "type": "number", "description": "Angel type allowed in this slot" }
+      }
+    },
+    "ConfigAngel_draw": {
+      "sourceLine": 218306,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "description": "Standard (permanent) angel gacha banner definitions.",
+      "fields": {
+        "id": { "type": "number", "description": "Banner ID" },
+        "name": { "type": "string_ref", "description": "Banner display name" },
+        "type": { "type": "number", "description": "Banner type classification" },
+        "banner": { "type": "number", "description": "Banner image asset ID" },
+        "normal": { "type": "number", "description": "Normal pool ID for non-pity pulls" },
+        "must": { "type": "optional_array", "description": "Pity / guaranteed pull thresholds" },
+        "open_time": { "type": "optional_array", "description": "Availability window" },
+        "cost": { "type": "optional_array", "description": "Single pull cost [[currencyId, amount]]" },
+        "cost2": { "type": "optional_array", "description": "Multi-pull cost (e.g. 10x pull)" },
+        "prob": { "type": "optional_array", "description": "Probability weights per quality tier" },
+        "decs": { "type": "string_ref", "description": "Banner description text" }
+      }
+    },
+    "ConfigAngel_draw_time_limit": {
+      "sourceLine": 218177,
+      "mainKey": "id",
+      "fieldCount": 18,
+      "description": "Limited-time angel gacha banner definitions with rate-up mechanics.",
+      "fields": {
+        "id": { "type": "number", "description": "Banner ID" },
+        "act_type": { "type": "number", "description": "Activity type this banner belongs to" },
+        "group": { "type": "number", "description": "Banner group for UI categorization" },
+        "name": { "type": "string_ref", "description": "Banner display name" },
+        "name_color": { "type": "optional_array", "description": "Name color/styling data" },
+        "banner": { "type": "number", "description": "Banner image asset" },
+        "normal": { "type": "number", "description": "Normal pool ID" },
+        "normal2": { "type": "number", "description": "Secondary pool ID" },
+        "must": { "type": "optional_array", "description": "Pity thresholds" },
+        "up_reward": { "type": "optional_array", "description": "Rate-up featured angel rewards" },
+        "special_rewards_times": { "type": "number", "description": "Special reward trigger pull count" },
+        "special_rewards_pro": { "type": "optional_array", "description": "Special reward probability" },
+        "special_rewards": { "type": "optional_array", "description": "Special reward items" },
+        "cost": { "type": "optional_array", "description": "Pull cost" },
+        "prob": { "type": "optional_array", "description": "Base probability weights" },
+        "prob_up": { "type": "optional_array", "description": "Rate-up probability weights" },
+        "decs": { "type": "string_ref", "description": "Banner description" },
+        "is_up": { "type": "number", "description": "Whether this banner has rate-up active (0/1)" }
+      }
+    },
+    "ConfigAngel_draw_package": {
+      "sourceLine": 218110,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "description": "Angel draw milestone/package rewards granted after N pulls.",
+      "fields": {
+        "id": { "type": "number", "description": "Package reward ID" },
+        "premise": { "type": "number", "description": "Pull count threshold to unlock this reward" },
+        "type": { "type": "number", "description": "Package type" },
+        "act_group": { "type": "number", "description": "Activity group this belongs to" },
+        "bundle_id": { "type": "number", "description": "Bundle asset ID" },
+        "reward": { "type": "optional_array", "description": "Reward items [[itemId, count], ...]" },
+        "desc": { "type": "number", "description": "Description reference" }
+      }
+    }
+  },
+  "mechanics": {
+    "formation": {
+      "description": "Angels are placed into a formation (Angel_array) with typed slots. Each formation type has multiple positions, and each position only accepts a specific angel type.",
+      "slots": {
+        "main_slots": "Positions 1-3 are main formation slots displayed in battle UI",
+        "develop_slots": "Positions 1-4 are development/support slots providing passive bonuses"
+      }
+    },
+    "star_upgrade": {
+      "description": "Each angel can be upgraded through star levels. Higher stars unlock better stats, stronger skills, and development effects.",
+      "skill_slots": {
+        "slot1": "Battle skill 1 -- references ConfigSkill + ConfigSkill_level; type indicates active/passive/aura. Cost deducted from shared energy pool.",
+        "slot2": "Battle skill 2 -- references ConfigAngel_skill; a simpler skill with its own cost."
+      },
+      "stat_bonuses": "The 'attr' field at each star provides attribute bonuses (e.g. [[attrId, value]]) applied to the player's combat stats."
+    },
+    "battle_integration": {
+      "description": "In battle, main-slot angels contribute their battle_skill1 and battle_skill2. Skill 1 may be a standard battle skill looked up via ConfigSkill_level (with skillCoefficient for damage scaling). Skill 2 is an angel-specific skill from ConfigAngel_skill with its own skill_effect chain.",
+      "setSkillEffect_code": "t.setSkillEffect = function(t, e) { var i = configAngel_skill.getDataByKey(e); null != i && (t.skillEffectList.push(i.skill_effect), t.skillDamList.push(i.skillPar)) }",
+      "setSkillEffect_line": 187518,
+      "energy_system": "All angel skills share a single energy pool. Each skill has a cost (battle_skill1_cost, battle_skill2_cost). The total formation cost is displayed in the UI.",
+      "develop_passive": "Development slot angels apply their develop_effect as a passive bonus during battle (e.g. stat multipliers, damage bonuses)."
+    },
+    "passive_skill_integration": {
+      "description": "Angel passive skills are loaded during battle setup via setPlayerPassiveSkill (line 187523). For each passive_skill entry, the system checks chapter_type compatibility, then adds the skill to the battle unit. If the angel enhances a specific skill (matching l[0]), it pushes additional skillEffect2 and skillDam entries plus up to 2 extra angel skill effects.",
+      "setPlayerPassiveSkill_line": 187523,
+      "chapter_type_filtering": "checkPvpChapterTypeOk (line 187535) filters skills by chapter type. if_chapter_type=0 means inclusion mode (only listed chapters), non-zero means exclusion mode (all except listed)."
+    },
+    "gacha_system": {
+      "description": "Angels are obtained through a draw/gacha system with permanent banners (ConfigAngel_draw) and limited-time banners (ConfigAngel_draw_time_limit).",
+      "pity_system": "The 'must' field defines guaranteed pull thresholds. After N pulls without a high-quality result, a guaranteed drop occurs.",
+      "rate_up": "Limited banners can have rate-up (is_up=1) with prob_up overriding base probabilities for featured angels.",
+      "milestone_rewards": "ConfigAngel_draw_package provides bonus rewards at pull count thresholds (premise field)."
+    }
+  },
+  "relatedSystems": [
+    "ConfigSkill / ConfigSkill_level -- Skill 1 references the standard skill system",
+    "ConfigBuff -- Angel skills may apply buffs",
+    "ConfigSkilleffcet -- Angel skill effects chain through the standard effect system"
+  ]
+}

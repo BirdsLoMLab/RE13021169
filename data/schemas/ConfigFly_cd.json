@@ -1,0 +1,35 @@
+{
+  "className": "ConfigFly_cd",
+  "tableName": "Fly_cd",
+  "sourceLine": 232881,
+  "mainKey": "times",
+  "indexedKeys": {
+    "times": 0,
+    "type": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "times",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "cd",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

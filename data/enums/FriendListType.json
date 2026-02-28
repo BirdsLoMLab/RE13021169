@@ -1,0 +1,16 @@
+{
+  "name": "FriendListType",
+  "sourceLine": 299880,
+  "values": {
+    "FriendList": 1,
+    "FriendRequest": 2,
+    "FriendRecommend": 3,
+    "FriendBlack": 4
+  },
+  "reverseMap": {
+    "1": "FriendList",
+    "2": "FriendRequest",
+    "3": "FriendRecommend",
+    "4": "FriendBlack"
+  }
+}

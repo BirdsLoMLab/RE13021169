@@ -1,0 +1,49 @@
+{
+  "className": "ConfigLeague_solo_hard_chest",
+  "tableName": "League_solo_hard_chest",
+  "sourceLine": 242579,
+  "mainKey": "guild_level",
+  "indexedKeys": {
+    "guild_level": 0,
+    "rare_chest_limit": 2
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "guild_level",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "normal_chest_limit",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "rare_chest_limit",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "normal_chest_reward",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "rare_chest_reward",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

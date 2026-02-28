@@ -1,0 +1,209 @@
+{
+  "className": "ConfigSkill",
+  "tableName": "Skill",
+  "sourceLine": 261531,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": true,
+  "fieldCount": 28,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "chapter_type",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "if_chapter_type",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "autoDis",
+      "index": 5,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "quality",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "buffGroup",
+      "index": 8,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "addSkill",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "releaseTime",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "releaseInterval",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "targetType",
+      "index": 12,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "targetRange",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skillEffect1",
+      "index": 14,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "rangeType",
+      "index": 15,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skillEffect2",
+      "index": 16,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skillPar",
+      "index": 17,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "initialPower",
+      "index": 18,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "maxPower",
+      "index": 19,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "powerRecovery",
+      "index": 20,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "action",
+      "index": 21,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bullet",
+      "index": 22,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "anim",
+      "index": 23,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "if_activity",
+      "index": 24,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "if_season",
+      "index": 25,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "open_time",
+      "index": 26,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "immediate_time",
+      "index": 27,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

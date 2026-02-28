@@ -1,0 +1,13 @@
+{
+  "name": "DeviceLevel",
+  "sourceLine": 272591,
+  "values": {
+    "Low": 1,
+    "Middle": 2,
+    "High": 2
+  },
+  "reverseMap": {
+    "1": "Low",
+    "2": "High"
+  }
+}

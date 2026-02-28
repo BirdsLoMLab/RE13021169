@@ -1,0 +1,16 @@
+{
+  "name": "ActivityState",
+  "sourceLine": 35352,
+  "values": {
+    "Null": 0,
+    "Preview": 1,
+    "Open": 2,
+    "EndShow": 3
+  },
+  "reverseMap": {
+    "0": "Null",
+    "1": "Preview",
+    "2": "Open",
+    "3": "EndShow"
+  }
+}

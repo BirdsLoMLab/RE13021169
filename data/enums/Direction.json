@@ -1,0 +1,16 @@
+{
+  "name": "Direction",
+  "sourceLine": 53887,
+  "values": {
+    "UP": 0,
+    "DOWN": 1,
+    "LEFT": 2,
+    "RIGHT": 3
+  },
+  "reverseMap": {
+    "0": "UP",
+    "1": "DOWN",
+    "2": "LEFT",
+    "3": "RIGHT"
+  }
+}

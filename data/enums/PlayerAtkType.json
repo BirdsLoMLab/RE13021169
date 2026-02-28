@@ -1,0 +1,22 @@
+{
+  "name": "PlayerAtkType",
+  "sourceLine": 162828,
+  "values": {
+    "None": 1,
+    "Warrior": 2,
+    "Warrior_1": 3,
+    "Archer": 4,
+    "Archer_1": 5,
+    "Master": 6,
+    "Master_1": 7
+  },
+  "reverseMap": {
+    "1": "None",
+    "2": "Warrior",
+    "3": "Warrior_1",
+    "4": "Archer",
+    "5": "Archer_1",
+    "6": "Master",
+    "7": "Master_1"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "EffectTriggerType",
+  "sourceLine": 278638,
+  "values": {
+    "NORMAL_ATTACK": 0,
+    "HIT": 1,
+    "COUNTER": 2,
+    "DOUBLE_ATTACK": 3,
+    "USE_SKILL": 4,
+    "USE_PAR": 5,
+    "HP_Hurt": 6,
+    "DIZZ": 7,
+    "CRIT_ATTACK": 8,
+    "NORMAL_DOUBLE_ATTACK": 9,
+    "SKILL_CRIT": 10,
+    "ALL_ATTACK": 11,
+    "HP_Heal": 12,
+    "Miss": 13,
+    "Spirit_Hit": 15
+  },
+  "reverseMap": {
+    "0": "NORMAL_ATTACK",
+    "1": "HIT",
+    "2": "COUNTER",
+    "3": "DOUBLE_ATTACK",
+    "4": "USE_SKILL",
+    "5": "USE_PAR",
+    "6": "HP_Hurt",
+    "7": "DIZZ",
+    "8": "CRIT_ATTACK",
+    "9": "NORMAL_DOUBLE_ATTACK",
+    "10": "SKILL_CRIT",
+    "11": "ALL_ATTACK",
+    "12": "HP_Heal",
+    "13": "Miss",
+    "15": "Spirit_Hit"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "className": "ConfigDanjon_meshi_recipe_preview",
+  "tableName": "Danjon_meshi_recipe_preview",
+  "sourceLine": 226254,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

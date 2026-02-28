@@ -1,0 +1,35 @@
+{
+  "className": "ConfigWorld_boss_total_dmg",
+  "tableName": "World_boss_total_dmg",
+  "sourceLine": 268979,
+  "mainKey": "day",
+  "indexedKeys": {
+    "day": 0,
+    "total_dmg": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "day",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "total_dmg",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward_participate",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

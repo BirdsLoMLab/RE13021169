@@ -1,0 +1,168 @@
+{
+  "system": "Sailing / Season System",
+  "description": "The seasonal sailing system encompasses ships, ship equipment, treasures, cabins, port supplies, and a naval PvP mode. Ships have levels with stat growth, equipment slots with random attributes, and gacha draws for obtaining new ships and treasures.",
+  "configTables": {
+    "ConfigSeason_ship": {
+      "sourceLine": 259623,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "description": "Ship definitions. Each ship has a quality tier, appearance options, and unlock conditions.",
+      "fields": {
+        "id": { "type": "number", "description": "Unique ship ID" },
+        "name": { "type": "string_ref", "description": "Localized ship name" },
+        "quality": { "type": "number", "description": "Rarity tier" },
+        "path": { "type": "number", "description": "Ship model/path asset ID" },
+        "icon": { "type": "number", "description": "Ship icon asset" },
+        "appearance": { "type": "optional_array", "description": "Available appearance/skin IDs" },
+        "item_id": { "type": "number", "description": "Inventory item ID for this ship" },
+        "default_unlock": { "type": "number", "description": "Whether ship is unlocked by default (0/1)" },
+        "open_time": { "type": "optional_array", "description": "Time-gated availability" }
+      }
+    },
+    "ConfigSeason_ship_level": {
+      "sourceLine": 259478,
+      "mainKey": "level",
+      "fieldCount": 6,
+      "description": "Ship level progression. Controls EXP costs, stat bonuses per level, and upgrade material requirements.",
+      "fields": {
+        "level": { "type": "number", "description": "Ship level" },
+        "expend_exp": { "type": "number", "description": "EXP required to reach this level" },
+        "expend_goods": { "type": "optional_array", "description": "Material costs [[itemId, count], ...]" },
+        "attr": { "type": "optional_array", "description": "Stat bonuses at this level [[attrId, value], ...]" },
+        "cost": { "type": "optional_array", "description": "Currency cost for upgrade" },
+        "power": { "type": "number", "description": "Combat power at this level" }
+      }
+    },
+    "ConfigSeason_ship_draw": {
+      "sourceLine": 259347,
+      "mainKey": "id",
+      "indexedKeys": ["id", "quality"],
+      "fieldCount": 7,
+      "description": "Ship gacha/draw pool entries with weights and jackpot flags.",
+      "fields": {
+        "id": { "type": "number", "description": "Draw entry ID" },
+        "reward": { "type": "optional_array", "description": "Reward items [[itemId, count], ...]" },
+        "weight": { "type": "number", "description": "Probability weight in the draw pool" },
+        "is_jackpot": { "type": "number", "description": "Whether this is a jackpot/featured reward (0/1)" },
+        "limited": { "type": "number", "description": "Maximum times this can be drawn (0=unlimited)" },
+        "quality": { "type": "number", "description": "Quality tier for filtering" },
+        "fragment": { "type": "number", "description": "Whether reward is a fragment (0/1)" }
+      }
+    },
+    "ConfigSeason_equipment": {
+      "sourceLine": 257932,
+      "mainKey": "id",
+      "indexedKeys": ["id", "level", "part"],
+      "fieldCount": 11,
+      "description": "Ship equipment definitions. Equipment goes into specific ship parts (hull, sail, cannon, etc.) and can be upgraded.",
+      "fields": {
+        "id": { "type": "number", "description": "Equipment ID" },
+        "name": { "type": "string_ref", "description": "Equipment name" },
+        "level": { "type": "number", "description": "Equipment level/tier" },
+        "part": { "type": "number", "description": "Equipment slot/part type (e.g. 1=hull, 2=sail, 3=cannon)" },
+        "quality": { "type": "number", "description": "Rarity tier" },
+        "number": { "type": "number", "description": "Numeric identifier for grouping" },
+        "advanced": { "type": "number", "description": "Advanced upgrade tier" },
+        "multiple": { "type": "optional_array", "description": "Set bonus multipliers when multiple pieces equipped" },
+        "icon": { "type": "number", "description": "Equipment icon asset" },
+        "atlas": { "type": "number", "description": "Atlas/sprite sheet ID" },
+        "gradeRange": { "type": "optional_array", "description": "Attribute grade range [min, max] for random rolls" }
+      }
+    },
+    "ConfigSeason_equipment_attr": {
+      "sourceLine": 257626,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "description": "Random attribute pools for ship equipment. Each entry defines a possible stat roll with probability and value range.",
+      "fields": {
+        "id": { "type": "number", "description": "Attribute pool entry ID" },
+        "group_id": { "type": "number", "description": "Group ID linking to equipment" },
+        "attr_id": { "type": "number", "description": "Attribute ID (references AttribDefine)" },
+        "type": { "type": "number", "description": "Attribute type (flat vs percentage)" },
+        "pro": { "type": "number", "description": "Probability weight for this attribute in random rolls" },
+        "value": { "type": "optional_array", "description": "Value range [min, max] for the roll" }
+      }
+    },
+    "ConfigSeason_pvp_chapter": {
+      "sourceLine": 258898,
+      "mainKey": "id",
+      "indexedKeys": ["id", "index"],
+      "fieldCount": 12,
+      "description": "Naval PvP battle chapters. Defines enemy power, ship cannon configurations, time limits, and rewards.",
+      "fields": {
+        "id": { "type": "number", "description": "Chapter ID" },
+        "index": { "type": "number", "description": "Stage index within chapter" },
+        "power": { "type": "number", "description": "Recommended combat power" },
+        "level": { "type": "number", "description": "Enemy level" },
+        "map": { "type": "number", "description": "Battle map ID" },
+        "part_type": { "type": "number", "description": "Battle part type" },
+        "part": { "type": "number", "description": "Current part index" },
+        "next_part": { "type": "number", "description": "Next part to transition to" },
+        "ship_cannon_left": { "type": "optional_array", "description": "Left-side cannon configuration [[cannonId, ...], ...]" },
+        "ship_cannon_right": { "type": "optional_array", "description": "Right-side cannon configuration" },
+        "time": { "type": "number", "description": "Battle time limit" },
+        "reward": { "type": "optional_array", "description": "Completion rewards" }
+      }
+    },
+    "ConfigSeason_treasure": {
+      "sourceLine": 260124,
+      "mainKey": "id",
+      "indexedKeys": ["id", "level"],
+      "fieldCount": 13,
+      "description": "Ship treasure items that provide passive bonuses and can be leveled up.",
+      "fields": {
+        "id": { "type": "number", "description": "Treasure ID" },
+        "level": { "type": "number", "description": "Treasure level" },
+        "name": { "type": "string_ref", "description": "Treasure name" },
+        "type": { "type": "number", "description": "Treasure type" },
+        "icon": { "type": "number", "description": "Icon asset" },
+        "item_id": { "type": "number", "description": "Inventory item ID" },
+        "attr_type": { "type": "number", "description": "Primary attribute type" },
+        "own": { "type": "optional_array", "description": "Ownership stat bonuses" },
+        "extra": { "type": "optional_array", "description": "Extra bonuses at this level" },
+        "use": { "type": "optional_array", "description": "Active use effects" },
+        "cost": { "type": "optional_array", "description": "Upgrade cost" },
+        "power": { "type": "number", "description": "Combat power" },
+        "season_type": { "type": "optional_array", "description": "Season restrictions" }
+      }
+    },
+    "ConfigSeason_cabin": {
+      "sourceLine": 257348,
+      "mainKey": "cabin_id",
+      "fieldCount": 5,
+      "description": "Ship cabin configurations for assigning crew members and unlocking bonuses.",
+      "fields": {
+        "cabin_id": { "type": "number", "description": "Cabin ID" },
+        "condition": { "type": "number", "description": "Unlock condition type" },
+        "type": { "type": "optional_array", "description": "Cabin type parameters" },
+        "condition_special": { "type": "optional_array", "description": "Special unlock conditions" },
+        "condition_text": { "type": "string_ref", "description": "Unlock condition display text" }
+      }
+    }
+  },
+  "mechanics": {
+    "ship_progression": {
+      "description": "Ships level up by consuming EXP and materials. Each level grants stat bonuses defined in Season_ship_level.attr. Ships also have appearance skins that can be unlocked.",
+      "durability": "Ships have a durability range [2500, 10000] as defined in SEASON_SHIP_DURABILITY_RANGE constant.",
+      "attributes": "Ship stats displayed: ATK (10002), HP (10001), SPD (10003), DEF (10004) as per SEASON_SHIP_ATTR_SHOW constant."
+    },
+    "equipment_system": {
+      "description": "Ship equipment fits into typed part slots. Equipment has random attribute rolls from Season_equipment_attr pools, with grade ranges controlling roll quality.",
+      "upgrade": "Equipment has level tiers and advanced upgrade tiers. The 'multiple' field provides set bonus multipliers when equipping multiple pieces from the same set.",
+      "s4_variants": "Season 4 introduced separate level and attribute tables (ConfigSeason_equipment_level_s4, ConfigSeason_equipment_attr_s4)."
+    },
+    "naval_pvp": {
+      "description": "PvP battles use ship cannon configurations. Left and right cannon arrays determine firepower. Battle calculates: ATK = round(att), speed factor = round(10000 * speed), and cannon damage multiplier = round(att_dam * (1 + att_resist)).",
+      "combat_formula": "Ship combat uses attacker ATT, ATT_DAM, and cannon-specific season_cannon_att_def resistance."
+    },
+    "gacha": {
+      "description": "Ship draw system with weighted pools (Season_ship_draw). Jackpot items have is_jackpot=1. Limited items can only be drawn a set number of times. Fragments can be collected to assemble full ships.",
+      "guaranteed": "ConfigSeason_ship_draw_guaranteed provides pity/guarantee thresholds."
+    }
+  },
+  "relatedConstants": {
+    "SEASON_SHIP_ATTR_SHOW": [10002, 10001, 10003, 10004],
+    "SEASON_SHIP_TREASURE_ITEM": [270012, 1],
+    "SEASON_SHIP_DURABILITY_RANGE": [2500, 10000]
+  }
+}

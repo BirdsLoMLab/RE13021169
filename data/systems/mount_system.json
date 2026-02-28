@@ -1,0 +1,261 @@
+{
+  "system": "Mount System (Horse / Back-Decoration / Wings)",
+  "description": "The mount system encompasses rideable mounts (horses), back decorations (wings), and talent/ability upgrades. Mounts provide movement speed and cosmetics; the back/wing system provides combat stats, skills, and talent trees.",
+  "config_tables": {
+    "ConfigMount": {
+      "source_line": 248453,
+      "table_name": "Mount",
+      "main_key": "id",
+      "field_count": 24,
+      "key_fields": {
+        "id": "Mount unique ID",
+        "name": "Display name (string_ref)",
+        "type": "Mount type category",
+        "path": "Model asset path",
+        "binds": "Bind point array for rider",
+        "quality": "Quality/rarity tier",
+        "min_speed": "Minimum movement speed",
+        "max_speed": "Maximum movement speed",
+        "animation": "Animation set ID",
+        "mount_location_adjust": "Rider position adjustment",
+        "position": "Model position offset array",
+        "scale": "Model scale",
+        "if_activity": "Activity-gated flag",
+        "pk_scale": "PvP model scale",
+        "fashion": "Fashion/skin variant array",
+        "fashion_eff": "Fashion effect array",
+        "power": "Combat power contribution",
+        "maxNum": "Maximum number owned",
+        "maxTime": "Maximum duration (0 = permanent)"
+      }
+    },
+    "ConfigMount_level": {
+      "source_line": 248305,
+      "table_name": "Mount_level",
+      "main_key": "level",
+      "indexed_keys": ["level", "order", "star"],
+      "field_count": 10,
+      "key_fields": {
+        "level": "Mount level",
+        "name": "Level name (string_ref)",
+        "order": "Level order/tier",
+        "star": "Star rating (1 = milestone level that unlocks a mount)",
+        "expend_exp": "EXP cost to reach next level",
+        "expend_goods": "Material cost array",
+        "attr": "Attribute bonuses at this level",
+        "base_skill": "Skills unlocked at this level",
+        "unlock": "Mount ID unlocked at this level (0 = none)",
+        "power": "Combat power"
+      }
+    },
+    "ConfigMount_ability": {
+      "source_line": 247718,
+      "table_name": "Mount_ability",
+      "main_key": "id",
+      "indexed_keys": ["id", "level"],
+      "field_count": 4,
+      "key_fields": {
+        "id": "Ability type ID (1-3 for three ability branches)",
+        "level": "Ability level",
+        "value_plus": "Attribute bonus array [[attr_id, value], ...]",
+        "power": "Combat power"
+      }
+    },
+    "ConfigMount_abilitycost": {
+      "source_line": 247770,
+      "table_name": "Mount_abilitycost",
+      "main_key": "total_level",
+      "field_count": 4,
+      "key_fields": {
+        "total_level": "Sum of all ability levels",
+        "cost": "Material cost array for next upgrade",
+        "success_rate": "Success rate (value / 100 = percentage)",
+        "success_guaranteed": "Guaranteed success threshold"
+      }
+    },
+    "ConfigMount_skin": {
+      "source_line": 248389,
+      "table_name": "Mount_skin",
+      "main_key": "mount_id",
+      "indexed_keys": ["mount_id", "skin_level"],
+      "field_count": 6,
+      "key_fields": {
+        "mount_id": "Mount ID this skin belongs to",
+        "skin_level": "Skin upgrade level",
+        "expend": "Upgrade cost array",
+        "skin_skill": "Skills granted at this skin level",
+        "attr": "Attribute bonuses at this skin level",
+        "power": "Combat power"
+      }
+    },
+    "ConfigBack_level": {
+      "source_line": 220655,
+      "table_name": "Back_level",
+      "main_key": "id",
+      "indexed_keys": ["id", "level"],
+      "field_count": 8,
+      "key_fields": {
+        "id": "Back decoration type ID",
+        "level": "Level number",
+        "expend_exp": "EXP cost",
+        "expend_goods": "Material cost array",
+        "attr": "Attribute bonuses",
+        "power": "Combat power",
+        "era_level": "Era/epoch level requirement",
+        "icon_show": "Icon display flag"
+      }
+    },
+    "ConfigBack_skin": {
+      "source_line": 220827,
+      "table_name": "Back_skin",
+      "main_key": "back_id",
+      "indexed_keys": ["back_id", "skin_level"],
+      "field_count": 6,
+      "key_fields": {
+        "back_id": "Back decoration ID",
+        "skin_level": "Skin upgrade level",
+        "expend": "Upgrade cost array",
+        "skin_skill": "Skills granted at this skin level",
+        "attr": "Attribute bonuses",
+        "power": "Combat power"
+      }
+    },
+    "ConfigBack_talent": {
+      "source_line": 220891,
+      "table_name": "Back_talent",
+      "main_key": "id",
+      "indexed_keys": ["id", "level"],
+      "field_count": 15,
+      "key_fields": {
+        "id": "Talent node ID",
+        "level": "Talent level",
+        "name": "Talent name (string_ref)",
+        "icon": "Icon asset ID",
+        "job_type": "Job/class restriction",
+        "color_type": "Color/rarity indicator",
+        "describe": "Description (string_ref)",
+        "cost": "Upgrade cost array",
+        "connect_id": "Connected talent nodes (prerequisite tree)",
+        "condition_1": "First unlock condition",
+        "condition_2": "Second unlock condition",
+        "attr": "Attribute bonuses",
+        "skill": "Skill granted at this talent level",
+        "power": "Combat power"
+      }
+    },
+    "ConfigBack_decoration": {
+      "source_line": 220174,
+      "table_name": "Back_decoration",
+      "main_key": "id",
+      "field_count": 15,
+      "key_fields": {
+        "id": "Decoration unique ID",
+        "name": "Display name (string_ref)",
+        "form": "Form/shape type",
+        "type": "Decoration type",
+        "path": "Model asset path",
+        "binds": "Bind points array",
+        "quality": "Quality/rarity",
+        "sort": "Sort order",
+        "back_location_adjust": "Position adjustment",
+        "if_activity": "Activity-gated flag",
+        "position": "Position offset array",
+        "scale": "Model scale"
+      }
+    }
+  },
+  "additional_tables": {
+    "ConfigMount_chapter": "Mount chapter/progression milestones",
+    "ConfigMount_chapter_bufflist": "Buffs from mount chapter milestones",
+    "ConfigMount_draw": "Mount gacha/draw system",
+    "ConfigMount_draw_cost_get": "Draw cost and reward tables",
+    "ConfigMount_draw_cumulative_times": "Cumulative draw bonuses",
+    "ConfigMount_draw_guaranteed": "Guaranteed pull thresholds",
+    "ConfigBack_book": "Back decoration book/collection",
+    "ConfigBack_checkin": "Check-in rewards for back system",
+    "ConfigBack_lamp_attr": "Lamp attribute bonuses",
+    "ConfigBack_lamp_chapter": "Lamp chapter progression",
+    "ConfigBack_lamp_item": "Lamp items",
+    "ConfigBack_lamp_map": "Lamp map configuration",
+    "ConfigBack_lamp_unit": "Lamp unit configuration",
+    "ConfigBack_level_rebate": "Level-up rebate rewards",
+    "ConfigBack_mall": "Back decoration mall/shop",
+    "ConfigBack_pay_rebate": "Payment rebate rewards",
+    "ConfigBack_task": "Back system tasks"
+  },
+  "battle_loading": {
+    "function": "setPlayerMount",
+    "game_script_lines": {
+      "client_version": "199066-199067"
+    },
+    "code": "e.setPlayerMount = function(e) { e.mount = IS(S).use_look }",
+    "description": "Mount is stored as a cosmetic look ID (use_look) on the player unit data. Mounts do not have combat unit representations; their stats are baked into the player's attributes."
+  },
+  "mount_level_system": {
+    "description": "Mounts are leveled using EXP and materials. Higher levels provide attribute bonuses and unlock new mounts.",
+    "exp_currency_id": 1008,
+    "level_progression": {
+      "code_location": "Lines 321241-321243",
+      "formula": "needed_exp = configMount_level.getDataByKey(curLevel + 1).expend_exp - curexp"
+    },
+    "mount_unlock": {
+      "description": "When mount_level.unlock > 0, reaching that level unlocks a new mount",
+      "code_location": "Lines 321224-321225"
+    },
+    "star_milestones": {
+      "description": "Levels with star=1 are milestone levels that unlock mounts (referenced in enable view line 321350)"
+    }
+  },
+  "ability_system": {
+    "description": "Three ability branches (id 1-3) that provide percentage-based attribute bonuses. Upgraded via gacha-like system with success rates.",
+    "branches": 3,
+    "upgrade_mechanics": {
+      "currency_id": 1025,
+      "code_location": "Lines 321258-321261",
+      "process": [
+        "1. Calculate total_level = sum of all ability branch levels",
+        "2. Look up ConfigMount_abilitycost by total_level",
+        "3. Pay cost (currency 1025)",
+        "4. Roll success_rate (displayed as rate/100 %)",
+        "5. If successful, random ability branch level increases",
+        "6. success_guaranteed provides pity/guaranteed threshold"
+      ]
+    },
+    "display": {
+      "code_location": "Lines 321411-321417",
+      "description": "Each ability shows its current level and the value_plus from ConfigMount_ability as a percentage bonus"
+    }
+  },
+  "skin_system": {
+    "mount_skins": {
+      "config": "ConfigMount_skin",
+      "description": "Mount skins provide additional attributes and skills at each skin_level",
+      "unlock_cost": "First skin_level (0) has unlock cost in expend field"
+    },
+    "back_skins": {
+      "config": "ConfigBack_skin",
+      "description": "Back decoration skins with progressive levels providing attr and skill bonuses"
+    }
+  },
+  "wing_talent_system": {
+    "description": "Wings/back decorations have a talent tree system with prerequisites, job-type restrictions, and progressive skill unlocks",
+    "config": "ConfigBack_talent",
+    "features": {
+      "tree_structure": "connect_id links talent nodes in a prerequisite tree",
+      "job_restriction": "job_type field limits which classes can use certain talents",
+      "conditions": "condition_1 and condition_2 provide additional unlock requirements",
+      "skills": "skill field grants combat skills at each talent level"
+    }
+  },
+  "events": {
+    "code_location": "Lines 321283-321290",
+    "event_names": {
+      "TYPE_HORSE_CHANGE": "Mount selection changed",
+      "TYPE_HORSE_SKIN_EFFECT_SEL": "Skin effect selected",
+      "TYPE_HORSE_ADD_EXP": "EXP added to mount",
+      "TYPE_HORSE_USE_SKILL": "Mount skill used",
+      "TYPE_HORSE_ENABLE_INFO": "Ability enable info update",
+      "TYPE_HORSE_COLLECT": "Mount collected"
+    }
+  }
+}

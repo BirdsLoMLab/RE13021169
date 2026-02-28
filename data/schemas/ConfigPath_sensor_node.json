@@ -1,0 +1,48 @@
+{
+  "className": "ConfigPath_sensor_node",
+  "tableName": "Path_sensor_node",
+  "sourceLine": 251467,
+  "mainKey": "node_id",
+  "indexedKeys": {
+    "node_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "node_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "trunk_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "trunk_number",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "affix_group",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "desc",
+      "index": 4,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

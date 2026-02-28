@@ -1,0 +1,27 @@
+{
+  "className": "ConfigMoonfestival_stagetemplate",
+  "tableName": "Moonfestival_stagetemplate",
+  "sourceLine": 247604,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "arrange",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

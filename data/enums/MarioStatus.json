@@ -1,0 +1,18 @@
+{
+  "name": "MarioStatus",
+  "sourceLine": 117717,
+  "values": {
+    "Idle": 0,
+    "Run": 1,
+    "Jump": 2,
+    "Hang": 3,
+    "Leave": 4
+  },
+  "reverseMap": {
+    "0": "Idle",
+    "1": "Run",
+    "2": "Jump",
+    "3": "Hang",
+    "4": "Leave"
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "battle_up_limit_raw": [
+    [
+      1008,
+      8000.0
+    ]
+  ],
+  "battle_up_limit_mapped": {
+    "1008": {
+      "raw_cap": 8000.0,
+      "effective_cap": 0.8,
+      "effective_cap_percent": 80.0
+    }
+  },
+  "equip_tab_limit": [
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      80
+    ],
+    [
+      3,
+      100
+    ],
+    [
+      4,
+      110
+    ],
+    [
+      5,
+      120
+    ],
+    [
+      6,
+      120
+    ],
+    [
+      7,
+      125
+    ],
+    [
+      8,
+      125
+    ],
+    [
+      9,
+      130
+    ],
+    [
+      10,
+      130
+    ]
+  ],
+  "suit_tab_limit": [
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      60
+    ],
+    [
+      3,
+      80
+    ],
+    [
+      4,
+      90
+    ],
+    [
+      5,
+      100
+    ],
+    [
+      6,
+      110
+    ],
+    [
+      7,
+      120
+    ],
+    [
+      8,
+      120
+    ],
+    [
+      9,
+      130
+    ],
+    [
+      10,
+      130
+    ]
+  ],
+  "statue_tab_limit": [
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      10,
+      10
+    ]
+  ],
+  "spirit_attrbonus_level_prob_raw": [
+    [
+      1,
+      5088
+    ],
+    [
+      2,
+      2543
+    ],
+    [
+      3,
+      1536
+    ],
+    [
+      4,
+      640
+    ],
+    [
+      5,
+      160
+    ],
+    [
+      6,
+      33
+    ]
+  ],
+  "spirit_attrbonus_level_prob_mapped": {
+    "1": {
+      "weight": 5088,
+      "probability_percent": 50.88
+    },
+    "2": {
+      "weight": 2543,
+      "probability_percent": 25.43
+    },
+    "3": {
+      "weight": 1536,
+      "probability_percent": 15.36
+    },
+    "4": {
+      "weight": 640,
+      "probability_percent": 6.4
+    },
+    "5": {
+      "weight": 160,
+      "probability_percent": 1.6
+    },
+    "6": {
+      "weight": 33,
+      "probability_percent": 0.33
+    }
+  },
+  "spirit_attrbonus_guaranteed_count": [
+    200,
+    6
+  ],
+  "spirit_attrbonus_cost": [
+    1331,
+    5
+  ],
+  "spirit_attrbonus_autoblock_count": 8,
+  "_notes": {
+    "battle_up_limit": "Attribute caps for battle. [attr_id, cap_value_raw]. Used as cap_value/10000 in code. Attr 1008 = crit rate.",
+    "spirit_attrbonus_level_prob": "Spirit attribute bonus level probability weights. [level, weight]. Higher weight = more likely.",
+    "equip_tab_limit": "Equipment tab unlock requirements. [tab_number, required_level].",
+    "suit_tab_limit": "Suit tab unlock requirements. [tab_number, required_level].",
+    "statue_tab_limit": "Statue tab unlock requirements. [tab_number, required_count]."
+  }
+}

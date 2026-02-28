@@ -1,0 +1,14 @@
+{
+  "name": "SocketState",
+  "sourceLine": 435612,
+  "values": {
+    "Disconnected": 0,
+    "Connecting": 1,
+    "Connected": 2
+  },
+  "reverseMap": {
+    "0": "Disconnected",
+    "1": "Connecting",
+    "2": "Connected"
+  }
+}

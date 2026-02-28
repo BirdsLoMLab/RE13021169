@@ -1,0 +1,14 @@
+{
+  "name": "GoldFishColliderTag",
+  "sourceLine": 158795,
+  "values": {
+    "Ground": 0,
+    "Fish": 1,
+    "Net": 2
+  },
+  "reverseMap": {
+    "0": "Ground",
+    "1": "Fish",
+    "2": "Net"
+  }
+}

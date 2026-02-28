@@ -1,0 +1,182 @@
+{
+  "system": "Avian/Spirit Bird (FlyPet) System",
+  "description": "Flying companion birds that provide passive skills in combat, with hatching, leveling, advancing, entry (stat modifier) systems, and hybridization breeding",
+  "config_tables": {
+    "ConfigFly": {
+      "source_line": 233576,
+      "table_name": "Fly",
+      "main_key": "id",
+      "field_count": 15,
+      "key_fields": {
+        "id": "Avian unique ID",
+        "name": "Display name (string_ref)",
+        "type": "Avian type category",
+        "quality": "Quality/rarity tier",
+        "hybrid_type": "Hybridization type for breeding",
+        "unitid": "Unit config ID for battle model",
+        "attr": "Base attribute array",
+        "home_weight": "Home/nest weight array",
+        "entry_weight": "Entry reroll weight array",
+        "fly_special": "Special skill ID (0 = none)",
+        "fly_tips": "Tooltip text array",
+        "scale": "Model scale",
+        "position": "Model position offset"
+      }
+    },
+    "ConfigFly_level": {
+      "source_line": 233409,
+      "table_name": "Fly_level",
+      "main_key": "id",
+      "indexed_keys": ["id", "level"],
+      "field_count": 6,
+      "key_fields": {
+        "id": "Avian type/category ID",
+        "level": "Level number",
+        "expend": "Leveling cost (currency amount)",
+        "if_advance": "Whether advance is required at this level",
+        "attr": "Attribute bonuses at this level",
+        "power": "Combat power"
+      }
+    },
+    "ConfigFly_advance": {
+      "source_line": 232812,
+      "table_name": "Fly_advance",
+      "main_key": "id",
+      "indexed_keys": ["id", "advance_level"],
+      "field_count": 7,
+      "key_fields": {
+        "id": "Avian type/category ID",
+        "advance_level": "Advance tier",
+        "expend": "Advance cost array",
+        "attr": "Attribute bonuses at this advance tier",
+        "fly_skill": "Skills unlocked at this advance tier",
+        "entry_level": "Entry level cap raised by this advance",
+        "power": "Combat power"
+      }
+    },
+    "ConfigFly_egg": {
+      "source_line": 232928,
+      "table_name": "Fly_egg",
+      "main_key": "id",
+      "field_count": 6,
+      "key_fields": {
+        "id": "Egg type ID",
+        "name": "Egg display name",
+        "path": "Model/asset path",
+        "quality": "Egg quality/rarity",
+        "fly_weight": "Weight array for which avian hatches",
+        "entry_num_weight": "Weight array for number of entries on hatched bird"
+      }
+    },
+    "ConfigFly_entry": {
+      "source_line": 233089,
+      "table_name": "Fly_entry",
+      "main_key": "id",
+      "indexed_keys": ["id", "level"],
+      "field_count": 12,
+      "key_fields": {
+        "id": "Entry ID",
+        "level": "Entry level",
+        "name": "Entry display name",
+        "quality": "Entry quality/rarity",
+        "passive_skill": "Passive skill array granted by this entry",
+        "special_effect": "Special combat effect array",
+        "home_effect": "Effect when bird is in nest/home",
+        "belong_talent": "Talent group this entry belongs to",
+        "desc": "Description text",
+        "power": "Combat power",
+        "conflict_entry": "Entries that conflict with this one (cannot coexist)"
+      }
+    },
+    "ConfigFly_hybrid": {
+      "source_line": 233357,
+      "table_name": "Fly_hybrid",
+      "main_key": "id1",
+      "indexed_keys": ["id1", "id2"],
+      "field_count": 4,
+      "key_fields": {
+        "id1": "First parent avian ID",
+        "id2": "Second parent avian ID",
+        "template_id": "Hybrid result template",
+        "fly_weight": "Weight array for possible offspring"
+      }
+    }
+  },
+  "additional_tables": {
+    "ConfigFly_achievement": "Achievement tracking for avian collection",
+    "ConfigFly_total_achievement": "Total achievement milestones",
+    "ConfigFly_cd": "Cooldown timers (breeding/hatching)",
+    "ConfigFly_entry_num": "Number of entries possible per avian",
+    "ConfigFly_entry_weight": "Weighted entry selection tables",
+    "ConfigFly_evolution_pro": "Evolution progression data",
+    "ConfigFly_evolution_rate": "Evolution success rate",
+    "ConfigFly_hybird_template": "Hybrid breeding templates (note: typo in original)",
+    "ConfigFly_hybrid_time": "Hybrid breeding time costs",
+    "ConfigFly_remake_cost": "Entry reroll/remake costs"
+  },
+  "battle_loading": {
+    "function": "setPlayerFlyPet",
+    "game_script_lines": {
+      "server_data_version": "187563-187575",
+      "client_local_version": "199108-199121"
+    },
+    "process": [
+      "1. Look up ConfigFly by avian ID",
+      "2. Look up ConfigUnit by fly.unitid",
+      "3. Create unit data object",
+      "4. For each attribute in module=1:",
+      "   a. Set baseValue from unit config (r[c.key])",
+      "5. Set idleIndex = 8 (fixed position for FlyPet)",
+      "6. Push to playerList units array"
+    ],
+    "notes": [
+      "Unlike pets, avians do NOT inherit player ATK or HP",
+      "Avian attributes come directly from their unit config",
+      "Fixed idleIndex=8 means avians always occupy position 8"
+    ]
+  },
+  "skill_system": {
+    "fly_skill_type": {
+      "code_location": "Line 278634",
+      "enum_value": "FLY_SKILL = 5",
+      "description": "Avian skills are stored as type 5 in the skill type enum"
+    },
+    "fly_special": {
+      "description": "Special ability ID on the avian config. Non-empty fly_special means the bird has an activatable special ability",
+      "check_code": "Line 297940: 1 == e ? '' != i.fly_special : ..."
+    },
+    "passive_skill_loading": {
+      "code_location": "Lines 450359-450361",
+      "code": "if (a.type == B.FLY_SKILL) {\n    t.flyPetPassiveSkillList = null != (o = t.flyPetPassiveSkillList) ? o : [];\n    t.flyPetPassiveSkillList.push(r)\n}",
+      "description": "FlyPet skills are stored in a separate flyPetPassiveSkillList on the player unit"
+    },
+    "advance_skills": {
+      "description": "Skills unlocked through ConfigFly_advance.fly_skill at each advance tier",
+      "config": "ConfigFly_advance.fly_skill"
+    },
+    "entry_skills": {
+      "description": "Passive skills from entries (ConfigFly_entry.passive_skill and special_effect)",
+      "config": "ConfigFly_entry.passive_skill, ConfigFly_entry.special_effect"
+    }
+  },
+  "breeding_system": {
+    "description": "Two avians can be hybridized to produce offspring",
+    "config": "ConfigFly_hybrid",
+    "process": [
+      "1. Select two parent avians (id1, id2)",
+      "2. Look up hybrid template from ConfigFly_hybrid",
+      "3. Use fly_weight array to determine offspring species",
+      "4. Breeding time from ConfigFly_hybrid_time",
+      "5. Result inherits entries based on parent entries and template rules"
+    ]
+  },
+  "hatching_system": {
+    "description": "Avians are obtained by hatching eggs",
+    "config": "ConfigFly_egg",
+    "process": [
+      "1. Obtain egg of certain quality",
+      "2. fly_weight determines which avian hatches",
+      "3. entry_num_weight determines how many entries the hatched bird gets"
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "className": "ConfigReversion_war_chess",
+  "tableName": "Reversion_war_chess",
+  "sourceLine": 255196,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": true,
+  "fieldCount": 14,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "spend",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "unlock_day",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "initialCd",
+      "index": 4,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "maxCd",
+      "index": 5,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "icon",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "desc",
+      "index": 7,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "quality",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "unitId",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "speed",
+      "index": 10,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "range",
+      "index": 11,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "scaling",
+      "index": 12,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "adjust_location",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

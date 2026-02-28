@@ -1,0 +1,16 @@
+{
+  "name": "TrackEdge",
+  "sourceLine": 405584,
+  "values": {
+    "Left": -250,
+    "Right": 250,
+    "Top": 700,
+    "Bottom": -700
+  },
+  "reverseMap": {
+    "-250": "Left",
+    "250": "Right",
+    "700": "Top",
+    "-700": "Bottom"
+  }
+}

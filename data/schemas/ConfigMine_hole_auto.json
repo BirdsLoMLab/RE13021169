@@ -1,0 +1,20 @@
+{
+  "className": "ConfigMine_hole_auto",
+  "tableName": "Mine_hole_auto",
+  "sourceLine": 245701,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 1,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

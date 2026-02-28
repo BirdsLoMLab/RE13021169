@@ -1,0 +1,41 @@
+{
+  "className": "ConfigGgbond_bead",
+  "tableName": "Ggbond_bead",
+  "sourceLine": 234218,
+  "mainKey": "bead_id",
+  "indexedKeys": {
+    "bead_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "bead_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "effect",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "picture_book",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

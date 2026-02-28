@@ -1,0 +1,22 @@
+{
+  "name": "SpBuffState",
+  "sourceLine": 278626,
+  "values": {
+    "ShareDamage": 0,
+    "StateTriger": 1,
+    "DelayDamage": 2,
+    "PetAddBuff": 3,
+    "HpChangeTriger": 4,
+    "AddBuffTrigger": 5,
+    "TotalDamageTrigger": 6
+  },
+  "reverseMap": {
+    "0": "ShareDamage",
+    "1": "StateTriger",
+    "2": "DelayDamage",
+    "3": "PetAddBuff",
+    "4": "HpChangeTriger",
+    "5": "AddBuffTrigger",
+    "6": "TotalDamageTrigger"
+  }
+}

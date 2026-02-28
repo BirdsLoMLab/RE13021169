@@ -1,0 +1,35 @@
+{
+  "className": "ConfigCross_pvp_grading_match",
+  "tableName": "Cross_pvp_grading_match",
+  "sourceLine": 225206,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "rank_id": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "rank_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "promote_win_num",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

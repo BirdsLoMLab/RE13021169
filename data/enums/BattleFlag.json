@@ -1,0 +1,22 @@
+{
+  "name": "BattleFlag",
+  "sourceLine": 278641,
+  "values": {
+    "NONE": 0,
+    "NOT_HURT": 1,
+    "LIMIT_SKILL": 2,
+    "LIMIT_ACT": 4,
+    "OPEN_GRAPHIC": 8,
+    "SIMP_MODEL": 16,
+    "UI_MASK": 32
+  },
+  "reverseMap": {
+    "0": "NONE",
+    "1": "NOT_HURT",
+    "2": "LIMIT_SKILL",
+    "4": "LIMIT_ACT",
+    "8": "OPEN_GRAPHIC",
+    "16": "SIMP_MODEL",
+    "32": "UI_MASK"
+  }
+}

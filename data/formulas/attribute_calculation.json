@@ -1,0 +1,234 @@
+{
+  "name": "MetaAttrib",
+  "sourceLine": 349636,
+  "description": "The MetaAttrib class — how individual attribute values are calculated from base + additive + multiplicative + extra components",
+  "overview": "Every combat attribute (ATK, HP, DEF, crit_rate, etc.) is a MetaAttrib instance. The final value is computed from four components: baseValue (from server), addValue (flat bonuses from buffs/effects), time (multiplicative modifier), and addExtraValue (flat post-multiplier bonus). The ConfigAttribute table defines per-attribute caps (up_limit) and display type (num_type).",
+
+  "class_definition": {
+    "sourceLine": 349639,
+    "properties": {
+      "config": "ConfigAttribute entry for this attribute (has up_limit, num_type, key, id, group, module)",
+      "_baseValue": "Base value from server data (set during stat assembly)",
+      "_addValue": "Additive flat bonus (accumulated from buffs, equipment effects, etc.)",
+      "_addExtraValue": "Extra flat bonus applied AFTER multiplication",
+      "_time": "Multiplicative modifier (starts at 1.0, stacks additively via addMultiples or multiplicatively via multiple)",
+      "_value": "Cached final value",
+      "_checkValue": "Anti-cheat check value (baseValue XOR 32)",
+      "_change": "Dirty flag — recalculates on next .value access if true"
+    }
+  },
+
+  "core_formula": {
+    "sourceLine": 349642,
+    "function": "_calculateValue(baseValue)",
+    "formula": "value = roundInt(roundInt(baseValue + _addValue) * _time + _addExtraValue)",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Add flat bonuses to base",
+        "formula": "withAdd = roundInt(baseValue + _addValue)"
+      },
+      {
+        "step": 2,
+        "description": "Apply multiplicative modifier and extra value",
+        "formula": "value = roundInt(withAdd * _time + _addExtraValue)"
+      },
+      {
+        "step": 3,
+        "description": "Apply attribute cap if defined",
+        "formula": "if (config.up_limit != 0): value = min(value, config.up_limit)",
+        "note": "Example: miss (evasion, id=1008) has up_limit=8000 (80%)"
+      },
+      {
+        "step": 4,
+        "description": "Convert to display percentage if num_type == 2",
+        "formula": "if (config.num_type == 2): value = round(value / 10000)",
+        "note": "num_type 2 means the value is stored as parts-per-10000 internally"
+      },
+      {
+        "step": 5,
+        "description": "Null-coalesce to 0",
+        "formula": "value = value ?? 0"
+      }
+    ],
+    "simplified": "final = min(roundInt(roundInt(base + addValue) * time + addExtraValue), up_limit)"
+  },
+
+  "modifier_methods": {
+    "addValue": {
+      "sourceLine": 349647,
+      "description": "Add flat bonus to _addValue",
+      "formula": "_addValue = round(_addValue + amount)",
+      "note": "Used for flat stat bonuses (e.g., +500 ATK from buff)"
+    },
+    "addExtraValue": {
+      "sourceLine": 349645,
+      "description": "Add flat bonus to _addExtraValue (applied after multiplication)",
+      "formula": "_addExtraValue = round(_addExtraValue + amount)",
+      "note": "Post-multiplier flat bonus"
+    },
+    "addMultiples": {
+      "sourceLine": 349649,
+      "description": "Add to multiplicative modifier (additive stacking)",
+      "formula": "_time = round(_time + amount)",
+      "note": "E.g., addMultiples(0.5) changes _time from 1.0 to 1.5 (50% increase)"
+    },
+    "multiple": {
+      "sourceLine": 349651,
+      "description": "Multiply the multiplicative modifier (multiplicative stacking)",
+      "formula": "_time = _time * amount",
+      "note": "E.g., multiple(1.2) changes _time from 1.5 to 1.8"
+    }
+  },
+
+  "baseValue_setter": {
+    "sourceLine": 349668,
+    "description": "Setting baseValue triggers normalization and anti-cheat",
+    "steps": [
+      "Null-coalesce to 0",
+      "Convert to Number",
+      "If NaN: set to 10000 if num_type==2, else 0",
+      "Apply roundInt()",
+      "Set _checkValue = 32 XOR baseValue (anti-cheat)",
+      "Set _change = true (triggers recalculation)"
+    ]
+  },
+
+  "anti_cheat": {
+    "sourceLine": 349655,
+    "function": "checkCheat()",
+    "description": "Verifies attribute hasn't been tampered with in memory",
+    "formula": "expected = _calculateValue(32 XOR _checkValue); if (value != expected) → log error"
+  },
+
+  "attribute_types": {
+    "num_type_1": {
+      "description": "Raw integer value (ATK, HP, DEF, speed, etc.)",
+      "examples": ["att (1001)", "hp (1002)", "def (1024)"]
+    },
+    "num_type_2": {
+      "description": "Percentage stored as parts-per-10000, divided by 10000 for display",
+      "examples": ["crit_rate (1004)", "miss (1008)", "att_resist (1018)"],
+      "note": "A baseValue of 5000 means 50% (0.5 after division). Default baseValue is 10000 (100% = 1.0) for these."
+    }
+  },
+
+  "key_attributes": {
+    "note": "All 89 attributes from AttribDefine (1001-1082, 6001-6007)",
+    "combat_stats": {
+      "att": {"id": 1001, "description": "Attack power"},
+      "hp": {"id": 1002, "description": "Hit points"},
+      "def": {"id": 1024, "description": "Defense"},
+      "def_coe": {"id": 1060, "description": "Defense coefficient (extra % defense)"},
+      "speed": {"id": 1009, "description": "Movement/action speed"}
+    },
+    "damage_modifiers": {
+      "att_dam": {"id": 1039, "description": "Basic ATK damage multiplier"},
+      "partner_dam": {"id": 1040, "description": "Pal/partner damage multiplier"},
+      "partner_dam_extra": {"id": 1047, "description": "Extra pal damage multiplier"},
+      "skill_dam_extra": {"id": 1045, "description": "Extra skill damage bonus"},
+      "active_skilldamage_par": {"id": 1043, "description": "Active skill damage parameter"},
+      "boss_dam": {"id": 1046, "description": "Boss damage bonus"},
+      "boss_def": {"id": 1052, "description": "Boss damage resistance"},
+      "total_dam_add": {"id": 1081, "description": "Total damage bonus (additive)"},
+      "total_dam_def": {"id": 1082, "description": "Total damage resistance"}
+    },
+    "critical": {
+      "crit_rate": {"id": 1004, "description": "Critical hit rate"},
+      "crit_dam": {"id": 1005, "description": "Critical damage multiplier"},
+      "crit_def": {"id": 1006, "description": "Critical damage reduction"},
+      "skill_crit_rate": {"id": 1037, "description": "Skill critical rate"},
+      "skill_crit_dam": {"id": 1038, "description": "Skill critical damage multiplier"},
+      "ignore_crit_rate": {"id": 1065, "description": "Ignore enemy crit rate"}
+    },
+    "hit_evasion": {
+      "hit": {"id": 1007, "description": "Hit/accuracy rate"},
+      "miss": {"id": 1008, "description": "Evasion rate (capped at 8000 = 80%)"}
+    },
+    "combo_counter": {
+      "double_hit": {"id": 1016, "description": "Combo/double hit rate"},
+      "double_hit_dam": {"id": 1032, "description": "Combo damage multiplier"},
+      "double_hit_def": {"id": 1034, "description": "Combo damage resistance"},
+      "ignore_double_hit": {"id": 1048, "description": "Ignore enemy combo rate"},
+      "counter": {"id": 1017, "description": "Counter-attack rate"},
+      "counter_dam": {"id": 1033, "description": "Counter damage multiplier"},
+      "counter_def": {"id": 1035, "description": "Counter damage resistance"},
+      "ignore_counter": {"id": 1049, "description": "Ignore enemy counter rate"},
+      "counter_suspend": {"id": 1036, "description": "Counter launch/suspend chance"}
+    },
+    "control": {
+      "suspend": {"id": 1022, "description": "Launch/throw rate"},
+      "suspend_def": {"id": 1025, "description": "Launch resistance"},
+      "vertigo": {"id": 1023, "description": "Stun/dizz rate"},
+      "vertigo_def": {"id": 1026, "description": "Stun resistance"},
+      "vertigo_times": {"id": 1030, "description": "Stun duration (frames)"},
+      "vertigo_res": {"id": 1031, "description": "Stun duration resistance"},
+      "CONTROL_RES": {"id": 1042, "description": "General control resistance"}
+    },
+    "pierce_block": {
+      "att_resist": {"id": 1018, "description": "Basic ATK resistance (pierce/block target)"},
+      "skill_resist": {"id": 1019, "description": "Skill resistance"},
+      "partner_resist": {"id": 1020, "description": "Pal/partner resistance"},
+      "resist": {"id": 1021, "description": "General resistance"},
+      "armor_penetration_rate": {"id": 1067, "description": "Armor penetration rate"},
+      "armor_penetration": {"id": 1068, "description": "Armor penetration value"},
+      "ignore_armor_penetration": {"id": 1069, "description": "Ignore armor penetration"},
+      "block_rate": {"id": 1070, "description": "Block rate"},
+      "block": {"id": 1071, "description": "Block value"},
+      "ignore_block": {"id": 1072, "description": "Ignore block"}
+    },
+    "inspire_suppress": {
+      "partner_inspire_rate": {"id": 1073, "description": "Pal inspire rate"},
+      "partner_inspire": {"id": 1074, "description": "Pal inspire value"},
+      "ignore_partner_inspire": {"id": 1075, "description": "Ignore inspire"},
+      "partner_suppress_rate": {"id": 1076, "description": "Pal suppress rate"},
+      "partner_suppress": {"id": 1077, "description": "Pal suppress value"},
+      "ignore_partner_suppress": {"id": 1078, "description": "Ignore suppress"}
+    },
+    "recovery_steal": {
+      "hp_recovery": {"id": 1012, "description": "HP recovery rate per frame"},
+      "ignore_hp_recovery": {"id": 1066, "description": "Reduce enemy HP recovery"},
+      "att_hpsteal": {"id": 1014, "description": "Basic attack HP steal rate"},
+      "skill_hpsteal": {"id": 1015, "description": "Skill HP steal rate"},
+      "att_hpsteal_def": {"id": 1027, "description": "ATK HP steal resistance"},
+      "skill_hpsteal_def": {"id": 1028, "description": "Skill HP steal resistance"},
+      "hpsteal_rate": {"id": 1053, "description": "HP steal bonus rate"},
+      "hpsteal_amount": {"id": 1054, "description": "HP steal bonus amount"},
+      "hpsteal_res": {"id": 1055, "description": "HP steal resistance"},
+      "ignore_hpsteal": {"id": 1056, "description": "Ignore HP steal"}
+    },
+    "shield_buff": {
+      "shield_time_extra": {"id": 1050, "description": "Shield duration bonus"},
+      "shield_hp_extra": {"id": 1051, "description": "Shield HP bonus"},
+      "active_skillbuff_time": {"id": 1041, "description": "Active skill buff duration bonus"},
+      "skillbuff_time_all": {"id": 1061, "description": "All skill buff duration bonus"}
+    },
+    "pve_specific": {
+      "pve_dam": {"id": 1057, "description": "PvE damage bonus"},
+      "pve_resist": {"id": 1058, "description": "PvE damage resistance"},
+      "pve_extra_time": {"id": 1062, "description": "PvE extra battle time"}
+    },
+    "battle_attribute": {
+      "battle_attribute_def": {"id": 1079, "description": "Battle attribute defense"},
+      "battle_resist_def": {"id": 1080, "description": "Battle resist defense"}
+    },
+    "spirit": {
+      "spirit_dam_add": {"id": 6001, "description": "Spirit damage bonus"},
+      "spirit_dam_def": {"id": 6002, "description": "Spirit damage resistance"},
+      "spirit_dam_def_final": {"id": 6003, "description": "Spirit final damage resistance"},
+      "spirit_hp": {"id": 6004, "description": "Spirit HP"},
+      "spirit_att": {"id": 6005, "description": "Spirit ATK"},
+      "spirit_hp_add": {"id": 6006, "description": "Spirit HP bonus %"},
+      "spirit_att_add": {"id": 6007, "description": "Spirit ATK bonus %"}
+    },
+    "other": {
+      "att_speed": {"id": 1003, "description": "Attack speed"},
+      "detection_range": {"id": 1010, "description": "Detection range"},
+      "att_range": {"id": 1011, "description": "Attack range"},
+      "power_recovery": {"id": 1013, "description": "Energy/power recovery rate"},
+      "power_recovery_buff": {"id": 1064, "description": "Power recovery buff bonus"},
+      "target_num": {"id": 1029, "description": "Number of targets"},
+      "season_cannon_att_def": {"id": 1059, "description": "Season cannon attack defense"}
+    }
+  }
+}

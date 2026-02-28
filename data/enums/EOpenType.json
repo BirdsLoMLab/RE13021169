@@ -1,0 +1,14 @@
+{
+  "name": "EOpenType",
+  "sourceLine": 363666,
+  "values": {
+    "Skin": 2,
+    "Buff": 1,
+    "Guide": 0
+  },
+  "reverseMap": {
+    "2": "Skin",
+    "1": "Buff",
+    "0": "Guide"
+  }
+}

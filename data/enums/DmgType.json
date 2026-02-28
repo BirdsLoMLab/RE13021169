@@ -1,0 +1,12 @@
+{
+  "name": "DmgType",
+  "sourceLine": 278589,
+  "values": {
+    "Red": 1,
+    "Add": 2
+  },
+  "reverseMap": {
+    "1": "Red",
+    "2": "Add"
+  }
+}

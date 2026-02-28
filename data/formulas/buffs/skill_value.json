@@ -1,0 +1,155 @@
+{
+  "className": "BuffSkillValue",
+  "sourceFile": "BuffSkillValue.ts",
+  "sourceLine": 195729,
+  "buffMapKey": "skill_value",
+  "description": "The primary skill damage buff. Handles HP-based, ATK-based, and attribute-based damage with extensive sub-type system. Supports healing, skill crit, normal crit, boss damage, resistance, and full interaction pipeline with EXTRA_DAMAGE, GIANT_SLAYER, VAMPIRE, SKILL_REAL_DAMAGE, SKILL_DAMAGE_ADD, SKILL_RETURN, and RECORD_DAMAGE.",
+  "internalEnums": {
+    "HpType": {
+      "Add": 1,
+      "Sub": 2,
+      "Attack": 4,
+      "Target": 8,
+      "note": "Bitfield. Add=heal, Sub=damage(unused in code directly), Attack=from caster, Target=from target for attribute reads"
+    },
+    "IgnoreFlag": {
+      "Not": 0,
+      "SkillCrit": 1,
+      "T1045": 2,
+      "UseCrit": 4,
+      "note": "Bitfield controlling which crit/multiplier systems to skip or use"
+    }
+  },
+  "configParams": {
+    "param1": {
+      "field": "_hpType",
+      "description": "HpType bitfield: 1=Add(heal), 2=Sub, 4=Attack(from caster), 8=Target(from target)"
+    },
+    "param2": {
+      "field": "_calType",
+      "description": "Calculation sub-type (0-10). Determines base damage source."
+    },
+    "param3": {
+      "field": "_attribId",
+      "description": "AttribDefine ID used for calType 0 (attribute-based)"
+    },
+    "param4": {
+      "field": "_ignoreFlag",
+      "description": "Bitfield: 1=skip SkillCrit, 2=ignore T1045 (set skill_dam_extra to 1), 4=use normal crit instead",
+      "default": 0
+    },
+    "param5": {
+      "field": "_limit",
+      "description": "Array of [minMultiplier, maxMultiplier] for damage clamping based on base ATK damage"
+    }
+  },
+  "calTypes": {
+    "type_0": {
+      "name": "Attribute-based",
+      "formula": "value = (hpType & Target) ? target.getAttrib(attribId) : caster.getAttrib(attribId)",
+      "description": "Read any attribute from target or caster based on hpType flags"
+    },
+    "type_1": {
+      "name": "ATK minus DEF",
+      "formula": "value = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1)",
+      "attributes_used": ["att", "def", "def_coe"]
+    },
+    "type_2": {
+      "name": "HP Difference (caster max HP - target current HP)",
+      "formula": "value = roundInt(caster.getAttrib(hp) - target.currentHp)",
+      "attributes_used": ["hp (caster)", "currentHp (target)"]
+    },
+    "type_3": {
+      "name": "Target Current HP",
+      "formula": "value = target.currentHp",
+      "attributes_used": ["currentHp (target)"]
+    },
+    "type_4": {
+      "name": "ATK damage (ATK-DEF * ATK_DAM)",
+      "formula": "value = roundInt(max(roundInt(ATK - DEF * (1 + DEF_COE)), 1) * ATK_DAM)",
+      "attributes_used": ["att", "def", "def_coe", "att_dam"]
+    },
+    "type_5": {
+      "name": "Target's own ATK damage",
+      "formula": "ATK = target.att; ATK_DAM = target.att_dam; value = roundInt(max(roundInt(ATK - DEF * (1 + DEF_COE)), 1) * ATK_DAM)",
+      "attributes_used": ["att (target)", "def (target)", "def_coe (target)", "att_dam (target)"]
+    },
+    "type_6": {
+      "name": "Double Hit damage",
+      "formula": "value = max(roundInt(roundInt(ATK - DEF * (1 + DEF_COE)) * DOUBLE_HIT_DAM), 1)",
+      "attributes_used": ["att", "def", "def_coe", "double_hit_dam"]
+    },
+    "type_7": {
+      "name": "Counter damage",
+      "formula": "value = max(roundInt(roundInt(ATK - DEF * (1 + DEF_COE)) * COUNTER_DAM), 1)",
+      "attributes_used": ["att", "def", "def_coe", "counter_dam"]
+    },
+    "type_8": {
+      "name": "Caster Current HP",
+      "formula": "value = caster.currentHp",
+      "attributes_used": ["currentHp (caster)"]
+    },
+    "type_9": {
+      "name": "Caster Max HP",
+      "formula": "value = caster.getAttrib(hp)",
+      "attributes_used": ["hp (caster)"]
+    },
+    "type_10": {
+      "name": "Partner ATK damage",
+      "formula": "ATK_DAM = caster.att_dam; if caster.parent exists and not callType: ATK = parent.att; partner_dam = caster.partner_dam; partner_dam_extra = caster.partner_dam_extra; ATK_DAM = round(ATK_DAM * partner_dam * partner_dam_extra); value = roundInt(max(roundInt(ATK - DEF * (1 + DEF_COE)), 1) * ATK_DAM)",
+      "attributes_used": ["att", "def", "def_coe", "att_dam", "partner_dam", "partner_dam_extra"]
+    }
+  },
+  "damageFlow": {
+    "heal_path": {
+      "condition": "hpType & Add (bit 1)",
+      "formula": "healAmount = roundInt(baseValue * skillPar); healthTarget(target, healAmount, HealthType.Treat)",
+      "triggers": "HP_Heal skill effects"
+    },
+    "hp_damage_path": {
+      "condition": "calType in [2, 3, 8, 9] OR (calType == 0 AND attribId == hp)",
+      "formula": "damage = roundInt(baseValue * skillPar); damage = roundInt(damage * injuryReduce); if _limit: clamp to [baseDMG * limit[0], baseDMG * limit[1]]",
+      "triggers": "VAMPIRE interaction, HP_Hurt skill effects",
+      "notes": "Bypasses skill damage pipeline (no crit, no resistance, no EXTRA_DAMAGE)"
+    },
+    "skill_damage_path": {
+      "condition": "All other calTypes when not Add",
+      "steps": [
+        "1. baseValue = _calHurt(target, caster) based on calType",
+        "2. damage = round(baseValue * getSkillFactAttrValue(skillPar, skillId, active_skilldamage_par))",
+        "3. Add SKILL_DAMAGE_ADD bonus from caster's buffs",
+        "4. Apply skill_dam_extra multiplier (unless T1045 flag set): damage = roundInt(damage * skill_dam_extra)",
+        "5. If SkillCrit check passes (and not ignored): damage *= round(1 + skill_crit_dam); damage = roundInt(pow(damage, 0.98))",
+        "6. If UseCrit flag and normal crit: critMul = max(1.5, round(crit_dam / max(0.5, crit_def)))",
+        "7. Apply boss_dam: if target is Boss and boss_dam > 0: damage *= round(1 + boss_dam)",
+        "8. Add SKILL_DAMAGE_ADD bonus",
+        "9. Apply RECORD_DAMAGE bonus: damage *= round(1 + round(recordDamage / 10000))",
+        "10. Apply counterDamage multiplier",
+        "11. Apply resistance: resistPar based on calType",
+        "12. Apply calHurt(damage * resistPar, target, caster)",
+        "13. Apply EXTRA_DAMAGE multiplier",
+        "14. Apply GIANT_SLAYER HP-diff bonus",
+        "15. Deal damage via healthTarget",
+        "16. If skill crit: trigger STATE_TRIGER(Skill_Crit) and SKILL_CRIT effects",
+        "17. Apply skillHpsteal for life steal",
+        "18. Apply SKILL_REAL_DAMAGE (true damage as percentage)",
+        "19. Apply VAMPIRE from target's buffs",
+        "20. Trigger HP_Hurt skill effects"
+      ]
+    }
+  },
+  "resistanceByCalType": {
+    "default": "skill_resist via calArmorAndBlock",
+    "type_4_5": "att_resist via calArmorAndBlock",
+    "type_6": "double_hit_def via calArmorAndBlock",
+    "type_7": "counter_def via calArmorAndBlock",
+    "type_10": "partner_resist via calSuppressAndInspire (uses parent as reference)"
+  },
+  "allAttributesUsed": [
+    "att", "def", "def_coe", "att_dam", "boss_dam", "active_skilldamage_par",
+    "skill_dam_extra", "skill_crit_dam", "crit_dam", "crit_def",
+    "skill_resist", "att_resist", "double_hit_dam", "double_hit_def",
+    "counter_dam", "counter_def", "partner_dam", "partner_dam_extra",
+    "partner_resist", "hp", "total_dam_add", "total_dam_def"
+  ]
+}

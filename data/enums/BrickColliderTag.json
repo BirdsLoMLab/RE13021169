@@ -1,0 +1,26 @@
+{
+  "name": "BrickColliderTag",
+  "sourceLine": 37997,
+  "values": {
+    "Common": 0,
+    "Bottom": 1,
+    "Racket": 2,
+    "Brick": 3,
+    "Item1": 4,
+    "Item2": 5,
+    "Item3": 6,
+    "Ball1": 1001,
+    "Ball2": 1002
+  },
+  "reverseMap": {
+    "0": "Common",
+    "1": "Bottom",
+    "2": "Racket",
+    "3": "Brick",
+    "4": "Item1",
+    "5": "Item2",
+    "6": "Item3",
+    "1001": "Ball1",
+    "1002": "Ball2"
+  }
+}

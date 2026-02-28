@@ -1,0 +1,30 @@
+{
+  "name": "UIViewState",
+  "sourceLine": 446369,
+  "values": {
+    "None": 0,
+    "Loading": 1,
+    "LoadFail": 3,
+    "Init": 5,
+    "Open": 6,
+    "OpenTween": 7,
+    "Close": 8,
+    "Destroy": 9,
+    "CloseTween": 10,
+    "Opening": 11,
+    "Closeing": 12
+  },
+  "reverseMap": {
+    "0": "None",
+    "1": "Loading",
+    "3": "LoadFail",
+    "5": "Init",
+    "6": "Open",
+    "7": "OpenTween",
+    "8": "Close",
+    "9": "Destroy",
+    "10": "CloseTween",
+    "11": "Opening",
+    "12": "Closeing"
+  }
+}

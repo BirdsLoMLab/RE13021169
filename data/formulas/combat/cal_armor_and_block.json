@@ -1,0 +1,66 @@
+{
+  "name": "calArmorAndBlock",
+  "sourceLine": 322773,
+  "description": "Pierce/Block probability layer. Randomly determines whether attacker pierces (reduces) or defender blocks (increases) the resistance value. Used for player-type damage (att_resist, double_hit_def, counter_def, skill_resist).",
+  "parameters": {
+    "defender": "Unit receiving damage (provides block stats)",
+    "attacker": "Unit dealing damage (provides armor penetration stats)",
+    "resistance": "Base resistance value to modify",
+    "attrib_key": "The attribute key for the resistance (used for up_limit config lookup)"
+  },
+  "attributes_used": {
+    "attacker": ["armor_penetration", "armor_penetration_rate", "ignore_block"],
+    "defender": ["ignore_armor_penetration", "block", "block_rate"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Build probability ranges for pierce and block",
+      "formula": "ranges = [0, 0, 10000]"
+    },
+    {
+      "step": 2,
+      "description": "Calculate pierce probability (only if armor_pen > ignore_armor_pen)",
+      "formula": "if (armor_penetration > ignore_armor_penetration): ranges[0] = roundInt(10000 * armor_penetration_rate)"
+    },
+    {
+      "step": 3,
+      "description": "Calculate block probability (only if block > ignore_block), stacked after pierce range",
+      "formula": "if (block > ignore_block): ranges[1] = ranges[0] + roundInt(10000 * block_rate)"
+    },
+    {
+      "step": 4,
+      "description": "Roll random number and determine outcome",
+      "formula": "rand = randomInt(0, 10000); if rand <= ranges[0]: outcome = Pierce(0); else if rand <= ranges[1]: outcome = Block(1); else: outcome = Neither(2)"
+    },
+    {
+      "step": 5,
+      "description": "Apply pierce or block to resistance",
+      "branches": {
+        "Pierce (outcome=0)": {
+          "formula": "resistance = round(resistance - min(0.5, (armor_penetration - ignore_armor_penetration) / 10000))",
+          "note": "Reduces resistance; pierce amount capped at 0.5 (50%)"
+        },
+        "Block (outcome=1)": {
+          "formula": "resistance = round(resistance + min(0.5, (block - ignore_block) / 10000))",
+          "note": "Increases resistance; block amount capped at 0.5 (50%)"
+        },
+        "Neither (outcome=2)": {
+          "formula": "resistance unchanged"
+        }
+      }
+    },
+    {
+      "step": 6,
+      "description": "Apply up_limit cap from attribute config",
+      "formula": "if (config.up_limit != 0): cap = (config.num_type == 2) ? round(up_limit / 10000) : up_limit; resistance = min(resistance, cap)"
+    }
+  ],
+  "notes": [
+    "Pierce and block are mutually exclusive per hit — only one can trigger",
+    "The probability check uses <= comparison, so the ranges are inclusive",
+    "If armor_penetration <= ignore_armor_penetration, pierce cannot trigger (range stays 0)",
+    "If block <= ignore_block, block cannot trigger (range stays same as pierce range)",
+    "The up_limit is read from the attribute metadata config of the resistance attribute"
+  ]
+}

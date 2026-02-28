@@ -1,0 +1,34 @@
+{
+  "className": "ConfigAds_reward",
+  "tableName": "Ads_reward",
+  "sourceLine": 216673,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "des",
+      "index": 2,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

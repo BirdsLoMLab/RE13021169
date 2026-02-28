@@ -1,0 +1,16 @@
+{
+  "name": "CareerType",
+  "sourceLine": 162822,
+  "values": {
+    "None": 0,
+    "Warrior": 1,
+    "Master": 2,
+    "Archer": 3
+  },
+  "reverseMap": {
+    "0": "None",
+    "1": "Warrior",
+    "2": "Master",
+    "3": "Archer"
+  }
+}

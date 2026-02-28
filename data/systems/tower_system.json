@@ -1,0 +1,51 @@
+{
+  "system": "Tower Defense System",
+  "description": "A tower defense mode where players defend against waves of monsters. Towers can be upgraded through levels, and different monster types have varying HP and point values.",
+  "configTables": {
+    "ConfigTowerlevel": {
+      "sourceLine": 266127,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "description": "Tower level definitions. Each level specifies the monsters that appear in that wave.",
+      "fields": {
+        "id": { "type": "number", "description": "Tower level/wave ID" },
+        "num": { "type": "optional_array", "description": "Monster composition for this wave [[monsterType, count, ...], ...]" }
+      }
+    },
+    "ConfigTowerdefence": {
+      "sourceLine": 266076,
+      "mainKey": "id",
+      "indexedKeys": ["id", "lev"],
+      "fieldCount": 4,
+      "description": "Tower defense tower upgrade definitions. Controls tower stats per level.",
+      "fields": {
+        "id": { "type": "number", "description": "Tower type ID" },
+        "lev": { "type": "number", "description": "Tower upgrade level" },
+        "point": { "type": "number", "description": "Points/cost required for this upgrade" },
+        "num": { "type": "number", "description": "Numeric stat value at this level (e.g. damage, range)" }
+      }
+    },
+    "ConfigTowermonster": {
+      "sourceLine": 266169,
+      "mainKey": "type",
+      "fieldCount": 3,
+      "description": "Tower defense monster type definitions.",
+      "fields": {
+        "type": { "type": "number", "description": "Monster type ID" },
+        "hp": { "type": "number", "description": "Monster HP" },
+        "point": { "type": "number", "description": "Points awarded for killing this monster" }
+      }
+    }
+  },
+  "mechanics": {
+    "wave_system": {
+      "description": "Towerlevel defines the monster composition per wave. Each wave ID maps to an array of monster spawns. Players must survive all waves to clear the level."
+    },
+    "tower_upgrades": {
+      "description": "Towers (Towerdefence) can be upgraded using points earned from killing monsters. Each tower type has multiple levels with increasing stats and costs."
+    },
+    "scoring": {
+      "description": "Monsters award points (Towermonster.point) when killed. These points are used both as score and as currency for tower upgrades (Towerdefence.point)."
+    }
+  }
+}

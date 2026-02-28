@@ -1,0 +1,16 @@
+{
+  "name": "AssetPoolState",
+  "sourceLine": 182739,
+  "values": {
+    "Useing": 0,
+    "Pool": 1,
+    "WaitFree": 2,
+    "Destroy": 3
+  },
+  "reverseMap": {
+    "0": "Useing",
+    "1": "Pool",
+    "2": "WaitFree",
+    "3": "Destroy"
+  }
+}

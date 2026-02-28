@@ -1,0 +1,221 @@
+{
+  "system": "Relic, Fate, Ring, and Statue Systems",
+  "description": "Collection-based progression systems that provide passive stat bonuses and combat effects. Relics are equippable artifacts, Fates are collectible cards with fusion mechanics, Rings provide base skills, and Statues provide permanent stat investment.",
+  "configTables": {
+    "ConfigRelic": {
+      "sourceLine": 254905,
+      "mainKey": "id",
+      "indexedKeys": ["id", "level"],
+      "fieldCount": 12,
+      "description": "Relic definitions with per-level data. Relics provide equip bonuses, ownership bonuses, and equip effects.",
+      "fields": {
+        "id": { "type": "number", "description": "Relic ID" },
+        "level": { "type": "number", "description": "Relic level (1-based)" },
+        "name": { "type": "string_ref", "description": "Relic name" },
+        "type": { "type": "number", "description": "Relic type classification" },
+        "desc": { "type": "string_ref", "description": "Description template" },
+        "desc_parm": { "type": "optional_array", "description": "Description format parameters" },
+        "icon": { "type": "number", "description": "Icon asset ID" },
+        "equip": { "type": "optional_array", "description": "Equip stat bonuses [[attrId, value], ...]" },
+        "own": { "type": "optional_array", "description": "Ownership (passive) stat bonuses [[attrId, value], ...]" },
+        "equip_effect": { "type": "optional_array", "description": "Equip effects (skill/buff effects applied when equipped)" },
+        "cost": { "type": "optional_array", "description": "Level-up cost [[itemId, count], ...]" },
+        "power": { "type": "number", "description": "Combat power at this level" }
+      }
+    },
+    "ConfigRelic_pos": {
+      "sourceLine": 254859,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "description": "Relic equipment slot positions.",
+      "fields": {
+        "id": { "type": "number", "description": "Slot position ID" },
+        "name": { "type": "string_ref", "description": "Slot name" },
+        "icon": { "type": "number", "description": "Slot icon" }
+      }
+    },
+    "ConfigRelic_get": {
+      "sourceLine": 254811,
+      "mainKey": "num",
+      "fieldCount": 3,
+      "description": "Relic acquisition/crafting definitions. Defines which relic pool to draw from and the cost.",
+      "fields": {
+        "num": { "type": "number", "description": "Acquisition tier/attempt number" },
+        "relic_pool": { "type": "optional_array", "description": "Pool of possible relic IDs to draw from" },
+        "cost": { "type": "optional_array", "description": "Cost to attempt acquisition [[itemId, count], ...]" }
+      }
+    },
+    "ConfigFate": {
+      "sourceLine": 231972,
+      "mainKey": "fate_id",
+      "indexedKeys": ["fate_id", "quality"],
+      "fieldCount": 7,
+      "description": "Fate card base definitions. Fates are collectible cards with quality tiers and mutually exclusive groupings.",
+      "fields": {
+        "fate_id": { "type": "number", "description": "Unique fate ID" },
+        "name": { "type": "string_ref", "description": "Fate name" },
+        "quality": { "type": "number", "description": "Quality/rarity tier" },
+        "mutually_exclusive": { "type": "optional_array", "description": "IDs of fates that cannot be equipped simultaneously" },
+        "icon": { "type": "number", "description": "Icon asset" },
+        "effect": { "type": "number", "description": "Effect ID applied by this fate" },
+        "preview": { "type": "optional_array", "description": "Preview data for UI display" }
+      }
+    },
+    "ConfigFate_level": {
+      "sourceLine": 231902,
+      "mainKey": "fate_id",
+      "indexedKeys": ["fate_id", "level"],
+      "fieldCount": 7,
+      "description": "Fate card per-level data. Controls stat growth, skill unlocks, and upgrade costs.",
+      "fields": {
+        "fate_id": { "type": "number", "description": "Fate ID (FK)" },
+        "level": { "type": "number", "description": "Level" },
+        "expend": { "type": "optional_array", "description": "Upgrade cost" },
+        "attr": { "type": "optional_array", "description": "Stat bonuses [[attrId, value], ...]" },
+        "skill": { "type": "optional_array", "description": "Skills unlocked at this level" },
+        "breakdown_reward": { "type": "optional_array", "description": "Reward for breaking down this fate at this level" },
+        "power": { "type": "number", "description": "Combat power" }
+      }
+    },
+    "ConfigFate_chapter": {
+      "sourceLine": 231675,
+      "mainKey": "id",
+      "indexedKeys": ["id", "index"],
+      "fieldCount": 14,
+      "description": "Fate dungeon chapters for farming fate materials.",
+      "fields": {
+        "id": { "type": "number", "description": "Chapter ID" },
+        "index": { "type": "number", "description": "Stage index" },
+        "power": { "type": "number", "description": "Recommended power" },
+        "level": { "type": "number", "description": "Enemy level" },
+        "map": { "type": "number", "description": "Battle map" },
+        "part_type": { "type": "number", "description": "Part type" },
+        "interval": { "type": "optional_array", "description": "Wave spawn intervals" },
+        "monster_refresh1": { "type": "optional_array", "description": "Wave 1 monster spawns" },
+        "time": { "type": "number", "description": "Time limit" },
+        "first_reward": { "type": "optional_array", "description": "First-clear rewards" },
+        "daily_reward": { "type": "optional_array", "description": "Daily completion rewards" },
+        "difficulty_adjust": { "type": "optional_array", "description": "Difficulty scaling parameters" },
+        "bossModel": { "type": "number", "description": "Boss model ID" },
+        "time_limit": { "type": "number", "description": "Hard time limit" }
+      }
+    },
+    "ConfigFate_draw": {
+      "sourceLine": 231781,
+      "mainKey": "id",
+      "indexedKeys": ["id", "weights"],
+      "fieldCount": 5,
+      "description": "Fate gacha draw pool.",
+      "fields": {
+        "id": { "type": "number", "description": "Draw entry ID" },
+        "type": { "type": "number", "description": "Entry type" },
+        "reward": { "type": "optional_array", "description": "Reward items" },
+        "weights": { "type": "number", "description": "Probability weight" },
+        "is_guaranteed": { "type": "number", "description": "Whether this is a pity/guaranteed entry (0/1)" }
+      }
+    },
+    "ConfigFate_fusion": {
+      "sourceLine": 231838,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "description": "Fate fusion recipes. Combine multiple fates to create a higher-quality fate.",
+      "fields": {
+        "id": { "type": "number", "description": "Fusion recipe ID" },
+        "get_fate_id": { "type": "number", "description": "Resulting fate ID" },
+        "material_fate_id": { "type": "optional_array", "description": "Required material fate IDs" },
+        "passive_skill_group": { "type": "optional_array", "description": "Passive skill group transferred to result" },
+        "desc": { "type": "string_ref", "description": "Fusion description" },
+        "same_kind": { "type": "optional_array", "description": "Same-kind substitution rules" }
+      }
+    },
+    "ConfigRing": {
+      "sourceLine": 255436,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "description": "Ring definitions. Rings are equippable items with dual visual paths.",
+      "fields": {
+        "id": { "type": "number", "description": "Ring ID" },
+        "name": { "type": "string_ref", "description": "Ring name" },
+        "path1": { "type": "number", "description": "Primary model path" },
+        "path2": { "type": "number", "description": "Secondary model path" },
+        "icon1": { "type": "number", "description": "Primary icon" },
+        "icon2": { "type": "number", "description": "Secondary icon" },
+        "quality": { "type": "number", "description": "Quality tier" }
+      }
+    },
+    "ConfigRing_level": {
+      "sourceLine": 255367,
+      "mainKey": "level",
+      "fieldCount": 7,
+      "description": "Ring level progression with stat bonuses and skill unlocks.",
+      "fields": {
+        "level": { "type": "number", "description": "Ring level" },
+        "expend_exp": { "type": "number", "description": "EXP required" },
+        "expend_goods": { "type": "optional_array", "description": "Material cost" },
+        "attr": { "type": "optional_array", "description": "Stat bonuses [[attrId, value], ...]" },
+        "base_skill": { "type": "optional_array", "description": "Base skills unlocked at this level" },
+        "unlock": { "type": "number", "description": "Content unlock flag" },
+        "power": { "type": "number", "description": "Combat power" }
+      }
+    },
+    "ConfigStatue_attr": {
+      "sourceLine": 263229,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "description": "Statue attribute upgrade paths. Each statue type provides different stats.",
+      "fields": {
+        "id": { "type": "number", "description": "Statue attribute ID" },
+        "product": { "type": "number", "description": "Product/statue type" },
+        "attr_id": { "type": "number", "description": "Attribute ID being boosted" },
+        "pro": { "type": "number", "description": "Probability/weight" },
+        "value": { "type": "optional_array", "description": "Value per level [base, increment]" },
+        "power_rate": { "type": "number", "description": "Combat power conversion rate" }
+      }
+    },
+    "ConfigStatue_level": {
+      "sourceLine": 263291,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "description": "Statue level costs and quality upgrade thresholds.",
+      "fields": {
+        "level": { "type": "number", "description": "Statue level" },
+        "expend": { "type": "number", "description": "Currency cost per upgrade at this level" },
+        "pro_quality": { "type": "optional_array", "description": "Quality tier probability thresholds" },
+        "power": { "type": "number", "description": "Combat power at this level" }
+      }
+    },
+    "ConfigStatue_pos": {
+      "sourceLine": 263343,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "description": "Statue slot positions.",
+      "fields": {
+        "id": { "type": "number", "description": "Position ID" },
+        "level": { "type": "number", "description": "Required level to unlock" },
+        "desc": { "type": "string_ref", "description": "Position description" }
+      }
+    },
+    "ConfigStatue_spend": {
+      "sourceLine": 263389,
+      "mainKey": "lock_quantity",
+      "fieldCount": 2,
+      "description": "Statue lock/reroll spending thresholds.",
+      "fields": {
+        "lock_quantity": { "type": "number", "description": "Number of locked attributes" },
+        "spend": { "type": "optional_array", "description": "Cost for reroll with this many locks" }
+      }
+    }
+  },
+  "mechanics": {
+    "relic_equip": {
+      "description": "Relics are equipped into Relic_pos slots. Each relic provides both 'equip' bonuses (active when equipped) and 'own' bonuses (passive from ownership). equip_effect can grant skill/buff effects.",
+      "network_protocol": "relic.relic_equip_c2s / relic.relic_equip_s2c"
+    },
+    "fate_fusion": {
+      "description": "Fates can be fused using the Fate_fusion recipes. Multiple lower-quality fates combine into a higher-quality one, potentially transferring passive skill groups. mutually_exclusive prevents equipping conflicting fates."
+    },
+    "statue_investment": {
+      "description": "Statues use a random roll system. Each upgrade spends currency (Statue_level.expend) and rolls from the Statue_attr pool with probability weights. Players can lock desirable attributes at extra cost (Statue_spend) to prevent rerolling them."
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "tabType",
+  "sourceLine": 368582,
+  "values": {
+    "suit": 1,
+    "weapon": 2,
+    "headgear": 3,
+    "fashion": 4,
+    "box": 5
+  },
+  "reverseMap": {
+    "1": "suit",
+    "2": "weapon",
+    "3": "headgear",
+    "4": "fashion",
+    "5": "box"
+  }
+}

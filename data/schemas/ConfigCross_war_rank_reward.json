@@ -1,0 +1,42 @@
+{
+  "className": "ConfigCross_war_rank_reward",
+  "tableName": "Cross_war_rank_reward",
+  "sourceLine": 225656,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "type": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "range",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "className": "ConfigStrategy_activity_milestone",
+  "tableName": "Strategy_activity_milestone",
+  "sourceLine": 263676,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "reward": 3
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "condition",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "get_way",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}
