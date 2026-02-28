@@ -1,0 +1,55 @@
+{
+  "className": "ConfigAdventure_space_item_book",
+  "tableName": "Adventure_space_item_book",
+  "sourceLine": 217061,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "star_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "next_id",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "thrid_id",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "last_id",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "className": "ConfigSeason_ship_draw",
+  "tableName": "Season_ship_draw",
+  "sourceLine": 259347,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "quality": 5
+  },
+  "usesConfigKey": false,
+  "fieldCount": 7,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "weight",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_jackpot",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limited",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "quality",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "fragment",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

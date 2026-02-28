@@ -1,0 +1,139 @@
+{
+  "className": "ConfigSkilleffcet",
+  "tableName": "Skilleffcet",
+  "sourceLine": 261711,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 18,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "trapId",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "targetType",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "targetRange",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bullet",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "execute",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "buffGroup",
+      "index": 7,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "randomType",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "buffRate",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "buffGroup2",
+      "index": 10,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skillEffect",
+      "index": 11,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skillEffect_rate",
+      "index": 12,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "effctId",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "shake",
+      "index": 14,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skillPar",
+      "index": 15,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "effectDelay",
+      "index": 16,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "soundid",
+      "index": 17,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

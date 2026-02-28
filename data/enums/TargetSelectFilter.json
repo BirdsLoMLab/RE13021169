@@ -1,0 +1,38 @@
+{
+  "name": "TargetSelectFilter",
+  "sourceLine": 278617,
+  "values": {
+    "NotFilter": 0,
+    "NearTarget": 1,
+    "FarTarget": 2,
+    "RandomTarget": 3,
+    "MaxHpTarget": 4,
+    "MinHpTarget": 5,
+    "MaxHpValueTarget": 6,
+    "MinHpValueTarget": 7,
+    "HpSmallTarget": 8,
+    "HpBigTarget": 9,
+    "LessHpValueTarget": 10,
+    "MoreHpValueTarget": 11,
+    "LessAttTarget": 12,
+    "MoreAttTarget": 13,
+    "MainUnitTarget": 14
+  },
+  "reverseMap": {
+    "0": "NotFilter",
+    "1": "NearTarget",
+    "2": "FarTarget",
+    "3": "RandomTarget",
+    "4": "MaxHpTarget",
+    "5": "MinHpTarget",
+    "6": "MaxHpValueTarget",
+    "7": "MinHpValueTarget",
+    "8": "HpSmallTarget",
+    "9": "HpBigTarget",
+    "10": "LessHpValueTarget",
+    "11": "MoreHpValueTarget",
+    "12": "LessAttTarget",
+    "13": "MoreAttTarget",
+    "14": "MainUnitTarget"
+  }
+}

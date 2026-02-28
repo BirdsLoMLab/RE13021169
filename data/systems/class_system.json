@@ -1,0 +1,173 @@
+{
+  "system_name": "Class / Job System",
+  "description": "The class/job system defines character archetypes, their skills, progression paths, and determines equipment compatibility via the 'wearable' field.",
+  "source_config": {
+    "config_class": "ConfigJobs",
+    "table_name": "Jobs",
+    "source_line": 239943,
+    "main_key": "id",
+    "indexed_keys": ["id", "type"]
+  },
+  "schema": {
+    "fields": {
+      "id": {
+        "type": "number",
+        "description": "Unique job identifier (e.g., 1001, 1002, etc.)"
+      },
+      "name": {
+        "type": "string_ref",
+        "description": "Localized job name"
+      },
+      "type": {
+        "type": "number",
+        "description": "Job type/category identifier. Used to match equipment wearable field. Equipment whose wearable == job.type can be worn by this class."
+      },
+      "job_pos": {
+        "type": "string_ref",
+        "description": "Job position description"
+      },
+      "desc": {
+        "type": "string_ref",
+        "description": "Job description text"
+      },
+      "skill": {
+        "type": "optional_array",
+        "description": "Array of active skill IDs available to this job"
+      },
+      "passive_skill": {
+        "type": "optional_array",
+        "description": "Array of passive skill IDs for this job"
+      },
+      "passive_imprint": {
+        "type": "optional_array",
+        "description": "Array of passive imprint skill IDs"
+      },
+      "change_times": {
+        "type": "number",
+        "description": "Number of job change/promotion tiers this job represents"
+      },
+      "job_change": {
+        "type": "optional_array",
+        "description": "Array of job IDs that this job can change/promote into"
+      },
+      "model": {
+        "type": "number",
+        "description": "Unit model ID used for visual rendering (references ConfigUnit)"
+      },
+      "fashion": {
+        "type": "optional_array",
+        "description": "Fashion/appearance data for the job"
+      },
+      "recommend_skill": {
+        "type": "optional_array",
+        "description": "Recommended active skills for this job"
+      },
+      "recommend_pet": {
+        "type": "optional_array",
+        "description": "Recommended pets for this job"
+      },
+      "transmog_list": {
+        "type": "optional_array",
+        "description": "List of transmog/cosmetic appearances available"
+      },
+      "default_transomg": {
+        "type": "optional_array",
+        "description": "Default transmog appearance (note: typo in original code)"
+      },
+      "arms_icon": {
+        "type": "number",
+        "description": "Icon ID for the job's weapon type"
+      },
+      "arms_name": {
+        "type": "string_ref",
+        "description": "Name of the weapon type this job uses"
+      },
+      "arms_desc": {
+        "type": "string_ref",
+        "description": "Description of the weapon type"
+      },
+      "job_desc": {
+        "type": "string_ref",
+        "description": "Extended job description"
+      },
+      "front_job": {
+        "type": "number",
+        "description": "Pre-requisite job ID (the job you must have before promoting to this one)"
+      },
+      "unlock": {
+        "type": "number",
+        "description": "Unlock condition value (e.g., level requirement)"
+      },
+      "scale": {
+        "type": "number",
+        "description": "Model display scale factor"
+      },
+      "position": {
+        "type": "optional_array",
+        "description": "Model display position offsets"
+      },
+      "job_icon": {
+        "type": "number",
+        "description": "Icon ID for the job class"
+      },
+      "skin": {
+        "type": "number",
+        "description": "Default skin ID for this job"
+      },
+      "job_sign": {
+        "type": "number",
+        "description": "Job sign/emblem identifier"
+      },
+      "job_class": {
+        "type": "number",
+        "description": "Job class grouping (higher-level archetype classification)"
+      }
+    }
+  },
+  "wakeup_system": {
+    "config_class": "ConfigJobs_wakeup",
+    "table_name": "Jobs_wakeup",
+    "source_line": 239885,
+    "description": "Job awakening/wakeup progression system. Each job has multiple awakening levels that grant bonus stats.",
+    "indexed_keys": ["id", "level"],
+    "fields": {
+      "id": "Job ID reference",
+      "level": "Awakening level",
+      "value_plus": "Array of attribute bonuses granted at this awakening level, format: [[attr_id, value], ...]",
+      "cost": "Array of costs to reach this awakening level, format: [[item_id, amount], ...]",
+      "power": "Combat power value at this awakening level"
+    }
+  },
+  "equipment_relationship": {
+    "description": "Equipment items have a 'wearable' field (from ConfigEquipment). If wearable == 0, any job can wear it. Otherwise, wearable must match the job's 'type' field.",
+    "code_reference": {
+      "file": "game_script_pretty.js",
+      "line": 112151,
+      "logic": "var n = e.wearable || 0; if (0 == n) /* any class can wear */; else { /* compare with configJobs.getDataByKey(job_id).type */ }"
+    },
+    "wearable_check": "configJobs.getDataByKey(player_job_id).type == equipment.wearable"
+  },
+  "job_figure_usage": {
+    "description": "The player's figure data contains a 'job_figure' field that stores the current job ID. This is used to look up the job config and determine the character model.",
+    "code_references": [
+      {
+        "line": 187359,
+        "code": "var f = configJobs.getDataByKey(t.figure.job_figure).model"
+      },
+      {
+        "line": 187423,
+        "code": "var l = configJobs.getDataByKey(i.figure.job_figure).model"
+      }
+    ]
+  },
+  "job_passive_skill_slots": {
+    "description": "Global config defines the number of passive skill slots per job level tier",
+    "config_value": [1, 1, 2, 3, 4],
+    "source_line": 234509,
+    "interpretation": "job_passive_skill: [tier0_slots, tier1_slots, tier2_slots, tier3_slots, tier4_slots]"
+  },
+  "promotion_chain": {
+    "description": "Jobs form a promotion chain via the front_job field. A job with front_job=0 is a base/starting job. The job_change array lists possible next promotions.",
+    "flow": "Starting Job -> (job_change array) -> Advanced Job -> (job_change array) -> Expert Job -> ..."
+  }
+}

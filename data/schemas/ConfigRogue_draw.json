@@ -1,0 +1,125 @@
+{
+  "className": "ConfigRogue_draw",
+  "tableName": "Rogue_draw",
+  "sourceLine": 255775,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 16,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "weight",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "guaranteed",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limited",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "order",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_jackpot",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "num",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "quality",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "show_picture",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "scale",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pos",
+      "index": 11,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "rotate",
+      "index": 12,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_precious",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward_replace",
+      "index": 14,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "replace_unlock",
+      "index": 15,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

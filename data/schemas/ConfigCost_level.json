@@ -1,0 +1,111 @@
+{
+  "className": "ConfigCost_level",
+  "tableName": "Cost_level",
+  "sourceLine": 224469,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 14,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "USD",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "HKD",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "IDR",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "SGD",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "THB",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "PHP",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "VND",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "MYR",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "EUR",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "RUB",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "GBP",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "star",
+      "index": 12,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "beans",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

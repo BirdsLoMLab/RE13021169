@@ -1,0 +1,36 @@
+{
+  "name": "checkCounterAct",
+  "sourceLine": 322926,
+  "description": "Checks if a counter-attack triggers. Rolls against the effective counter probability.",
+  "parameters": {
+    "attacker": "Unit that may perform a counter-attack",
+    "defender": "Unit that originally attacked"
+  },
+  "attributes_used": {
+    "attacker": ["counter"],
+    "defender": ["ignore_counter"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get counter rate and defender's ignore value",
+      "formula": "counter = attacker.counter, ignore = defender.ignore_counter"
+    },
+    {
+      "step": 2,
+      "description": "Calculate effective probability (out of 10000)",
+      "formula": "probability = roundInt(10000 * max(round(counter - ignore), 0))"
+    },
+    {
+      "step": 3,
+      "description": "Early exit if no chance",
+      "formula": "if probability <= 0: return false"
+    },
+    {
+      "step": 4,
+      "description": "Roll and compare",
+      "formula": "roll = randomInt(0, 10000); return (roll <= probability)"
+    }
+  ],
+  "simplified_formula": "triggers if randomInt(0, 10000) <= roundInt(10000 * max(counter - ignore_counter, 0))"
+}

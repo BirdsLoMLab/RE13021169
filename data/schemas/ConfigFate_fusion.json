@@ -1,0 +1,55 @@
+{
+  "className": "ConfigFate_fusion",
+  "tableName": "Fate_fusion",
+  "sourceLine": 231838,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "get_fate_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "material_fate_id",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "passive_skill_group",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "desc",
+      "index": 4,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "same_kind",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

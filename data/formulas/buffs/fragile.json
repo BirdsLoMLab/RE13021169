@@ -1,0 +1,47 @@
+{
+  "name": "BuffSkillFragileAdd",
+  "sourceLine": 195433,
+  "description": "Fragile Effect — adds bonus damage based on attacker's attribute or current HP. Applied to DEFENDER as a debuff, checked by attacker during damage calculation.",
+  "buffMapKey": "fragile_effect",
+  "buffGroupType": "FRAGILE_EFFECT",
+
+  "usage_context": {
+    "description": "Applied to defender. During normal attack, counter, and skill damage, the attacker iterates over defender's FRAGILE_EFFECT buffs and adds the result to damage.",
+    "code_pattern": "for each fragile in defender.getBuffByType(FRAGILE_EFFECT): damage += fragile.calDamage(damage, attacker)",
+    "applied_in": [
+      "SkillHandleNormal (line ~429647) — normal attacks, counters",
+      "SkillHandleNormal (line ~429948) — skill attacks",
+      "SkillHandleNormal (line ~430000) — additional skill attacks"
+    ]
+  },
+
+  "alloc_parameters": {
+    "sourceLine": 195460,
+    "config": "Buff config from ConfigBuff/ConfigSpecil_buff",
+    "_calType": "config.param1 — calculation type (0 = attribute-based, 1 = HP-based)",
+    "_attribId": "config.param2 — attribute ID to use when calType=0"
+  },
+
+  "calDamage": {
+    "sourceLine": 195457,
+    "parameters": {
+      "t": "Current damage value (unused in calculation, bonus is added separately)",
+      "n": "Attacker unit"
+    },
+    "branches": {
+      "calType_0": {
+        "description": "Attribute-based: bonus = attacker's attribute × skillPar",
+        "formula": "bonus = roundInt(attacker.getAttrib(attribId) * skillPar)",
+        "example": "If attribId=1001 (ATK) and skillPar=0.2, adds 20% of attacker's ATK as flat damage"
+      },
+      "calType_1": {
+        "description": "HP-based: bonus = attacker's current HP × skillPar",
+        "formula": "bonus = roundInt(attacker.currenHp * skillPar)",
+        "example": "If skillPar=0.1, adds 10% of attacker's current HP as flat damage"
+      }
+    },
+    "return": "Flat bonus damage to be ADDED to existing damage"
+  },
+
+  "key_distinction": "Unlike EXTRA_DAMAGE which multiplies, FRAGILE_EFFECT adds a flat bonus based on attacker stats. It's checked on the DEFENDER (as a debuff), not the attacker."
+}

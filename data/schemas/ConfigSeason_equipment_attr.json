@@ -1,0 +1,55 @@
+{
+  "className": "ConfigSeason_equipment_attr",
+  "tableName": "Season_equipment_attr",
+  "sourceLine": 257626,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "attr_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pro",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "value",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

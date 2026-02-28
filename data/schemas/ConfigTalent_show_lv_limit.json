@@ -1,0 +1,34 @@
+{
+  "className": "ConfigTalent_show_lv_limit",
+  "tableName": "Talent_show_lv_limit",
+  "sourceLine": 264465,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "time",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "num",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "ItemIdDefine",
+  "sourceLine": 184212,
+  "values": {
+    "Gold": 1,
+    "Diamond": 2,
+    "GuildExp": 8,
+    "FakeRechare": 999
+  },
+  "reverseMap": {
+    "1": "Gold",
+    "2": "Diamond",
+    "8": "GuildExp",
+    "999": "FakeRechare"
+  }
+}

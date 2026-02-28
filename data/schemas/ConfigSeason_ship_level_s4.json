@@ -1,0 +1,55 @@
+{
+  "className": "ConfigSeason_ship_level_s4",
+  "tableName": "Season_ship_level_s4",
+  "sourceLine": 259414,
+  "mainKey": "level",
+  "indexedKeys": {
+    "level": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "level",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "expend_exp",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "expend_goods",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "attr",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "cost",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "power",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

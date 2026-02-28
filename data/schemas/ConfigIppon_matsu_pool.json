@@ -1,0 +1,55 @@
+{
+  "className": "ConfigIppon_matsu_pool",
+  "tableName": "Ippon_matsu_pool",
+  "sourceLine": 239667,
+  "mainKey": "gacha_group",
+  "indexedKeys": {
+    "gacha_group": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "gacha_group",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pull_price",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "black_hole_times",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "act_type",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "act_group",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "title",
+      "index": 5,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

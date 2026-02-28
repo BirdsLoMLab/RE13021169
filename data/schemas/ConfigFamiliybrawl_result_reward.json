@@ -1,0 +1,62 @@
+{
+  "className": "ConfigFamiliybrawl_result_reward",
+  "tableName": "Familiybrawl_result_reward",
+  "sourceLine": 230580,
+  "mainKey": "group",
+  "indexedKeys": {
+    "group": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 7,
+  "fields": [
+    {
+      "name": "group",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "self_rank_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "self_rank_reward",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "family_rank_id",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "family_rank_reward",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "win_reward",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "lose_reward",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,5695 @@
+{
+  "totalConfigs": 711,
+  "configKey": 24455,
+  "sourceFile": "game_script_pretty.js",
+  "configs": [
+    {
+      "className": "ConfigAchievement",
+      "tableName": "Achievement",
+      "sourceLine": 215618,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAchievement_total",
+      "tableName": "Achievement_total",
+      "sourceLine": 215561,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAct_cohesion_reward",
+      "tableName": "Act_cohesion_reward",
+      "sourceLine": 215701,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAct_guild_pay",
+      "tableName": "Act_guild_pay",
+      "sourceLine": 215763,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAct_login",
+      "tableName": "Act_login",
+      "sourceLine": 215820,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActicity_sheet",
+      "tableName": "Acticity_sheet",
+      "sourceLine": 215882,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_adjust",
+      "tableName": "Activity_adjust",
+      "sourceLine": 215959,
+      "mainKey": "type",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_boss",
+      "tableName": "Activity_boss",
+      "sourceLine": 216057,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_boss_level",
+      "tableName": "Activity_boss_level",
+      "sourceLine": 216006,
+      "mainKey": "boss_id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_control",
+      "tableName": "Activity_control",
+      "sourceLine": 216136,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_rank_reward",
+      "tableName": "Activity_rank_reward",
+      "sourceLine": 216212,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_rank_score",
+      "tableName": "Activity_rank_score",
+      "sourceLine": 216281,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_schedule",
+      "tableName": "Activity_schedule",
+      "sourceLine": 216339,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_task",
+      "tableName": "Activity_task",
+      "sourceLine": 216478,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_task_group",
+      "tableName": "Activity_task_group",
+      "sourceLine": 216425,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_term",
+      "tableName": "Activity_term",
+      "sourceLine": 216541,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigActivity_wartoken_reward",
+      "tableName": "Activity_wartoken_reward",
+      "sourceLine": 216621,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAds",
+      "tableName": "Ads",
+      "sourceLine": 216719,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAds_reward",
+      "tableName": "Ads_reward",
+      "sourceLine": 216673,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_exp_point",
+      "tableName": "Adventure_exp_point",
+      "sourceLine": 216822,
+      "mainKey": "lose",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_level",
+      "tableName": "Adventure_level",
+      "sourceLine": 216873,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_back",
+      "tableName": "Adventure_space_back",
+      "sourceLine": 216942,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_group",
+      "tableName": "Adventure_space_group",
+      "sourceLine": 216989,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_item",
+      "tableName": "Adventure_space_item",
+      "sourceLine": 217122,
+      "mainKey": "id",
+      "fieldCount": 21,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_item_book",
+      "tableName": "Adventure_space_item_book",
+      "sourceLine": 217061,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_job",
+      "tableName": "Adventure_space_job",
+      "sourceLine": 217263,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_level",
+      "tableName": "Adventure_space_level",
+      "sourceLine": 217369,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_number",
+      "tableName": "Adventure_space_number",
+      "sourceLine": 217425,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_rank",
+      "tableName": "Adventure_space_rank",
+      "sourceLine": 217477,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_robot",
+      "tableName": "Adventure_space_robot",
+      "sourceLine": 217565,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_rule",
+      "tableName": "Adventure_space_rule",
+      "sourceLine": 217621,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_space_shop",
+      "tableName": "Adventure_space_shop",
+      "sourceLine": 217703,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAdventure_task",
+      "tableName": "Adventure_task",
+      "sourceLine": 217754,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAlchemy_enemy",
+      "tableName": "Alchemy_enemy",
+      "sourceLine": 217864,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAlchemy_enemy_reward",
+      "tableName": "Alchemy_enemy_reward",
+      "sourceLine": 217812,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAlchemy_main",
+      "tableName": "Alchemy_main",
+      "sourceLine": 217966,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel",
+      "tableName": "Angel",
+      "sourceLine": 218577,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel_array",
+      "tableName": "Angel_array",
+      "sourceLine": 218018,
+      "mainKey": "type",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel_develop",
+      "tableName": "Angel_develop",
+      "sourceLine": 218064,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel_draw",
+      "tableName": "Angel_draw",
+      "sourceLine": 218306,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel_draw_package",
+      "tableName": "Angel_draw_package",
+      "sourceLine": 218110,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel_draw_time_limit",
+      "tableName": "Angel_draw_time_limit",
+      "sourceLine": 218177,
+      "mainKey": "id",
+      "fieldCount": 18,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel_skill",
+      "tableName": "Angel_skill",
+      "sourceLine": 218397,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAngel_star",
+      "tableName": "Angel_star",
+      "sourceLine": 218461,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAni_emoji",
+      "tableName": "Ani_emoji",
+      "sourceLine": 218654,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAppads",
+      "tableName": "Appads",
+      "sourceLine": 218711,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAppearance",
+      "tableName": "Appearance",
+      "sourceLine": 218762,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAppid",
+      "tableName": "Appid",
+      "sourceLine": 218854,
+      "mainKey": "fnchannel",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArchery_chapter",
+      "tableName": "Archery_chapter",
+      "sourceLine": 218900,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact",
+      "tableName": "Artifact",
+      "sourceLine": 219703,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_gem_chapter",
+      "tableName": "Artifact_gem_chapter",
+      "sourceLine": 218989,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_gemattr",
+      "tableName": "Artifact_gemattr",
+      "sourceLine": 219078,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_gemgenerate",
+      "tableName": "Artifact_gemgenerate",
+      "sourceLine": 219152,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_gemlevel",
+      "tableName": "Artifact_gemlevel",
+      "sourceLine": 219206,
+      "mainKey": "quality",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_gemquality",
+      "tableName": "Artifact_gemquality",
+      "sourceLine": 219262,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_gemsets",
+      "tableName": "Artifact_gemsets",
+      "sourceLine": 219335,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_gemslot",
+      "tableName": "Artifact_gemslot",
+      "sourceLine": 219430,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_level",
+      "tableName": "Artifact_level",
+      "sourceLine": 219471,
+      "mainKey": "level",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_preview_chapter",
+      "tableName": "Artifact_preview_chapter",
+      "sourceLine": 219540,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigArtifact_skin",
+      "tableName": "Artifact_skin",
+      "sourceLine": 219639,
+      "mainKey": "artifact_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAttr_source",
+      "tableName": "Attr_source",
+      "sourceLine": 219818,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAttribute",
+      "tableName": "Attribute",
+      "sourceLine": 219864,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAuto_share",
+      "tableName": "Auto_share",
+      "sourceLine": 219955,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigAvatar_frame",
+      "tableName": "Avatar_frame",
+      "sourceLine": 219996,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_book",
+      "tableName": "Back_book",
+      "sourceLine": 220063,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_checkin",
+      "tableName": "Back_checkin",
+      "sourceLine": 220110,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_decoration",
+      "tableName": "Back_decoration",
+      "sourceLine": 220174,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_lamp_attr",
+      "tableName": "Back_lamp_attr",
+      "sourceLine": 220283,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_lamp_chapter",
+      "tableName": "Back_lamp_chapter",
+      "sourceLine": 220329,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_lamp_item",
+      "tableName": "Back_lamp_item",
+      "sourceLine": 220412,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_lamp_map",
+      "tableName": "Back_lamp_map",
+      "sourceLine": 220491,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_lamp_unit",
+      "tableName": "Back_lamp_unit",
+      "sourceLine": 220548,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_level",
+      "tableName": "Back_level",
+      "sourceLine": 220655,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_level_rebate",
+      "tableName": "Back_level_rebate",
+      "sourceLine": 220604,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_mall",
+      "tableName": "Back_mall",
+      "sourceLine": 220728,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_pay_rebate",
+      "tableName": "Back_pay_rebate",
+      "sourceLine": 220776,
+      "mainKey": "number",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_skin",
+      "tableName": "Back_skin",
+      "sourceLine": 220827,
+      "mainKey": "back_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_talent",
+      "tableName": "Back_talent",
+      "sourceLine": 220891,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBack_task",
+      "tableName": "Back_task",
+      "sourceLine": 221004,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBadge",
+      "tableName": "Badge",
+      "sourceLine": 221079,
+      "mainKey": "badge_id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBattle_competition_reward",
+      "tableName": "Battle_competition_reward",
+      "sourceLine": 221168,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBattle_competition_stage",
+      "tableName": "Battle_competition_stage",
+      "sourceLine": 221215,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBattle_competition_task",
+      "tableName": "Battle_competition_task",
+      "sourceLine": 221271,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBattlepass",
+      "tableName": "Battlepass",
+      "sourceLine": 221450,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBattlepass_reward",
+      "tableName": "Battlepass_reward",
+      "sourceLine": 221324,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBattlepass_task",
+      "tableName": "Battlepass_task",
+      "sourceLine": 221388,
+      "mainKey": "task_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBeast_chapter",
+      "tableName": "Beast_chapter",
+      "sourceLine": 221539,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBeast_job",
+      "tableName": "Beast_job",
+      "sourceLine": 221596,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBeast_monster",
+      "tableName": "Beast_monster",
+      "sourceLine": 221652,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBingo",
+      "tableName": "Bingo",
+      "sourceLine": 221729,
+      "mainKey": "type",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBonfire",
+      "tableName": "Bonfire",
+      "sourceLine": 221834,
+      "mainKey": "type",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBonfire_donation_reward",
+      "tableName": "Bonfire_donation_reward",
+      "sourceLine": 221787,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBox_tower_box",
+      "tableName": "Box_tower_box",
+      "sourceLine": 221892,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBox_tower_level",
+      "tableName": "Box_tower_level",
+      "sourceLine": 221959,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBox_tower_reward_preview",
+      "tableName": "Box_tower_reward_preview",
+      "sourceLine": 222038,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBreak_big_prize_preview",
+      "tableName": "Break_big_prize_preview",
+      "sourceLine": 222100,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBreak_cumulative_times",
+      "tableName": "Break_cumulative_times",
+      "sourceLine": 222153,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBreak_gold_egg_layers",
+      "tableName": "Break_gold_egg_layers",
+      "sourceLine": 222205,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBreak_gold_egg_weight",
+      "tableName": "Break_gold_egg_weight",
+      "sourceLine": 222261,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBreakbricks",
+      "tableName": "Breakbricks",
+      "sourceLine": 222370,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBreaklevel",
+      "tableName": "Breaklevel",
+      "sourceLine": 222421,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBuff",
+      "tableName": "Buff",
+      "sourceLine": 222479,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigBullet",
+      "tableName": "Bullet",
+      "sourceLine": 222591,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCapture_slave",
+      "tableName": "Capture_slave",
+      "sourceLine": 222754,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCapture_slave_earnings",
+      "tableName": "Capture_slave_earnings",
+      "sourceLine": 222662,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCapture_slave_pvp_debuff",
+      "tableName": "Capture_slave_pvp_debuff",
+      "sourceLine": 222708,
+      "mainKey": "num",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCard_card",
+      "tableName": "Card_card",
+      "sourceLine": 222872,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCard_level",
+      "tableName": "Card_level",
+      "sourceLine": 222914,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCard_pool",
+      "tableName": "Card_pool",
+      "sourceLine": 223040,
+      "mainKey": "type",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCard_pool_type",
+      "tableName": "Card_pool_type",
+      "sourceLine": 222977,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCelebration_active_chapter",
+      "tableName": "Celebration_active_chapter",
+      "sourceLine": 223092,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigChapter",
+      "tableName": "Chapter",
+      "sourceLine": 223322,
+      "mainKey": "id",
+      "fieldCount": 24,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigChapter_type",
+      "tableName": "Chapter_type",
+      "sourceLine": 223210,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigChat_bubble",
+      "tableName": "Chat_bubble",
+      "sourceLine": 223483,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigChat_keywords",
+      "tableName": "Chat_keywords",
+      "sourceLine": 223550,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigChristmas_pack",
+      "tableName": "Christmas_pack",
+      "sourceLine": 223612,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigChristmas_tree",
+      "tableName": "Christmas_tree",
+      "sourceLine": 223696,
+      "mainKey": "lv",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCircle_label",
+      "tableName": "Circle_label",
+      "sourceLine": 223743,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCircle_location",
+      "tableName": "Circle_location",
+      "sourceLine": 223825,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCircle_location_small",
+      "tableName": "Circle_location_small",
+      "sourceLine": 223784,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigClientGlobalDefine",
+      "tableName": null,
+      "sourceLine": 223929,
+      "mainKey": null,
+      "fieldCount": 0,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigClientGlobalHelper",
+      "tableName": null,
+      "sourceLine": 223942,
+      "mainKey": null,
+      "fieldCount": 0,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigClient_global",
+      "tableName": "Client_global",
+      "sourceLine": 223882,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCoin_chapter",
+      "tableName": "Coin_chapter",
+      "sourceLine": 223964,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCollect_cards",
+      "tableName": "Collect_cards",
+      "sourceLine": 224053,
+      "mainKey": "act_type",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigColor",
+      "tableName": "Color",
+      "sourceLine": 224100,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCombat_manual",
+      "tableName": "Combat_manual",
+      "sourceLine": 224171,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCommon_condition",
+      "tableName": "Common_condition",
+      "sourceLine": 224217,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigComplaint",
+      "tableName": "Complaint",
+      "sourceLine": 224268,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCondition",
+      "tableName": "Condition",
+      "sourceLine": 224314,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigConnect_pipe_chapter",
+      "tableName": "Connect_pipe_chapter",
+      "sourceLine": 224365,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigConnect_pipe_grid",
+      "tableName": "Connect_pipe_grid",
+      "sourceLine": 224412,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCost_level",
+      "tableName": "Cost_level",
+      "sourceLine": 224469,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCountdown_box",
+      "tableName": "Countdown_box",
+      "sourceLine": 224570,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCraft_preview",
+      "tableName": "Craft_preview",
+      "sourceLine": 224627,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_limited_rank",
+      "tableName": "Cross_limited_rank",
+      "sourceLine": 224823,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_limited_rank_reward",
+      "tableName": "Cross_limited_rank_reward",
+      "sourceLine": 224681,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_limited_rank_task",
+      "tableName": "Cross_limited_rank_task",
+      "sourceLine": 224745,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_pvp_chapter",
+      "tableName": "Cross_pvp_chapter",
+      "sourceLine": 224900,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_pvp_extra_reward",
+      "tableName": "Cross_pvp_extra_reward",
+      "sourceLine": 225018,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_pvp_grade",
+      "tableName": "Cross_pvp_grade",
+      "sourceLine": 225071,
+      "mainKey": "id",
+      "fieldCount": 20,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_pvp_grading_match",
+      "tableName": "Cross_pvp_grading_match",
+      "sourceLine": 225206,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_pvp_robot",
+      "tableName": "Cross_pvp_robot",
+      "sourceLine": 225252,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_war_head_scale",
+      "tableName": "Cross_war_head_scale",
+      "sourceLine": 225338,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_war_idle_reward",
+      "tableName": "Cross_war_idle_reward",
+      "sourceLine": 225389,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_war_job",
+      "tableName": "Cross_war_job",
+      "sourceLine": 225437,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_war_kv",
+      "tableName": "Cross_war_kv",
+      "sourceLine": 225515,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_war_match",
+      "tableName": "Cross_war_match",
+      "sourceLine": 225557,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_war_point",
+      "tableName": "Cross_war_point",
+      "sourceLine": 225604,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCross_war_rank_reward",
+      "tableName": "Cross_war_rank_reward",
+      "sourceLine": 225656,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCustom_mall",
+      "tableName": "Custom_mall",
+      "sourceLine": 225709,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCut_rope_art",
+      "tableName": "Cut_rope_art",
+      "sourceLine": 225757,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigCut_rope_level",
+      "tableName": "Cut_rope_level",
+      "sourceLine": 225803,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDaily_task",
+      "tableName": "Daily_task",
+      "sourceLine": 225944,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDaily_task_reward",
+      "tableName": "Daily_task_reward",
+      "sourceLine": 225897,
+      "mainKey": "box_id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDanjon_meshi_dinner",
+      "tableName": "Danjon_meshi_dinner",
+      "sourceLine": 226012,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDanjon_meshi_event_preview",
+      "tableName": "Danjon_meshi_event_preview",
+      "sourceLine": 226078,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDanjon_meshi_kv",
+      "tableName": "Danjon_meshi_kv",
+      "sourceLine": 226135,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDanjon_meshi_lv",
+      "tableName": "Danjon_meshi_lv",
+      "sourceLine": 226187,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDanjon_meshi_recipe",
+      "tableName": "Danjon_meshi_recipe",
+      "sourceLine": 226296,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDanjon_meshi_recipe_preview",
+      "tableName": "Danjon_meshi_recipe_preview",
+      "sourceLine": 226254,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDark_trial_chapter",
+      "tableName": "Dark_trial_chapter",
+      "sourceLine": 226344,
+      "mainKey": "id",
+      "fieldCount": 18,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDefault_speed",
+      "tableName": "Default_speed",
+      "sourceLine": 226471,
+      "mainKey": "level",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDialogue",
+      "tableName": "Dialogue",
+      "sourceLine": 226518,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDiamond_chapter",
+      "tableName": "Diamond_chapter",
+      "sourceLine": 226559,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDiamond_mall",
+      "tableName": "Diamond_mall",
+      "sourceLine": 226653,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDifficult_artifact_chapter",
+      "tableName": "Difficult_artifact_chapter",
+      "sourceLine": 226704,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDifficult_chapter_type",
+      "tableName": "Difficult_chapter_type",
+      "sourceLine": 226814,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDifficult_coin_chapter",
+      "tableName": "Difficult_coin_chapter",
+      "sourceLine": 226886,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDifficult_diamond_chapter",
+      "tableName": "Difficult_diamond_chapter",
+      "sourceLine": 226996,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDifficult_mount_chapter",
+      "tableName": "Difficult_mount_chapter",
+      "sourceLine": 227111,
+      "mainKey": "id",
+      "fieldCount": 19,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDiscount_price",
+      "tableName": "Discount_price",
+      "sourceLine": 227243,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDivi",
+      "tableName": "Divi",
+      "sourceLine": 227471,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDivi_reward",
+      "tableName": "Divi_reward",
+      "sourceLine": 227294,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDivi_tree_chapter",
+      "tableName": "Divi_tree_chapter",
+      "sourceLine": 227351,
+      "mainKey": "id",
+      "fieldCount": 17,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouble_cumulative_reward",
+      "tableName": "Double_cumulative_reward",
+      "sourceLine": 227537,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouble_draw",
+      "tableName": "Double_draw",
+      "sourceLine": 227646,
+      "mainKey": "act_type",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouble_draw_guaranteed",
+      "tableName": "Double_draw_guaranteed",
+      "sourceLine": 227594,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouble_ladder_assist_reward",
+      "tableName": "Double_ladder_assist_reward",
+      "sourceLine": 227715,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouble_ladder_chapter",
+      "tableName": "Double_ladder_chapter",
+      "sourceLine": 227757,
+      "mainKey": "id",
+      "fieldCount": 20,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouble_ladder_strategic",
+      "tableName": "Double_ladder_strategic",
+      "sourceLine": 227896,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouble_probabillity",
+      "tableName": "Double_probabillity",
+      "sourceLine": 227972,
+      "mainKey": "reward_id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDouyin_card",
+      "tableName": "Douyin_card",
+      "sourceLine": 228060,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDragon_map_chapter",
+      "tableName": "Dragon_map_chapter",
+      "sourceLine": 228112,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDragon_map_event",
+      "tableName": "Dragon_map_event",
+      "sourceLine": 228230,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDragon_map_guide",
+      "tableName": "Dragon_map_guide",
+      "sourceLine": 228344,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDragon_map_kv",
+      "tableName": "Dragon_map_kv",
+      "sourceLine": 228416,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDragon_map_pvp_damage",
+      "tableName": "Dragon_map_pvp_damage",
+      "sourceLine": 228472,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDragon_map_rank_reward",
+      "tableName": "Dragon_map_rank_reward",
+      "sourceLine": 228524,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigDup",
+      "tableName": "Dup",
+      "sourceLine": 228582,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEffect",
+      "tableName": "Effect",
+      "sourceLine": 228634,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEmoji",
+      "tableName": "Emoji",
+      "sourceLine": 228716,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment",
+      "tableName": "Equipment",
+      "sourceLine": 229175,
+      "mainKey": "id",
+      "fieldCount": 20,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment_advancement",
+      "tableName": "Equipment_advancement",
+      "sourceLine": 228788,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment_attr",
+      "tableName": "Equipment_attr",
+      "sourceLine": 228846,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment_guarantee",
+      "tableName": "Equipment_guarantee",
+      "sourceLine": 228908,
+      "mainKey": "num",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment_level",
+      "tableName": "Equipment_level",
+      "sourceLine": 228960,
+      "mainKey": "part",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment_refinement",
+      "tableName": "Equipment_refinement",
+      "sourceLine": 229012,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment_resonance",
+      "tableName": "Equipment_resonance",
+      "sourceLine": 229060,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEquipment_suit",
+      "tableName": "Equipment_suit",
+      "sourceLine": 229118,
+      "mainKey": "suit_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigErrorInfo",
+      "tableName": "ErrorInfo",
+      "sourceLine": 229309,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_boss_bullet",
+      "tableName": "Escort_boss_bullet",
+      "sourceLine": 229350,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_boss_report",
+      "tableName": "Escort_boss_report",
+      "sourceLine": 229421,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_boss_skill",
+      "tableName": "Escort_boss_skill",
+      "sourceLine": 229462,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_building",
+      "tableName": "Escort_building",
+      "sourceLine": 229560,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_chapter",
+      "tableName": "Escort_chapter",
+      "sourceLine": 229673,
+      "mainKey": "id",
+      "fieldCount": 18,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_chapter_reward",
+      "tableName": "Escort_chapter_reward",
+      "sourceLine": 229606,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_global",
+      "tableName": "Escort_global",
+      "sourceLine": 229801,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_goods",
+      "tableName": "Escort_goods",
+      "sourceLine": 229853,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_monster",
+      "tableName": "Escort_monster",
+      "sourceLine": 229925,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_rank_reward",
+      "tableName": "Escort_rank_reward",
+      "sourceLine": 230002,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEscort_route",
+      "tableName": "Escort_route",
+      "sourceLine": 230060,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEye_item",
+      "tableName": "Eye_item",
+      "sourceLine": 230106,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEye_location",
+      "tableName": "Eye_location",
+      "sourceLine": 230152,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEye_task",
+      "tableName": "Eye_task",
+      "sourceLine": 230242,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigEye_task_group",
+      "tableName": "Eye_task_group",
+      "sourceLine": 230200,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFacebookshare",
+      "tableName": "Facebookshare",
+      "sourceLine": 230294,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFail_tips",
+      "tableName": "Fail_tips",
+      "sourceLine": 230341,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFairy_colors",
+      "tableName": "Fairy_colors",
+      "sourceLine": 230404,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFamiliybrawl",
+      "tableName": "Familiybrawl",
+      "sourceLine": 230648,
+      "mainKey": "group",
+      "fieldCount": 22,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFamiliybrawl_rank",
+      "tableName": "Familiybrawl_rank",
+      "sourceLine": 230509,
+      "mainKey": "group",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFamiliybrawl_rank_reward",
+      "tableName": "Familiybrawl_rank_reward",
+      "sourceLine": 230451,
+      "mainKey": "rank_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFamiliybrawl_result_reward",
+      "tableName": "Familiybrawl_result_reward",
+      "sourceLine": 230580,
+      "mainKey": "group",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFamily_brawl_chapter",
+      "tableName": "Family_brawl_chapter",
+      "sourceLine": 230794,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFamliy_gvg_bufflist",
+      "tableName": "Famliy_gvg_bufflist",
+      "sourceLine": 230912,
+      "mainKey": "buff_id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_action",
+      "tableName": "Farm_action",
+      "sourceLine": 230963,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_buildings",
+      "tableName": "Farm_buildings",
+      "sourceLine": 231071,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_buildings_details",
+      "tableName": "Farm_buildings_details",
+      "sourceLine": 231019,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_greens",
+      "tableName": "Farm_greens",
+      "sourceLine": 231152,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_level",
+      "tableName": "Farm_level",
+      "sourceLine": 231250,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_pos",
+      "tableName": "Farm_pos",
+      "sourceLine": 231302,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_pvp_chapter",
+      "tableName": "Farm_pvp_chapter",
+      "sourceLine": 231349,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFarm_seed",
+      "tableName": "Farm_seed",
+      "sourceLine": 231467,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFashion_mall",
+      "tableName": "Fashion_mall",
+      "sourceLine": 231519,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFashion_skin",
+      "tableName": "Fashion_skin",
+      "sourceLine": 231617,
+      "mainKey": "skin_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFate",
+      "tableName": "Fate",
+      "sourceLine": 231972,
+      "mainKey": "fate_id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFate_chapter",
+      "tableName": "Fate_chapter",
+      "sourceLine": 231675,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFate_draw",
+      "tableName": "Fate_draw",
+      "sourceLine": 231781,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFate_fusion",
+      "tableName": "Fate_fusion",
+      "sourceLine": 231838,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFate_level",
+      "tableName": "Fate_level",
+      "sourceLine": 231902,
+      "mainKey": "fate_id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFavorability",
+      "tableName": "Favorability",
+      "sourceLine": 232138,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFavorability_level",
+      "tableName": "Favorability_level",
+      "sourceLine": 232040,
+      "mainKey": "level",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFish_mission",
+      "tableName": "Fish_mission",
+      "sourceLine": 232194,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFish_ocean",
+      "tableName": "Fish_ocean",
+      "sourceLine": 232268,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFish_species",
+      "tableName": "Fish_species",
+      "sourceLine": 232403,
+      "mainKey": "id",
+      "fieldCount": 19,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFish_species_reward",
+      "tableName": "Fish_species_reward",
+      "sourceLine": 232351,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFish_tackle",
+      "tableName": "Fish_tackle",
+      "sourceLine": 232534,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFish_turntable",
+      "tableName": "Fish_turntable",
+      "sourceLine": 232612,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFlappy_bird",
+      "tableName": "Flappy_bird",
+      "sourceLine": 232669,
+      "mainKey": "score",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly",
+      "tableName": "Fly",
+      "sourceLine": 233576,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_achievement",
+      "tableName": "Fly_achievement",
+      "sourceLine": 232734,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_advance",
+      "tableName": "Fly_advance",
+      "sourceLine": 232812,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_cd",
+      "tableName": "Fly_cd",
+      "sourceLine": 232881,
+      "mainKey": "times",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_egg",
+      "tableName": "Fly_egg",
+      "sourceLine": 232928,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_entry",
+      "tableName": "Fly_entry",
+      "sourceLine": 233089,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_entry_num",
+      "tableName": "Fly_entry_num",
+      "sourceLine": 232991,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_entry_weight",
+      "tableName": "Fly_entry_weight",
+      "sourceLine": 233038,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_evolution_pro",
+      "tableName": "Fly_evolution_pro",
+      "sourceLine": 233185,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_evolution_rate",
+      "tableName": "Fly_evolution_rate",
+      "sourceLine": 233232,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_hybird_template",
+      "tableName": "Fly_hybird_template",
+      "sourceLine": 233274,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_hybrid",
+      "tableName": "Fly_hybrid",
+      "sourceLine": 233357,
+      "mainKey": "id1",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_hybrid_time",
+      "tableName": "Fly_hybrid_time",
+      "sourceLine": 233316,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_level",
+      "tableName": "Fly_level",
+      "sourceLine": 233409,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_remake_cost",
+      "tableName": "Fly_remake_cost",
+      "sourceLine": 233471,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFly_total_achievement",
+      "tableName": "Fly_total_achievement",
+      "sourceLine": 233519,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFood",
+      "tableName": "Food",
+      "sourceLine": 233688,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigForum_checkin",
+      "tableName": "Forum_checkin",
+      "sourceLine": 233750,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigForum_condition",
+      "tableName": "Forum_condition",
+      "sourceLine": 233803,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigForum_task",
+      "tableName": "Forum_task",
+      "sourceLine": 233844,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFountain_preview",
+      "tableName": "Fountain_preview",
+      "sourceLine": 233902,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFund",
+      "tableName": "Fund",
+      "sourceLine": 234024,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigFund_reward",
+      "tableName": "Fund_reward",
+      "sourceLine": 233959,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGamecentre",
+      "tableName": "Gamecentre",
+      "sourceLine": 234105,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGameid",
+      "tableName": "Gameid",
+      "sourceLine": 234172,
+      "mainKey": "game_id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGgbond_bead",
+      "tableName": "Ggbond_bead",
+      "sourceLine": 234218,
+      "mainKey": "bead_id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGgbond_chapter",
+      "tableName": "Ggbond_chapter",
+      "sourceLine": 234269,
+      "mainKey": "chapter_id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGgbond_monster",
+      "tableName": "Ggbond_monster",
+      "sourceLine": 234349,
+      "mainKey": "monster_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGlobal",
+      "tableName": null,
+      "sourceLine": 234405,
+      "mainKey": null,
+      "fieldCount": 0,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGlobalzone",
+      "tableName": "Globalzone",
+      "sourceLine": 237649,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGoldfish_scooping_fish",
+      "tableName": "Goldfish_scooping_fish",
+      "sourceLine": 237690,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGoldfish_scooping_level",
+      "tableName": "Goldfish_scooping_level",
+      "sourceLine": 237777,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGoods",
+      "tableName": "Goods",
+      "sourceLine": 238027,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGoods_refresh",
+      "tableName": "Goods_refresh",
+      "sourceLine": 237849,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGoods_source",
+      "tableName": "Goods_source",
+      "sourceLine": 237930,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuide",
+      "tableName": "Guide",
+      "sourceLine": 238133,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuild_activity",
+      "tableName": "Guild_activity",
+      "sourceLine": 238246,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuild_career",
+      "tableName": "Guild_career",
+      "sourceLine": 238317,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuild_level",
+      "tableName": "Guild_level",
+      "sourceLine": 238403,
+      "mainKey": "level",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuild_log",
+      "tableName": "Guild_log",
+      "sourceLine": 238465,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuild_permission",
+      "tableName": "Guild_permission",
+      "sourceLine": 238573,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuild_permission_show",
+      "tableName": "Guild_permission_show",
+      "sourceLine": 238521,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigGuild_rank",
+      "tableName": "Guild_rank",
+      "sourceLine": 238614,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigHalloween_group_buy",
+      "tableName": "Halloween_group_buy",
+      "sourceLine": 238660,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigHalloween_pvp",
+      "tableName": "Halloween_pvp",
+      "sourceLine": 238744,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigHousekeeper",
+      "tableName": "Housekeeper",
+      "sourceLine": 238987,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigHousekeeper_chapter",
+      "tableName": "Housekeeper_chapter",
+      "sourceLine": 238862,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigHousekeeper_shopping",
+      "tableName": "Housekeeper_shopping",
+      "sourceLine": 238929,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIce_game_daily",
+      "tableName": "Ice_game_daily",
+      "sourceLine": 239044,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIce_random_pet",
+      "tableName": "Ice_random_pet",
+      "sourceLine": 239112,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIcebond_chapter",
+      "tableName": "Icebond_chapter",
+      "sourceLine": 239169,
+      "mainKey": "chapter_id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIdol_show",
+      "tableName": "Idol_show",
+      "sourceLine": 239255,
+      "mainKey": "id",
+      "fieldCount": 18,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIdol_story",
+      "tableName": "Idol_story",
+      "sourceLine": 239377,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIllustrated",
+      "tableName": "Illustrated",
+      "sourceLine": 239439,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigInit_language",
+      "tableName": "Init_language",
+      "sourceLine": 239529,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigInspire",
+      "tableName": "Inspire",
+      "sourceLine": 239615,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIppon_matsu_pool",
+      "tableName": "Ippon_matsu_pool",
+      "sourceLine": 239667,
+      "mainKey": "gacha_group",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIppon_matsu_prob",
+      "tableName": "Ippon_matsu_prob",
+      "sourceLine": 239729,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigIppon_matsu_times",
+      "tableName": "Ippon_matsu_times",
+      "sourceLine": 239828,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigJobs",
+      "tableName": "Jobs",
+      "sourceLine": 239943,
+      "mainKey": "id",
+      "fieldCount": 28,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigJobs_wakeup",
+      "tableName": "Jobs_wakeup",
+      "sourceLine": 239885,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigJump_link",
+      "tableName": "Jump_link",
+      "sourceLine": 240124,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigKf_war_chapter",
+      "tableName": "Kf_war_chapter",
+      "sourceLine": 240309,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigKf_war_chapter_monster",
+      "tableName": "Kf_war_chapter_monster",
+      "sourceLine": 240191,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage",
+      "tableName": "Language",
+      "sourceLine": 241206,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ar",
+      "tableName": "Language_ar",
+      "sourceLine": 240427,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_de",
+      "tableName": "Language_de",
+      "sourceLine": 240468,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_en",
+      "tableName": "Language_en",
+      "sourceLine": 240509,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_es",
+      "tableName": "Language_es",
+      "sourceLine": 240550,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_fr",
+      "tableName": "Language_fr",
+      "sourceLine": 240591,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_it",
+      "tableName": "Language_it",
+      "sourceLine": 240632,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_pt",
+      "tableName": "Language_pt",
+      "sourceLine": 240673,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ru",
+      "tableName": "Language_ru",
+      "sourceLine": 240714,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_tr",
+      "tableName": "Language_tr",
+      "sourceLine": 240755,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui",
+      "tableName": "Language_ui",
+      "sourceLine": 241165,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_ar",
+      "tableName": "Language_ui_ar",
+      "sourceLine": 240796,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_de",
+      "tableName": "Language_ui_de",
+      "sourceLine": 240837,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_en",
+      "tableName": "Language_ui_en",
+      "sourceLine": 240878,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_es",
+      "tableName": "Language_ui_es",
+      "sourceLine": 240919,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_fr",
+      "tableName": "Language_ui_fr",
+      "sourceLine": 240960,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_it",
+      "tableName": "Language_ui_it",
+      "sourceLine": 241001,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_pt",
+      "tableName": "Language_ui_pt",
+      "sourceLine": 241042,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_ru",
+      "tableName": "Language_ui_ru",
+      "sourceLine": 241083,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguage_ui_tr",
+      "tableName": "Language_ui_tr",
+      "sourceLine": 241124,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLanguageconfig",
+      "tableName": "Languageconfig",
+      "sourceLine": 241247,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_bonus_level",
+      "tableName": "League_gve_bonus_level",
+      "sourceLine": 241288,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_buff_effect",
+      "tableName": "League_gve_buff_effect",
+      "sourceLine": 241350,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter",
+      "tableName": "League_gve_chapter",
+      "sourceLine": 241940,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter_control",
+      "tableName": "League_gve_chapter_control",
+      "sourceLine": 241392,
+      "mainKey": "id",
+      "fieldCount": 21,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter_global",
+      "tableName": null,
+      "sourceLine": 241540,
+      "mainKey": null,
+      "fieldCount": 0,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter_monster",
+      "tableName": "League_gve_chapter_monster",
+      "sourceLine": 241563,
+      "mainKey": "id",
+      "fieldCount": 27,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter_rank",
+      "tableName": "League_gve_chapter_rank",
+      "sourceLine": 241739,
+      "mainKey": "rank_damage",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter_show",
+      "tableName": "League_gve_chapter_show",
+      "sourceLine": 241781,
+      "mainKey": "type",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter_task",
+      "tableName": "League_gve_chapter_task",
+      "sourceLine": 241838,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_chapter_type",
+      "tableName": "League_gve_chapter_type",
+      "sourceLine": 241884,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_event_buff",
+      "tableName": "League_gve_event_buff",
+      "sourceLine": 242052,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_event_game",
+      "tableName": "League_gve_event_game",
+      "sourceLine": 242119,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_map",
+      "tableName": "League_gve_map",
+      "sourceLine": 242258,
+      "mainKey": "map_id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_gve_map_group",
+      "tableName": "League_gve_map_group",
+      "sourceLine": 242202,
+      "mainKey": "map_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_solo_chapter",
+      "tableName": "League_solo_chapter",
+      "sourceLine": 242393,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_solo_chapter_chest",
+      "tableName": "League_solo_chapter_chest",
+      "sourceLine": 242335,
+      "mainKey": "guild_level",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_solo_hard_chapter",
+      "tableName": "League_solo_hard_chapter",
+      "sourceLine": 242486,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_solo_hard_chest",
+      "tableName": "League_solo_hard_chest",
+      "sourceLine": 242579,
+      "mainKey": "guild_level",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_solo_hard_rank",
+      "tableName": "League_solo_hard_rank",
+      "sourceLine": 242637,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeague_solo_hard_turn",
+      "tableName": "League_solo_hard_turn",
+      "sourceLine": 242690,
+      "mainKey": "turn_number",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeft_right_crush",
+      "tableName": "Left_right_crush",
+      "sourceLine": 242813,
+      "mainKey": "difficulty",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLeft_right_crush_block",
+      "tableName": "Left_right_crush_block",
+      "sourceLine": 242757,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLegacy_team_chapter",
+      "tableName": "Legacy_team_chapter",
+      "sourceLine": 242877,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLevel",
+      "tableName": "Level",
+      "sourceLine": 242991,
+      "mainKey": "level",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLikability",
+      "tableName": "Likability",
+      "sourceLine": 243047,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLoop_break_cumulative_times",
+      "tableName": "Loop_break_cumulative_times",
+      "sourceLine": 243131,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLoop_break_gold_egg_weight",
+      "tableName": "Loop_break_gold_egg_weight",
+      "sourceLine": 243188,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLucky_bag_preview",
+      "tableName": "Lucky_bag_preview",
+      "sourceLine": 243303,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLucky_bag_store",
+      "tableName": "Lucky_bag_store",
+      "sourceLine": 243360,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLucky_cat",
+      "tableName": "Lucky_cat",
+      "sourceLine": 243493,
+      "mainKey": "type",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigLucky_cat_reward",
+      "tableName": "Lucky_cat_reward",
+      "sourceLine": 243422,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMail",
+      "tableName": "Mail",
+      "sourceLine": 243556,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMainUnit",
+      "tableName": "MainUnit",
+      "sourceLine": 243778,
+      "mainKey": "id",
+      "fieldCount": 90,
+      "usesConfigKey": true
+    },
+    {
+      "className": "ConfigMain_task",
+      "tableName": "Main_task",
+      "sourceLine": 243617,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMainicon",
+      "tableName": "Mainicon",
+      "sourceLine": 243696,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMall",
+      "tableName": "Mall",
+      "sourceLine": 244265,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMandela_grass_chapter",
+      "tableName": "Mandela_grass_chapter",
+      "sourceLine": 244365,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMap",
+      "tableName": "Map",
+      "sourceLine": 244452,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMario_main",
+      "tableName": "Mario_main",
+      "sourceLine": 244510,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMario_milestone",
+      "tableName": "Mario_milestone",
+      "sourceLine": 244578,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMarry",
+      "tableName": "Marry",
+      "sourceLine": 244732,
+      "mainKey": "id",
+      "fieldCount": 24,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMarry_anniversary",
+      "tableName": "Marry_anniversary",
+      "sourceLine": 244632,
+      "mainKey": "time",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMarry_task",
+      "tableName": "Marry_task",
+      "sourceLine": 244679,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMayday_lottery",
+      "tableName": "Mayday_lottery",
+      "sourceLine": 244899,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMbti",
+      "tableName": "Mbti",
+      "sourceLine": 244982,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMerge",
+      "tableName": "Merge",
+      "sourceLine": 245420,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMerge_box",
+      "tableName": "Merge_box",
+      "sourceLine": 245023,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMerge_card",
+      "tableName": "Merge_card",
+      "sourceLine": 245079,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMerge_element",
+      "tableName": "Merge_element",
+      "sourceLine": 245130,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMerge_level",
+      "tableName": "Merge_level",
+      "sourceLine": 245196,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMerge_order",
+      "tableName": "Merge_order",
+      "sourceLine": 245315,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMerge_pet",
+      "tableName": "Merge_pet",
+      "sourceLine": 245379,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMgr",
+      "tableName": null,
+      "sourceLine": 245468,
+      "mainKey": null,
+      "fieldCount": 0,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMine",
+      "tableName": "Mine",
+      "sourceLine": 245919,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMine_add",
+      "tableName": "Mine_add",
+      "sourceLine": 245596,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMine_grid",
+      "tableName": "Mine_grid",
+      "sourceLine": 245644,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMine_hole_auto",
+      "tableName": "Mine_hole_auto",
+      "sourceLine": 245701,
+      "mainKey": "id",
+      "fieldCount": 1,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMine_hole_reward",
+      "tableName": "Mine_hole_reward",
+      "sourceLine": 245737,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMine_hole_type",
+      "tableName": "Mine_hole_type",
+      "sourceLine": 245789,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMine_template",
+      "tableName": "Mine_template",
+      "sourceLine": 245872,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMining_config",
+      "tableName": "Mining_config",
+      "sourceLine": 245967,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMining_item",
+      "tableName": "Mining_item",
+      "sourceLine": 246014,
+      "mainKey": "level",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMining_level",
+      "tableName": "Mining_level",
+      "sourceLine": 246075,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMining_main",
+      "tableName": "Mining_main",
+      "sourceLine": 246165,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMining_reward",
+      "tableName": "Mining_reward",
+      "sourceLine": 246217,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMining_soil",
+      "tableName": "Mining_soil",
+      "sourceLine": 246275,
+      "mainKey": "level",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMix",
+      "tableName": "Mix",
+      "sourceLine": 246347,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMole_enemy",
+      "tableName": "Mole_enemy",
+      "sourceLine": 246403,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMole_hammer",
+      "tableName": "Mole_hammer",
+      "sourceLine": 246504,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMole_level",
+      "tableName": "Mole_level",
+      "sourceLine": 246601,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMole_main",
+      "tableName": "Mole_main",
+      "sourceLine": 246706,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMonopoly",
+      "tableName": "Monopoly",
+      "sourceLine": 246884,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMonopoly_random",
+      "tableName": "Monopoly_random",
+      "sourceLine": 246785,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMonopoly_turnreward",
+      "tableName": "Monopoly_turnreward",
+      "sourceLine": 246832,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMonster",
+      "tableName": "Monster",
+      "sourceLine": 247173,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMonster_buff_chapter",
+      "tableName": "Monster_buff_chapter",
+      "sourceLine": 246974,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMonster_pve_chapter",
+      "tableName": "Monster_pve_chapter",
+      "sourceLine": 247036,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMonster_pve_main",
+      "tableName": "Monster_pve_main",
+      "sourceLine": 247112,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMoonfestival_bullet",
+      "tableName": "Moonfestival_bullet",
+      "sourceLine": 247224,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMoonfestival_card",
+      "tableName": "Moonfestival_card",
+      "sourceLine": 247316,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMoonfestival_riddle",
+      "tableName": "Moonfestival_riddle",
+      "sourceLine": 247374,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMoonfestival_search",
+      "tableName": "Moonfestival_search",
+      "sourceLine": 247463,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMoonfestival_stage",
+      "tableName": "Moonfestival_stage",
+      "sourceLine": 247546,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMoonfestival_stagetemplate",
+      "tableName": "Moonfestival_stagetemplate",
+      "sourceLine": 247604,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMoonfestival_unit",
+      "tableName": "Moonfestival_unit",
+      "sourceLine": 247646,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount",
+      "tableName": "Mount",
+      "sourceLine": 248453,
+      "mainKey": "id",
+      "fieldCount": 24,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_ability",
+      "tableName": "Mount_ability",
+      "sourceLine": 247718,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_abilitycost",
+      "tableName": "Mount_abilitycost",
+      "sourceLine": 247770,
+      "mainKey": "total_level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_chapter",
+      "tableName": "Mount_chapter",
+      "sourceLine": 247878,
+      "mainKey": "id",
+      "fieldCount": 17,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_chapter_bufflist",
+      "tableName": "Mount_chapter_bufflist",
+      "sourceLine": 247822,
+      "mainKey": "mount_buff_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_draw",
+      "tableName": "Mount_draw",
+      "sourceLine": 248163,
+      "mainKey": "id",
+      "fieldCount": 21,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_draw_cost_get",
+      "tableName": "Mount_draw_cost_get",
+      "sourceLine": 248001,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_draw_cumulative_times",
+      "tableName": "Mount_draw_cumulative_times",
+      "sourceLine": 248049,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_draw_guaranteed",
+      "tableName": "Mount_draw_guaranteed",
+      "sourceLine": 248106,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_level",
+      "tableName": "Mount_level",
+      "sourceLine": 248305,
+      "mainKey": "level",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMount_skin",
+      "tableName": "Mount_skin",
+      "sourceLine": 248389,
+      "mainKey": "mount_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMusic_main",
+      "tableName": "Music_main",
+      "sourceLine": 248609,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigMusic_notes",
+      "tableName": "Music_notes",
+      "sourceLine": 248685,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNation_flag",
+      "tableName": "Nation_flag",
+      "sourceLine": 248757,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNewFuncOpen",
+      "tableName": "NewFuncOpen",
+      "sourceLine": 249106,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNew_server_launch",
+      "tableName": "New_server_launch",
+      "sourceLine": 248818,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNew_server_meet",
+      "tableName": "New_server_meet",
+      "sourceLine": 248897,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNew_year_couplets",
+      "tableName": "New_year_couplets",
+      "sourceLine": 248960,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNew_year_drive_away",
+      "tableName": "New_year_drive_away",
+      "sourceLine": 249006,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNew_year_gift",
+      "tableName": "New_year_gift",
+      "sourceLine": 249058,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNews",
+      "tableName": "News",
+      "sourceLine": 249193,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNewyear_dinner_dish",
+      "tableName": "Newyear_dinner_dish",
+      "sourceLine": 249260,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNinja_chapter",
+      "tableName": "Ninja_chapter",
+      "sourceLine": 249318,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNinja_item",
+      "tableName": "Ninja_item",
+      "sourceLine": 249380,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNinja_map",
+      "tableName": "Ninja_map",
+      "sourceLine": 249436,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNote_matching_level",
+      "tableName": "Note_matching_level",
+      "sourceLine": 249483,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigNotice",
+      "tableName": "Notice",
+      "sourceLine": 249559,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigOutput",
+      "tableName": "Output",
+      "sourceLine": 249631,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPac_man_cha",
+      "tableName": "Pac_man_cha",
+      "sourceLine": 249694,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPac_man_level",
+      "tableName": "Pac_man_level",
+      "sourceLine": 249753,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPac_man_monster",
+      "tableName": "Pac_man_monster",
+      "sourceLine": 249827,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPac_man_plot",
+      "tableName": "Pac_man_plot",
+      "sourceLine": 249884,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPaint_color",
+      "tableName": "Paint_color",
+      "sourceLine": 249941,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_boss",
+      "tableName": "Palu_boss",
+      "sourceLine": 249987,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_client_global",
+      "tableName": "Palu_client_global",
+      "sourceLine": 250086,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_kv",
+      "tableName": "Palu_kv",
+      "sourceLine": 250133,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_new_artiact",
+      "tableName": "Palu_new_artiact",
+      "sourceLine": 250180,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_new_equip",
+      "tableName": "Palu_new_equip",
+      "sourceLine": 250246,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_new_pal",
+      "tableName": "Palu_new_pal",
+      "sourceLine": 250294,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_new_skill",
+      "tableName": "Palu_new_skill",
+      "sourceLine": 250345,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_new_unlock",
+      "tableName": "Palu_new_unlock",
+      "sourceLine": 250396,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPalu_world_boss",
+      "tableName": "Palu_world_boss",
+      "sourceLine": 250463,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPanda_enemy",
+      "tableName": "Panda_enemy",
+      "sourceLine": 250549,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPanda_level",
+      "tableName": "Panda_level",
+      "sourceLine": 250600,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPark_cross_pvp_chapter",
+      "tableName": "Park_cross_pvp_chapter",
+      "sourceLine": 250668,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPark_cross_reward",
+      "tableName": "Park_cross_reward",
+      "sourceLine": 250786,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPark_pvp_chapter",
+      "tableName": "Park_pvp_chapter",
+      "sourceLine": 250839,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPark_pvp_debuff",
+      "tableName": "Park_pvp_debuff",
+      "sourceLine": 250957,
+      "mainKey": "num",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigParking_design",
+      "tableName": "Parking_design",
+      "sourceLine": 251024,
+      "mainKey": "id",
+      "fieldCount": 22,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigParking_log",
+      "tableName": "Parking_log",
+      "sourceLine": 251173,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigParking_mount",
+      "tableName": "Parking_mount",
+      "sourceLine": 251229,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigParking_time",
+      "tableName": "Parking_time",
+      "sourceLine": 251302,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPath_affix",
+      "tableName": "Path_affix",
+      "sourceLine": 251405,
+      "mainKey": "affix_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPath_affix_levelpro",
+      "tableName": "Path_affix_levelpro",
+      "sourceLine": 251358,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPath_sensor_node",
+      "tableName": "Path_sensor_node",
+      "sourceLine": 251467,
+      "mainKey": "node_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPath_to_divinity",
+      "tableName": "Path_to_divinity",
+      "sourceLine": 251523,
+      "mainKey": "trunk_id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPath_upper_limit",
+      "tableName": "Path_upper_limit",
+      "sourceLine": 251575,
+      "mainKey": "trunk_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPay_activity",
+      "tableName": "Pay_activity",
+      "sourceLine": 251636,
+      "mainKey": "activity_code",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPay_mall",
+      "tableName": "Pay_mall",
+      "sourceLine": 251688,
+      "mainKey": "id",
+      "fieldCount": 43,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPay_rebate_reward",
+      "tableName": "Pay_rebate_reward",
+      "sourceLine": 251940,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPet",
+      "tableName": "Pet",
+      "sourceLine": 252193,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPet_pos",
+      "tableName": "Pet_pos",
+      "sourceLine": 251997,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPet_proficiency",
+      "tableName": "Pet_proficiency",
+      "sourceLine": 252044,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPet_talent",
+      "tableName": "Pet_talent",
+      "sourceLine": 252111,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPetlevel",
+      "tableName": "Petlevel",
+      "sourceLine": 252287,
+      "mainKey": "id",
+      "fieldCount": 64,
+      "usesConfigKey": true
+    },
+    {
+      "className": "ConfigPetrace",
+      "tableName": "Petrace",
+      "sourceLine": 252643,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPhoenix_tips",
+      "tableName": "Phoenix_tips",
+      "sourceLine": 252684,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPic_text_guide",
+      "tableName": "Pic_text_guide",
+      "sourceLine": 252736,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPk_chapter",
+      "tableName": "Pk_chapter",
+      "sourceLine": 252792,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPlanting_trees",
+      "tableName": "Planting_trees",
+      "sourceLine": 253117,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPlanting_trees_reward",
+      "tableName": "Planting_trees_reward",
+      "sourceLine": 252910,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPlanting_trees_turns",
+      "tableName": "Planting_trees_turns",
+      "sourceLine": 252967,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPlanting_trees_type",
+      "tableName": "Planting_trees_type",
+      "sourceLine": 253033,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPre_func",
+      "tableName": "Pre_func",
+      "sourceLine": 253194,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPrivilege",
+      "tableName": "Privilege",
+      "sourceLine": 253491,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPrivilege_card",
+      "tableName": "Privilege_card",
+      "sourceLine": 253282,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPrivilege_carditem",
+      "tableName": "Privilege_carditem",
+      "sourceLine": 253334,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPrivilege_cardtype",
+      "tableName": "Privilege_cardtype",
+      "sourceLine": 253385,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigProgram_reset",
+      "tableName": "Program_reset",
+      "sourceLine": 253537,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPvp_chapter",
+      "tableName": "Pvp_chapter",
+      "sourceLine": 253593,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPvp_competition_chapter",
+      "tableName": "Pvp_competition_chapter",
+      "sourceLine": 253711,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigPvp_reward",
+      "tableName": "Pvp_reward",
+      "sourceLine": 253829,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuest_house_chapter",
+      "tableName": "Quest_house_chapter",
+      "sourceLine": 253887,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuest_house_facilities",
+      "tableName": "Quest_house_facilities",
+      "sourceLine": 253965,
+      "mainKey": "facilities_id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuest_house_global",
+      "tableName": "Quest_house_global",
+      "sourceLine": 254065,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuest_house_level",
+      "tableName": "Quest_house_level",
+      "sourceLine": 254117,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuest_house_pet",
+      "tableName": "Quest_house_pet",
+      "sourceLine": 254183,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuest_house_quest",
+      "tableName": "Quest_house_quest",
+      "sourceLine": 254278,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuest_house_robot",
+      "tableName": "Quest_house_robot",
+      "sourceLine": 254386,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuiz",
+      "tableName": "Quiz",
+      "sourceLine": 254490,
+      "mainKey": "question_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigQuiz_dice",
+      "tableName": "Quiz_dice",
+      "sourceLine": 254448,
+      "mainKey": "dice_point",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRanktype",
+      "tableName": "Ranktype",
+      "sourceLine": 254548,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRecall_reward",
+      "tableName": "Recall_reward",
+      "sourceLine": 254619,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRecall_turantable",
+      "tableName": "Recall_turantable",
+      "sourceLine": 254677,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRed_packet",
+      "tableName": "Red_packet",
+      "sourceLine": 254729,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRelic",
+      "tableName": "Relic",
+      "sourceLine": 254905,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRelic_get",
+      "tableName": "Relic_get",
+      "sourceLine": 254811,
+      "mainKey": "num",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRelic_pos",
+      "tableName": "Relic_pos",
+      "sourceLine": 254859,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigReservation",
+      "tableName": "Reservation",
+      "sourceLine": 255001,
+      "mainKey": "product_id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigReversion_war_boss",
+      "tableName": "Reversion_war_boss",
+      "sourceLine": 255048,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigReversion_war_chapter",
+      "tableName": "Reversion_war_chapter",
+      "sourceLine": 255104,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigReversion_war_chess",
+      "tableName": "Reversion_war_chess",
+      "sourceLine": 255196,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": true
+    },
+    {
+      "className": "ConfigReversion_war_reward",
+      "tableName": "Reversion_war_reward",
+      "sourceLine": 255298,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRing",
+      "tableName": "Ring",
+      "sourceLine": 255436,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRing_level",
+      "tableName": "Ring_level",
+      "sourceLine": 255367,
+      "mainKey": "level",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRobot",
+      "tableName": "Robot",
+      "sourceLine": 255502,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_chapter",
+      "tableName": "Rogue_chapter",
+      "sourceLine": 255563,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_draw",
+      "tableName": "Rogue_draw",
+      "sourceLine": 255775,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_draw_cumulative_times",
+      "tableName": "Rogue_draw_cumulative_times",
+      "sourceLine": 255681,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_draw_guaranteed",
+      "tableName": "Rogue_draw_guaranteed",
+      "sourceLine": 255728,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_enemy",
+      "tableName": "Rogue_enemy",
+      "sourceLine": 255889,
+      "mainKey": "enemy_id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_gift",
+      "tableName": "Rogue_gift",
+      "sourceLine": 255961,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_global",
+      "tableName": "Rogue_global",
+      "sourceLine": 256073,
+      "mainKey": "key",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_goods",
+      "tableName": "Rogue_goods",
+      "sourceLine": 256199,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_goods_mall",
+      "tableName": "Rogue_goods_mall",
+      "sourceLine": 256125,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_main_chapter",
+      "tableName": "Rogue_main_chapter",
+      "sourceLine": 256292,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_output",
+      "tableName": "Rogue_output",
+      "sourceLine": 256403,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_rank_reward",
+      "tableName": "Rogue_rank_reward",
+      "sourceLine": 256466,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_sidestory_chapter",
+      "tableName": "Rogue_sidestory_chapter",
+      "sourceLine": 256519,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_sidestory_times",
+      "tableName": "Rogue_sidestory_times",
+      "sourceLine": 256585,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigRogue_weekly_reward",
+      "tableName": "Rogue_weekly_reward",
+      "sourceLine": 256633,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigScene",
+      "tableName": "Scene",
+      "sourceLine": 256736,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigScene_object",
+      "tableName": "Scene_object",
+      "sourceLine": 256680,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigScience",
+      "tableName": "Science",
+      "sourceLine": 256814,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_achievement",
+      "tableName": "Season_achievement",
+      "sourceLine": 256921,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_battle_guide",
+      "tableName": "Season_battle_guide",
+      "sourceLine": 257045,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_battle_guide_new",
+      "tableName": "Season_battle_guide_new",
+      "sourceLine": 256974,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_battle_score",
+      "tableName": "Season_battle_score",
+      "sourceLine": 257116,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_building_function",
+      "tableName": "Season_building_function",
+      "sourceLine": 257168,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_building_plot",
+      "tableName": "Season_building_plot",
+      "sourceLine": 257214,
+      "mainKey": "id",
+      "fieldCount": 19,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_cabin",
+      "tableName": "Season_cabin",
+      "sourceLine": 257348,
+      "mainKey": "cabin_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_command_center",
+      "tableName": "Season_command_center",
+      "sourceLine": 257406,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_draw_guaranteed",
+      "tableName": "Season_draw_guaranteed",
+      "sourceLine": 257507,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_equipment",
+      "tableName": "Season_equipment",
+      "sourceLine": 257932,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_equipment_attr",
+      "tableName": "Season_equipment_attr",
+      "sourceLine": 257626,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_equipment_attr_s4",
+      "tableName": "Season_equipment_attr_s4",
+      "sourceLine": 257564,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_equipment_guarantee",
+      "tableName": "Season_equipment_guarantee",
+      "sourceLine": 257688,
+      "mainKey": "num",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_equipment_level",
+      "tableName": "Season_equipment_level",
+      "sourceLine": 257792,
+      "mainKey": "part",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_equipment_level_s4",
+      "tableName": "Season_equipment_level_s4",
+      "sourceLine": 257740,
+      "mainKey": "part",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_equipment_s4",
+      "tableName": "Season_equipment_s4",
+      "sourceLine": 257844,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_event",
+      "tableName": "Season_event",
+      "sourceLine": 258020,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_favor",
+      "tableName": "Season_favor",
+      "sourceLine": 258093,
+      "mainKey": "level",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_kv",
+      "tableName": null,
+      "sourceLine": 258207,
+      "mainKey": null,
+      "fieldCount": 0,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_kv_new",
+      "tableName": "Season_kv_new",
+      "sourceLine": 258151,
+      "mainKey": "season_type",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_mapevent_reward",
+      "tableName": "Season_mapevent_reward",
+      "sourceLine": 258637,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_notice",
+      "tableName": "Season_notice",
+      "sourceLine": 258751,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_notice_condition",
+      "tableName": "Season_notice_condition",
+      "sourceLine": 258705,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_port_supply",
+      "tableName": "Season_port_supply",
+      "sourceLine": 258850,
+      "mainKey": "level",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_port_supply_item",
+      "tableName": "Season_port_supply_item",
+      "sourceLine": 258803,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_pvp_chapter",
+      "tableName": "Season_pvp_chapter",
+      "sourceLine": 258898,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_pvp_robot",
+      "tableName": "Season_pvp_robot",
+      "sourceLine": 258992,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_rank_reward",
+      "tableName": "Season_rank_reward",
+      "sourceLine": 259105,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_recovery_speed",
+      "tableName": "Season_recovery_speed",
+      "sourceLine": 259164,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_ship",
+      "tableName": "Season_ship",
+      "sourceLine": 259623,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_ship_appearance",
+      "tableName": "Season_ship_appearance",
+      "sourceLine": 259210,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_ship_draw",
+      "tableName": "Season_ship_draw",
+      "sourceLine": 259347,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_ship_draw_guaranteed",
+      "tableName": "Season_ship_draw_guaranteed",
+      "sourceLine": 259300,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_ship_level",
+      "tableName": "Season_ship_level",
+      "sourceLine": 259478,
+      "mainKey": "level",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_ship_level_s4",
+      "tableName": "Season_ship_level_s4",
+      "sourceLine": 259414,
+      "mainKey": "level",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_ship_skin",
+      "tableName": "Season_ship_skin",
+      "sourceLine": 259542,
+      "mainKey": "mount_id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_station_level",
+      "tableName": "Season_station_level",
+      "sourceLine": 259701,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_target",
+      "tableName": "Season_target",
+      "sourceLine": 259755,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_transform",
+      "tableName": "Season_transform",
+      "sourceLine": 259828,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_treasure",
+      "tableName": "Season_treasure",
+      "sourceLine": 260124,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_treasure_bag_effect",
+      "tableName": "Season_treasure_bag_effect",
+      "sourceLine": 259870,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_treasure_draw",
+      "tableName": "Season_treasure_draw",
+      "sourceLine": 259933,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_treasure_level",
+      "tableName": "Season_treasure_level",
+      "sourceLine": 260070,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_treasure_level_s4",
+      "tableName": "Season_treasure_level_s4",
+      "sourceLine": 260016,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeason_workshop_level",
+      "tableName": "Season_workshop_level",
+      "sourceLine": 260225,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigServer_puzzle",
+      "tableName": "Server_puzzle",
+      "sourceLine": 260279,
+      "mainKey": "type",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSetting",
+      "tableName": "Setting",
+      "sourceLine": 260348,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeven_sign_loop",
+      "tableName": "Seven_sign_loop",
+      "sourceLine": 260414,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeven_trial_bullet",
+      "tableName": "Seven_trial_bullet",
+      "sourceLine": 260466,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeven_trial_chapter",
+      "tableName": "Seven_trial_chapter",
+      "sourceLine": 260558,
+      "mainKey": "id",
+      "fieldCount": 13,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeven_trial_stage",
+      "tableName": "Seven_trial_stage",
+      "sourceLine": 260656,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeven_trial_stagetemplate",
+      "tableName": "Seven_trial_stagetemplate",
+      "sourceLine": 260714,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSeven_trial_unit",
+      "tableName": "Seven_trial_unit",
+      "sourceLine": 260756,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSevenlogin",
+      "tableName": "Sevenlogin",
+      "sourceLine": 260828,
+      "mainKey": "condition",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSever_list",
+      "tableName": "Sever_list",
+      "sourceLine": 260875,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigShare",
+      "tableName": "Share",
+      "sourceLine": 260932,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSheep_a_sheep_card",
+      "tableName": "Sheep_a_sheep_card",
+      "sourceLine": 260994,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSheep_a_sheep_chapter",
+      "tableName": "Sheep_a_sheep_chapter",
+      "sourceLine": 261035,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigShooting_chapter",
+      "tableName": "Shooting_chapter",
+      "sourceLine": 261146,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigShooting_chapter_cha",
+      "tableName": "Shooting_chapter_cha",
+      "sourceLine": 261082,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigShooting_color",
+      "tableName": "Shooting_color",
+      "sourceLine": 261221,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSki",
+      "tableName": "Ski",
+      "sourceLine": 261314,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSki_chapter",
+      "tableName": "Ski_chapter",
+      "sourceLine": 261263,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSkill",
+      "tableName": "Skill",
+      "sourceLine": 261531,
+      "mainKey": "id",
+      "fieldCount": 28,
+      "usesConfigKey": true
+    },
+    {
+      "className": "ConfigSkill_level",
+      "tableName": "Skill_level",
+      "sourceLine": 261387,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSkill_pos",
+      "tableName": "Skill_pos",
+      "sourceLine": 261479,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSkilleffcet",
+      "tableName": "Skilleffcet",
+      "sourceLine": 261711,
+      "mainKey": "id",
+      "fieldCount": 18,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSkin",
+      "tableName": "Skin",
+      "sourceLine": 261841,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSnake_chapter",
+      "tableName": "Snake_chapter",
+      "sourceLine": 261929,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSnake_fruit",
+      "tableName": "Snake_fruit",
+      "sourceLine": 261977,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSorting_master_chapter",
+      "tableName": "Sorting_master_chapter",
+      "sourceLine": 262034,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSorting_master_item",
+      "tableName": "Sorting_master_item",
+      "sourceLine": 262103,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSound",
+      "tableName": "Sound",
+      "sourceLine": 262144,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpecil_buff",
+      "tableName": "Specil_buff",
+      "sourceLine": 262195,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit",
+      "tableName": "Spirit",
+      "sourceLine": 262760,
+      "mainKey": "spirit_id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_affix_group",
+      "tableName": "Spirit_affix_group",
+      "sourceLine": 262266,
+      "mainKey": "affix_group",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_attrbonus_affix",
+      "tableName": "Spirit_attrbonus_affix",
+      "sourceLine": 262317,
+      "mainKey": "affix_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_attrbonus_slot",
+      "tableName": "Spirit_attrbonus_slot",
+      "sourceLine": 262379,
+      "mainKey": "slot_id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_craft",
+      "tableName": "Spirit_craft",
+      "sourceLine": 262467,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_craft_target",
+      "tableName": "Spirit_craft_target",
+      "sourceLine": 262420,
+      "mainKey": "spirit_level",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_draw",
+      "tableName": "Spirit_draw",
+      "sourceLine": 262583,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_draw_prob",
+      "tableName": "Spirit_draw_prob",
+      "sourceLine": 262531,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSpirit_level",
+      "tableName": "Spirit_level",
+      "sourceLine": 262673,
+      "mainKey": "spirit_id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStar_diamond_mall",
+      "tableName": "Star_diamond_mall",
+      "sourceLine": 262863,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStar_rain",
+      "tableName": "Star_rain",
+      "sourceLine": 263176,
+      "mainKey": "type",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStar_rain_draw",
+      "tableName": "Star_rain_draw",
+      "sourceLine": 263025,
+      "mainKey": "id",
+      "fieldCount": 23,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStar_rain_draw_guaranteed",
+      "tableName": "Star_rain_draw_guaranteed",
+      "sourceLine": 262911,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStar_rain_draw_times",
+      "tableName": "Star_rain_draw_times",
+      "sourceLine": 262968,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStatue_attr",
+      "tableName": "Statue_attr",
+      "sourceLine": 263229,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStatue_level",
+      "tableName": "Statue_level",
+      "sourceLine": 263291,
+      "mainKey": "level",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStatue_pos",
+      "tableName": "Statue_pos",
+      "sourceLine": 263343,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStatue_spend",
+      "tableName": "Statue_spend",
+      "sourceLine": 263389,
+      "mainKey": "lock_quantity",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_activity_chapter",
+      "tableName": "Strategy_activity_chapter",
+      "sourceLine": 263431,
+      "mainKey": "id",
+      "fieldCount": 19,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_activity_commodity",
+      "tableName": "Strategy_activity_commodity",
+      "sourceLine": 263566,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_activity_level",
+      "tableName": "Strategy_activity_level",
+      "sourceLine": 263624,
+      "mainKey": "chapter_progress",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_activity_milestone",
+      "tableName": "Strategy_activity_milestone",
+      "sourceLine": 263676,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_activity_pet",
+      "tableName": "Strategy_activity_pet",
+      "sourceLine": 263730,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_activity_shop",
+      "tableName": "Strategy_activity_shop",
+      "sourceLine": 263791,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_activity_skill",
+      "tableName": "Strategy_activity_skill",
+      "sourceLine": 263848,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigStrategy_artiact",
+      "tableName": "Strategy_artiact",
+      "sourceLine": 263909,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSugar_bawl_reward",
+      "tableName": "Sugar_bawl_reward",
+      "sourceLine": 263980,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSugar_card_weight",
+      "tableName": "Sugar_card_weight",
+      "sourceLine": 264042,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSugar_chapter",
+      "tableName": "Sugar_chapter",
+      "sourceLine": 264084,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSugar_item",
+      "tableName": "Sugar_item",
+      "sourceLine": 264222,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSugar_item_new",
+      "tableName": "Sugar_item_new",
+      "sourceLine": 264135,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSugar_main",
+      "tableName": "Sugar_main",
+      "sourceLine": 264309,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSummoner_passive",
+      "tableName": "Summoner_passive",
+      "sourceLine": 264361,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigSys_progress",
+      "tableName": "Sys_progress",
+      "sourceLine": 264419,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTalent_show",
+      "tableName": "Talent_show",
+      "sourceLine": 264512,
+      "mainKey": "type",
+      "fieldCount": 17,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTalent_show_lv_limit",
+      "tableName": "Talent_show_lv_limit",
+      "sourceLine": 264465,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTalk_option",
+      "tableName": "Talk_option",
+      "sourceLine": 264636,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTalk_stage",
+      "tableName": "Talk_stage",
+      "sourceLine": 264708,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTanabata_checkin",
+      "tableName": "Tanabata_checkin",
+      "sourceLine": 264777,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTanabata_flower",
+      "tableName": "Tanabata_flower",
+      "sourceLine": 264829,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTask_force_attr",
+      "tableName": "Task_force_attr",
+      "sourceLine": 264886,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTask_force_chapter",
+      "tableName": "Task_force_chapter",
+      "sourceLine": 264932,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTask_force_item",
+      "tableName": "Task_force_item",
+      "sourceLine": 264983,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTask_force_map",
+      "tableName": "Task_force_map",
+      "sourceLine": 265062,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTask_force_unit",
+      "tableName": "Task_force_unit",
+      "sourceLine": 265119,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigText_adventure",
+      "tableName": "Text_adventure",
+      "sourceLine": 265520,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigText_adventure_buff",
+      "tableName": "Text_adventure_buff",
+      "sourceLine": 265231,
+      "mainKey": "text_adventure_buff",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigText_adventure_buff_group",
+      "tableName": "Text_adventure_buff_group",
+      "sourceLine": 265175,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigText_adventure_chapter",
+      "tableName": "Text_adventure_chapter",
+      "sourceLine": 265297,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigText_adventure_event",
+      "tableName": "Text_adventure_event",
+      "sourceLine": 265435,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigText_adventure_event_pack",
+      "tableName": "Text_adventure_event_pack",
+      "sourceLine": 265364,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigThanksgiving_food",
+      "tableName": "Thanksgiving_food",
+      "sourceLine": 265592,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigThanksgiving_recipe",
+      "tableName": "Thanksgiving_recipe",
+      "sourceLine": 265638,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigThanksgiving_serv_level",
+      "tableName": "Thanksgiving_serv_level",
+      "sourceLine": 265756,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTitle",
+      "tableName": "Title",
+      "sourceLine": 265824,
+      "mainKey": "id",
+      "fieldCount": 9,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTlanguage",
+      "tableName": "Tlanguage",
+      "sourceLine": 265902,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTournament_chapter",
+      "tableName": "Tournament_chapter",
+      "sourceLine": 265958,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTowerdefence",
+      "tableName": "Towerdefence",
+      "sourceLine": 266076,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTowerlevel",
+      "tableName": "Towerlevel",
+      "sourceLine": 266127,
+      "mainKey": "id",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTowermonster",
+      "tableName": "Towermonster",
+      "sourceLine": 266169,
+      "mainKey": "type",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigToy_game",
+      "tableName": "Toy_game",
+      "sourceLine": 266251,
+      "mainKey": "id",
+      "fieldCount": 21,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigToy_game_global",
+      "tableName": "Toy_game_global",
+      "sourceLine": 266215,
+      "mainKey": "id",
+      "fieldCount": 1,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTrans_language",
+      "tableName": "Trans_language",
+      "sourceLine": 266389,
+      "mainKey": "type",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTrap",
+      "tableName": "Trap",
+      "sourceLine": 266440,
+      "mainKey": "id",
+      "fieldCount": 11,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTreasure_hunt",
+      "tableName": "Treasure_hunt",
+      "sourceLine": 266529,
+      "mainKey": "member_num",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTreasure_hunting",
+      "tableName": "Treasure_hunting",
+      "sourceLine": 266752,
+      "mainKey": "type",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTreasure_hunting_draw",
+      "tableName": "Treasure_hunting_draw",
+      "sourceLine": 266591,
+      "mainKey": "id",
+      "fieldCount": 14,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTreasure_hunting_num_reward",
+      "tableName": "Treasure_hunting_num_reward",
+      "sourceLine": 266695,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTreasure_level",
+      "tableName": "Treasure_level",
+      "sourceLine": 266822,
+      "mainKey": "level",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTreasure_skin",
+      "tableName": "Treasure_skin",
+      "sourceLine": 266890,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTrick_or_treat_chapter",
+      "tableName": "Trick_or_treat_chapter",
+      "sourceLine": 267002,
+      "mainKey": "chapter_id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTurntable",
+      "tableName": "Turntable",
+      "sourceLine": 267060,
+      "mainKey": "id",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigTzone",
+      "tableName": "Tzone",
+      "sourceLine": 267107,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigUnit",
+      "tableName": "Unit",
+      "sourceLine": 267178,
+      "mainKey": "id",
+      "fieldCount": 97,
+      "usesConfigKey": true
+    },
+    {
+      "className": "ConfigUnitModel",
+      "tableName": "UnitModel",
+      "sourceLine": 267701,
+      "mainKey": "id",
+      "fieldCount": 34,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigUnitType",
+      "tableName": "UnitType",
+      "sourceLine": 267922,
+      "mainKey": "id",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigValentine_reward",
+      "tableName": "Valentine_reward",
+      "sourceLine": 267989,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigValentine_template",
+      "tableName": "Valentine_template",
+      "sourceLine": 268062,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWartoken",
+      "tableName": "Wartoken",
+      "sourceLine": 268248,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWartoken_reward",
+      "tableName": "Wartoken_reward",
+      "sourceLine": 268122,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWartoken_task",
+      "tableName": "Wartoken_task",
+      "sourceLine": 268186,
+      "mainKey": "task_id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWedding_talk",
+      "tableName": "Wedding_talk",
+      "sourceLine": 268362,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWedding_time",
+      "tableName": "Wedding_time",
+      "sourceLine": 268436,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWeekly_card",
+      "tableName": "Weekly_card",
+      "sourceLine": 268489,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWelfare",
+      "tableName": "Welfare",
+      "sourceLine": 268604,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWelfare_task",
+      "tableName": "Welfare_task",
+      "sourceLine": 268541,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWordFilter",
+      "tableName": "WordFilter",
+      "sourceLine": 268665,
+      "mainKey": "content",
+      "fieldCount": 1,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWork_log",
+      "tableName": "Work_log",
+      "sourceLine": 268701,
+      "mainKey": "id",
+      "fieldCount": 6,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWork_team",
+      "tableName": "Work_team",
+      "sourceLine": 268762,
+      "mainKey": "team",
+      "fieldCount": 7,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWorkshop",
+      "tableName": "Workshop",
+      "sourceLine": 268828,
+      "mainKey": "id",
+      "fieldCount": 5,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWorld_boss",
+      "tableName": "World_boss",
+      "sourceLine": 269027,
+      "mainKey": "id",
+      "fieldCount": 10,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWorld_boss_bufflist",
+      "tableName": "World_boss_bufflist",
+      "sourceLine": 268885,
+      "mainKey": "buff_id",
+      "fieldCount": 4,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWorld_boss_rank",
+      "tableName": "World_boss_rank",
+      "sourceLine": 268936,
+      "mainKey": "rank",
+      "fieldCount": 2,
+      "usesConfigKey": false
+    },
+    {
+      "className": "ConfigWorld_boss_total_dmg",
+      "tableName": "World_boss_total_dmg",
+      "sourceLine": 268979,
+      "mainKey": "day",
+      "fieldCount": 3,
+      "usesConfigKey": false
+    }
+  ]
+}

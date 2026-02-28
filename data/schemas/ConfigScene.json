@@ -1,0 +1,76 @@
+{
+  "className": "ConfigScene",
+  "tableName": "Scene",
+  "sourceLine": 256736,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 9,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "map_wh",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "desc",
+      "index": 4,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "picture",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "map_path",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "mini_map_path",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

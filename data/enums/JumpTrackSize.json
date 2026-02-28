@@ -1,0 +1,12 @@
+{
+  "name": "JumpTrackSize",
+  "sourceLine": 30696,
+  "values": {
+    "x": 720,
+    "y": 1672
+  },
+  "reverseMap": {
+    "720": "x",
+    "1672": "y"
+  }
+}

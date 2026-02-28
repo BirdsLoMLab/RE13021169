@@ -1,0 +1,41 @@
+{
+  "className": "ConfigFarm_seed",
+  "tableName": "Farm_seed",
+  "sourceLine": 231467,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "harvest",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "icon",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "activity",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

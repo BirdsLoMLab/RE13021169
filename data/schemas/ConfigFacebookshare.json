@@ -1,0 +1,34 @@
+{
+  "className": "ConfigFacebookshare",
+  "tableName": "Facebookshare",
+  "sourceLine": 230294,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

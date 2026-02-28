@@ -1,0 +1,18 @@
+{
+  "name": "PropsType",
+  "sourceLine": 162825,
+  "values": {
+    "Health": 0,
+    "WarriorUp": 1,
+    "MasterUp": 2,
+    "ArcherUp": 3,
+    "Change": 4
+  },
+  "reverseMap": {
+    "0": "Health",
+    "1": "WarriorUp",
+    "2": "MasterUp",
+    "3": "ArcherUp",
+    "4": "Change"
+  }
+}

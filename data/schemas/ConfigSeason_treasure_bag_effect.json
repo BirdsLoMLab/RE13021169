@@ -1,0 +1,56 @@
+{
+  "className": "ConfigSeason_treasure_bag_effect",
+  "tableName": "Season_treasure_bag_effect",
+  "sourceLine": 259870,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "number": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "number",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "attr",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill_buff",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "desc",
+      "index": 4,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "power",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

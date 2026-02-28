@@ -1,0 +1,41 @@
+{
+  "className": "ConfigCondition",
+  "tableName": "Condition",
+  "sourceLine": 224314,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "des",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "guide",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

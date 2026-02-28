@@ -1,0 +1,12 @@
+{
+  "name": "BackLampTrackSize",
+  "sourceLine": 131901,
+  "values": {
+    "x": 720,
+    "y": 1600
+  },
+  "reverseMap": {
+    "720": "x",
+    "1600": "y"
+  }
+}

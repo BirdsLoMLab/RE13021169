@@ -1,0 +1,27 @@
+{
+  "className": "ConfigArtifact_gemslot",
+  "tableName": "Artifact_gemslot",
+  "sourceLine": 219430,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "main_attr_group",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

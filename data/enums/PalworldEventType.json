@@ -1,0 +1,28 @@
+{
+  "name": "PalworldEventType",
+  "sourceLine": 111872,
+  "values": {
+    "Attr": 1,
+    "Fight": 2,
+    "Event2_1": 3,
+    "Angel": 4,
+    "Pay": 5,
+    "Buff_1": 6,
+    "Heal": 7,
+    "Boss": 8,
+    "Heal2_1": 9,
+    "Wheel": 10
+  },
+  "reverseMap": {
+    "1": "Attr",
+    "2": "Fight",
+    "3": "Event2_1",
+    "4": "Angel",
+    "5": "Pay",
+    "6": "Buff_1",
+    "7": "Heal",
+    "8": "Boss",
+    "9": "Heal2_1",
+    "10": "Wheel"
+  }
+}

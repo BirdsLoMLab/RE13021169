@@ -1,0 +1,692 @@
+{
+  "className": "ConfigUnit",
+  "tableName": "Unit",
+  "sourceLine": 267178,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": true,
+  "fieldCount": 97,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "model",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "hatred_type",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "ai",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "att_skill",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skills",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "passiveSkills",
+      "index": 7,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "dead_skills",
+      "index": 8,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "dead_effect",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "att",
+      "index": 10,
+      "type": "bignum",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "def",
+      "index": 11,
+      "type": "bignum",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "hp",
+      "index": 12,
+      "type": "bignum",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "att_range",
+      "index": 13,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "detection_range",
+      "index": 14,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "att_speed",
+      "index": 15,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "crit_rate",
+      "index": 16,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "crit_dam",
+      "index": 17,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "crit_def",
+      "index": 18,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "double_hit",
+      "index": 19,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "counter",
+      "index": 20,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_double_hit",
+      "index": 21,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_counter",
+      "index": 22,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "hit",
+      "index": 23,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "miss",
+      "index": 24,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "speed",
+      "index": 25,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "hp_recovery",
+      "index": 26,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "boss_dam",
+      "index": 27,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "att_hpsteal",
+      "index": 28,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "skill_hpsteal",
+      "index": 29,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "att_resist",
+      "index": 30,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "skill_resist",
+      "index": 31,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "partner_resist",
+      "index": 32,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "resist",
+      "index": 33,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "vertigo",
+      "index": 34,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "suspend",
+      "index": 35,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "vertigo_def",
+      "index": 36,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "suspend_def",
+      "index": 37,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "att_hpsteal_def",
+      "index": 38,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "skill_hpsteal_def",
+      "index": 39,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "target_num",
+      "index": 40,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "bullet",
+      "index": 41,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "destoryTime",
+      "index": 42,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "vertigo_times",
+      "index": 43,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "vertigo_res",
+      "index": 44,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "control_res",
+      "index": 45,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "double_hit_dam",
+      "index": 46,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "counter_dam",
+      "index": 47,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "double_hit_def",
+      "index": 48,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "counter_def",
+      "index": 49,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "counter_suspend",
+      "index": 50,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "skill_crit_rate",
+      "index": 51,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "skill_crit_dam",
+      "index": 52,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "att_dam",
+      "index": 53,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "skill_dam_extra",
+      "index": 54,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "boss_def",
+      "index": 55,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "hpsteal_rate",
+      "index": 56,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "hpsteal_amount",
+      "index": 57,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "hpsteal_res",
+      "index": 58,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_hpsteal",
+      "index": 59,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "pve_dam",
+      "index": 60,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "pve_resist",
+      "index": 61,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "def_coe",
+      "index": 62,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "skillbuff_time_all",
+      "index": 63,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "partner_dam",
+      "index": 64,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "partner_dam_extra",
+      "index": 65,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "kill_reward",
+      "index": 66,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "first_kill_reward",
+      "index": 67,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "petrace",
+      "index": 68,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "dialogue",
+      "index": 69,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "dialogue_list",
+      "index": 70,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "apperanceID",
+      "index": 71,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "ignore_crit_rate",
+      "index": 72,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_hp_recovery",
+      "index": 73,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "armor_penetration_rate",
+      "index": 74,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "armor_penetration",
+      "index": 75,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_armor_penetration",
+      "index": 76,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "block_rate",
+      "index": 77,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "block",
+      "index": 78,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_block",
+      "index": 79,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "partner_inspire_rate",
+      "index": 80,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "partner_inspire",
+      "index": 81,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_partner_inspire",
+      "index": 82,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "partner_suppress_rate",
+      "index": 83,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "partner_suppress",
+      "index": 84,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "ignore_partner_suppress",
+      "index": 85,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "battle_attribute_def",
+      "index": 86,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "battle_resist_def",
+      "index": 87,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "spirit_att_dam",
+      "index": 88,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "spirit_dam_def",
+      "index": 89,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "spirit_dam_def_final",
+      "index": 90,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "total_dam_add",
+      "index": 91,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "total_dam_def",
+      "index": 92,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "spirit_hp",
+      "index": 93,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "spirit_att",
+      "index": 94,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "spirit_hp_add",
+      "index": 95,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    },
+    {
+      "name": "spirit_att_add",
+      "index": 96,
+      "type": "xor_number",
+      "xor": true,
+      "optional": false
+    }
+  ]
+}

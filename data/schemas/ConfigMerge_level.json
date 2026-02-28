@@ -1,0 +1,125 @@
+{
+  "className": "ConfigMerge_level",
+  "tableName": "Merge_level",
+  "sourceLine": 245196,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 16,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "act_type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "chess_board",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "initial_element",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "initial_cover",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "initial_order",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "order_group",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "element_drop_list",
+      "index": 8,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "element_type",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "highest_stage",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "chest_prob",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "chest_minimum",
+      "index": 12,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "chest_spawn",
+      "index": 13,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "pass",
+      "index": 14,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "release_order",
+      "index": 15,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

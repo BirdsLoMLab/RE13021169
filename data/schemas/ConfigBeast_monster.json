@@ -1,0 +1,76 @@
+{
+  "className": "ConfigBeast_monster",
+  "tableName": "Beast_monster",
+  "sourceLine": 221652,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 9,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "model",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skill",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "hp",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "speed",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "att_speed",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skill_interval",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bullet_speed",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_skill",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

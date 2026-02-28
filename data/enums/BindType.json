@@ -1,0 +1,14 @@
+{
+  "name": "BindType",
+  "sourceLine": 278605,
+  "values": {
+    "bp_lead": 1,
+    "bp_bottom": 2,
+    "bp_top": 3
+  },
+  "reverseMap": {
+    "1": "bp_lead",
+    "2": "bp_bottom",
+    "3": "bp_top"
+  }
+}

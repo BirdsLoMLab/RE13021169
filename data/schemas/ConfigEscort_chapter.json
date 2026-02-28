@@ -1,0 +1,140 @@
+{
+  "className": "ConfigEscort_chapter",
+  "tableName": "Escort_chapter",
+  "sourceLine": 229673,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "index": 3
+  },
+  "usesConfigKey": false,
+  "fieldCount": 18,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "part_type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "index",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "power",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "map",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "part",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "next_part",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "interval",
+      "index": 8,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "monster_refresh1",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "monster_refresh2",
+      "index": 10,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "monster_refresh3",
+      "index": 11,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "monster_refresh4",
+      "index": 12,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "monster_refresh5",
+      "index": 13,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "max_refresh",
+      "index": 14,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "time",
+      "index": 15,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bossModel",
+      "index": 16,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 17,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

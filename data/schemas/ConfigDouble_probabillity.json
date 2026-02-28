@@ -1,0 +1,90 @@
+{
+  "className": "ConfigDouble_probabillity",
+  "tableName": "Double_probabillity",
+  "sourceLine": 227972,
+  "mainKey": "reward_id",
+  "indexedKeys": {
+    "reward_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 11,
+  "fields": [
+    {
+      "name": "reward_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward_limit",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "weight",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward_type",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limited",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "guaranteed",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "order",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "goods_type",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward_replace",
+      "index": 10,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "className": "ConfigBreak_big_prize_preview",
+  "tableName": "Break_big_prize_preview",
+  "sourceLine": 222100,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "good_id",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "level",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

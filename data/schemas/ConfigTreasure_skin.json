@@ -1,0 +1,118 @@
+{
+  "className": "ConfigTreasure_skin",
+  "tableName": "Treasure_skin",
+  "sourceLine": 266890,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 15,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "path",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "shendeng_plot",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "shendeng_scale",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "equip_path",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "icon",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon_scale",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bottom_icon",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "number_bg_icon",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "sound_id",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "condition",
+      "index": 10,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "open_time",
+      "index": 11,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "close_time",
+      "index": 12,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "sell",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "sell_time",
+      "index": 14,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

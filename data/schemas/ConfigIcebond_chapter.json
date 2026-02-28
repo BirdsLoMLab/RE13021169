@@ -1,0 +1,83 @@
+{
+  "className": "ConfigIcebond_chapter",
+  "tableName": "Icebond_chapter",
+  "sourceLine": 239169,
+  "mainKey": "chapter_id",
+  "indexedKeys": {
+    "chapter_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 10,
+  "fields": [
+    {
+      "name": "chapter_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "initial_bead",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "ice_location",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "snow_location",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bead",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "open_day",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limit",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "star_step",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "className": "ConfigPay_activity",
+  "tableName": "Pay_activity",
+  "sourceLine": 251636,
+  "mainKey": "activity_code",
+  "indexedKeys": {
+    "activity_code": 0,
+    "channel_code": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "activity_code",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "channel_code",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "mail_id",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

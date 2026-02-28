@@ -1,0 +1,48 @@
+{
+  "className": "ConfigSeven_trial_stage",
+  "tableName": "Seven_trial_stage",
+  "sourceLine": 260656,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "template",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "open_day",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limit",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "star_step",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

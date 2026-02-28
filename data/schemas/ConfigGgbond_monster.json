@@ -1,0 +1,48 @@
+{
+  "className": "ConfigGgbond_monster",
+  "tableName": "Ggbond_monster",
+  "sourceLine": 234349,
+  "mainKey": "monster_id",
+  "indexedKeys": {
+    "monster_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "monster_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "spine",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_model",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "monster_hp",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "scale",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

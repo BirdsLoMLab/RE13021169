@@ -1,0 +1,35 @@
+{
+  "className": "ConfigAngel_array",
+  "tableName": "Angel_array",
+  "sourceLine": 218018,
+  "mainKey": "type",
+  "indexedKeys": {
+    "type": 0,
+    "pos": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "type",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pos",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pos_type",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

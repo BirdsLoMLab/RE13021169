@@ -1,0 +1,14 @@
+{
+  "name": "RedPointType",
+  "sourceLine": 390840,
+  "values": {
+    "Dot": 1,
+    "Num": 2,
+    "NumDot": 3
+  },
+  "reverseMap": {
+    "1": "Dot",
+    "2": "Num",
+    "3": "NumDot"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "UnityType",
+  "sourceLine": 278603,
+  "values": {
+    "Player": 1,
+    "Partner": 2,
+    "Monster": 3,
+    "LeaderMonster": 4,
+    "Boss": 5,
+    "CallUnit": 6,
+    "NotHurtBoss": 7,
+    "DefBoss": 8,
+    "Gun": 10,
+    "FlyPet": 13,
+    "Spirit": 14
+  },
+  "reverseMap": {
+    "1": "Player",
+    "2": "Partner",
+    "3": "Monster",
+    "4": "LeaderMonster",
+    "5": "Boss",
+    "6": "CallUnit",
+    "7": "NotHurtBoss",
+    "8": "DefBoss",
+    "10": "Gun",
+    "13": "FlyPet",
+    "14": "Spirit"
+  }
+}

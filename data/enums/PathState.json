@@ -1,0 +1,14 @@
+{
+  "name": "PathState",
+  "sourceLine": 278611,
+  "values": {
+    "Seeking": 0,
+    "ResetPath": 1,
+    "Stop": 2
+  },
+  "reverseMap": {
+    "0": "Seeking",
+    "1": "ResetPath",
+    "2": "Stop"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "TitleType",
+  "sourceLine": 389456,
+  "values": {
+    "NORMAL": 0,
+    "CROSS_PVP": 1,
+    "GUILD": 2
+  },
+  "reverseMap": {
+    "0": "NORMAL",
+    "1": "CROSS_PVP",
+    "2": "GUILD"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "className": "ConfigArtifact_gemgenerate",
+  "tableName": "Artifact_gemgenerate",
+  "sourceLine": 219152,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "quality_possible",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "slot_possible",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "set_possible",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

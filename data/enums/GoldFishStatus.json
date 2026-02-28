@@ -1,0 +1,12 @@
+{
+  "name": "GoldFishStatus",
+  "sourceLine": 158792,
+  "values": {
+    "Idle": 0,
+    "Run": 1
+  },
+  "reverseMap": {
+    "0": "Idle",
+    "1": "Run"
+  }
+}

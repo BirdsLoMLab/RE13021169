@@ -1,0 +1,69 @@
+{
+  "className": "ConfigDifficult_chapter_type",
+  "tableName": "Difficult_chapter_type",
+  "sourceLine": 226814,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 8,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "banner",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "main_background",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "attr_background",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "open",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "sort",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "badge_id",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

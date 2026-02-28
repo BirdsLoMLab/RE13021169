@@ -1,0 +1,14 @@
+{
+  "name": "AchievementDefine",
+  "sourceLine": 805,
+  "values": {
+    "Normal": 0,
+    "Reward": 1,
+    "Lock": 2
+  },
+  "reverseMap": {
+    "0": "Normal",
+    "1": "Reward",
+    "2": "Lock"
+  }
+}

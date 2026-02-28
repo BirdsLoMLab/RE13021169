@@ -1,0 +1,41 @@
+{
+  "className": "ConfigPrivilege_carditem",
+  "tableName": "Privilege_carditem",
+  "sourceLine": 253334,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "serv_macro",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "desc",
+      "index": 2,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "value",
+      "index": 3,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

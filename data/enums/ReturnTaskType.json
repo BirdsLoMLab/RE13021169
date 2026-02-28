@@ -1,0 +1,12 @@
+{
+  "name": "ReturnTaskType",
+  "sourceLine": 393548,
+  "values": {
+    "ReturnTask": 101,
+    "NewReturnTask": 201
+  },
+  "reverseMap": {
+    "101": "ReturnTask",
+    "201": "NewReturnTask"
+  }
+}

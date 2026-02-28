@@ -1,0 +1,40 @@
+{
+  "name": "TargetFilter",
+  "sourceLine": 278614,
+  "values": {
+    "All": -1,
+    "Cast": 1,
+    "CastPartner": 2,
+    "Enemy": 4,
+    "FriendPlayer": 8,
+    "FriendPartner": 16,
+    "Friend": 32,
+    "EnemyPartner": 64,
+    "CastPlayer": 128,
+    "EnemyPlayer": 256,
+    "EnemyBoss": 512,
+    "FriendCall": 1024,
+    "FriendFlyPet": 2048,
+    "EnemySpirit": 4096,
+    "FriendSpirit": 8192,
+    "CastSpirit": 16384
+  },
+  "reverseMap": {
+    "-1": "All",
+    "1": "Cast",
+    "2": "CastPartner",
+    "4": "Enemy",
+    "8": "FriendPlayer",
+    "16": "FriendPartner",
+    "32": "Friend",
+    "64": "EnemyPartner",
+    "128": "CastPlayer",
+    "256": "EnemyPlayer",
+    "512": "EnemyBoss",
+    "1024": "FriendCall",
+    "2048": "FriendFlyPet",
+    "4096": "EnemySpirit",
+    "8192": "FriendSpirit",
+    "16384": "CastSpirit"
+  }
+}

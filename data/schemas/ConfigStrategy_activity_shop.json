@@ -1,0 +1,48 @@
+{
+  "className": "ConfigStrategy_activity_shop",
+  "tableName": "Strategy_activity_shop",
+  "sourceLine": 263791,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "commodity",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "weight",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limit",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "guarantee_num",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

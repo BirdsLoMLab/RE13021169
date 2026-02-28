@@ -1,0 +1,27 @@
+{
+  "className": "ConfigSorting_master_item",
+  "tableName": "Sorting_master_item",
+  "sourceLine": 262103,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

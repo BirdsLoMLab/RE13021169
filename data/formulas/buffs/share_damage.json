@@ -1,0 +1,50 @@
+{
+  "className": "BuffShareDamage",
+  "sourceFile": "BuffShareDamage.ts",
+  "sourceLine": 195114,
+  "buffMapKey": "sharedamage",
+  "description": "Splash/share damage buff. When the owner takes damage, distributes damage to nearby enemies. Has two modes: direct pass-through (type 0) or percentage-based (type 1).",
+  "configParams": {
+    "param1": {
+      "field": "_calType",
+      "description": "Calculation type. 0 = pass full damage to targets. 1 = apply percentage of damage to targets."
+    },
+    "param2": {
+      "field": "_calPercent (raw)",
+      "description": "Percentage value (divided by 10000 on alloc). Used only for calType 1.",
+      "processedAs": "FixMath.round(param2 / 10000)"
+    },
+    "param5": {
+      "field": "target selection params",
+      "description": "param5[0] = target count filter param, param5[1] = TargetFilter type for getTargets"
+    }
+  },
+  "skillPar": "Multiplier for percentage-based splash (calType 1)",
+  "onShareDamageAction": {
+    "description": "Called when the buff owner takes damage. Distributes damage to enemy targets.",
+    "parameters": {
+      "damage": "Raw damage amount received",
+      "source": "The unit that dealt the damage",
+      "healthType": "The type of damage (Hurt, Hurt_Crit, etc.)"
+    },
+    "formula": {
+      "calType_0": {
+        "name": "Full Damage Pass-through",
+        "formula": "splashDamage = roundInt(originalDamage)",
+        "each_target": "healthTarget(target, splashDamage, healthType, false, configId)"
+      },
+      "calType_1": {
+        "name": "Percentage-based Splash",
+        "formula": "splashDamage = roundInt(originalDamage * _calPercent * skillPar)",
+        "each_target": "If target is NOT the source: healthTarget(target, splashDamage, healthType); If target IS the source: healthTarget(target, roundInt(originalDamage + splashDamage), healthType)"
+      }
+    },
+    "healthType_mapping": {
+      "normal": "Hurt_Share_Damage",
+      "crit": "Hurt_Share_Damage_Crit (if original was Hurt_Crit or Hurt_Double_Crit)"
+    },
+    "target_selection": "getTargets(TargetFilter.Enemy, param5[1], source.position, param5[0])"
+  },
+  "attributesUsed": [],
+  "notes": "This buff is passive - onBegin does nothing. Damage sharing is triggered externally when the owner receives damage."
+}

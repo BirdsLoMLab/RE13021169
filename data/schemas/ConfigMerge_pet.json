@@ -1,0 +1,27 @@
+{
+  "className": "ConfigMerge_pet",
+  "tableName": "Merge_pet",
+  "sourceLine": 245379,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "model",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

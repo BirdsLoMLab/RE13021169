@@ -1,0 +1,12 @@
+{
+  "name": "CallFriendTaskType",
+  "sourceLine": 393551,
+  "values": {
+    "CallFriendRewardTask": 4,
+    "CallFriendRewardLoginTask": 3
+  },
+  "reverseMap": {
+    "4": "CallFriendRewardTask",
+    "3": "CallFriendRewardLoginTask"
+  }
+}

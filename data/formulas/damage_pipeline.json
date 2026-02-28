@@ -1,0 +1,162 @@
+{
+  "name": "addDamage",
+  "sourceLine": 449240,
+  "description": "Master damage application pipeline — processes all damage/heal events for a unit each frame",
+  "overview": "Called once per frame with an array of health events. Applies PvP reduction, shield absorption, death prevention, and HP modification.",
+
+  "pre_damage_phase": {
+    "description": "HP recovery tick (every frame)",
+    "sourceLine": 449241,
+    "formula": "recoveryAmount = roundInt(round(maxHP * (hp_recovery - ignore_hp_recovery)) * treatDecay)",
+    "conditions": "Only if recoveryAmount > 0",
+    "heal_reduction": "REDUCE_HEAL buffs can further reduce healing",
+    "hp_cap": "currenHp = min(currenHp + recoveryAmount, maxHP)",
+    "triggers": "HP_Heal effect triggers fire after recovery"
+  },
+
+  "damage_health_types": {
+    "damage_types": {
+      "description": "These HealthTypes go through the full damage pipeline",
+      "types": [
+        "Hurt (1)", "Hurt_Crit (2)", "Hurt_Ret (3)",
+        "Hurt_Share_Damage (13)", "Hurt_Share_Damage_Crit (14)",
+        "Hurt_Double (15)", "Hurt_Double_Crit (16)",
+        "Real_Damage (20)", "Hurt_Bleed (19)", "Hurt_Bleed_Crit (23)",
+        "Hurt_Counter (21)", "Hurt_Counter_Crit (22)",
+        "SpiritToPlayer (31)"
+      ]
+    },
+    "heal_types": {
+      "description": "These HealthTypes heal the unit",
+      "types": ["Treat (4)", "Treat_Crit (5)", "Skill_Hpsteal (11)", "Act_Hpsteal (12)"]
+    },
+    "display_types": {
+      "description": "These HealthTypes only log/display, no HP change",
+      "types": ["Miss (6)", "Armor (28)", "Armor_def (29)", "Inspire (27)", "Suppress (26)"]
+    },
+    "spirit_damage": {
+      "description": "Spirit-to-spirit damage, directly reduces HP",
+      "types": ["SpiritToSpirit (30)"]
+    }
+  },
+
+  "damage_pipeline_steps": [
+    {
+      "step": 1,
+      "name": "PvP Damage Reduction",
+      "sourceLine": 449285,
+      "formula": "damage = max(roundInt(damage / injuryReduce), 1)",
+      "note": "injuryReduce is level-based PvP reduction factor; 1 in PvE"
+    },
+    {
+      "step": 2,
+      "name": "Season PvE Damage Bonus",
+      "sourceLine": 449285,
+      "formula": "if (seasonPveDamAdd > 0 && teamId == 1): damage = roundInt(damage * (1 + seasonPveDamAdd))",
+      "note": "Only applies to defending team (teamId=1) during season PvE"
+    },
+    {
+      "step": 3,
+      "name": "Shield Absorption",
+      "sourceLine": 449286,
+      "description": "If unit has shields (SHIELD buffs) and shieldHp > 0",
+      "formula": "For each shield: absorbed = shield.onShieldAction(damage); damage = roundInt(damage - absorbed)",
+      "note": "Iteration stops when shieldHp reaches 0"
+    },
+    {
+      "step": 4,
+      "name": "Block Absorption",
+      "sourceLine": 449293,
+      "description": "If unit has BLOCK buffs, they absorb remaining damage",
+      "formula": "For each block buff: absorbed = block.onShieldAction(damage); damage = roundInt(damage - absorbed)"
+    },
+    {
+      "step": 5,
+      "name": "HP Reduction",
+      "sourceLine": 449298,
+      "formula": "currenHp = roundInt(currenHp - damage)"
+    },
+    {
+      "step": 6,
+      "name": "Death Prevention Chain",
+      "sourceLine": 449299,
+      "description": "Checked in order: Time Reversal → Remake HP → Immune Death",
+      "order": [
+        {
+          "priority": 1,
+          "name": "TIME_REVERSAL",
+          "description": "Checks if HP dropped below threshold, reverses time if so"
+        },
+        {
+          "priority": 2,
+          "name": "REMAKE_HP",
+          "description": "If Time Reversal didn't trigger, checks and restores HP"
+        },
+        {
+          "priority": 3,
+          "name": "IMMUNE_DEATH",
+          "description": "If neither triggered, prevents death entirely"
+        }
+      ],
+      "result": "If immuneDeath or remakeLock active: currenHp = max(currenHp, 1)"
+    },
+    {
+      "step": 7,
+      "name": "Record Damage",
+      "sourceLine": 449312,
+      "description": "RECORD_DAMAGE buffs log cumulative damage taken"
+    },
+    {
+      "step": 8,
+      "name": "HP Change Triggers",
+      "sourceLine": 449316,
+      "description": "totalDamage accumulates; HP_CHANGE_TRIGER and TOTAL_DAMAGE_TRIGGER buffs fire"
+    }
+  ],
+
+  "heal_pipeline": {
+    "sourceLine": 449331,
+    "steps": [
+      {
+        "step": 1,
+        "name": "Treat Decay",
+        "formula": "healAmount = roundInt(healAmount * treatDecay)",
+        "note": "treatDecay = 0.3 in PvP (hp_recovery_correct/10000), 1 in PvE"
+      },
+      {
+        "step": 2,
+        "name": "Heal Reduction",
+        "formula": "For each REDUCE_HEAL buff: healAmount = buff.onCalHeal(healAmount)"
+      },
+      {
+        "step": 3,
+        "name": "HP Addition",
+        "formula": "currenHp = min(roundInt(currenHp + healAmount), maxHP)"
+      }
+    ]
+  },
+
+  "post_processing": {
+    "sourceLine": 449355,
+    "steps": [
+      "Ensure currenHp >= 0",
+      "Record protection: if recording and this is the recorded winner, currenHp = max(currenHp, 1)",
+      "Calculate net HP change from frame start",
+      "If currenHp <= 0: trigger dead()",
+      "If damaged and not controlled: flash model, potentially trigger Hit state"
+    ]
+  },
+
+  "buff_types_involved": {
+    "SHIELD": "Shield HP absorption",
+    "BLOCK": "Block-based damage absorption",
+    "IMMUNE_DEATH": "Prevents HP from reaching 0",
+    "REMAKE_HP": "Restores HP when it drops too low",
+    "TIME_REVERSAL": "Resets state when HP drops below threshold",
+    "HP_CHANGE_TRIGER": "Triggers effects based on HP change",
+    "TOTAL_DAMAGE_TRIGGER": "Triggers effects based on cumulative damage",
+    "RECORD_DAMAGE": "Logs damage for recording/replay",
+    "REDUCE_HEAL": "Reduces incoming healing",
+    "ATTRIB_CONDITION": "Updates attributes based on conditions"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "className": "ConfigEye_task_group",
+  "tableName": "Eye_task_group",
+  "sourceLine": 230200,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "task",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

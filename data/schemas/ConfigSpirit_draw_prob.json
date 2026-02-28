@@ -1,0 +1,41 @@
+{
+  "className": "ConfigSpirit_draw_prob",
+  "tableName": "Spirit_draw_prob",
+  "sourceLine": 262531,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "desc",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "prob",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "good_list",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "className": "ConfigRogue_sidestory_times",
+  "tableName": "Rogue_sidestory_times",
+  "sourceLine": 256585,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "cost",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "random_level",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

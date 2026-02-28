@@ -1,0 +1,48 @@
+{
+  "className": "ConfigAdventure_task",
+  "tableName": "Adventure_task",
+  "sourceLine": 217754,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "condition",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "desc",
+      "index": 2,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "guide",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "checkThrowHit",
+  "sourceLine": 322933,
+  "description": "Checks if a launch/knockup (suspend) effect triggers on the target.",
+  "parameters": {
+    "attacker": "Unit performing the attack",
+    "defender": "Unit being attacked"
+  },
+  "attributes_used": {
+    "attacker": ["suspend"],
+    "defender": ["suspend_def"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get suspend stats",
+      "formula": "suspend = attacker.suspend, suspend_def = defender.suspend_def"
+    },
+    {
+      "step": 2,
+      "description": "Calculate effective probability (out of 10000)",
+      "formula": "probability = roundInt(10000 * round(suspend - suspend_def))",
+      "note": "Unlike combo/counter, this does NOT use max(..., 0) before scaling — but the <= 0 check below handles negatives"
+    },
+    {
+      "step": 3,
+      "description": "Early exit if no chance",
+      "formula": "if probability <= 0: return false"
+    },
+    {
+      "step": 4,
+      "description": "Roll and compare",
+      "formula": "roll = randomInt(0, 10000); return (roll <= probability)"
+    }
+  ],
+  "simplified_formula": "triggers if randomInt(0, 10000) <= roundInt(10000 * round(suspend - suspend_def))",
+  "related": {
+    "checkCounterThrowHit": {
+      "sourceLine": 322940,
+      "description": "Identical formula but uses counter_suspend instead of suspend",
+      "formula": "probability = roundInt(10000 * round(counter_suspend - suspend_def))"
+    }
+  }
+}

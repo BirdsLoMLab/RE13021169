@@ -1,0 +1,29 @@
+{
+  "name": "CircleOfFriendsDefine",
+  "sourceLine": 212525,
+  "values": {
+    "MainPanel": 1,
+    "OtherPanel": 2,
+    "MessageMainPanel": 3,
+    "AttentionPanel": 4,
+    "Square": 0,
+    "My": 1,
+    "Hot": 0,
+    "Local": 1,
+    "Offical": 2,
+    "Attention": 3,
+    "Recommend": 1,
+    "New": 2,
+    "PageSize": 20,
+    "ContentRefeshPos": -100
+  },
+  "reverseMap": {
+    "1": "Recommend",
+    "2": "New",
+    "3": "Attention",
+    "4": "AttentionPanel",
+    "0": "Hot",
+    "20": "PageSize",
+    "-100": "ContentRefeshPos"
+  }
+}

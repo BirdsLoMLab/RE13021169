@@ -1,0 +1,48 @@
+{
+  "className": "ConfigProgram_reset",
+  "tableName": "Program_reset",
+  "sourceLine": 253537,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "desc",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "show_descition",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "sort",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

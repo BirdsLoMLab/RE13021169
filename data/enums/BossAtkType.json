@@ -1,0 +1,18 @@
+{
+  "name": "BossAtkType",
+  "sourceLine": 162831,
+  "values": {
+    "Normal": 1,
+    "Random": 2,
+    "Sector": 3,
+    "Spiral": 4,
+    "Spiral_Re": 6
+  },
+  "reverseMap": {
+    "1": "Normal",
+    "2": "Random",
+    "3": "Sector",
+    "4": "Spiral",
+    "6": "Spiral_Re"
+  }
+}

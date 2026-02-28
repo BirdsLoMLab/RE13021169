@@ -1,0 +1,35 @@
+{
+  "className": "ConfigDefault_speed",
+  "tableName": "Default_speed",
+  "sourceLine": 226471,
+  "mainKey": "level",
+  "indexedKeys": {
+    "level": 0,
+    "treasure_level": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "level",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "treasure_level",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "attr",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "className": "ConfigActivity_boss",
+  "tableName": "Activity_boss",
+  "sourceLine": 216057,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "type": 1,
+    "group_id": 2
+  },
+  "usesConfigKey": false,
+  "fieldCount": 9,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "boss_id",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bossModel",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "serv_reward",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "expend",
+      "index": 7,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "attack",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

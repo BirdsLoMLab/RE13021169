@@ -1,0 +1,42 @@
+{
+  "className": "ConfigStrategy_activity_level",
+  "tableName": "Strategy_activity_level",
+  "sourceLine": 263624,
+  "mainKey": "chapter_progress",
+  "indexedKeys": {
+    "chapter_progress": 0,
+    "level": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "chapter_progress",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "equipments",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "refresh_cost",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

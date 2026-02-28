@@ -1,0 +1,12 @@
+{
+  "name": "DailyBoxState",
+  "sourceLine": 443970,
+  "values": {
+    "Normal": 1,
+    "Received": 2
+  },
+  "reverseMap": {
+    "1": "Normal",
+    "2": "Received"
+  }
+}

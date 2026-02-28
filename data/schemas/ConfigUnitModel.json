@@ -1,0 +1,251 @@
+{
+  "className": "ConfigUnitModel",
+  "tableName": "UnitModel",
+  "sourceLine": 267701,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 34,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "path",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "appearance",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "radius",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "scale",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "change_times",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skill1",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill2",
+      "index": 7,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill3",
+      "index": 8,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill4",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill5",
+      "index": 10,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill6",
+      "index": 11,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill7",
+      "index": 12,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "skill8",
+      "index": 13,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill1",
+      "index": 14,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill2",
+      "index": 15,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill3",
+      "index": 16,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill4",
+      "index": 17,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill5",
+      "index": 18,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill6",
+      "index": 19,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill7",
+      "index": 20,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill8",
+      "index": 21,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bigskill9",
+      "index": 22,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "hitTime",
+      "index": 23,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "chuxian_time",
+      "index": 24,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "deadTime",
+      "index": 25,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bp_bottom",
+      "index": 26,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bp_top",
+      "index": 27,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "bp_lead",
+      "index": 28,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "mountPos",
+      "index": 29,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "maxNum",
+      "index": 30,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "maxTime",
+      "index": 31,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skin",
+      "index": 32,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skin_scale",
+      "index": 33,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

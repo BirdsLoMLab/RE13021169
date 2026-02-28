@@ -1,0 +1,30 @@
+{
+  "name": "StateType",
+  "sourceLine": 278549,
+  "values": {
+    "Born": 0,
+    "Idle": 1,
+    "Move": 2,
+    "Skill": 3,
+    "Hit": 4,
+    "Over": 5,
+    "Dizz": 6,
+    "Dead": 7,
+    "HitBack": 8,
+    "HitThrow": 9,
+    "VirtualAct": 10
+  },
+  "reverseMap": {
+    "0": "Born",
+    "1": "Idle",
+    "2": "Move",
+    "3": "Skill",
+    "4": "Hit",
+    "5": "Over",
+    "6": "Dizz",
+    "7": "Dead",
+    "8": "HitBack",
+    "9": "HitThrow",
+    "10": "VirtualAct"
+  }
+}

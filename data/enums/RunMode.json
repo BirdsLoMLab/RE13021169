@@ -1,0 +1,14 @@
+{
+  "name": "RunMode",
+  "sourceLine": 278592,
+  "values": {
+    "Main": 0,
+    "Record": 1,
+    "Check": 2
+  },
+  "reverseMap": {
+    "0": "Main",
+    "1": "Record",
+    "2": "Check"
+  }
+}

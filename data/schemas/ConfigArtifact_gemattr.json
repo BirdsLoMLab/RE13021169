@@ -1,0 +1,70 @@
+{
+  "className": "ConfigArtifact_gemattr",
+  "tableName": "Artifact_gemattr",
+  "sourceLine": 219078,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "attr_id": 2
+  },
+  "usesConfigKey": false,
+  "fieldCount": 8,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group_id",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "attr_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pro",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "initial_value",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "upgrade_value",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "power_rate",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "color",
+      "index": 7,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

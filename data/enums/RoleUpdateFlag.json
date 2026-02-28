@@ -1,0 +1,20 @@
+{
+  "name": "RoleUpdateFlag",
+  "sourceLine": 215150,
+  "values": {
+    "Not": 0,
+    "All": 1,
+    "Add": 2,
+    "Move": 4,
+    "Break": 8,
+    "Del": 16
+  },
+  "reverseMap": {
+    "0": "Not",
+    "1": "All",
+    "2": "Add",
+    "4": "Move",
+    "8": "Break",
+    "16": "Del"
+  }
+}

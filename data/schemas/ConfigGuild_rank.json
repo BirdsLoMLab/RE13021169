@@ -1,0 +1,34 @@
+{
+  "className": "ConfigGuild_rank",
+  "tableName": "Guild_rank",
+  "sourceLine": 238614,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "refresh",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "show_num",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

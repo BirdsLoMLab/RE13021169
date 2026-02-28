@@ -1,0 +1,41 @@
+{
+  "className": "ConfigMine_hole_reward",
+  "tableName": "Mine_hole_reward",
+  "sourceLine": 245737,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "range",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "drop",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

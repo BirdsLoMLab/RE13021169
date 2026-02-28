@@ -1,0 +1,48 @@
+{
+  "className": "BuffGiantSlayer",
+  "sourceFile": "BuffGiantSlayer.ts",
+  "sourceLine": 194151,
+  "buffMapKey": "giantslayer",
+  "description": "Passive buff that provides bonus damage based on the HP difference between the target and the owner. More effective against targets with higher max HP than the owner. Has separate caps for boss and non-boss units.",
+  "configParams": {
+    "param1": {
+      "field": "_extraDam",
+      "description": "Damage bonus per 1% HP difference. Scaled per 10000 (basis points)."
+    },
+    "param2": {
+      "field": "_maxforBoss",
+      "description": "Maximum bonus cap for Boss targets (in basis points / 10000)."
+    },
+    "param3": {
+      "field": "_maxforUnit",
+      "description": "Maximum bonus cap for non-Boss units (unit type IDs 1 and 12) (in basis points / 10000)."
+    }
+  },
+  "onCalHpDamage": {
+    "description": "Called during damage pipeline to apply HP-difference bonus. Returns modified damage.",
+    "formula": {
+      "condition": "targetMaxHp > ownerMaxHp (otherwise returns unchanged damage)",
+      "steps": [
+        "1. ownerHp = owner.getAttrib(hp)",
+        "2. targetHp = target.getAttrib(hp)",
+        "3. hpDiffPercent = ceil(round((targetHp - ownerHp) / ownerHp * 100))",
+        "4. rawBonus = round(hpDiffPercent * _extraDam)",
+        "5. If target unitType is 1 or 12: bonus = min(rawBonus, _maxforUnit)",
+        "6. Otherwise (Boss): bonus = min(rawBonus, _maxforBoss)",
+        "7. finalDamage = round(damage * (1 + bonus / 10000))"
+      ],
+      "formula_compact": "bonus = min(ceil((targetHp - ownerHp) / ownerHp * 100) * extraDam, cap); result = round(damage * (1 + bonus / 10000))"
+    }
+  },
+  "calledBy": [
+    "BuffBleed (type 0 only)",
+    "BuffSkillValue (skill_damage_path step 14)",
+    "BuffSkillRealDamage (indirectly via EXTRA_DAMAGE + GIANT_SLAYER chain)"
+  ],
+  "attributesUsed": ["hp (owner max)", "hp (target max)"],
+  "notes": [
+    "Unit types 1 and 12 use the _maxforUnit cap (likely Player/Hero types)",
+    "All other unit types use the _maxforBoss cap",
+    "Returns unchanged damage if target HP <= owner HP"
+  ]
+}

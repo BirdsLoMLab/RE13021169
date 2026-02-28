@@ -1,0 +1,41 @@
+{
+  "className": "ConfigBack_pay_rebate",
+  "tableName": "Back_pay_rebate",
+  "sourceLine": 220776,
+  "mainKey": "number",
+  "indexedKeys": {
+    "number": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "number",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "percent",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "low_star_diamond",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "high_star_diamond",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "className": "ConfigMining_item",
+  "tableName": "Mining_item",
+  "sourceLine": 246014,
+  "mainKey": "level",
+  "indexedKeys": {
+    "level": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "level",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "hp",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "attack",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "image",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "price",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "gift",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

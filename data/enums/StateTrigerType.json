@@ -1,0 +1,28 @@
+{
+  "name": "StateTrigerType",
+  "sourceLine": 278629,
+  "values": {
+    "All": 0,
+    "Double_Act": 1,
+    "Counter_Act": 2,
+    "Miss": 3,
+    "Dizz": 4,
+    "BanAct": 5,
+    "Skill_Crit": 7,
+    "Shield": 8,
+    "Skill_Effect": 9,
+    "Normal_Act": 10
+  },
+  "reverseMap": {
+    "0": "All",
+    "1": "Double_Act",
+    "2": "Counter_Act",
+    "3": "Miss",
+    "4": "Dizz",
+    "5": "BanAct",
+    "7": "Skill_Crit",
+    "8": "Shield",
+    "9": "Skill_Effect",
+    "10": "Normal_Act"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "className": "ConfigCard_pool",
+  "tableName": "Card_pool",
+  "sourceLine": 223040,
+  "mainKey": "type",
+  "indexedKeys": {
+    "type": 0,
+    "level": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "type",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "num",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

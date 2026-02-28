@@ -1,0 +1,14 @@
+{
+  "name": "FateDefine",
+  "sourceLine": 290122,
+  "values": {
+    "lock": 0,
+    "empty": 1,
+    "Equipped": 2
+  },
+  "reverseMap": {
+    "0": "lock",
+    "1": "empty",
+    "2": "Equipped"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "name": "normalDoubleHurt",
+  "sourceLine": 322839,
+  "description": "Calculates combo (double hit) damage for players, pals, and cannons",
+  "parameters": {
+    "attacker": "Unit performing the combo attack",
+    "defender": "Unit receiving the combo attack",
+    "crit_flag": "1 = no crit, 2 = crit (from checkHit)",
+    "usePierceResist": "boolean, default true — whether to apply pierce/block"
+  },
+  "attributes_used": {
+    "attacker": ["att", "crit_dam", "double_hit_dam", "partner_dam", "partner_dam_extra"],
+    "defender": ["def", "def_coe", "crit_def", "double_hit_def", "partner_resist", "season_cannon_att_def"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get base stats",
+      "formula": "ATK = attacker.att, DEF = defender.def, DEF_COE = defender.def_coe"
+    },
+    {
+      "step": 2,
+      "description": "Calculate base damage with defense coefficient",
+      "formula": "baseDmg = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1)"
+    },
+    {
+      "step": 3,
+      "description": "Get combo resistance (pierce/block applied for Player and Gun, suppress/inspire for Pal)",
+      "branches": {
+        "Player": {
+          "resistance": "calArmorAndBlock(defender.double_hit_def)",
+          "combo_multiplier": "double_hit_dam",
+          "formula": "dmg = roundInt(baseDmg * combo_multiplier) * round(1 - resistance), dmg = roundInt(dmg)"
+        },
+        "Partner (Pal)": {
+          "ATK": "parent.att (inherits player ATK)",
+          "pal_multiplier": "round(partner_dam * parent.partner_dam_extra)",
+          "resistance": "calSuppressAndInspire(defender.partner_resist)",
+          "formula": "x = roundInt(max(roundInt(ATK - DEF*(1+DEF_COE)), 1) * pal_multiplier) * round(1 - resistance), dmg = roundInt(roundInt(x) * double_hit_dam), dmg = roundInt(dmg)",
+          "note": "Pal combo first applies pal multiplier and pal resistance, then scales by double_hit_dam"
+        },
+        "Gun (Cannon)": {
+          "cannon_multiplier": "partner_dam",
+          "resistance_cannon": "defender.season_cannon_att_def (no suppress/inspire applied)",
+          "resistance_combo": "calArmorAndBlock(defender.double_hit_def)",
+          "formula": "y = roundInt(max(roundInt(ATK - DEF*(1+DEF_COE)), 1) * partner_dam) * round(1 - season_cannon_att_def), dmg = roundInt(roundInt(y) * double_hit_dam) * round(1 - combo_resistance), dmg = roundInt(dmg)",
+          "note": "Gun combo applies cannon resistance first, then scales by double_hit_dam with pierce/block on double_hit_def"
+        }
+      }
+    },
+    {
+      "step": 4,
+      "description": "Apply calHurt (DMG RES + PvE bonuses)",
+      "formula": "dmg = calHurt(dmg, defender, attacker)"
+    },
+    {
+      "step": 5,
+      "description": "Apply critical damage if applicable",
+      "formula": "if (crit_flag != 1): dmg = roundInt(dmg * max(1.5, round(crit_dam / crit_def)))",
+      "note": "crit_def has floor of 0.5 (50%)"
+    },
+    {
+      "step": 6,
+      "description": "Floor at 1",
+      "formula": "dmg = max(1, dmg)"
+    }
+  ],
+  "simplified_formula": {
+    "player": "max(1, calHurt(roundInt(roundInt(max(roundInt(ATK - DEF*(1+DEF_COE)), 1) * double_hit_dam) * round(1 - pierce_block(double_hit_def))), defender, attacker) * crit_multiplier)",
+    "pal": "max(1, calHurt(roundInt(roundInt(roundInt(max(roundInt(parentATK - DEF*(1+DEF_COE)), 1) * round(partner_dam * partner_dam_extra)) * round(1 - suppress_inspire(partner_resist))) * double_hit_dam), defender, attacker) * crit_multiplier)",
+    "gun": "max(1, calHurt(roundInt(roundInt(roundInt(max(roundInt(ATK - DEF*(1+DEF_COE)), 1) * partner_dam) * round(1 - season_cannon_att_def)) * double_hit_dam) * round(1 - pierce_block(double_hit_def)), defender, attacker) * crit_multiplier)"
+  }
+}

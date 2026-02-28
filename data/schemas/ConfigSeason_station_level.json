@@ -1,0 +1,41 @@
+{
+  "className": "ConfigSeason_station_level",
+  "tableName": "Season_station_level",
+  "sourceLine": 259701,
+  "mainKey": "level",
+  "indexedKeys": {
+    "level": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "level",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "expend",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "attr",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "special_attr",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

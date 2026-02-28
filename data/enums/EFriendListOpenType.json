@@ -1,0 +1,16 @@
+{
+  "name": "EFriendListOpenType",
+  "sourceLine": 300036,
+  "values": {
+    "Default": 0,
+    "Plant": 1,
+    "PlantRequestHelp": 2,
+    "PlantMashleHelp": 3
+  },
+  "reverseMap": {
+    "0": "Default",
+    "1": "Plant",
+    "2": "PlantRequestHelp",
+    "3": "PlantMashleHelp"
+  }
+}

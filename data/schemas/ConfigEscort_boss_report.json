@@ -1,0 +1,27 @@
+{
+  "className": "ConfigEscort_boss_report",
+  "tableName": "Escort_boss_report",
+  "sourceLine": 229421,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "text",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

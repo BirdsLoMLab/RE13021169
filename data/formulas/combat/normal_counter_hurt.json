@@ -1,0 +1,54 @@
+{
+  "name": "normalCounterHurt",
+  "sourceLine": 322869,
+  "description": "Calculates counter-attack damage. Uses counter_dam multiplier and counter_def resistance. Only applies pierce/block (calArmorAndBlock), not suppress/inspire.",
+  "parameters": {
+    "attacker": "Unit performing the counter-attack",
+    "defender": "Unit receiving the counter-attack",
+    "crit_flag": "1 = no crit, 2 = crit (from checkHit)",
+    "usePierceResist": "boolean, default true — whether to apply pierce/block"
+  },
+  "attributes_used": {
+    "attacker": ["att", "crit_dam", "counter_dam"],
+    "defender": ["def", "def_coe", "crit_def", "counter_def"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get base stats",
+      "formula": "ATK = attacker.att, DEF = defender.def, DEF_COE = defender.def_coe"
+    },
+    {
+      "step": 2,
+      "description": "Calculate base damage with defense coefficient",
+      "formula": "baseDmg = max(roundInt(ATK - DEF * (1 + DEF_COE)), 1)"
+    },
+    {
+      "step": 3,
+      "description": "Get counter resistance with optional pierce/block",
+      "formula": "resistance = usePierceResist ? calArmorAndBlock(defender.counter_def) : counter_def"
+    },
+    {
+      "step": 4,
+      "description": "Apply counter multiplier and resistance",
+      "formula": "dmg = roundInt(baseDmg * counter_dam) * round(1 - resistance), dmg = roundInt(dmg)"
+    },
+    {
+      "step": 5,
+      "description": "Apply calHurt (DMG RES + PvE bonuses)",
+      "formula": "dmg = calHurt(dmg, defender, attacker)"
+    },
+    {
+      "step": 6,
+      "description": "Apply critical damage if applicable",
+      "formula": "if (crit_flag != 1): dmg = roundInt(dmg * max(1.5, round(crit_dam / crit_def)))",
+      "note": "crit_def has floor of 0.5 (50%)"
+    },
+    {
+      "step": 7,
+      "description": "Floor at 1",
+      "formula": "dmg = max(1, dmg)"
+    }
+  ],
+  "simplified_formula": "max(1, calHurt(roundInt(max(roundInt(ATK - DEF*(1+DEF_COE)), 1) * counter_dam * round(1 - pierce_block(counter_def))), defender, attacker) * crit_multiplier)"
+}

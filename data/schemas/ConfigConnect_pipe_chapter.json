@@ -1,0 +1,34 @@
+{
+  "className": "ConfigConnect_pipe_chapter",
+  "tableName": "Connect_pipe_chapter",
+  "sourceLine": 224365,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "open_day",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "template",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

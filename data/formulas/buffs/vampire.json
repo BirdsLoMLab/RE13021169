@@ -1,0 +1,73 @@
+{
+  "className": "BuffVampire",
+  "sourceFile": "BuffVampire.ts",
+  "sourceLine": 196745,
+  "buffMapKey": "vampire",
+  "description": "Life steal / Vampire buff. Converts a portion of damage dealt into healing for the caster. Factors in Total DMG Add/Def, skill-specific damage multiplier, heal cap based on max HP percentage, and treat decay. Can be limited to specific skills.",
+  "configParams": {
+    "param1": {
+      "field": "_calType",
+      "description": "Calculation type. Currently only type 0 is implemented (total damage based)."
+    },
+    "param2": {
+      "field": "_topType",
+      "description": "Cap type. Currently only type 0 is implemented (max HP percentage cap)."
+    },
+    "param3": {
+      "field": "_max",
+      "description": "Maximum heal cap as basis points of max HP (per 10000). E.g. 5000 = 50% of max HP."
+    },
+    "param5": {
+      "field": "_limitSkill",
+      "description": "Array of skill IDs. If non-empty, vampire only triggers for these skills.",
+      "default": []
+    }
+  },
+  "skillPar": "Not directly used in formula (skillDam from skill config is used instead)",
+  "calDamage": {
+    "description": "Called when the caster deals damage. Calculates and applies life steal healing.",
+    "parameters": {
+      "damage": "Raw damage dealt",
+      "target": "The unit that received the damage",
+      "skillId": "The skill that dealt the damage"
+    },
+    "formula": {
+      "steps": [
+        "1. Check skill filter: if _limitSkill is non-empty and skillId not in list, skip",
+        "2. total_dam_add = caster.getAttrib(total_dam_add)",
+        "3. total_dam_def = owner.getAttrib(total_dam_def)",
+        "4. totalDamMultiplier = max(1 + total_dam_add - total_dam_def, ConfigGlobal.total_damage_add_down_limit / 10000)",
+        "5. calType 0: healBase = round(damage * totalDamMultiplier)",
+        "6. topType 0: healCap = round(caster.maxHp * _max / 10000)",
+        "7. healBase = max(roundInt(healBase / injuryReduce), 1)",
+        "8. skillDamFactor = round((skillDam[0] XOR CONFIG_KEY) / 10000) [from skill config, encrypted]",
+        "9. healAmount = round(healBase * skillDamFactor)",
+        "10. effectiveCap = healCap / treatDecay",
+        "11. If healAmount < healCap: effectiveCap = healAmount / treatDecay",
+        "12. healthTarget(caster, effectiveCap, HealthType.Treat)"
+      ],
+      "formula_compact": "heal = min(round(damage * totalDamMul) / injuryReduce * skillDamFactor, hpCap) / treatDecay"
+    }
+  },
+  "calledBy": [
+    "BuffBleed (post-damage, for matching caster/parent)",
+    "BuffSkillValue (post-damage, for matching caster/parent)",
+    "BuffSkillRealDamage (post-real-damage)"
+  ],
+  "attributesUsed": [
+    "total_dam_add (caster)",
+    "total_dam_def (owner/target)",
+    "hp (caster, for heal cap)"
+  ],
+  "globalConfigReferences": {
+    "total_damage_add_down_limit": "Minimum floor for total damage multiplier (from ConfigGlobal)",
+    "CONFIG_KEY": "XOR decryption key for skill damage values",
+    "treatDecay": "Global battle healing decay factor",
+    "injuryReduce": "Global battle damage/injury reduction factor"
+  },
+  "notes": [
+    "The XOR with CONFIG_KEY (line 196772-196773) is an obfuscation/encryption mechanism for skill damage values",
+    "Vampire triggers from target's buff list (checked on target, heals caster)",
+    "Only triggers if caster matches the vampire buff's runner.cast or runner.cast.parent"
+  ]
+}

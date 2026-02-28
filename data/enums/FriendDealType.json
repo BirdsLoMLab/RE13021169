@@ -1,0 +1,16 @@
+{
+  "name": "FriendDealType",
+  "sourceLine": 299883,
+  "values": {
+    "AddFriend": 1,
+    "DelFriend": 2,
+    "AddBlack": 3,
+    "DelBlack": 4
+  },
+  "reverseMap": {
+    "1": "AddFriend",
+    "2": "DelFriend",
+    "3": "AddBlack",
+    "4": "DelBlack"
+  }
+}

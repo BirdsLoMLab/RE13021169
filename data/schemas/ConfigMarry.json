@@ -1,0 +1,181 @@
+{
+  "className": "ConfigMarry",
+  "tableName": "Marry",
+  "sourceLine": 244732,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 24,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "spend",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "show_reward",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "invite_num",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "num_max",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "enter_spend",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "process_time",
+      "index": 7,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "cheers_time",
+      "index": 8,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "output0",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "active_free_num",
+      "index": 10,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "active_time",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "active_standard",
+      "index": 12,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "output_ratio",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "active_rate",
+      "index": 14,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "output_get_num",
+      "index": 15,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "output_num",
+      "index": 16,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "output1",
+      "index": 17,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "output2",
+      "index": 18,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "output3",
+      "index": 19,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "final_reward",
+      "index": 20,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "points",
+      "index": 21,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "pos_limit",
+      "index": 22,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "desc",
+      "index": 23,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

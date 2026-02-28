@@ -1,0 +1,14 @@
+{
+  "name": "SelectedType",
+  "sourceLine": 447515,
+  "values": {
+    "NONE": 0,
+    "SINGLE": 1,
+    "MULT": 2
+  },
+  "reverseMap": {
+    "0": "NONE",
+    "1": "SINGLE",
+    "2": "MULT"
+  }
+}

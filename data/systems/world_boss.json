@@ -1,0 +1,75 @@
+{
+  "system": "World Boss System",
+  "description": "A cooperative boss-fight mode where players deal damage to a shared world boss. Features daily damage milestones, ranking rewards, and selectable buff lists that modify the encounter.",
+  "configTables": {
+    "ConfigWorld_boss": {
+      "sourceLine": 269027,
+      "mainKey": "id",
+      "indexedKeys": ["id", "index"],
+      "fieldCount": 10,
+      "description": "World boss encounter definitions with multi-stage progression.",
+      "fields": {
+        "id": { "type": "number", "description": "Boss encounter ID" },
+        "index": { "type": "number", "description": "Stage/phase index" },
+        "power": { "type": "number", "description": "Recommended combat power" },
+        "level": { "type": "number", "description": "Boss level" },
+        "map": { "type": "number", "description": "Battle map ID" },
+        "part_type": { "type": "number", "description": "Battle part type" },
+        "part": { "type": "number", "description": "Current part/phase" },
+        "bossID": { "type": "number", "description": "Boss unit configuration ID" },
+        "bossModel": { "type": "number", "description": "Boss visual model ID" },
+        "time": { "type": "number", "description": "Battle time limit per attempt (seconds)" }
+      }
+    },
+    "ConfigWorld_boss_bufflist": {
+      "sourceLine": 268885,
+      "mainKey": "buff_id",
+      "fieldCount": 4,
+      "description": "Selectable buffs for world boss encounters. Players choose buffs to modify the fight.",
+      "fields": {
+        "buff_id": { "type": "number", "description": "Buff selection ID" },
+        "skill_id": { "type": "number", "description": "Skill ID applied by this buff (references ConfigSkill)" },
+        "buff_desc": { "type": "string_ref", "description": "Buff description text" },
+        "target": { "type": "number", "description": "Target of the buff (0=player, 1=boss)" }
+      }
+    },
+    "ConfigWorld_boss_rank": {
+      "sourceLine": 268936,
+      "mainKey": "rank",
+      "fieldCount": 2,
+      "description": "Ranking reward tiers based on damage dealt.",
+      "fields": {
+        "rank": { "type": "optional_array", "description": "Rank range [min_rank, max_rank]" },
+        "reward_rank": { "type": "optional_array", "description": "Rewards for this rank tier [[itemId, count], ...]" }
+      }
+    },
+    "ConfigWorld_boss_total_dmg": {
+      "sourceLine": 268979,
+      "mainKey": "day",
+      "indexedKeys": ["day", "total_dmg"],
+      "fieldCount": 3,
+      "description": "Daily cumulative damage milestone rewards across all players.",
+      "fields": {
+        "day": { "type": "number", "description": "Day number of the world boss event" },
+        "total_dmg": { "type": "optional_array", "description": "Cumulative damage thresholds [[threshold, ...], ...]" },
+        "reward_participate": { "type": "optional_array", "description": "Participation rewards at each threshold" }
+      }
+    }
+  },
+  "mechanics": {
+    "encounter": {
+      "description": "World boss has multiple stages (indexed phases). Each attempt is time-limited. Players deal damage that contributes to both personal ranking and server-wide total damage milestones."
+    },
+    "buff_selection": {
+      "description": "Before each attempt, players can select from World_boss_bufflist. Buffs can target the player (target=0) or the boss (target=1). Each buff applies a skill from ConfigSkill."
+    },
+    "rewards": {
+      "ranking": "Players are ranked by total damage dealt. World_boss_rank defines reward tiers by rank ranges.",
+      "milestones": "World_boss_total_dmg tracks server-wide cumulative damage per day. When thresholds are reached, all participants receive milestone rewards.",
+      "participation": "reward_participate provides base rewards for contributing damage regardless of rank."
+    },
+    "boss_damage_modifier": {
+      "description": "In combat, the boss_dam attribute (AttribDefine) provides a damage multiplier when attacking Boss-type units. Formula: if target.type == Boss and boss_dam > 0, damage = roundInt(damage * round(1 + boss_dam))."
+    }
+  }
+}

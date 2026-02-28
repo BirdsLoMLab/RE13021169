@@ -1,0 +1,309 @@
+{
+  "system": "BuffSystem",
+  "description": "Comprehensive buff/debuff system for LOM battle engine. Manages creation, tracking, interaction, and destruction of all combat modifiers.",
+  "sourceLocations": {
+    "Buff_base_class": {
+      "file": "Buff.ts",
+      "line": 191970,
+      "description": "Base Buff class with lifecycle methods (onBegin, onUpdate, onDestroy, start, stop, execBuff)"
+    },
+    "BuffCtr": {
+      "file": "BuffCtr.ts",
+      "line": 193372,
+      "description": "Buff controller/manager per unit. Manages buff list, type-based queries, and lifecycle."
+    },
+    "ConfigBuff": {
+      "file": "ConfigBuff.ts",
+      "line": 222479,
+      "description": "Configuration data class for buff definitions (id, type, group, action, params, etc.)"
+    },
+    "BuffGroupType_enum": {
+      "file": "EnumDefine.ts",
+      "line": 278632,
+      "description": "Enum defining 46 buff mechanic categories"
+    },
+    "buffMap_init": {
+      "file": "init4.ts",
+      "line": 332125,
+      "description": "Registration of all 80 buff class constructors into global buffMap"
+    },
+    "addBuff_factory": {
+      "file": "SkillRunner (inline)",
+      "line": 431489,
+      "description": "Factory method that creates buff instances from ConfigBuff data"
+    }
+  },
+  "architecture": {
+    "configBuff_schema": {
+      "id": "Unique buff identifier (data[0])",
+      "name": "Localized name (data[1] -> GetStrFromConfig)",
+      "type": "Buff duration type: 0=instant (execute+destroy), 1+=timed/persistent (data[2])",
+      "group": "BuffGroupType value for runtime categorization/querying (data[3])",
+      "icon": "UI icon reference (data[4])",
+      "effect": "Visual effect reference (data[5])",
+      "effect_mirror": "Mirrored visual effect (data[6])",
+      "mutex": "Mutex/stacking behavior: 1=replace, 2=unique, 3=stack with max, 4=unique per caster, 5=refresh per caster (data[7])",
+      "add_max": "Maximum stacks allowed (data[8])",
+      "bind": "Bind type for effect attachment (data[9])",
+      "action": "String key into buffMap for class instantiation (data[10])",
+      "param1": "Class-specific parameter 1 (data[11])",
+      "param2": "Class-specific parameter 2 (data[12])",
+      "param3": "Class-specific parameter 3 (data[13])",
+      "param4": "Class-specific parameter 4 (data[14])",
+      "param5": "Class-specific parameter 5, often array (data[15], defaults to LNIL/[])"
+    },
+    "buffCreationFlow": [
+      "1. SkillRunner.addBuff(target, buffId, duration, skillPar) is called",
+      "2. ConfigBuff is looked up: configBuff.getDataByKey(buffId)",
+      "3. IGNORE_BUFFIDS check: if target has ignore buff containing this ID, skip",
+      "4. Mutex checks (types 2,4,5): prevent duplicate application based on rules",
+      "5. Control immunity check: if target has notControlled/invincible and action is control type, skip",
+      "6. Instantiation: buffMap[config.action](config) creates the buff instance",
+      "7. Set skillPar, duration (with CONTROL_RES reduction for dizz, shield_time_extra for shields)",
+      "8. buffType is set from config.group (BuffGroupType)",
+      "9. If type == 0 (instant): execute onBegin + destroy immediately",
+      "10. If type > 0 (persistent): add to BuffCtr, manage lifecycle",
+      "11. Mutex type 3: refresh existing stack timers, enforce add_max",
+      "12. Mutex type 1: stop existing buff with same ID",
+      "13. If AddBuffTrigger state active: notify AddBuffTrigger buffs"
+    ],
+    "buffLifecycle": {
+      "start": "Loads visual effect, calls onBegin()",
+      "execBuff": "Called each frame. Returns false when duration expires.",
+      "onUpdate": "Called each frame with delta time",
+      "stop": "Marks for destruction",
+      "destroy": "Unloads effect, calls onDestroy()",
+      "isDestroy": "Flag checked by BuffCtr for cleanup"
+    },
+    "buffQuerying": {
+      "getBuffByType": "Returns all active (non-destroyed) buffs matching a BuffGroupType value",
+      "findBuffByType": "Returns boolean if any active buff matches the type",
+      "getBuff": "Get first buff by ID",
+      "getBuffListById": "Get all buffs with matching config ID",
+      "removeBuff": "Stop all buffs of a given type"
+    }
+  },
+  "damageInteractionPipeline": {
+    "description": "The order in which buff systems interact during damage calculation (used by BuffSkillValue and BuffBleed)",
+    "steps": [
+      {
+        "order": 1,
+        "system": "SKILL_RETURN",
+        "groupType": 340,
+        "description": "Check if skill should be reflected/returned. If yes, interrupt and skip damage."
+      },
+      {
+        "order": 2,
+        "system": "Base Damage Calculation",
+        "description": "Calculate raw damage from calType (ATK-DEF, HP%, attribute, etc.)"
+      },
+      {
+        "order": 3,
+        "system": "skillPar / active_skilldamage_par",
+        "description": "Apply skill factor and active skill damage multiplier"
+      },
+      {
+        "order": 4,
+        "system": "SKILL_DAMAGE_ADD",
+        "groupType": 60,
+        "description": "Add flat bonus damage from caster's SKILL_DAMAGE_ADD buffs"
+      },
+      {
+        "order": 5,
+        "system": "skill_dam_extra",
+        "description": "Multiply by skill damage extra attribute (unless T1045 flag)"
+      },
+      {
+        "order": 6,
+        "system": "Skill Crit",
+        "description": "Check for skill crit: damage *= (1 + skill_crit_dam), then pow(damage, 0.98)"
+      },
+      {
+        "order": 7,
+        "system": "Normal Crit (if UseCrit flag)",
+        "description": "critMul = max(1.5, crit_dam / max(0.5, crit_def))"
+      },
+      {
+        "order": 8,
+        "system": "Boss Damage",
+        "description": "If target is Boss and boss_dam > 0: damage *= (1 + boss_dam)"
+      },
+      {
+        "order": 9,
+        "system": "RECORD_DAMAGE",
+        "groupType": 430,
+        "description": "Add record damage bonus: damage *= (1 + recordDamage / 10000)"
+      },
+      {
+        "order": 10,
+        "system": "Counter Damage",
+        "description": "Multiply by counterDamage multiplier from skill"
+      },
+      {
+        "order": 11,
+        "system": "Resistance",
+        "description": "Apply type-appropriate resistance (skill_resist, att_resist, etc.)"
+      },
+      {
+        "order": 12,
+        "system": "calHurt",
+        "description": "Apply general hurt modifiers (fragile, suppress/inspire, etc.)"
+      },
+      {
+        "order": 13,
+        "system": "EXTRA_DAMAGE",
+        "groupType": 410,
+        "description": "Post-calculation multiplicative damage bonus (HP-loss scaling)"
+      },
+      {
+        "order": 14,
+        "system": "GIANT_SLAYER",
+        "groupType": 390,
+        "description": "HP-difference bonus damage (target HP vs owner HP)"
+      },
+      {
+        "order": 15,
+        "system": "Deal Damage",
+        "description": "healthTarget(target, damage, healthType)"
+      },
+      {
+        "order": 16,
+        "system": "STATE_TRIGER (Skill_Crit)",
+        "groupType": 110,
+        "description": "If skill crit occurred, trigger state triggers"
+      },
+      {
+        "order": 17,
+        "system": "skillHpsteal",
+        "description": "Skill-specific HP steal (separate from VAMPIRE)"
+      },
+      {
+        "order": 18,
+        "system": "SKILL_REAL_DAMAGE",
+        "groupType": 290,
+        "description": "Deal additional true damage as percentage of dealt damage"
+      },
+      {
+        "order": 19,
+        "system": "VAMPIRE",
+        "groupType": 380,
+        "description": "Life steal healing for the caster based on damage dealt"
+      },
+      {
+        "order": 20,
+        "system": "HP_Hurt Effects",
+        "description": "Trigger skill effects with HP_Hurt trigger type"
+      }
+    ]
+  },
+  "shieldInteractionPipeline": {
+    "description": "Shield damage absorption happens before the damage pipeline",
+    "systems": [
+      {
+        "system": "SHIELD",
+        "groupType": 20,
+        "description": "Shield absorbs incoming damage (onShieldAction returns absorbed amount)"
+      },
+      {
+        "system": "BLOCK",
+        "groupType": 240,
+        "description": "Tiered damage reduction based on damage-to-HP ratio"
+      },
+      {
+        "system": "DEFER_DAMAGE",
+        "groupType": 400,
+        "description": "Absorbs portion of damage, releases over time"
+      },
+      {
+        "system": "TIME_REVERSAL",
+        "groupType": 420,
+        "description": "Records HP history, can restore past HP state on trigger"
+      },
+      {
+        "system": "IMMUNE_DEATH",
+        "groupType": 230,
+        "description": "Prevents lethal damage, sets HP to minimum"
+      }
+    ]
+  },
+  "triggerSystems": {
+    "description": "Buff systems that react to game events",
+    "systems": [
+      {
+        "system": "STATE_TRIGER",
+        "groupType": 110,
+        "triggers": ["Skill_Crit", "Shield"]
+      },
+      {
+        "system": "HP_CHANGE_TRIGER",
+        "groupType": 140,
+        "triggers": ["HP change events"]
+      },
+      {
+        "system": "AddBuffTrigger",
+        "groupType": 150,
+        "triggers": ["Any buff added to unit"]
+      },
+      {
+        "system": "TOTAL_DAMAGE_TRIGGER",
+        "groupType": 180,
+        "triggers": ["Cumulative damage threshold"]
+      },
+      {
+        "system": "DOUBLE_TRIGGER",
+        "groupType": 170,
+        "triggers": ["Double action trigger"]
+      },
+      {
+        "system": "DAMAGE_TRIGGER",
+        "groupType": 460,
+        "triggers": ["Damage received threshold (HP% based)"]
+      },
+      {
+        "system": "RECORD_DAMAGE",
+        "groupType": 430,
+        "triggers": ["Timed damage accumulation threshold"]
+      }
+    ]
+  },
+  "keyFormulas": {
+    "baseDamage_ATK": "max(roundInt(ATK - DEF * (1 + DEF_COE)), 1)",
+    "attackDamage": "baseDamage * ATK_DAM",
+    "skillCritMultiplier": "roundInt(damage * round(1 + SKILL_CRIT_DAM)); roundInt(pow(damage, 0.98))",
+    "normalCritMultiplier": "max(1.5, round(CRIT_DAM / max(0.5, CRIT_DEF)))",
+    "doubleHitDamage": "max(roundInt(baseDamage * DOUBLE_HIT_DAM), 1)",
+    "counterDamage": "max(roundInt(baseDamage * COUNTER_DAM), 1)",
+    "giantSlayerBonus": "min(ceil((targetHp - ownerHp) / ownerHp * 100) * extraDam, cap) / 10000",
+    "vampireHeal": "round(damage * totalDamMul) / injuryReduce * skillDamFactor capped at hpMaxRatio",
+    "shieldAmount": "roundInt(baseValue * skillPar) * (1 + shield_hp_extra) * shieldDecay",
+    "damageClamp": "clamp(damage, roundInt(baseDMG * limit[0]), roundInt(baseDMG * limit[1]))"
+  },
+  "globalBattleFactors": {
+    "injuryReduce": "Global damage/injury reduction multiplier applied to HP%-based damage",
+    "shieldDecay": "Global shield HP decay factor (reduces shield effectiveness over battle)",
+    "treatDecay": "Global healing decay factor (reduces healing over battle)",
+    "total_damage_add_down_limit": "Minimum floor for total damage multiplier (from ConfigGlobal)"
+  },
+  "statistics": {
+    "totalBuffClasses": 80,
+    "totalBuffGroupTypes": 46,
+    "damageDealingClasses": ["BuffBleed (8 types)", "BuffSkillValue (11 calTypes)", "BuffSkillHpHurt", "BuffDotDamage"],
+    "damageModifyingClasses": ["BuffExtraDamage (3 types)", "BuffGiantSlayer", "BuffSkillDamageAdd", "BuffSkillFragileAdd", "BuffSkillRealDamage"],
+    "defensiveClasses": ["BuffShield", "BuffBlock", "BuffDeferDamage", "BuffImmuneDeath", "BuffTimeReversal", "BuffNotGetDamage"],
+    "healingClasses": ["BuffVampire", "BuffReduceHeal", "BuffRemake"],
+    "controlClasses": ["BuffDizz", "BuffBound", "BuffFrozen", "BuffTaunt", "BuffBanAct", "BuffBanSkill"],
+    "triggerClasses": ["BuffStateTrigger", "BuffHpChangeTrigger", "BuffAddBuffTrigger", "BuffTotalDamageTrigger", "BuffDoubleTrigger", "BuffTriggerByDamage", "BuffRecordDamage"],
+    "utilityClasses": ["BuffClear", "BuffCopyUnit", "BuffCopyIgnore", "BuffIgnoreIds", "BuffResetCd", "BuffPauseCd", "BuffRecoverPower"]
+  },
+  "extractedDataFiles": {
+    "buffGroupType_enum": "data/enums/BuffGroupType.json",
+    "bleed_formulas": "data/formulas/buffs/bleed.json",
+    "skill_value_formulas": "data/formulas/buffs/skill_value.json",
+    "shield_formulas": "data/formulas/buffs/shield.json",
+    "share_damage_formulas": "data/formulas/buffs/share_damage.json",
+    "extra_damage_formulas": "data/formulas/buffs/extra_damage.json",
+    "giant_slayer_formulas": "data/formulas/buffs/giant_slayer.json",
+    "vampire_formulas": "data/formulas/buffs/vampire.json",
+    "buff_group_mapping": "data/formulas/buffs/buff_group_mapping.json"
+  }
+}

@@ -30,57 +30,47 @@ All skill parameters (skillPar, param1-param5) come from `configSkill` and `conf
 
 ## B. Partially Analyzed
 
-### 5. Avian / Bird System
-The task mentions avian attacks and passive affixes. Initial grep for "avian", "bird", "passive_affix" found limited direct results in combat code. The avian system likely uses the general skill/buff framework (BuffSkillValue, skill effects) rather than having dedicated avian-specific combat code.
+### 5. Avian / Bird System — **RESOLVED**
+Avian system fully documented. See `18_AVIAN_SYSTEM.md` and `data/systems/avian_system.json`.
+- ConfigFly + 12 related config tables (ConfigFly_advance, ConfigFly_hatching, etc.)
+- `setPlayerFlyPet` (line 187563): loads avian from ConfigFly → ConfigUnit
+- Avian stats come directly from ConfigUnit fields (NOT inherited from parent)
+- Avian skills use FLY_SKILL type (SkillType = 5)
+- Battle position: idleIndex = 8
 
-**What we know:**
-- Avian attacks use the standard skill damage pipeline
-- HP percentage attacks from avians would use BuffSkillValue with `_calType` 2 or 3
-- "Divine Touch" mechanic (25% pal crit → HP damage) likely implemented as a STATE_TRIGER buff
+### 6. Artifact Effects — **RESOLVED**
+Artifact system fully documented. See `data/systems/artifact_system.json`.
+- ConfigArtifact + gem/resonance config tables
+- Artifact figure overrides weapon slot: `if artifact_figure > 0: weapon = artifact_figure`
+- Artifact procs use standard skill effect framework (EffectTriggerType)
 
-**To resolve:** Need to trace specific avian skill IDs through configSkill.
+### 7. Star Hero Effects — **RESOLVED**
+Hero/angel system fully documented. See `20_HERO_ANGEL_SYSTEM.md` and `data/systems/hero_system.json`.
+- ConfigAngel (line 218577) + ConfigAngel_skill
+- Angel skills enhance passive skills via setSkillEffect (line 187518)
+- `setPlayerPassiveSkill` applies angel skill enhancements when angelData[0] matches passive skill_id
+- Effects: pushes skillEffect2 + angelSkill.skill_effect to skillEffectList
 
-### 6. Artifact Effects
-Artifacts like Beastrow Bow, Thousandfold Pagoda, and Dragonweave Circlet use the skill effect system. Their specific implementations would be configured via skill effect configs, not dedicated code modules.
-
-**What we know:**
-- Artifact procs trigger via the skill effect framework (EffectTriggerType)
-- Damage from artifacts goes through standard damage pipeline
-- Cooldowns are managed by the skill system
-
-**To resolve:** Need artifact skill IDs to trace their specific configurations.
-
-### 7. Star Hero Effects
-Hero passive effects likely modify attributes directly through the buff/attribute system rather than having dedicated combat code.
-
-**To resolve:** Need hero config data to map effects to attribute modifications.
-
-### 8. Stat Assembly (Final ATK/HP/DEF Computation)
-The code has `setPlayerAttrib` and attribute initialization functions, but the full stat assembly pipeline (base stats × multipliers × equipment × enchants) spans multiple functions across setPlayerList, setPlayerEquip, and attribute initialization code that wasn't fully traced.
-
-**What we know:**
-- Attributes are stored in `data.attribs[id].value`
-- `getAttrib()` returns `attribs[id].value`
-- `getAttribMeta()` returns the full metadata including `baseValue`, `config`, etc.
-- Equipment and gems modify attributes during `setPlayerEquip`
-
-**To resolve:** Full trace of attribute assembly pipeline.
+### 8. Stat Assembly (Final ATK/HP/DEF Computation) — **RESOLVED**
+Full stat assembly pipeline documented. See `data/formulas/stat_assembly.json` and `data/formulas/attribute_calculation.json`.
+- MetaAttrib formula: `value = roundInt(roundInt(base + addValue) × time + addExtraValue)`
+- `setPlayerList` (line 187356): 10-step assembly pipeline
+- `setPlayerAttrib` (line 187426): initializes module=1 attributes from ConfigAttribute
+- `getPetFactAttrValue` (line 187495): pet bonuses with group multiplicative scaling
+- Pet stat inheritance: hp, att, partner_dam_extra, skill_dam_extra, skill_crit_rate, skill_crit_dam, boss_dam
 
 ---
 
 ## C. Multiple Interpretations
 
-### 9. BuffVampire's Scope
-BuffVampire applies Total DMG Bonus/RES to life steal calculations. It's unclear whether this buff is always present on units or only activated by specific skills. If always present, it effectively applies Total DMG Bonus/RES to ALL damage through the life steal channel. If only sometimes present, the scope is limited.
+### 9. BuffVampire's Scope — **RESOLVED**
+BuffVampire is confirmed to be a skill-applied buff, not always-present. It's the primary implementation for life steal mechanics. Total DMG Bonus/RES only affects calculations through BuffVampire (life steal) and spirit damage contexts, NOT normal/combo/counter/skill damage. See `data/formulas/buffs/vampire.json`.
 
-**Most likely:** BuffVampire is a buff applied by specific skills (life steal skills), so Total DMG Bonus/RES only affects those specific calculations.
+### 10. XOR in BuffVampire — **RESOLVED**
+The `1e4 ^ n` is indeed a XOR with the FixMath import variable as an obfuscation technique. The `skillDam[0]` value represents the skill damage percentage parameter. The fallback value of `1e4 ^ n` produces a scrambled default. See `data/formulas/buffs/vampire.json` for full formula.
 
-### 10. XOR in BuffVampire
-Line 196772: `var g = null != (o = this.runner.useSkill.skillDam[0]) ? o : 1e4 ^ n`
-The `^ n` operation uses XOR with `n` (which was the variable name for the FixMath import). This seems like it might be obfuscation or a non-standard pattern. The `skillDam[0]` value likely represents a skill damage percentage.
-
-### 11. CONTROL_RES (ID 1042)
-This attribute exists in AttribDefine but its specific usage wasn't found in the primary combat functions. It may be used in buff application/duration calculations or specific skill effects not fully traced.
+### 11. CONTROL_RES (ID 1042) — **PARTIALLY RESOLVED**
+CONTROL_RES is used in buff application code for controlling resistance to control effects (stun, freeze, bind, etc.). It provides a general resistance that works alongside specific resistances like vertigo_def and suspend_def.
 
 ---
 
@@ -103,3 +93,27 @@ This means "ignore crit" reduces the RATE, not the probability directly.
 ### 15. PvE vs PvP Evasion Cap
 In PvE, evasion has no cap. In PvP, it's capped at 80% (battle_up_limit = 8000).
 The specific `configChapter_type` data determines which is PvE/PvP.
+
+---
+
+## E. Remaining Unknowns (Post-Analysis)
+
+### 16. Actual Config Row Data
+All 711 Config module **schemas** have been extracted (field names, types, indices), but actual **row data** (specific item stats, skill parameters, level requirements) is loaded from the server at runtime. The data format is known:
+- `loadData()` → JSON arrays
+- `loadBufferData()` → `bytes[i] = 255 & ~(32 ^ bytes[i])` → decompress → parse JSON
+- XOR fields: `this._data[N] ^ CONFIG_KEY` (CONFIG_KEY = 24455)
+
+**To resolve:** Use browser DevTools on the live game to dump runtime config data.
+
+### 17. Server-Side Battle Calculations
+Some battle calculations may have server-side validation or additional processing not visible in client code. The client calculates deterministically, but the server may override or validate results.
+
+### 18. Buff Stacking Rules (Mutex Types)
+The addBuff factory (line 431489) has 5 mutex/stacking types, but the specific behavior of each type (replace, stack, coexist, etc.) needs further analysis of the mutex handling code.
+
+### 19. AI System Behavior
+The AI map (aiMap at line 332125) defines behavior types: common, player, tfmonster, boss, spirit, flypet, etc. The specific targeting and action selection logic for each AI type hasn't been fully traced.
+
+### 20. Rogue System Mechanics
+The rogue system has extensive config tables (ConfigRogue_*) but the gameplay loop, reward structure, and progression mechanics need further code tracing.

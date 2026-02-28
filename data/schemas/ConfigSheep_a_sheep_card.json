@@ -1,0 +1,27 @@
+{
+  "className": "ConfigSheep_a_sheep_card",
+  "tableName": "Sheep_a_sheep_card",
+  "sourceLine": 260994,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

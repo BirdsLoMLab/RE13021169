@@ -1,0 +1,42 @@
+{
+  "className": "ConfigFly_hybrid",
+  "tableName": "Fly_hybrid",
+  "sourceLine": 233357,
+  "mainKey": "id1",
+  "indexedKeys": {
+    "id1": 0,
+    "id2": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "id1",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "id2",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "template_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "fly_weight",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "LoadState",
+  "sourceLine": 184356,
+  "values": {
+    "Not": 0,
+    "Ready": 1,
+    "Loading": 2,
+    "Finish": 3
+  },
+  "reverseMap": {
+    "0": "Not",
+    "1": "Ready",
+    "2": "Loading",
+    "3": "Finish"
+  }
+}

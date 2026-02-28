@@ -1,0 +1,12 @@
+{
+  "name": "EBoth",
+  "sourceLine": 435464,
+  "values": {
+    "Top": 0,
+    "Bot": 1
+  },
+  "reverseMap": {
+    "0": "Top",
+    "1": "Bot"
+  }
+}

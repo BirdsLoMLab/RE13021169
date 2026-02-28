@@ -1,0 +1,14 @@
+{
+  "name": "ActivityTaskState",
+  "sourceLine": 35357,
+  "values": {
+    "Normal": 0,
+    "CanGet": 1,
+    "HadGet": 2
+  },
+  "reverseMap": {
+    "0": "Normal",
+    "1": "CanGet",
+    "2": "HadGet"
+  }
+}

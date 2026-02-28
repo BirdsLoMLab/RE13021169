@@ -1,0 +1,91 @@
+{
+  "className": "ConfigBadge",
+  "tableName": "Badge",
+  "sourceLine": 221079,
+  "mainKey": "badge_id",
+  "indexedKeys": {
+    "badge_id": 0,
+    "level": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 11,
+  "fields": [
+    {
+      "name": "badge_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "all_name",
+      "index": 2,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 3,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "get_desc",
+      "index": 4,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "baege_icon",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level_icon",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "position",
+      "index": 7,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "expend_goods",
+      "index": 8,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "attr",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "power",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "HitType",
+  "sourceLine": 278620,
+  "values": {
+    "Not": 0,
+    "Hit": 1,
+    "Over": 2,
+    "Repeat": 4
+  },
+  "reverseMap": {
+    "0": "Not",
+    "1": "Hit",
+    "2": "Over",
+    "4": "Repeat"
+  }
+}

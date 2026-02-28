@@ -1,0 +1,14 @@
+{
+  "name": "TaskState",
+  "sourceLine": 443967,
+  "values": {
+    "Normal": 1,
+    "Complete": 2,
+    "Received": 3
+  },
+  "reverseMap": {
+    "1": "Normal",
+    "2": "Complete",
+    "3": "Received"
+  }
+}

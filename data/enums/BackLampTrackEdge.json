@@ -1,0 +1,16 @@
+{
+  "name": "BackLampTrackEdge",
+  "sourceLine": 131896,
+  "values": {
+    "Left": -360,
+    "Right": 360,
+    "Top": 1600,
+    "Bottom": 0
+  },
+  "reverseMap": {
+    "-360": "Left",
+    "360": "Right",
+    "1600": "Top",
+    "0": "Bottom"
+  }
+}

@@ -2,68 +2,114 @@
 
 **Source file:** `game_script_pretty.js` (457,538 lines, 28MB beautified)
 **Generated from:** `game_script.js` (7,685 lines, 18MB minified)
+**Config modules extracted:** 711 schemas → `data/schemas/`
+**Enums extracted:** 96 enums → `data/enums/`
+**Constants extracted:** 5 files → `data/constants/`
 
 ---
 
 ## Key Module Locations
 
-### Math & Utility
+### Core Infrastructure
 | Module | Lines | Description |
 |--------|-------|-------------|
+| BaseConfig | ~184594 | Universal config table class, loadData/loadBufferData (binary XOR decode) |
+| CONFIG_KEY | ~184611 | `24455` — XOR obfuscation key for config data |
 | FixMath | 292602-292620 | Fixed-point math: `round()`, `roundInt()`, `clamp()` |
 
 ### Enums & Definitions
 | Module | Lines | Description |
 |--------|-------|-------------|
-| EnumDefine | 278546-278600 | HealthType, AttackType, StateType, DmgType, RunMode enums |
-| AttribDefine (MetaAttrib) | 349630-349640 | All attribute IDs (att=1001, hp=1002, def=1024, etc.) |
+| EnumDefine | 278546-278700 | HealthType, AttackType, StateType, DmgType, RunMode, BuffGroupType (46), EffectTriggerType (16), SkillType (5), TargetFilter, SpBuffState, HitType, BindType, etc. |
+| AttribDefine (MetaAttrib) | 349630-349675 | All 89 attribute IDs (1001-1082, 6001-6007), MetaAttrib value calculation class |
+| buffMap registration | 332125 | Complete mapping of 80 buff action strings → implementing classes |
+| aiMap registration | 332125 | AI type mappings: common, player, boss, tfmonster, spirit, flypet, etc. |
+| skillMap registration | 332125 | Skill handler mappings: normal, counter, effect, passive, boss_effect, spirit_normal, etc. |
 
 ### Battle Core
 | Module | Lines | Description |
 |--------|-------|-------------|
 | BattleMain (init/reset) | 188200-188210 | Battle initialization, injuryReduce/shieldDecay/treatDecay defaults |
-| HurtUtil | 322750-322980 | ALL core damage functions: normalHurt, normalDoubleHurt, normalCounterHurt, calHurt, calArmorAndBlock, calSuppressAndInspire, checkHit, checkDoubleAct, checkCounterAct, checkDizz, checkSkillCirt, SkillHurt |
-| BattleData / setPlayerList | 187356-187530 | Player data setup, attribute initialization, pet/skill loading |
+| HurtUtil | 322750-323007 | ALL core damage functions: normalHurt, normalDoubleHurt, normalCounterHurt, calHurt, calArmorAndBlock, calSuppressAndInspire, checkHit, checkDoubleAct, checkCounterAct, checkDizz, checkSkillCirt, checkThrowHit, SkillHurt, spiritNormalHit, hpStealHeal/hpStealCal/hpStealCheck |
+| BattleData / setPlayerList | 187356-187578 | Player data setup, attribute initialization, pet/skill/spirit/passive skill loading |
+
+### Stat Assembly Pipeline
+| Module | Lines | Description |
+|--------|-------|-------------|
+| setPlayerList | 187356-187419 | Master entry point: job→unit config, attr, equip, pets, skills, ext, spirit, passives |
+| setPlayerAttrib | 187426-187432 | Initialize module=1 attributes from ConfigAttribute, PvE filtering |
+| setPlayerEquip | 187440-187491 | Equipment figure processing: 5 slots, artifact override, skin system |
+| getPetFactAttrValue | 187495-187505 | Pet attribute bonus with group-based multiplicative scaling |
+| setPlayerPets | 187544-187562 | Pet/pal unit initialization, stat inheritance from parent |
+| setPlayerFlyPet | 187563-187575 | Avian/fly pet initialization from ConfigFly + ConfigUnit |
+| setPlayerSkill | 187506-187517 | Active skill loading sorted by position |
+| setPlayerPassiveSkill | 187523-187534 | Passive skills with angel skill enhancements |
 
 ### Damage Application
 | Module | Lines | Description |
 |--------|-------|-------------|
-| Unit.addDamage (healthType switch) | 449240-449365 | Master damage application: PvP reduction, shield absorption, HP modification, death handling |
-| SkillHandleNormal | 429879-430068 | Normal attack execution: hit check, basic/double/counter damage, buff triggers |
+| Unit.addDamage | 449240-449365 | Master damage pipeline: PvP reduction, season bonus, shield absorption, block, HP reduction, death prevention (Time Reversal → Remake HP → Immune Death), record damage, HP change triggers |
+| SkillHandleNormal | 429879-430068 | Normal attack execution: hit check, basic/double/counter damage, FRAGILE_EFFECT, EXTRA_DAMAGE, GIANT_SLAYER, buff triggers |
 | SkillHandleCounter | 429630-429700 | Counter-attack execution |
 
 ### Buff System — Damage Modifiers
 | Module | Lines | Description |
 |--------|-------|-------------|
-| BuffBleed | 192750-192860 | Bleed damage (7 types: basic, HP%, skill, basic+resist, combo, counter, maxHP%) |
-| BuffSkillValue | 195700-195970 | Skill damage: HP-based damage with clamping, skill crit, resist, multiple calc types |
-| BuffShareDamage | 195095-195144 | Shared/splash damage propagation |
-| BuffExtraDamage | 193948-194016 | Extra damage multiplier (fixed %, HP-loss based) |
-| BuffGiantSlayer | 194132-194175 | HP-difference based damage bonus |
-| BuffSkillFragileAdd | 195433-195468 | Fragile effect: flat bonus damage from attribute/HP |
-| BuffVampire | 196720-196788 | Life steal with Total DMG Bonus/RES calculation |
+| BuffBleed | 192751-192860 | Bleed damage (8 types: basic, curHP%, skill, basic+resist, combo, counter, maxHP%, attribute-based) |
+| BuffSkillValue | 195729-195970 | Primary skill damage: 11 calTypes (attrib, ATK-DEF, HP-diff, curHP, atkDmg, targetATK, combo, counter, casterHP, casterMaxHP, partnerDam) |
+| BuffSkillHpHurt | 195470-195530 | HP-based damage with resistance and clamping |
+| BuffShareDamage | 195114-195144 | Shared/splash damage (full pass-through or percentage-based) |
+| BuffExtraDamage | 193971-194016 | Extra damage multiplier (fixed %, HP-loss scaling, CURRENT_HP scaling) |
+| BuffGiantSlayer | 194151-194175 | HP-difference based damage bonus with boss/non-boss caps |
+| BuffSkillFragileAdd | 195433-195468 | Fragile effect: flat bonus damage from attacker attribute/HP |
+| BuffVampire | 196745-196788 | Life steal with Total DMG Bonus/RES, treatDecay, HP cap |
+| BuffSkillDamageAdd | ~196700 | Skill-specific damage bonus with Total DMG calc |
+| BuffDotDamage | 193836 | Damage over time |
 
 ### Buff System — Defense/Utility
 | Module | Lines | Description |
 |--------|-------|-------------|
-| BuffShield | 195146-195250 | Shield creation, decay, damage absorption, duration |
+| BuffShield | 195173-195250 | Shield creation (4 calTypes), shield_hp_extra, shieldDecay, sub-buff on create/destroy |
+| BuffAttrib | 192380 | Attribute modification buffs |
+| BuffAttribContinue | ~192400 | Continuous attribute modification |
+| BuffAttribCondition | ~192450 | Conditional attribute modification |
+| BuffInvincible | ~194070 | Invincibility buff |
+| BuffImmuneDeath | ~194100 | Death immunity |
+| BuffRemake | ~195050 | HP remake/restore |
+| BuffReduceHeal | ~195080 | Healing reduction |
 | BuffTotalDamageTrigger | 196369-196410 | Cumulative damage tracking trigger |
-| BuffSkillDamageAdd | ~196700 | Skill-specific damage bonus with Total DMG calc |
+| BuffRecordDamage | ~196300 | Damage recording for replay |
+| BuffBlock | ~192900 | Block damage absorption |
+| BuffNotControll | ~195000 | Control immunity |
 
 ### PvP Systems
 | Module | Lines | Description |
 |--------|-------|-------------|
-| ChapterArena | 197534-197544 | 1v1 PvP: avg level calc, injuryReduce/shieldDecay/treatDecay |
+| ChapterArena | 197534-197544 | 1v1 PvP: avg level calc, injuryReduce/shieldDecay(0.4)/treatDecay(0.3) |
 | ChapterMultipleArena (DoublePvp) | 202647-202660 | Multi-player PvP initialization |
 | ChapterRogue | 203550-203560 | Rogue PvP initialization |
-| ConfigLevel | 242991-243045 | Level config schema: pvp_injury_reduce, power_par |
+| ChapterTeam20 | ~203600 | Team 20 PvP mode |
+| ChapterDoubleLadder | ~203650 | Double Ladder PvP mode |
+| ConfigLevel | 242991-243045 | Level config: pvp_injury_reduce, power_par |
 
-### Config Data
+### Config Schemas (Key Tables)
 | Module | Lines | Description |
 |--------|-------|-------------|
-| ConfigGlobal (defaults) | 235650-235710 | Default battle constants: miss_correct, shield_correct, hp_recovery_correct |
-| battle_up_limit | 237427-237429 | Miss rate cap: [[1008, 8000]] |
-| total_damage_add_down_limit | 237503 | Total DMG floor: 2000 (= 0.20x) |
+| ConfigAttribute | 219864 | 12 fields: id, name, key, module, group, up_limit, num_type, etc. |
+| ConfigUnit | 267178 | 97 fields (77 XOR-obfuscated): all combat stats, unit type, model |
+| ConfigBuff | 222479 | 16 fields: id, group, action, param1-5, skillPar, time, etc. |
+| ConfigSkill | 261531 | 28 fields: skillType, buffGroup, skillEffect, targetType, etc. |
+| ConfigAngel | 218577 | Hero/angel schema |
+| ConfigEquipment | 229175 | Equipment schema |
+| ConfigFly | 233576 | Avian/bird schema (12 related tables) |
+| ConfigGlobal | 235650 | 744 global constant keys |
+| ConfigJobs | 239943 | Class/job schema |
+| ConfigMount | 248453 | Mount schema |
+| ConfigPet | 252193 | Pet/pal schema |
+| ConfigRelic | 254905 | Relic schema |
+| ConfigSeason_ship | 259623 | Ship/sailing schema |
+| ConfigSpirit | 262760 | Spirit schema |
+| ConfigSpecil_buff | ~262200 | Special buff definitions |
 
 ---
 
@@ -201,3 +247,76 @@
 | 6005 | spirit_att | Spirit ATK |
 | 6006 | spirit_hp_add | Spirit HP Bonus |
 | 6007 | spirit_att_add | Spirit ATK Bonus |
+
+---
+
+## Document Index
+
+### Combat System (01-13)
+| Doc | Title | Key Topics |
+|-----|-------|------------|
+| 01 | Basic Damage Calculation | normalHurt, ATK-DEF formula, multipliers |
+| 02 | Combo/Counter/Skill Damage | normalDoubleHurt, normalCounterHurt, SkillHurt |
+| 03 | Critical Hit System | checkSkillCirt, crit_dam/crit_def |
+| 04 | PvP Damage Reduction | injuryReduce, level-based table |
+| 05 | HP-Based Damage | BuffSkillHpHurt, skillPar, clamping |
+| 06 | Shield System | BuffShield, 4 calTypes, shieldDecay |
+| 07 | Total DMG Bonus/RES | total_dam_add/def, floor=0.20x |
+| 08 | Pierce/Block/Inspire/Suppress | calArmorAndBlock, calSuppressAndInspire |
+| 09 | Bleed Damage | BuffBleed, 8 types |
+| 10 | Stun/Control/Ignore | checkDizz, vertigo, CONTROL_RES |
+| 11 | Pal Damage | partner_dam, partner_dam_extra |
+| 12 | Battle Flow & Normal Attack | SkillHandleNormal, turn sequence |
+| 13 | FixMath & Rounding | round(), roundInt(), clamp() |
+
+### Game Systems (14-22)
+| Doc | Title | Key Topics |
+|-----|-------|------------|
+| 14 | Class/Job System | ConfigJobs, job_figure, model, wakeup |
+| 15 | Equipment System | 5 equip slots, upgrade, enchant |
+| 16 | Pet/Pal System | getPetFactAttrValue, stat inheritance |
+| 17 | Pet/Pal System (detailed) | Battle loading, combat formulas |
+| 18 | Avian/Bird System | ConfigFly, hatching, breeding |
+| 19 | Spirit System | spiritNormalHit, affix system |
+| 20 | Mount System | Cosmetic + stat baking, abilities |
+| 21 | Hero/Angel System | ConfigAngel, angel_skill enhancements |
+| 22 | Sailing/Season System | Ships, cannons, season buffs |
+
+### Reference & Encyclopedia (23-31)
+| Doc | Title | Key Topics |
+|-----|-------|------------|
+| 23 | Item/Goods System | ConfigGoods, item types |
+| 24 | Relic System | ConfigRelic, relic effects |
+| 25 | Buff Encyclopedia | All 46+ BuffGroupTypes, 80 buff classes |
+| 26 | Skill Effect System | EffectTriggerType cascades |
+| 27 | Fate System | ConfigFate, fate mechanics |
+| 28 | Path to Divinity | ConfigPath_affix, path mechanics |
+| 29 | Statue System | ConfigStatue_attr/level/pos |
+| 30 | Ring System | ConfigRing, ring levels |
+| 31 | Config Table Reference | Master catalog of all 711 tables |
+
+### Meta (97-99)
+| Doc | Title |
+|-----|-------|
+| 97 | Unknowns & Open Questions |
+| 98 | Discrepancies (Code vs Yuko's PDF) |
+| 99 | Full Damage Pipeline Reference |
+
+---
+
+## Data Directory Structure
+
+```
+data/
+├── schemas/          # 711 auto-extracted Config module schemas
+│   └── _index.json   # Master index
+├── enums/            # 96 enum definitions
+├── constants/        # 5 constant files (config_global, battle, attrib_caps, pvp, config_key)
+├── formulas/
+│   ├── combat/       # 15 damage function JSONs
+│   ├── buffs/        # 9 buff formula JSONs + buff_group_mapping
+│   ├── damage_pipeline.json
+│   ├── stat_assembly.json
+│   └── attribute_calculation.json
+└── systems/          # Non-combat system JSONs (equipment, artifact, class, pets, etc.)
+```

@@ -1,0 +1,63 @@
+{
+  "className": "ConfigFate",
+  "tableName": "Fate",
+  "sourceLine": 231972,
+  "mainKey": "fate_id",
+  "indexedKeys": {
+    "fate_id": 0,
+    "quality": 2
+  },
+  "usesConfigKey": false,
+  "fieldCount": 7,
+  "fields": [
+    {
+      "name": "fate_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "name",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "quality",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "mutually_exclusive",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "icon",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "effect",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "preview",
+      "index": 6,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

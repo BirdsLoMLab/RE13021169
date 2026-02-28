@@ -1,0 +1,32 @@
+{
+  "name": "GoodsType",
+  "sourceLine": 184215,
+  "values": {
+    "Normal": 1,
+    "Equip": 2,
+    "Skill": 3,
+    "Pet": 4,
+    "Skin": 5,
+    "Privilege": 6,
+    "Fate": 12,
+    "Mount": 27,
+    "Artifact": 28,
+    "Wing": 32,
+    "Spirit": 50,
+    "SpiritClip": 51
+  },
+  "reverseMap": {
+    "1": "Normal",
+    "2": "Equip",
+    "3": "Skill",
+    "4": "Pet",
+    "5": "Skin",
+    "6": "Privilege",
+    "12": "Fate",
+    "27": "Mount",
+    "28": "Artifact",
+    "32": "Wing",
+    "50": "Spirit",
+    "51": "SpiritClip"
+  }
+}

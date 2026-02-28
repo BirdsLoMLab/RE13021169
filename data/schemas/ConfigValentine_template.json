@@ -1,0 +1,48 @@
+{
+  "className": "ConfigValentine_template",
+  "tableName": "Valentine_template",
+  "sourceLine": 268062,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "fixed_reward",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "random_reward",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "select_gift",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "diamond_shop",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

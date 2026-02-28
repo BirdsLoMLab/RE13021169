@@ -1,0 +1,57 @@
+{
+  "className": "ConfigFund_reward",
+  "tableName": "Fund_reward",
+  "sourceLine": 233959,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "level": 1,
+    "condition": 2
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "condition",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "reward",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "high_reward",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "mid_reward",
+      "index": 5,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

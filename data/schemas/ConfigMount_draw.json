@@ -1,0 +1,160 @@
+{
+  "className": "ConfigMount_draw",
+  "tableName": "Mount_draw",
+  "sourceLine": 248163,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 21,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "weight",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "guaranteed",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limited",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "order",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_jackpot",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "num",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "quality",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "show_picture",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "scale",
+      "index": 12,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "pos",
+      "index": 13,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "rotate",
+      "index": 14,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "goods_type",
+      "index": 15,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward_replace",
+      "index": 16,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "replace_unlock",
+      "index": 17,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "ext",
+      "index": 18,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "prize_display",
+      "index": 19,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "extra_reward",
+      "index": 20,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

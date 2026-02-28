@@ -1,0 +1,119 @@
+{
+  "className": "ConfigBreak_gold_egg_weight",
+  "tableName": "Break_gold_egg_weight",
+  "sourceLine": 222261,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0,
+    "layers": 3
+  },
+  "usesConfigKey": false,
+  "fieldCount": 15,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group_id",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "layers",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "weight",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "limited",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "guaranteed",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "order",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "is_jackpot",
+      "index": 9,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "num",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "goods_type",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "reward_replace",
+      "index": 12,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "replace_unlock",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "ext",
+      "index": 14,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

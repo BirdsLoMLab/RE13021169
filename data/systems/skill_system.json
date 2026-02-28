@@ -1,0 +1,309 @@
+{
+  "system": "Skill & Effect System",
+  "description": "The core battle skill system. Skills define targeting, energy management, effect chains, and buff application. The execution pipeline flows: Skill -> SkillEffect (Skilleffcet) -> BuffGroup -> individual Buff instances. Special buffs (Specil_buff) handle state-based CC and status effects.",
+  "configTables": {
+    "ConfigSkill": {
+      "sourceLine": 261531,
+      "mainKey": "id",
+      "usesConfigKey": true,
+      "fieldCount": 28,
+      "description": "Master skill definition table. Each skill has targeting rules, effect chains, energy costs, and buff groups.",
+      "fields": {
+        "id": { "type": "number", "description": "Unique skill ID" },
+        "name": { "type": "string_ref", "description": "Localized skill name" },
+        "type": { "type": "number", "description": "Skill type classification (maps to SkillType enum: 1=USE, 2=PASSIVE_ADD, 3=PASSIVE_EFFECT, 4=PARTNER_SKILL, 5=FLY_SKILL)" },
+        "chapter_type": { "type": "optional_array", "description": "Chapter/mode restrictions where this skill is available" },
+        "if_chapter_type": { "type": "number", "description": "Chapter filter mode: 0=inclusion (only active in listed chapters), non-0=exclusion (active everywhere except listed)" },
+        "autoDis": { "type": "xor_number", "xor_encoded": true, "description": "Auto-targeting distance; XOR-encoded. If > 0, skill auto-targets enemies within this range" },
+        "quality": { "type": "number", "description": "Skill rarity tier" },
+        "icon": { "type": "number", "description": "Skill icon asset ID" },
+        "buffGroup": { "type": "optional_array", "description": "Buff groups applied by this skill. Each entry: [groupIndex, buffId, duration, buffGroupType]. Cross-references ConfigBuff." },
+        "addSkill": { "type": "optional_array", "description": "Additional skills triggered by this skill" },
+        "releaseTime": { "type": "number", "description": "Skill cast time in frames" },
+        "releaseInterval": { "type": "number", "description": "Interval between repeated casts" },
+        "targetType": { "type": "optional_array", "description": "Target selection rules: [filterType, count, selectFilter]. filterType maps to TargetFilter enum" },
+        "targetRange": { "type": "number", "description": "Range for target selection" },
+        "skillEffect1": { "type": "optional_array", "description": "Primary skill effect IDs (references ConfigSkilleffcet)" },
+        "rangeType": { "type": "optional_array", "description": "AoE/range type specification" },
+        "skillEffect2": { "type": "optional_array", "description": "Secondary skill effect IDs (used by angel passive enhancement)" },
+        "skillPar": { "type": "optional_array", "description": "Skill parameters; indexed by buffGroup entries to select damage coefficient from Skill_level.skillCoefficient" },
+        "initialPower": { "type": "xor_number", "xor_encoded": true, "description": "Starting energy when battle begins" },
+        "maxPower": { "type": "xor_number", "xor_encoded": true, "description": "Maximum energy capacity" },
+        "powerRecovery": { "type": "xor_number", "xor_encoded": true, "description": "Energy recovered per normal attack" },
+        "action": { "type": "number", "description": "Animation action ID" },
+        "bullet": { "type": "number", "description": "Projectile visual ID" },
+        "anim": { "type": "number", "description": "Animation resource ID" },
+        "if_activity": { "type": "number", "description": "Whether skill is activity-restricted" },
+        "if_season": { "type": "number", "description": "Whether skill is season-restricted" },
+        "open_time": { "type": "optional_array", "description": "Time-gated availability" },
+        "immediate_time": { "type": "number", "description": "Whether skill triggers immediately (0=no, >0=delay in ms)" }
+      }
+    },
+    "ConfigSkill_level": {
+      "sourceLine": 261387,
+      "mainKey": "id",
+      "indexedKeys": ["id", "level"],
+      "fieldCount": 11,
+      "description": "Per-level scaling data for skills. Controls damage coefficients, stat effects, and upgrade costs.",
+      "fields": {
+        "id": { "type": "number", "description": "Skill ID (FK to ConfigSkill)" },
+        "level": { "type": "number", "description": "Skill level" },
+        "expend": { "type": "optional_array", "description": "Upgrade cost [[itemId, count], ...]" },
+        "ownEffect": { "type": "optional_array", "description": "Passive effects applied to owner" },
+        "attrType": { "type": "optional_array", "description": "Attribute types affected by ownEffect" },
+        "ownDesc": { "type": "string_ref", "description": "Passive effect description template" },
+        "ownDesc_parm": { "type": "optional_array", "description": "Parameters for ownDesc formatting" },
+        "skillCoefficient": { "type": "optional_array", "description": "Damage coefficients per hit. Indexed by ConfigSkill.skillPar to determine buff damage. Values are /10000 fixed-point." },
+        "desc": { "type": "string_ref", "description": "Active skill description template" },
+        "desc_parm": { "type": "optional_array", "description": "Parameters for desc formatting" },
+        "power": { "type": "number", "description": "Combat power contribution" }
+      }
+    },
+    "ConfigSkill_pos": {
+      "sourceLine": 261479,
+      "mainKey": "id",
+      "fieldCount": 4,
+      "description": "Skill slot/position definitions with unlock conditions.",
+      "fields": {
+        "id": { "type": "number", "description": "Slot ID" },
+        "condition": { "type": "optional_array", "description": "Unlock conditions [[condType, condValue], ...]" },
+        "type": { "type": "number", "description": "Slot type (1=active skill, 2=passive skill)" },
+        "desc": { "type": "string_ref", "description": "Slot description" }
+      }
+    },
+    "ConfigSkilleffcet": {
+      "sourceLine": 261711,
+      "mainKey": "id",
+      "fieldCount": 18,
+      "note": "Table name has a typo: 'effcet' instead of 'effect'",
+      "description": "Skill effect definitions. Each effect can target enemies/allies, apply buffs, chain into further effects, and spawn visual projectiles.",
+      "fields": {
+        "id": { "type": "number", "description": "Unique effect ID" },
+        "type": { "type": "number", "description": "Effect execution type" },
+        "trapId": { "type": "optional_array", "description": "Trap/summon IDs spawned by this effect" },
+        "targetType": { "type": "optional_array", "description": "Target selection: [filterType, selfOrEnemy]. If [x,1], targets self/caster." },
+        "targetRange": { "type": "number", "description": "Effect range" },
+        "bullet": { "type": "number", "description": "Projectile visual for this effect" },
+        "execute": { "type": "optional_array", "description": "Execution timing: [duration, totalTime]. Controls how long the effect persists." },
+        "buffGroup": { "type": "optional_array", "description": "Buff groups applied on hit. Each: [groupIndex, buffId, duration, buffGroupType]" },
+        "randomType": { "type": "number", "description": "Random selection mode for buffs (0=all, 1=random pick)" },
+        "buffRate": { "type": "optional_array", "description": "Probability per buff group: [[groupIndex, probability/10000], ...]" },
+        "buffGroup2": { "type": "optional_array", "description": "Secondary buff groups (applied to caster)" },
+        "skillEffect": { "type": "optional_array", "description": "Chained skill effect IDs; enables multi-stage effects" },
+        "skillEffect_rate": { "type": "optional_array", "description": "Probability for chained effects" },
+        "effctId": { "type": "number", "description": "Visual effect asset ID (typo preserved from source)" },
+        "shake": { "type": "number", "description": "Screen shake intensity" },
+        "skillPar": { "type": "optional_array", "description": "Parameter indices for damage coefficient lookup" },
+        "effectDelay": { "type": "number", "description": "Delay before effect triggers (milliseconds)" },
+        "soundid": { "type": "number", "description": "Sound effect asset ID" }
+      }
+    },
+    "ConfigBuff": {
+      "sourceLine": 222479,
+      "mainKey": "id",
+      "fieldCount": 16,
+      "description": "Individual buff definitions. Each buff has a type, group, stacking rules, and up to 5 parameters that control its behavior.",
+      "fields": {
+        "id": { "type": "number", "description": "Unique buff ID" },
+        "name": { "type": "string_ref", "description": "Localized buff name" },
+        "type": { "type": "number", "description": "Buff type (positive/negative/neutral)" },
+        "group": { "type": "number", "description": "BuffGroupType enum value; determines how the buff is processed in combat" },
+        "icon": { "type": "number", "description": "Buff icon asset" },
+        "effect": { "type": "number", "description": "Visual effect played on the buffed unit" },
+        "effect_mirror": { "type": "number", "description": "Mirrored visual effect (for facing direction)" },
+        "mutex": { "type": "number", "description": "Mutex group; buffs in the same mutex group overwrite each other" },
+        "add_max": { "type": "number", "description": "Maximum stack count" },
+        "bind": { "type": "number", "description": "BindType: 1=bp_lead, 2=bp_bottom, 3=bp_top" },
+        "action": { "type": "number", "description": "Animation action triggered by buff" },
+        "param1": { "type": "number", "description": "Generic parameter 1 (meaning depends on group type)" },
+        "param2": { "type": "number", "description": "Generic parameter 2" },
+        "param3": { "type": "number", "description": "Generic parameter 3" },
+        "param4": { "type": "number", "description": "Generic parameter 4" },
+        "param5": { "type": "optional_array", "description": "Extended parameters array" }
+      }
+    },
+    "ConfigSpecil_buff": {
+      "sourceLine": 262195,
+      "mainKey": "id",
+      "fieldCount": 8,
+      "note": "Table name has a typo: 'Specil' instead of 'Special'",
+      "description": "Special buffs for crowd-control and state effects (stun, silence, etc.).",
+      "fields": {
+        "id": { "type": "number", "description": "Special buff ID" },
+        "name": { "type": "string_ref", "description": "Display name" },
+        "type": { "type": "number", "description": "CC type classification" },
+        "time": { "type": "number", "description": "Default duration" },
+        "quantity": { "type": "number", "description": "Effect magnitude or stack quantity" },
+        "param1": { "type": "number", "description": "Type-specific parameter" },
+        "state_icon": { "type": "number", "description": "Status icon displayed on affected unit" },
+        "desc": { "type": "string_ref", "description": "Effect description" }
+      }
+    }
+  },
+  "enums": {
+    "SkillType": {
+      "sourceLine": 278635,
+      "description": "Classifies the skill behavior type.",
+      "values": {
+        "USE": { "id": 1, "description": "Active use skill (player-triggered)" },
+        "PASSIVE_ADD": { "id": 2, "description": "Passive stat addition skill" },
+        "PASSIVE_EFFECT": { "id": 3, "description": "Passive effect skill (triggers on conditions)" },
+        "PARTNER_SKILL": { "id": 4, "description": "Partner/pal skill" },
+        "FLY_SKILL": { "id": 5, "description": "Flying pet skill" }
+      }
+    },
+    "EffectTriggerType": {
+      "sourceLine": 278638,
+      "description": "Determines when a passive skill effect triggers during combat.",
+      "values": {
+        "NORMAL_ATTACK": { "id": 0, "description": "Triggers on each normal attack" },
+        "HIT": { "id": 1, "description": "Triggers when the unit is hit" },
+        "COUNTER": { "id": 2, "description": "Triggers on counter-attack" },
+        "DOUBLE_ATTACK": { "id": 3, "description": "Triggers on double/multi-hit attack" },
+        "USE_SKILL": { "id": 4, "description": "Triggers when any skill is used" },
+        "USE_PAR": { "id": 5, "description": "Triggers on partner/pal action" },
+        "HP_Hurt": { "id": 6, "description": "Triggers when HP damage is taken" },
+        "DIZZ": { "id": 7, "description": "Triggers when a stun/dizz is inflicted" },
+        "CRIT_ATTACK": { "id": 8, "description": "Triggers on critical hit" },
+        "NORMAL_DOUBLE_ATTACK": { "id": 9, "description": "Triggers on normal + double attack combined" },
+        "SKILL_CRIT": { "id": 10, "description": "Triggers on skill critical hit" },
+        "ALL_ATTACK": { "id": 11, "description": "Triggers on any attack type" },
+        "HP_Heal": { "id": 12, "description": "Triggers when HP is healed" },
+        "Miss": { "id": 13, "description": "Triggers on a miss" },
+        "Spirit_Hit": { "id": 15, "description": "Triggers on guardian spirit hit" }
+      }
+    },
+    "BuffGroupType": {
+      "sourceLine": 278632,
+      "description": "Classifies how a buff is processed by the combat engine. Each type has its own handler in BuffCtr.",
+      "values": {
+        "HURT": { "id": 1, "description": "Direct damage buff" },
+        "CTR": { "id": 3, "description": "Control/CC effect" },
+        "ADD": { "id": 4, "description": "Attribute addition/modification" },
+        "TRAP_FOLLOW": { "id": 10, "description": "Trap that follows target" },
+        "SHIELD": { "id": 20, "description": "Shield/barrier effect" },
+        "NORMAL_ACT_NUM_TRIGGER": { "id": 30, "description": "Triggers after N normal attacks" },
+        "BULLET_NUM": { "id": 40, "description": "Modifies skill projectile count" },
+        "USE_SKILL_NORMAL_ADD": { "id": 50, "description": "Adds effect when using skill then normal attack" },
+        "SKILL_DAMAGE_ADD": { "id": 60, "description": "Flat skill damage addition" },
+        "SHARE_DAMAGE": { "id": 70, "description": "Damage sharing between units" },
+        "ATTRIB_CONDITION": { "id": 80, "description": "Conditional attribute modifier" },
+        "DESTROY_WHEN_NORMAL_AFTER": { "id": 90, "description": "Buff destroyed after next normal attack" },
+        "NORMAL_BULLET_NUM": { "id": 100, "description": "Modifies normal attack projectile count" },
+        "STATE_TRIGER": { "id": 110, "description": "State-based trigger (on Normal_Act, Skill_Effect, etc.)" },
+        "DELAY_DEMAGE": { "id": 120, "description": "Delayed damage application" },
+        "ADDBUFF_TOPET": { "id": 130, "description": "Adds buff to pet/pal" },
+        "HP_CHANGE_TRIGER": { "id": 140, "description": "Triggers on HP change events" },
+        "AddBuffTrigger": { "id": 150, "description": "Triggers when a buff is added" },
+        "UnitCallDamageAdd": { "id": 160, "description": "Bonus damage from summoned units" },
+        "DOUBLE_TRIGGER": { "id": 170, "description": "Double-hit trigger effect" },
+        "TOTAL_DAMAGE_TRIGGER": { "id": 180, "description": "Triggers based on total damage dealt" },
+        "USE_SKILL_ADD": { "id": 190, "description": "Accumulates damage record per skill" },
+        "FRAGILE_EFFECT": { "id": 200, "description": "Fragile/vulnerability debuff; calDamage adds bonus damage" },
+        "TRIGGER_BULLET": { "id": 210, "description": "Triggers additional projectile" },
+        "SKILL_COUNTER": { "id": 220, "description": "Counter-attack on skill hit" },
+        "IMMUNE_DEATH": { "id": 230, "description": "Prevents lethal damage (survive with 1 HP)" },
+        "BLOCK": { "id": 240, "description": "Damage block/reduction" },
+        "DESTROY_WHEN_SKILL_AFTER": { "id": 270, "description": "Buff destroyed after next skill use" },
+        "TRIGGER_AND_STAY": { "id": 280, "description": "Persistent trigger effect" },
+        "SKILL_REAL_DAMAGE": { "id": 290, "description": "True/real damage from skill (ignores defense)" },
+        "REMAKE_HP": { "id": 320, "description": "HP reset/remake effect" },
+        "IGNORE_BUFFIDS": { "id": 330, "description": "Immunity to specific buff IDs" },
+        "SKILL_RETURN": { "id": 340, "description": "Reflects skill damage" },
+        "CURRENT_HP": { "id": 350, "description": "Current HP percentage based effect" },
+        "SKILL_BUFFTIME_ADD": { "id": 360, "description": "Extends buff duration for specific skills" },
+        "IGNORE_COPY": { "id": 370, "description": "Prevents buff from being copied" },
+        "VAMPIRE": { "id": 380, "description": "Life steal / vampiric effect" },
+        "GIANT_SLAYER": { "id": 390, "description": "Bonus damage based on target max HP (onCalHpDamage)" },
+        "DEFER_DAMAGE": { "id": 400, "description": "Deferred damage application" },
+        "EXTRA_DAMAGE": { "id": 410, "description": "Extra damage modifier (calDamage with skillId filter)" },
+        "TIME_REVERSAL": { "id": 420, "description": "Time reversal effect" },
+        "RECORD_DAMAGE": { "id": 430, "description": "Records damage for later use" },
+        "REDUCE_HEAL": { "id": 440, "description": "Healing reduction debuff" },
+        "SPECIAL_EXTRA_BULLET_NUM": { "id": 450, "description": "Special extra projectile count" },
+        "DAMAGE_TRIGGER": { "id": 460, "description": "Triggers effect based on damage dealt" }
+      }
+    },
+    "HealthType": {
+      "sourceLine": 278550,
+      "description": "All damage and healing event types in combat.",
+      "values": {
+        "Invalid": 0, "Hurt": 1, "Hurt_Crit": 2, "Hurt_Ret": 3,
+        "Treat": 4, "Treat_Crit": 5, "Miss": 6, "Absorb": 7,
+        "Break": 8, "Double_Act": 9, "Counter_Act": 10,
+        "Skill_Hpsteal": 11, "Act_Hpsteal": 12,
+        "Hurt_Share_Damage": 13, "Hurt_Share_Damage_Crit": 14,
+        "Hurt_Double": 15, "Hurt_Double_Crit": 16,
+        "Dizz": 17, "Shield": 18, "Hurt_Bleed": 19,
+        "Real_Damage": 20, "Hurt_Counter": 21, "Hurt_Counter_Crit": 22,
+        "Hurt_Bleed_Crit": 23, "Call_unit_Hp": 24, "Call_unit_Att": 25,
+        "Suppress": 26, "Inspire": 27, "Armor": 28, "Armor_def": 29,
+        "SpiritToSpirit": 30, "SpiritToPlayer": 31,
+        "block": 50, "Hp_recovery": 51
+      }
+    },
+    "AttackType": {
+      "sourceLine": 278623,
+      "description": "Hit result classification.",
+      "values": { "Miss": 0, "Normal": 1, "Cirt": 2 }
+    },
+    "UnityType": {
+      "sourceLine": 278602,
+      "description": "Unit type classification for all battle entities.",
+      "values": {
+        "Player": 1, "Partner": 2, "Monster": 3, "LeaderMonster": 4,
+        "Boss": 5, "CallUnit": 6, "NotHurtBoss": 7, "DefBoss": 8,
+        "Gun": 10, "FlyPet": 13, "Spirit": 14
+      }
+    }
+  },
+  "executionFlow": {
+    "description": "Skill execution pipeline as observed in SkillHandleNormal.ts, SkillHandleEffect.ts, and SkillHandleBase.ts",
+    "setPlayerSkill_line": 187506,
+    "setPlayerSkill_code": "Sorts active_skill by pos_id, adds each skill with addSkill(skillId, skillLv), sets useDelay from delay_time/1000",
+    "normalAttackFlow": [
+      "1. beginRun(): Play attack animation, trigger STATE_TRIGER buffs with Normal_Act",
+      "2. checkHit(): Determine hit type (Miss=0, Normal=1, Crit=2) using accuracy/evasion",
+      "3. If miss -> healthTarget(0, Miss); return",
+      "4. normalHurt() or normalDoubleHurt(): Calculate damage using base formula",
+      "5. Apply NORMAL_ACT_NUM_TRIGGER buffs (bonus damage after N attacks)",
+      "6. Apply UnitCallDamageAdd buffs (summoned unit bonus)",
+      "7. Apply boss_dam multiplier if target is Boss type",
+      "8. Apply FRAGILE_EFFECT debuffs on target (calDamage adds % bonus)",
+      "9. Apply EXTRA_DAMAGE buffs on caster (calDamage with skill ID filter)",
+      "10. Apply GIANT_SLAYER buffs (onCalHpDamage based on target HP)",
+      "11. healthTarget(): Apply final damage, trigger death checks",
+      "12. HP steal: normailHpsteal() for life steal, trigger HP_Heal effects",
+      "13. Stun check: checkDizz() -> apply vertigo_times * (1 - vertigo_res)",
+      "14. Trigger passive skill effects: NORMAL_ATTACK, CRIT_ATTACK, ALL_ATTACK, HP_Hurt",
+      "15. Remove DESTROY_WHEN_NORMAL_AFTER buffs",
+      "16. Process VAMPIRE buffs on target"
+    ],
+    "skillEffectFlow": [
+      "1. SkillHandleEffect.beginRun(): Increment hurtNumCount, remove DESTROY_WHEN_SKILL_AFTER buffs",
+      "2. Trigger USE_SKILL and ALL_ATTACK passive effects (with skill ID filtering via param5)",
+      "3. Process USE_SKILL_ADD buffs (accumulate damage records)",
+      "4. Trigger STATE_TRIGER buffs with Skill_Effect",
+      "5. SkillHandleBase.checkBuff(): Apply buff groups from ConfigSkilleffcet.buffGroup",
+      "   - Roll buffRate probability for each group",
+      "   - Look up damage coefficient from skillCoefficient via skillPar index",
+      "   - Apply buff with duration from execute field",
+      "   - Apply SKILL_BUFFTIME_ADD modifiers",
+      "6. Chain to nested skillEffect IDs if present"
+    ],
+    "buffApplication": [
+      "1. addBuff(target, buffId, duration, damageCoefficient)",
+      "2. Look up ConfigBuff by ID",
+      "3. Check mutex group -- if same mutex exists, overwrite",
+      "4. Check add_max stacking limit",
+      "5. Create buff instance with group-specific handler (BuffGroupType)",
+      "6. Handler processes param1-param5 based on group type"
+    ]
+  },
+  "relatedSystems": [
+    "HurtUtil.ts -- normalHurt, normalDoubleHurt, calHurt, checkHit functions",
+    "ConfigAngel_skill -- Angel-specific skill definitions",
+    "ConfigAngel_star -- Angel star levels reference skills",
+    "MetaAttrib / AttribDefine -- Attribute IDs used in calculations"
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "system": "PvP and Competitive Modes",
+  "description": "Competitive game modes including Naval PvP (Season), Rogue mode, and Fate dungeons. Each mode has chapter-based progression with indexed stages, recommended power levels, battle maps, and reward structures.",
+  "configTables": {
+    "ConfigSeason_pvp_chapter": {
+      "sourceLine": 258898,
+      "mainKey": "id",
+      "indexedKeys": ["id", "index"],
+      "fieldCount": 12,
+      "description": "Naval PvP chapters with ship cannon configurations.",
+      "fields": {
+        "id": { "type": "number", "description": "Chapter ID" },
+        "index": { "type": "number", "description": "Stage index within chapter" },
+        "power": { "type": "number", "description": "Recommended power" },
+        "level": { "type": "number", "description": "Enemy level" },
+        "map": { "type": "number", "description": "Battle map ID" },
+        "part_type": { "type": "number", "description": "Battle part classification" },
+        "part": { "type": "number", "description": "Current wave/part" },
+        "next_part": { "type": "number", "description": "Next wave/part transition" },
+        "ship_cannon_left": { "type": "optional_array", "description": "Left side cannon IDs" },
+        "ship_cannon_right": { "type": "optional_array", "description": "Right side cannon IDs" },
+        "time": { "type": "number", "description": "Battle time limit (seconds)" },
+        "reward": { "type": "optional_array", "description": "Stage completion rewards" }
+      }
+    },
+    "ConfigRogue_chapter": {
+      "sourceLine": 255563,
+      "mainKey": "id",
+      "indexedKeys": ["id", "index"],
+      "fieldCount": 16,
+      "description": "Rogue mode chapter definitions with multi-wave monster spawns.",
+      "fields": {
+        "id": { "type": "number", "description": "Chapter ID" },
+        "index": { "type": "number", "description": "Stage index" },
+        "power": { "type": "number", "description": "Recommended power" },
+        "level": { "type": "number", "description": "Enemy level" },
+        "map": { "type": "number", "description": "Battle map" },
+        "part_type": { "type": "number", "description": "Battle part type" },
+        "part": { "type": "number", "description": "Current part" },
+        "next_part": { "type": "number", "description": "Next part transition" },
+        "interval": { "type": "optional_array", "description": "Wave spawn timing intervals" },
+        "monster_refresh1": { "type": "optional_array", "description": "Wave 1 spawns [[monsterId, count, position], ...]" },
+        "monster_refresh2": { "type": "optional_array", "description": "Wave 2 spawns" },
+        "monster_refresh3": { "type": "optional_array", "description": "Wave 3 spawns" },
+        "monster_refresh4": { "type": "optional_array", "description": "Wave 4 spawns" },
+        "monster_refresh5": { "type": "optional_array", "description": "Wave 5 spawns" },
+        "time": { "type": "number", "description": "Time limit" },
+        "reward": { "type": "optional_array", "description": "Completion rewards" }
+      }
+    },
+    "ConfigRogue_main_chapter": {
+      "sourceLine": 256292,
+      "mainKey": "id",
+      "fieldCount": 15,
+      "description": "Rogue main story chapters with branching paths, rewards, and punishments.",
+      "fields": {
+        "id": { "type": "number", "description": "Chapter ID" },
+        "name": { "type": "string_ref", "description": "Chapter name" },
+        "icon": { "type": "number", "description": "Chapter icon" },
+        "part_type": { "type": "number", "description": "Part type" },
+        "map": { "type": "number", "description": "Battle map" },
+        "enemy_type": { "type": "number", "description": "Enemy type classification" },
+        "enemy_id": { "type": "number", "description": "Enemy configuration ID" },
+        "multiplier": { "type": "optional_array", "description": "Difficulty multipliers for stats" },
+        "accessory": { "type": "number", "description": "Required accessory/item" },
+        "this_reward": { "type": "optional_array", "description": "Immediate completion reward" },
+        "this_punishment": { "type": "optional_array", "description": "Failure punishment" },
+        "next_starting": { "type": "number", "description": "Next chapter starting point ID" },
+        "starting_reward": { "type": "optional_array", "description": "Starting bonus reward" },
+        "end_reward": { "type": "optional_array", "description": "End-of-run reward" },
+        "point": { "type": "number", "description": "Points earned for completion" }
+      }
+    },
+    "ConfigRogue_goods": {
+      "sourceLine": 256199,
+      "mainKey": "id",
+      "fieldCount": 12,
+      "description": "Rogue mode collectible goods/power-ups obtained during runs.",
+      "fields": {
+        "id": { "type": "number", "description": "Good ID" },
+        "name": { "type": "string_ref", "description": "Good name" },
+        "type": { "type": "number", "description": "Good category type" },
+        "quality": { "type": "number", "description": "Quality tier" },
+        "effect": { "type": "optional_array", "description": "Effect data when activated" },
+        "uniqueness": { "type": "number", "description": "Whether only one can be held (0/1)" },
+        "loseable": { "type": "number", "description": "Whether item is lost on death (0/1)" },
+        "describe": { "type": "string_ref", "description": "Description template" },
+        "desc_parm": { "type": "optional_array", "description": "Description parameters" },
+        "icon": { "type": "number", "description": "Icon asset" },
+        "icon_group": { "type": "number", "description": "Icon group for categorization" },
+        "sub_type": { "type": "number", "description": "Sub-type classification" }
+      }
+    },
+    "ConfigFate_chapter": {
+      "sourceLine": 231675,
+      "mainKey": "id",
+      "indexedKeys": ["id", "index"],
+      "fieldCount": 14,
+      "description": "Fate dungeon chapters with difficulty adjustment and dual reward tracks.",
+      "fields": {
+        "id": { "type": "number", "description": "Chapter ID" },
+        "index": { "type": "number", "description": "Stage index" },
+        "power": { "type": "number", "description": "Recommended power" },
+        "level": { "type": "number", "description": "Enemy level" },
+        "map": { "type": "number", "description": "Battle map" },
+        "part_type": { "type": "number", "description": "Part type" },
+        "interval": { "type": "optional_array", "description": "Wave intervals" },
+        "monster_refresh1": { "type": "optional_array", "description": "Monster spawns" },
+        "time": { "type": "number", "description": "Time limit" },
+        "first_reward": { "type": "optional_array", "description": "First-clear reward" },
+        "daily_reward": { "type": "optional_array", "description": "Daily repeatable reward" },
+        "difficulty_adjust": { "type": "optional_array", "description": "Dynamic difficulty scaling" },
+        "bossModel": { "type": "number", "description": "Boss visual model ID" },
+        "time_limit": { "type": "number", "description": "Hard time limit" }
+      }
+    }
+  },
+  "mechanics": {
+    "naval_pvp": {
+      "description": "Ship-based PvP battles where players equip cannon configurations on left/right sides. Uses season_cannon_att_def resistance attribute for cannon damage calculations.",
+      "progression": "Chapters have indexed stages with increasing power requirements. Clearing a stage (part) transitions to next_part."
+    },
+    "rogue_mode": {
+      "description": "Roguelike mode with procedurally-structured runs. Players progress through chapters, collecting goods (power-ups) along the way. Chapters have up to 5 monster waves (monster_refresh1-5) with timed intervals.",
+      "goods_system": "Collectible items during runs provide temporary effects. Some are unique (only one held), some are loseable on failure.",
+      "branching": "Main chapters have branching paths with this_reward for success and this_punishment for failure. next_starting determines progression."
+    },
+    "fate_dungeons": {
+      "description": "Dungeon mode for farming fate card materials. Has difficulty_adjust for dynamic scaling, separate first_reward and daily_reward tracks, and boss encounters."
+    }
+  }
+}

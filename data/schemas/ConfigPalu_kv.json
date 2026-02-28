@@ -1,0 +1,34 @@
+{
+  "className": "ConfigPalu_kv",
+  "tableName": "Palu_kv",
+  "sourceLine": 250133,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "array_value",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "value",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

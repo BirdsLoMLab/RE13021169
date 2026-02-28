@@ -1,0 +1,12 @@
+{
+  "name": "RedBagType",
+  "sourceLine": 207917,
+  "values": {
+    "Guild": 0,
+    "News": 1
+  },
+  "reverseMap": {
+    "0": "Guild",
+    "1": "News"
+  }
+}

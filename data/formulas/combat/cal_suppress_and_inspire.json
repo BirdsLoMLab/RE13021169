@@ -1,0 +1,67 @@
+{
+  "name": "calSuppressAndInspire",
+  "sourceLine": 322802,
+  "description": "Inspire/Suppress probability layer for pal (partner) and cannon damage. Structurally identical to calArmorAndBlock but uses partner-specific attributes. Randomly determines whether attacker inspires (reduces resistance) or defender suppresses (increases resistance).",
+  "parameters": {
+    "defender": "Unit receiving damage (provides suppress stats)",
+    "attacker": "Unit dealing damage (provides inspire stats)",
+    "resistance": "Base resistance value to modify (partner_resist or season_cannon_att_def)",
+    "attrib_key": "The attribute key for the resistance (used for up_limit config lookup)"
+  },
+  "attributes_used": {
+    "attacker": ["partner_inspire", "ignore_partner_suppress"],
+    "defender": ["ignore_partner_inspire", "partner_suppress", "partner_inspire_rate", "partner_suppress_rate"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Build probability ranges for inspire and suppress",
+      "formula": "ranges = [0, 0, 10000]"
+    },
+    {
+      "step": 2,
+      "description": "Calculate inspire probability (only if partner_inspire > ignore_partner_inspire)",
+      "formula": "if (partner_inspire > ignore_partner_inspire): ranges[0] = roundInt(10000 * partner_suppress_rate)",
+      "note": "Despite the name, inspire triggers the suppress_rate probability (attacker's inspire uses partner_suppress_rate from attacker)"
+    },
+    {
+      "step": 3,
+      "description": "Calculate suppress probability (only if partner_suppress > ignore_partner_suppress), stacked after inspire range",
+      "formula": "if (partner_suppress > ignore_partner_suppress): ranges[1] = ranges[0] + roundInt(10000 * partner_inspire_rate)",
+      "note": "Suppress triggers the inspire_rate probability (defender's suppress uses partner_inspire_rate from defender)"
+    },
+    {
+      "step": 4,
+      "description": "Roll random number and determine outcome",
+      "formula": "rand = randomInt(0, 10000); if rand <= ranges[0]: outcome = Inspire(0); else if rand <= ranges[1]: outcome = Suppress(1); else: outcome = Neither(2)"
+    },
+    {
+      "step": 5,
+      "description": "Apply inspire or suppress to resistance",
+      "branches": {
+        "Inspire (outcome=0)": {
+          "formula": "resistance = round(resistance - min(0.5, (partner_inspire - ignore_partner_inspire) / 10000))",
+          "note": "Reduces resistance; inspire amount capped at 0.5 (50%)"
+        },
+        "Suppress (outcome=1)": {
+          "formula": "resistance = round(resistance + min(0.5, (partner_suppress - ignore_partner_suppress) / 10000))",
+          "note": "Increases resistance; suppress amount capped at 0.5 (50%)"
+        },
+        "Neither (outcome=2)": {
+          "formula": "resistance unchanged"
+        }
+      }
+    },
+    {
+      "step": 6,
+      "description": "Apply up_limit cap from attribute config",
+      "formula": "if (config.up_limit != 0): cap = (config.num_type == 2) ? round(up_limit / 10000) : up_limit; resistance = min(resistance, cap)"
+    }
+  ],
+  "notes": [
+    "Inspire and suppress are mutually exclusive per hit — only one can trigger",
+    "The attribute cross-reference is noteworthy: inspire condition uses attacker's partner_inspire vs defender's ignore_partner_inspire, but the probability uses attacker's partner_suppress_rate",
+    "Similarly, suppress condition uses defender's partner_suppress vs attacker's ignore_partner_suppress, but the probability uses defender's partner_inspire_rate",
+    "The up_limit is read from the attribute metadata config of the resistance attribute"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "RankType",
+  "sourceLine": 214780,
+  "values": {
+    "TYPE_DMG": 1
+  },
+  "reverseMap": {
+    "1": "TYPE_DMG"
+  }
+}

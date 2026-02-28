@@ -1,0 +1,34 @@
+{
+  "className": "ConfigFly_entry_num",
+  "tableName": "Fly_entry_num",
+  "sourceLine": 232991,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 3,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "entry_num_weight",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "entry_num_fixed",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

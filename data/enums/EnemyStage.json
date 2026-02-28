@@ -1,0 +1,12 @@
+{
+  "name": "EnemyStage",
+  "sourceLine": 22515,
+  "values": {
+    "Random": 1,
+    "Chasing": 2
+  },
+  "reverseMap": {
+    "1": "Random",
+    "2": "Chasing"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "className": "ConfigMoonfestival_card",
+  "tableName": "Moonfestival_card",
+  "sourceLine": 247316,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "group",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "open_time",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "item_weight",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

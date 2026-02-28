@@ -1,0 +1,40 @@
+{
+  "name": "checkDoubleAct",
+  "sourceLine": 322918,
+  "description": "Determines whether a combo (double hit) triggers. Compares attacker's double_hit chance minus defender's ignore_double_hit.",
+  "parameters": {
+    "attacker": "Unit attempting the combo",
+    "defender": "Unit being attacked (optional, may be null)"
+  },
+  "attributes_used": {
+    "attacker": ["double_hit"],
+    "defender": ["ignore_double_hit"]
+  },
+  "return_values": {
+    "true": "Combo triggers",
+    "false": "Combo does not trigger"
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get combo chance and reduction",
+      "formula": "double_hit = attacker.double_hit, ignore = defender ? defender.ignore_double_hit : 0"
+    },
+    {
+      "step": 2,
+      "description": "Calculate effective probability (out of 10000)",
+      "formula": "probability = roundInt(10000 * max(round(double_hit - ignore), 0))"
+    },
+    {
+      "step": 3,
+      "description": "Early exit if no chance",
+      "formula": "if (probability <= 0): return false"
+    },
+    {
+      "step": 4,
+      "description": "Roll and compare",
+      "formula": "rand = randomInt(0, 10000); return rand <= probability"
+    }
+  ],
+  "simplified_formula": "rand(0, 10000) <= roundInt(10000 * max(round(double_hit - ignore_double_hit), 0))"
+}

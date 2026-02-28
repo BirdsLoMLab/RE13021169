@@ -1,0 +1,48 @@
+{
+  "className": "ConfigSeason_cabin",
+  "tableName": "Season_cabin",
+  "sourceLine": 257348,
+  "mainKey": "cabin_id",
+  "indexedKeys": {
+    "cabin_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "cabin_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "condition",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "type",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "condition_special",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "condition_text",
+      "index": 4,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

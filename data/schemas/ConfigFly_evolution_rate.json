@@ -1,0 +1,27 @@
+{
+  "className": "ConfigFly_evolution_rate",
+  "tableName": "Fly_evolution_rate",
+  "sourceLine": 233232,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "rate",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

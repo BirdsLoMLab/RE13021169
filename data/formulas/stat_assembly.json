@@ -1,0 +1,272 @@
+{
+  "name": "statAssemblyPipeline",
+  "sourceLine": 187356,
+  "description": "How player stats are assembled from server data before battle — setPlayerList and its sub-functions",
+  "overview": "Called during battle initialization. Takes server-provided player data and constructs a fully-initialized Unit with all attributes, equipment visuals, pets, skills, spirits, and passive skills.",
+
+  "entry_point": {
+    "function": "setPlayerList",
+    "sourceLine": 187356,
+    "parameters": {
+      "t": "Player data from server (contains attr_list, figure, pet_list, role_skill, ext, etc.)",
+      "i": "Team role object (gets units pushed to it)",
+      "a": "Chapter type (PvP mode identifier)"
+    },
+    "steps": [
+      {
+        "step": 1,
+        "description": "Get job and unit config",
+        "code": "job_model = configJobs.getDataByKey(player.figure.job_figure).model; unitConfig = configUnit.getDataByKey(job_model)",
+        "note": "Job figure → model ID → ConfigUnit (97 fields, 77 XOR-obfuscated)"
+      },
+      {
+        "step": 2,
+        "description": "Initialize unit and set basic info",
+        "details": "Creates new unit, sets config, name, level, head, roleId"
+      },
+      {
+        "step": 3,
+        "description": "Set player attributes",
+        "function": "setPlayerAttrib(playerData, unit, chapterType)"
+      },
+      {
+        "step": 4,
+        "description": "Set equipment visuals and idle animation",
+        "function": "setPlayerEquip(playerData, unit, modelId, chapterType)"
+      },
+      {
+        "step": 5,
+        "description": "Process attr_obj_list for pet/skill attribute objects",
+        "details": "Parses attr_obj_list into groups: group 1 = pet attributes, group 2 = skill attributes. Each has sub-keys (k=pet_id or skill_id) mapping to attribute values."
+      },
+      {
+        "step": 6,
+        "description": "Set player pets",
+        "function": "setPlayerPets(teamRole, pet_list, attrObjGroup1)"
+      },
+      {
+        "step": 7,
+        "description": "Store skill attribute info and set skills",
+        "details": "unit.skillAttrInfo = attrObjGroup2",
+        "function": "setPlayerSkill(playerData, unit)"
+      },
+      {
+        "step": 8,
+        "description": "Process ext (extension) data",
+        "details": "ext is an array of {k, v} pairs with various effects",
+        "ext_keys": {
+          "1": "Set team position",
+          "2": "Set HP as percentage: currenHp = roundInt(round(max(1, value) / 10000) * maxHP)",
+          "3": "Add buff ID",
+          "4": "Set HP as absolute: currenHp = roundInt(max(1, min(value, maxHP)))",
+          "5": "Add buff ID",
+          "6": "Set avian/fly pet via setPlayerFlyPet",
+          "7": "Add buff ID",
+          "9": "Set passive skill enhancement [0] = skill_id",
+          "10": "Set passive skill enhancement [1] = angel_skill_id_1",
+          "11": "Set passive skill enhancement [2] = angel_skill_id_2",
+          "12": "Set spirit[0] value",
+          "13": "Set spirit[1] value"
+        }
+      },
+      {
+        "step": 9,
+        "description": "Set spirit data",
+        "function": "setPlayerSpirit(teamRole, spiritArray)"
+      },
+      {
+        "step": 10,
+        "description": "Set passive skills with angel skill enhancements",
+        "function": "setPlayerPassiveSkill(playerData, unit, chapterType, angelSkillData)"
+      }
+    ]
+  },
+
+  "setPlayerAttrib": {
+    "sourceLine": 187426,
+    "description": "Initialize all module=1 attributes from ConfigAttribute with base values from server",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Get all attributes where module=1 from ConfigAttribute",
+        "code": "attributes = configAttribute.getDataByList('module', 1)"
+      },
+      {
+        "step": 2,
+        "description": "Get chapter type config for PvE filtering",
+        "code": "chapterConfig = configChapter_type.getDataByKey(chapterType)"
+      },
+      {
+        "step": 3,
+        "description": "For each attribute, create MetaAttrib and set baseValue",
+        "formula": "metaAttrib = new MetaAttrib(configAttribute); metaAttrib.baseValue = getAttrib(attr.id, player.attr_list)",
+        "special_case": "If chapterConfig.pve == 0 AND attr is pve_dam(1057) or pve_resist(1058), baseValue is forced to 0"
+      }
+    ],
+    "note": "attr_list is an array of {k: attribId, v: value} from the server. getAttrib searches this list by key and returns roundInt(Number(v)), or 0 if not found."
+  },
+
+  "setPlayerEquip": {
+    "sourceLine": 187440,
+    "description": "Process equipment figure data for visual appearance",
+    "equipment_slots": {
+      "1": {"name": "weapon", "default": 1},
+      "2": {"name": "ornaments", "default": 2},
+      "3": {"name": "face", "default": 3},
+      "4": {"name": "fate", "default": 0},
+      "5": {"name": "wing", "default": 0}
+    },
+    "special_rules": [
+      "In Team20, WorldBoss, or DoubleLadder chapter types: fate slot is forced to 0",
+      "If artifact_figure > 0: weapon slot uses artifact_figure instead",
+      "Skin system: skin_list with k=2 applies dress skin, only_skin=1 hides ALL slots, only_skin=2 hides weapon only, only_skin=3 hides ornaments+face"
+    ]
+  },
+
+  "setPlayerPets": {
+    "sourceLine": 187544,
+    "description": "Initialize pet/pal units from pet_list",
+    "steps": [
+      {
+        "step": 1,
+        "description": "For each pet in pet_list with pet_id != 0",
+        "code": "petConfig = configPet.getDataByKey(pet_id); petLevel = configPetlevel.getDataByKeys('id', pet_id, 'level', pet_lev)"
+      },
+      {
+        "step": 2,
+        "description": "Create new unit with pet's unitId from ConfigUnit",
+        "code": "unitConfig = configUnit.getDataByKey(petConfig.unitId)"
+      },
+      {
+        "step": 3,
+        "description": "For each module=1 attribute, set base value using getPetFactAttrValue",
+        "formula": "baseValue = getPetFactAttrValue(petAttrObjGroup, petLevel[attr.key], pet_id, attr.id)"
+      },
+      {
+        "step": 4,
+        "description": "Override key stats from parent player",
+        "inherited_stats": ["hp (1002)", "att (1001)", "partner_dam_extra (1047)", "skill_dam_extra (1045)", "skill_crit_rate (1037)", "skill_crit_dam (1038)", "boss_dam (1046)"],
+        "note": "Pals inherit parent's HP, ATK, partner_dam_extra, skill_dam_extra, skill_crit_rate, skill_crit_dam, and boss_dam"
+      },
+      {
+        "step": 5,
+        "description": "Set idle index and add to team",
+        "code": "unit.idleIndex = pet_pos + 1; team.units.push(unit)"
+      }
+    ]
+  },
+
+  "getPetFactAttrValue": {
+    "sourceLine": 187495,
+    "description": "Apply pet attribute bonuses with group-based multiplicative scaling",
+    "formula_steps": [
+      {
+        "step": 1,
+        "description": "Calculate additive bonus: pet-specific + global pet bonus",
+        "formula": "value = roundInt(baseValue + getPetAttrByAttrId(petAttrs, petId, attrId) + getPetAttrByAttrId(petAttrs, 0, attrId))",
+        "note": "petId=0 means global bonus applying to all pets"
+      },
+      {
+        "step": 2,
+        "description": "Get attributes in same group from ConfigAttribute",
+        "code": "groupAttrs = configAttribute.getDataByList('group', attrId)"
+      },
+      {
+        "step": 3,
+        "description": "For each attribute in the group, apply multiplicative bonus",
+        "formula": "groupBonus = roundInt(getPetAttrByAttrId(petAttrs, petId, groupAttr.id) + getPetAttrByAttrId(petAttrs, 0, groupAttr.id)); multiplier = round(round(groupBonus / 10000) + 1); value = roundInt(value * multiplier)",
+        "note": "Group bonuses are percentage-based (divided by 10000) and multiplicative with each other"
+      }
+    ]
+  },
+
+  "setPlayerFlyPet": {
+    "sourceLine": 187563,
+    "description": "Initialize avian/fly pet unit",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Get avian config and unit config",
+        "code": "flyConfig = configFly.getDataByKey(flyId); unitConfig = configUnit.getDataByKey(flyConfig.unitid)"
+      },
+      {
+        "step": 2,
+        "description": "For each module=1 attribute, set base value from unit config",
+        "formula": "baseValue = unitConfig[attr.key]",
+        "note": "Avian stats come directly from ConfigUnit fields (XOR-obfuscated)"
+      },
+      {
+        "step": 3,
+        "description": "Set idle index to 8 (avian position) and add to team",
+        "code": "unit.idleIndex = 8; team.units.push(unit)"
+      }
+    ]
+  },
+
+  "setPlayerSkill": {
+    "sourceLine": 187506,
+    "description": "Load active skills sorted by position",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Get active skills from player data",
+        "code": "activeSkills = player.role_skill.active_skill"
+      },
+      {
+        "step": 2,
+        "description": "Sort by pos_id ascending"
+      },
+      {
+        "step": 3,
+        "description": "For each skill with skill_id > 0, add to unit",
+        "code": "skill = addSkill(unit, skill_id, skill_lv); skill.useDelay = round(delay_time / 1000)",
+        "note": "delay_time converts from milliseconds to seconds"
+      }
+    ]
+  },
+
+  "setPlayerPassiveSkill": {
+    "sourceLine": 187523,
+    "description": "Load passive skills with chapter type filtering and angel skill enhancements",
+    "steps": [
+      {
+        "step": 1,
+        "description": "For each passive skill with skill_id > 0"
+      },
+      {
+        "step": 2,
+        "description": "Check if skill is valid for current chapter type",
+        "code": "configSkill.getDataByKey(skill_id).chapter_type → checkPvpChapterTypeOk()",
+        "note": "Skills can be restricted to specific PvP/PvE modes via chapter_type array"
+      },
+      {
+        "step": 3,
+        "description": "If angel skill enhancement data matches this passive skill",
+        "condition": "angelData[0] == skill_id",
+        "effects": [
+          "Push config.skillEffect2 to skillEffectList",
+          "Push skillDam to skillDamList",
+          "Apply angel_skill_id_1 effects via setSkillEffect",
+          "Apply angel_skill_id_2 effects via setSkillEffect"
+        ]
+      }
+    ],
+    "note": "Angel skills enhance passive skills by adding extra skill effects and damage parameters"
+  },
+
+  "setSkillEffect": {
+    "sourceLine": 187518,
+    "description": "Apply angel skill effects to a skill",
+    "code": "angelSkill = configAngel_skill.getDataByKey(angelSkillId); skill.skillEffectList.push(angelSkill.skill_effect); skill.skillDamList.push(angelSkill.skillPar)"
+  },
+
+  "checkPvpChapterTypeOk": {
+    "sourceLine": 187535,
+    "description": "Check if a skill is valid for the current chapter/PvP type",
+    "logic": {
+      "no_chapter_type": "If chapter_type is null/empty, skill is always valid",
+      "if_chapter_type_0": "Normal mode: skill valid if current chapter type is in the list",
+      "if_chapter_type_1": "Inverse mode: skill valid if current chapter type is NOT in the list"
+    }
+  }
+}

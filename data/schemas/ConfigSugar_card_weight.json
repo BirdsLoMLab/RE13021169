@@ -1,0 +1,27 @@
+{
+  "className": "ConfigSugar_card_weight",
+  "tableName": "Sugar_card_weight",
+  "sourceLine": 264042,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 2,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "weight",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}

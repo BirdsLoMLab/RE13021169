@@ -1,0 +1,543 @@
+{
+  "system_name": "Equipment System",
+  "description": "The equipment system manages gear items worn by the player across 10 body slots. Equipment provides base attributes, random attributes, and participates in suit set bonuses. Sub-systems include refinement (per-slot level ups), advancement (stage-based group upgrades), and resonance (milestone rewards). Equipment is primarily obtained from treasure box opening with a pity/guarantee system. The visual figure system overlays equipment appearances on the character model for slots 1-5.",
+
+  "equipment_slots": {
+    "description": "Equipment is worn in up to 10 body part slots, identified by the 'part' field in ConfigEquipment and 'location' in the player's equip_list. The first 5 slots (weapon, ornaments, face, fate, wing) have visual figure overlays on the character model. The remaining 5 are stat-only.",
+    "slots": {
+      "1": {
+        "name": "Weapon",
+        "sprite": "zjm_ui_wuqi",
+        "has_figure": true,
+        "figure_key": "weapon",
+        "description": "Primary weapon slot. Determines the weapon model displayed on the character. Can be overridden by artifact_figure."
+      },
+      "2": {
+        "name": "Ornaments",
+        "sprite": "zjm_ui_goushi",
+        "has_figure": true,
+        "figure_key": "ornaments",
+        "description": "Ornamental headgear/accessories. Visible on the character model. If in appearance_head_not_face list, hides the face slot."
+      },
+      "3": {
+        "name": "Face",
+        "sprite": "zjm_ui_mianshi",
+        "has_figure": true,
+        "figure_key": "face",
+        "description": "Face decoration/mask. Visible on the character model. Hidden if ornaments are in the appearance_head_not_face list."
+      },
+      "4": {
+        "name": "Shoulder Guard (Hujian)",
+        "sprite": "zjm_ui_hujian",
+        "has_figure": true,
+        "figure_key": "fate",
+        "description": "Shoulder/fate slot. Has visual figure mapping. Forced to 0 in Team20, WorldBoss, and DoubleLadder battle modes."
+      },
+      "5": {
+        "name": "Armor (Kaijia)",
+        "sprite": "zjm_ui_kaijia",
+        "has_figure": true,
+        "figure_key": "wing",
+        "description": "Armor/wing slot. Has visual figure mapping for wing display."
+      },
+      "6": {
+        "name": "Arm Guard (Bijia)",
+        "sprite": "zjm_ui_bijia",
+        "has_figure": false,
+        "description": "Arm guard slot. Stats only, no visual figure."
+      },
+      "7": {
+        "name": "Gloves (Shoutao)",
+        "sprite": "zjm_ui_shoutao",
+        "has_figure": false,
+        "description": "Gloves slot. Stats only, no visual figure."
+      },
+      "8": {
+        "name": "Belt (Yaodai)",
+        "sprite": "zjm_ui_yaodai",
+        "has_figure": false,
+        "description": "Belt slot. Stats only, no visual figure."
+      },
+      "9": {
+        "name": "Leggings (Hutui)",
+        "sprite": "zjm_ui_hutui",
+        "has_figure": false,
+        "description": "Leg armor slot. Stats only, no visual figure."
+      },
+      "10": {
+        "name": "Shoes (Xiezi)",
+        "sprite": "zjm_ui_xiezi",
+        "has_figure": false,
+        "description": "Footwear slot. Stats only, no visual figure."
+      }
+    },
+    "source_line": 281238,
+    "note": "Slot IDs are defined by ConfigEquipment.part and used as location values in equip_list. Visual figure slot definitions at line 187440."
+  },
+
+  "equipment_config": {
+    "config_class": "ConfigEquipment",
+    "table_name": "Equipment",
+    "source_line": 229175,
+    "main_key": "id",
+    "field_count": 20,
+    "key_fields": {
+      "id": "Unique equipment config ID",
+      "name": "Equipment name (string_ref)",
+      "level": "Equipment tier/level requirement",
+      "part": "Equipment slot (1-10)",
+      "quality": "Quality tier (1=WHITE through 11=FOREVER)",
+      "number": "Internal number identifier",
+      "advanced": "Advanced attribute group ID (references ConfigEquipment_attr.group_id)",
+      "multiple": "Optional multiplier array",
+      "suitId": "Suit set ID (0 = no suit; references ConfigEquipment_suit)",
+      "icon": "Icon resource ID",
+      "atlas": "Atlas resource ID for icon lookup",
+      "job": "Job type restriction (0 = any job)",
+      "wearable": "Job type that can wear this equipment (0 = all classes; matches ConfigJobs.type)",
+      "gradeRange": "Optional grade range for variation",
+      "preAttr": "Optional pre-defined attribute array",
+      "is_precious": "1 if the item requires confirmation before selling",
+      "drop_condition": "Drop condition string (localized)",
+      "unlock_level": "Player level required to use this equipment",
+      "preview": "Preview flag",
+      "is_hide": "Hidden from normal UI lists (0 or 1)"
+    }
+  },
+
+  "quality_tiers": {
+    "description": "Equipment quality tiers determine color, rarity, and stat ranges. Shared quality system used by equipment, gems, and other items.",
+    "source_line": 279699,
+    "tiers": {
+      "1": {
+        "name": "WHITE",
+        "color_light": "rgb(193,189,176)",
+        "color_dark": "rgb(83,62,42)"
+      },
+      "2": {
+        "name": "GREEN",
+        "color_light": "rgb(89,197,144)",
+        "color_dark": "rgb(36,115,67)"
+      },
+      "3": {
+        "name": "BLUE",
+        "color_light": "rgb(125,172,248)",
+        "color_dark": "rgb(47,69,130)"
+      },
+      "4": {
+        "name": "PURPLE",
+        "color_light": "rgb(216,121,255)",
+        "color_dark": "rgb(110,15,139)"
+      },
+      "5": {
+        "name": "GOLD",
+        "color_light": "rgb(243,207,67)",
+        "color_dark": "rgb(151,107,0)"
+      },
+      "6": {
+        "name": "ORANGE",
+        "color_light": "rgb(252,140,31)",
+        "color_dark": "rgb(167,76,0)"
+      },
+      "7": {
+        "name": "RED",
+        "color_light": "rgb(254,70,70)",
+        "color_dark": "rgb(156,9,9)"
+      },
+      "8": {
+        "name": "PINK",
+        "color_light": "rgb(205,105,137)",
+        "color_dark": "rgb(170,0,104)"
+      },
+      "9": {
+        "name": "MULTICOLOR",
+        "color_light": "rgb(60,208,235)",
+        "color_dark": "rgb(5,99,250)"
+      },
+      "10": {
+        "name": "GILT",
+        "color": "rgb(227,119,13)"
+      },
+      "11": {
+        "name": "FOREVER",
+        "color": "rgb(200,41,224)"
+      }
+    }
+  },
+
+  "attribute_system": {
+    "base_attributes": {
+      "description": "Each equipment has base_attr (up to 4 base stats) stored as [{k: attr_id, v: value}, ...]. These are the primary stats like HP, ATK, DEF, etc.",
+      "config_ids": [1002, 1001, 1024, 1003],
+      "config_names": ["HP", "ATK", "DEF", "Unknown (1003)"],
+      "source_line": 234505,
+      "display_order": "Sorted by the attrToIndex mapping at line 280036"
+    },
+    "random_attributes": {
+      "description": "Each equipment can have up to 2 random attributes (rand_attr). These are percentage-based bonus effects displayed as percentages (value / 10000 * 100).",
+      "max_count": 2,
+      "display_format": "value * 100 / 10000 = percentage (e.g., 500 = 5%)",
+      "source_line": 112173,
+      "code_reference": "for (var v = t.rand_attr || [], _ = 0; _ < 2; _++) { ... txtValue.string = d.formatStr('%s%', 100 * r / 1e4) }"
+    },
+    "equipment_attr_config": {
+      "config_class": "ConfigEquipment_attr",
+      "table_name": "Equipment_attr",
+      "source_line": 228846,
+      "description": "Defines attribute groups for equipment random attributes. The group_id links to ConfigEquipment.advanced field. When opening treasure boxes, attributes are randomly rolled from the group.",
+      "fields": {
+        "id": "Unique attr config ID",
+        "group_id": "Attribute group (matches ConfigEquipment.advanced)",
+        "attr_id": "The actual attribute ID (references ConfigAttribute)",
+        "type": "Attribute type classification",
+        "pro": "Probability weight for random selection",
+        "value": "Value range array for the attribute"
+      }
+    },
+    "equip_attr_display_list": {
+      "description": "The ordered list of attribute IDs displayed in equipment detail views",
+      "attr_ids": [1002, 1001, 1024, 1003, 1004, 1016, 1017, 1023, 1008, 1012, 1037, 4001, 4005],
+      "source_line": 234508
+    },
+    "attr_value_display_rules": {
+      "description": "Attribute values display differently based on ConfigAttribute.show_type",
+      "source_line": 279875,
+      "rules": {
+        "show_type_3": "Display as Math.floor(value) / 10000 (decimal fraction, e.g., 0.5 for 5000)",
+        "show_type_2": "Display as percentage: formatStr('%s%', 100 * value / 10000)",
+        "default": "Display as raw integer: String(value)"
+      }
+    }
+  },
+
+  "equipment_level": {
+    "config_class": "ConfigEquipment_level",
+    "table_name": "Equipment_level",
+    "source_line": 228960,
+    "indexed_keys": ["part", "level"],
+    "description": "Defines the level-up costs and basic stat multiplier per equipment slot and level.",
+    "fields": {
+      "part": "Equipment slot ID (1-10)",
+      "level": "Enhancement level",
+      "basic": "Basic stat multiplier at this level",
+      "price": "Cost to enhance to this level, format: [[item_id, amount], ...]"
+    },
+    "equipment_level_weights": {
+      "description": "Global config defining level drop probability weights when generating equipment from boxes",
+      "values": [[-2, 500], [-1, 1500], [0, 6000], [1, 1500], [2, 500]],
+      "source_line": 234610,
+      "interpretation": "Offset from base level with probability weight (e.g., 0 offset = 6000 weight = most common)"
+    }
+  },
+
+  "suit_system": {
+    "config_class": "ConfigEquipment_suit",
+    "table_name": "Equipment_suit",
+    "source_line": 229118,
+    "indexed_keys": ["suit_id", "num"],
+    "description": "Equipment suits grant bonuses when multiple pieces from the same set are worn. Each suit has threshold bonuses at different piece counts.",
+    "fields": {
+      "suit_id": "Suit set ID (matches ConfigEquipment.suitId)",
+      "num": "Number of pieces required to activate this bonus tier",
+      "effect": "Array of effects granted by this tier",
+      "desc": "Description of the bonus (localized string)",
+      "name": "Name of the bonus tier (localized string)"
+    },
+    "counting_logic": {
+      "source_line": 280544,
+      "code": "getEquipWearCountBySuitId: for each equipped item, if configEquipment.getDataByKey(equip.config_id).suitId == target_suit_id, count += 1",
+      "display": "Shows as 'BonusName (currentCount/requiredCount): description' with color #FDF9B8 if active, #908474 if inactive"
+    }
+  },
+
+  "refinement_system": {
+    "description": "Equipment refinement is a per-slot leveling system. Each of the 10 equipment slots has its own refinement level. Refinement adds percentage-based multipliers to the equipment's base attributes. The slot with the lowest refinement level is automatically selected for upgrade.",
+    "config_class": "ConfigEquipment_refinement",
+    "table_name": "Equipment_refinement",
+    "source_line": 229012,
+    "fields": {
+      "id": "Refinement level (sequential)",
+      "attar": "Array of attribute multipliers at this level, format: [[attr_id, multiplier_value], ...]. The multiplier is applied as base_attr_value * multiplier / 10000.",
+      "cost": "Cost to refine, format: [[item_id, amount], ...]. Last entry with empty cost array marks the max level."
+    },
+    "refinement_formula": {
+      "description": "Refinement bonus for each base attribute is calculated as a percentage of the equipment's base stat value, using the refinement level's multiplier.",
+      "formula": "refined_bonus = Math.round(base_attr_value * attar_multiplier / 10000)",
+      "source_line": 279920,
+      "code": "var h = Math.round(i * d[1] / 1e4)",
+      "variables": {
+        "i": "base_attr value (the equipment's base attribute value for matching attr_id)",
+        "d[1]": "refinement multiplier from ConfigEquipment_refinement.attar entry matching the attr_id",
+        "h": "resulting refinement bonus value"
+      },
+      "example": "If weapon has base HP=5000, and refinement level 10 has attar [[1002, 5000]], then refined HP bonus = Math.round(5000 * 5000 / 10000) = 2500"
+    },
+    "slot_selection": {
+      "description": "The UI auto-selects the equipment type with the lowest refinement level",
+      "source_line": 281347,
+      "code": "(-1 == s || s > o.v) && (s = o.v, t.curSelEquip = n)"
+    },
+    "refine_slot_types": {
+      "description": "All 10 equipment types participate in refinement",
+      "source_line": 279462,
+      "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    "display": {
+      "source_line": 279909,
+      "logic": "For each of the equipment's 4 base_attr entries, find matching attr_id in refinement.attar, apply multiplier, display as flat value or percentage depending on show_type"
+    },
+    "cost_items": {
+      "item_1333": "Primary refinement material (Refining Stone)",
+      "item_1334": "Secondary refinement material"
+    },
+    "operations": {
+      "single_refine": "equip.equip_refine_c2s with type=1 - refines one level for the lowest-level slot",
+      "batch_refine": "equip.equip_refine_c2s with type=2 - refines multiple slots at once",
+      "source_line": 279390
+    }
+  },
+
+  "advancement_system": {
+    "description": "Equipment advancement is a stage-based system that applies to ALL equipment slots collectively. When all 10 slots reach the refinement limit for the current stage, the player can advance to the next stage, unlocking higher refinement limits and granting global attribute bonuses.",
+    "config_class": "ConfigEquipment_advancement",
+    "table_name": "Equipment_advancement",
+    "source_line": 228788,
+    "fields": {
+      "id": "Advancement stage number (sequential, starts at 1)",
+      "attr": "Array of global attribute bonuses at this stage, format: [[attr_id, value], ...]",
+      "cost": "Cost to advance to this stage, format: [[item_id, amount], ...]",
+      "limit": "Maximum refinement level allowed at this advancement stage (0 = unlimited/final stage)",
+      "power": "Combat power value for this stage"
+    },
+    "advancement_attr_display": {
+      "description": "Attribute IDs commonly displayed in the advancement detail panel",
+      "attr_ids": [1068, 1069, 1071, 1072, 1074, 1075, 1077, 1078],
+      "source_line": 237573
+    },
+    "advancement_trigger": {
+      "source_line": 281355,
+      "condition": "All 10 slot refinement levels must equal advancement.limit (all slots maxed for current stage)",
+      "code": "var p = r == s && s == a.limit; // r = max level across slots, s = min level across slots, a = current advancement config",
+      "explanation": "When max(all_levels) == min(all_levels) == limit, advancement is available"
+    },
+    "max_limit_calculation": {
+      "source_line": 281340,
+      "code": "configEquipment_advancement.getDatas().forEach(function(t) { o = Math.max(o, t.limit) })",
+      "description": "The absolute max refinement level is determined by the highest limit across all advancement stages"
+    },
+    "stage_up_logic": {
+      "source_line": 281322,
+      "protocol": "equip.equip_refine_stage_c2s",
+      "response": "Updates the stage value in refineInfo"
+    }
+  },
+
+  "resonance_system": {
+    "description": "Equipment resonance is a milestone reward system tied to advancement stages. When the player reaches a certain advancement stage, they can claim resonance rewards that grant permanent attribute bonuses.",
+    "config_class": "ConfigEquipment_resonance",
+    "table_name": "Equipment_resonance",
+    "source_line": 229060,
+    "fields": {
+      "id": "Resonance milestone ID (sequential)",
+      "attr": "Array of cumulative attribute bonuses from this resonance level, format: [[attr_id, value], ...]",
+      "current_attr": "The specific attribute bonus at this resonance level (displayed individually)",
+      "stage": "Required advancement stage to unlock this resonance",
+      "power": "Combat power value for this resonance"
+    },
+    "claim_logic": {
+      "source_line": 279640,
+      "condition": "refineInfo.stage >= resonance.stage && resonance.id > refineInfo.resonate",
+      "protocol": "equip.equip_refine_resonate_c2s"
+    },
+    "red_point": {
+      "source_line": 279638,
+      "logic": "Red point appears when any unclaimed resonance milestone has stage <= current advancement stage"
+    }
+  },
+
+  "guarantee_system": {
+    "config_class": "ConfigEquipment_guarantee",
+    "table_name": "Equipment_guarantee",
+    "source_line": 228908,
+    "description": "Pity/guarantee system for equipment box opening. After a certain number of opens without a high-quality drop, the system guarantees one.",
+    "fields": {
+      "num": "Number of opens trigger threshold (pity counter)",
+      "quality": "Minimum guaranteed quality tier",
+      "level": "Minimum guaranteed level",
+      "part": "Optional restriction on which equipment parts are guaranteed"
+    }
+  },
+
+  "treasure_box_system": {
+    "description": "Equipment is obtained by opening treasure boxes using a consumable item (box_goods_id). The box has its own leveling system that improves drop quality over time.",
+    "source_line": 279286,
+    "operations": {
+      "open_single": "equip.equip_box_open_c2s",
+      "open_multiple": "equip.equip_box_open_all_c2s with {num, quality}",
+      "level_up": "equip.equip_box_lv_c2s"
+    },
+    "auto_open": {
+      "description": "Auto-open feature that continuously opens boxes and auto-sells equipment below quality/attribute thresholds",
+      "batch_thresholds": [[1, 1], [8, 2], [12, 4], [16, 6], [20, 8], [24, 10], [28, 20]],
+      "source_line": 234632,
+      "interpretation": "[box_level, batch_size] - at box level X, can auto-open Y at a time"
+    },
+    "auto_open_conditions": {
+      "description": "Players configure auto-sell conditions with quality threshold and attribute filters",
+      "default_quality": 3,
+      "filter_slots": 2,
+      "filter_attrs_per_slot": 2,
+      "source_line": 280565,
+      "logic": "Equipment is kept if quality >= threshold AND either filter slot matches (both required attrs present in rand_attr). If both filter slots are disabled, all equipment passes."
+    }
+  },
+
+  "stat_contribution_flow": {
+    "description": "Equipment stats flow into the player's total attributes through the following pipeline",
+    "steps": [
+      {
+        "step": 1,
+        "name": "Base Attributes",
+        "description": "Equipment's base_attr values (up to 4) are added directly to player stats"
+      },
+      {
+        "step": 2,
+        "name": "Random Attributes",
+        "description": "Equipment's rand_attr values (up to 2) provide percentage-based bonuses"
+      },
+      {
+        "step": 3,
+        "name": "Refinement Bonus",
+        "description": "For each base_attr, refinement multiplier is applied: bonus = round(base_value * refinement_attar / 10000)"
+      },
+      {
+        "step": 4,
+        "name": "Advancement Bonus",
+        "description": "Global attribute bonuses from current advancement stage are added"
+      },
+      {
+        "step": 5,
+        "name": "Resonance Bonus",
+        "description": "Cumulative attribute bonuses from all claimed resonance milestones are added"
+      },
+      {
+        "step": 6,
+        "name": "Suit Set Bonus",
+        "description": "If enough pieces from the same suit are equipped, set bonus effects are applied"
+      }
+    ],
+    "player_attribute_flow": {
+      "source_line": 199068,
+      "note": "getRoleAttrById aggregates all attribute sources on the server side; the client simply reads the final values"
+    }
+  },
+
+  "equipment_comparison": {
+    "description": "The checkIsBetterEquip function compares a candidate equipment against the currently worn one in the same slot.",
+    "source_line": 280616,
+    "logic": "For each base_attr in the worn equipment, check if the candidate's matching attr value is >= the worn value. If ALL worn attrs are <= candidate attrs and at least one is strictly less, the candidate is better.",
+    "auto_replace": "Better equipment triggers a notification via OPEN_EQUIP_EDITOR_VIEW event"
+  },
+
+  "figure_system": {
+    "description": "Equipment figure/appearance system. The setPlayerEquip function reads equip_list from the player figure data and maps slot keys to visual model components.",
+    "skin_slots": [1, 2, 3, 4, 5],
+    "source_line": 187440,
+    "visual_mapping": {
+      "k=1": "weapon figure (default=1)",
+      "k=2": "ornaments figure (default=2)",
+      "k=3": "face figure (default=3)",
+      "k=4": "fate figure (default=0, forced to 0 in Team20/WorldBoss/DoubleLadder)",
+      "k=5": "wing figure (default=0)"
+    },
+    "skin_override_rules": [
+      "If artifact_figure > 0, weapon figure (slot 1) is replaced with artifact figure",
+      "Hair figure (hair_figure) sets the color value for character tinting",
+      "If a dress skin has only_skin=1, all visual slots + mount are cleared to 0",
+      "If only_skin=2, only weapon is cleared to 0",
+      "If only_skin=3, ornaments and face are cleared to 0",
+      "If ornaments ID is in appearance_head_not_face list, face is forced to 0"
+    ],
+    "figure_customization": {
+      "description": "Players can customize which equipment appearance shows per slot via EquipFigureView. The locationToFigure map stores per-slot overrides: 0 = show equipped item, -1 = hide slot, >0 = show specific config_id.",
+      "source_line": 280633,
+      "function": "getEquipFigureByLocation(location) returns the figure override for a slot"
+    }
+  },
+
+  "equipment_tabs": {
+    "description": "Players can save multiple equipment loadouts (tabs/presets). Each tab has its own set of equipped items.",
+    "tab_limit_source": "ConfigGlobal.equip_tab_limit defines the number of available tabs",
+    "source_line": 281702,
+    "operations": {
+      "get_info": "equip.equip_tab_info_c2s",
+      "choose_tab": "equip.equip_choose_tab_c2s",
+      "rename_tab": "equip.equip_change_tab_name_c2s"
+    },
+    "source_line_operations": 279348
+  },
+
+  "events": {
+    "source_line": 279673,
+    "event_list": {
+      "EQUIP_LIST_INIT": "Fired when equipment list is first loaded",
+      "EQUIP_LIST_UPDATE": "Fired when equipment list changes",
+      "EQUIP_INFO_UPDATE": "Fired when a specific equipment info changes",
+      "EQUIP_ADD": "Fired when a new equipment is added to inventory",
+      "EQUIP_REMOVE": "Fired when equipment is removed (sold/consumed)",
+      "BOX_INFO_UPDATE": "Fired when box/chest info updates",
+      "AUTO_OPEN_CONDITION_CHANGE": "Fired when auto-open conditions change",
+      "EQUIP_GOT_UPDATE": "Fired when equipment collection updates",
+      "EQUIP_FIGURE_UPDATE": "Fired when equipment visual figure changes",
+      "CONDITION_LIST_VIEW_CLOSE": "Fired when condition list view closes",
+      "OPEN_EQUIP_EDITOR_VIEW": "Fired to trigger the equip editor view",
+      "EQUIP_SKIN_UPDATE": "Fired when equipment skin settings change",
+      "AUTO_OPEN_STATUS_CHANGE": "Fired when auto-open toggle changes",
+      "EQUIP_SELL": "Fired when equipment is sold",
+      "EQUIP_TRY_PLAY_ROLE_EFFECT": "Fired to trigger role visual effect playback",
+      "EQUIP_EDIT_VIEW_OPEN": "Fired when equip edit view opens",
+      "EQUIP_TAB_INFO_UPDATE": "Fired when equipment tab/loadout changes",
+      "EQUIP_TAB_NAME_CHANGE": "Fired when equipment tab is renamed",
+      "BOX_SKIN_CHANGE": "Fired when box skin changes",
+      "EQUIP_FILTER": "Fired when equipment filter settings change",
+      "EQUIP_REFINE_INFO_UPDATE": "Fired when refine/advancement/resonance state changes"
+    }
+  },
+
+  "change_types": {
+    "source_line": 279697,
+    "UPDATE": 1,
+    "ADD": 2,
+    "DELETE": 3
+  },
+
+  "box_change_types": {
+    "source_line": 279703,
+    "lvUp": 1,
+    "expAdd": 2
+  },
+
+  "network_protocol": {
+    "prefix": "equip",
+    "source_line": 279245,
+    "messages": {
+      "equip_info_c2s/s2c": "Get full equipment list",
+      "equip_wear_c2s": "Equip an item to a slot",
+      "equip_change_s2c": "Equipment list change notification (server push)",
+      "equip_shop_c2s/s2c": "Sell equipment",
+      "equip_box_info_c2s/s2c": "Get treasure box info",
+      "equip_box_open_c2s/s2c": "Open single box",
+      "equip_box_open_all_c2s/s2c": "Open multiple boxes",
+      "equip_box_lv_c2s/s2c": "Level up treasure box",
+      "equip_refine_info_c2s/s2c": "Get refinement info",
+      "equip_refine_c2s/s2c": "Refine equipment (type 1=single, 2=batch)",
+      "equip_refine_stage_c2s/s2c": "Advance to next stage",
+      "equip_refine_resonate_c2s/s2c": "Claim resonance milestone",
+      "equip_tab_info_c2s/s2c": "Get tab/loadout info",
+      "equip_choose_tab_c2s": "Switch active tab",
+      "equip_change_tab_name_c2s": "Rename a tab",
+      "equip_filter_info_c2s/s2c": "Get equipment filter settings",
+      "equip_filter_attr_c2s": "Set equipment filter attribute"
+    }
+  }
+}

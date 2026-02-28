@@ -46,6 +46,21 @@ Rounds to 4 decimals, then floors to integer.
 
 ## 2. Attribute System
 
+### MetaAttrib Value Formula (Line 349642)
+```
+value = roundInt(roundInt(baseValue + _addValue) × _time + _addExtraValue)
+if (up_limit ≠ 0): value = min(value, up_limit)
+if (num_type = 2): value = round(value / 10000)   // percentage display
+```
+
+**Components:**
+- `baseValue` — from server (set during stat assembly)
+- `_addValue` — flat bonuses from buffs/effects (stacks additively)
+- `_time` — multiplicative modifier (starts at 1.0, `addMultiples(x)` → `_time += x`, `multiple(x)` → `_time *= x`)
+- `_addExtraValue` — post-multiplier flat bonus
+
+**Anti-cheat:** `_checkValue = baseValue XOR 32`, verified via `checkCheat()`
+
 ### Key Attribute IDs (AttribDefine, Line 349634)
 
 | ID | Name | Description |
@@ -445,6 +460,102 @@ damage += bonus
 
 ---
 
+## 17. Stat Assembly Pipeline (setPlayerList, Line 187356)
+
+### Assembly Order
+```
+1. Look up job figure → ConfigJobs → model → ConfigUnit
+2. setPlayerAttrib: Load all module=1 attributes, set baseValue from server attr_list
+   - PvE filter: if chapterType.pve == 0, force pve_dam/pve_resist to 0
+3. setPlayerEquip: Process equipment figure (weapon, ornaments, face, fate, wing)
+4. Parse attr_obj_list → group 1 (pet attribs) + group 2 (skill attribs)
+5. setPlayerPets: Initialize pal units with stat inheritance
+6. setPlayerSkill: Load active skills sorted by position
+7. Process ext data: HP percentage, absolute HP, buffs, avian, spirit, angel skills
+8. setPlayerSpirit: Set spirit data
+9. setPlayerPassiveSkill: Load passives with chapter type filtering + angel enhancements
+```
+
+### Pet Attribute Scaling (getPetFactAttrValue, Line 187495)
+```
+base = petLevel[attr.key]
+additive = base + petAttrById(petId, attrId) + petAttrById(0, attrId)
+for each groupAttr in configAttribute.group(attrId):
+    groupBonus = petAttrById(petId, groupAttr.id) + petAttrById(0, groupAttr.id)
+    multiplier = round(round(groupBonus / 10000) + 1)
+    result = roundInt(result × multiplier)
+```
+Group bonuses are percentage-based (÷10000) and multiply sequentially.
+
+### Pal Stat Inheritance
+Pals inherit from parent player: `hp, att, partner_dam_extra, skill_dam_extra, skill_crit_rate, skill_crit_dam, boss_dam`
+
+---
+
+## 18. Life Steal System (HurtUtil, Line 322999)
+
+### HP Steal Check (hpStealCheck)
+```
+rate = max(0, HPSTEAL_RATE - IGNORE_HPSTEAL)
+triggers if randomInt(0, 10000) < roundInt(10000 × rate)
+```
+
+### HP Steal Calculation (hpStealCal)
+```
+heal = roundInt(damage × max(0, attribId_hpsteal - target_hpsteal_def))
+heal += roundInt(damage × HPSTEAL_AMOUNT)
+heal -= roundInt(damage × target_HPSTEAL_RES)
+heal = max(0, heal)
+```
+
+### BuffVampire Life Steal (Line 196745)
+```
+totalDmgMult = round(round(1 + total_dam_add) / round(1 + total_dam_def))
+totalDmgMult = max(round(total_damage_add_down_limit / 10000), totalDmgMult)  // floor at 0.20
+heal = roundInt(damage × totalDmgMult × skillPar × treatDecay)
+hp_cap = roundInt(maxHP × param3)
+heal = min(heal, hp_cap)
+```
+
+---
+
+## 19. Spirit Combat (spiritNormalHit, Line 323010)
+
+### Spirit vs Spirit
+```
+damage = roundInt(spirit_ATT × round(round(1 + spirit_dam_add) - spirit_dam_def))
+damage = roundInt(damage × round(1 - spirit_dam_def_final))
+```
+
+### Spirit vs Normal Unit
+```
+Scales parent player's normalHurt, doubleHurt, counterHurt, or skillDamage
+by the ratio of spirit's att_dam to parent's att_dam
+```
+
+---
+
+## 20. Data Architecture
+
+### Config System (BaseConfig, Line 184594)
+```
+711 Config modules define data table schemas
+Row data loaded from server via:
+  loadData(json)       → parse JSON arrays
+  loadBufferData(buf)  → bytes[i] = 255 & ~(32 ^ bytes[i]) → decompress → parse JSON
+CONFIG_KEY = 24455     → used for XOR obfuscation: this._data[N] ^ CONFIG_KEY
+```
+
+### Probability System
+All probability checks use `randomInt(0, 10000)`:
+```
+triggers if randomInt(0, 10000) < roundInt(10000 × rate)
+```
+Rates are stored as decimals (e.g., 0.5 = 50%). The 10000-point system gives 0.01% granularity.
+
+---
+
 *End of Master Formula Reference*
 *All formulas verified against game_script_pretty.js*
 *Line numbers reference the beautified file*
+*Data files: data/schemas/ (711), data/enums/ (96), data/constants/ (5), data/formulas/ (25+)*

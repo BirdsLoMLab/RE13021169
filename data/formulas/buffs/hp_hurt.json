@@ -1,0 +1,94 @@
+{
+  "name": "BuffSkillHpHurt",
+  "sourceLine": 195470,
+  "description": "HP-Based Damage buff — deals damage based on defender's max HP. This is the complex 'HP-Based Damage' system referenced in Yuko's guide.",
+  "buffMapKey": "hp_hurt",
+  "buffGroupType": "HP_HURT",
+
+  "alloc_parameters": {
+    "sourceLine": 195525,
+    "config": "Buff config from ConfigBuff/ConfigSpecil_buff",
+    "_resistPar": "round(config.param1 / 10000) — resistance scaling parameter",
+    "_limit": "config.param5 — [min_multiplier, max_multiplier] damage clamping array"
+  },
+
+  "onBegin": {
+    "sourceLine": 195500,
+    "description": "Executes when buff is applied — immediately deals HP-based damage",
+    "condition": "Only fires if NOT_HURT battle flag is not set",
+    "formula_steps": [
+      {
+        "step": 1,
+        "description": "Get defender's max HP and attacker's general resistance",
+        "formula": "maxHP = defender.getAttrib(hp); resist = attacker.getAttrib(resist)"
+      },
+      {
+        "step": 2,
+        "description": "Calculate resistance via calArmorAndBlock",
+        "formula": "resistValue = calArmorAndBlock(defender, attacker, resist, AttribDefine.resist)",
+        "note": "Uses the pierce/block system for resistance"
+      },
+      {
+        "step": 3,
+        "description": "Calculate base HP damage with resistance component",
+        "formula": "damage = roundInt(maxHP * skillPar) + roundInt(maxHP * resistPar * resistValue)",
+        "note": "skillPar = base HP% damage, resistPar = additional HP% scaled by resistance"
+      },
+      {
+        "step": 4,
+        "description": "Apply PvP damage reduction",
+        "formula": "damage = roundInt(damage * injuryReduce)",
+        "note": "injuryReduce = configLevel.pvp_injury_reduce / 10000 (1.0 in PvE)"
+      },
+      {
+        "step": 5,
+        "description": "Apply damage clamping if limit is defined",
+        "condition": "if (this._limit exists)",
+        "sub_steps": [
+          {
+            "step": "5a",
+            "description": "Calculate reference damage for clamping",
+            "formula": "ATK = attacker.att; DEF = defender.def; DEF_COE = defender.def_coe; att_dam = attacker.att_dam",
+            "formula2": "refDmg = roundInt(max(roundInt(ATK - DEF * (1 + DEF_COE)), 1) * att_dam)"
+          },
+          {
+            "step": "5b",
+            "description": "Calculate min and max bounds",
+            "formula": "minDmg = roundInt(refDmg * limit[0]); maxDmg = roundInt(refDmg * limit[1])"
+          },
+          {
+            "step": "5c",
+            "description": "Clamp damage between min and max",
+            "formula": "damage = min(max(damage, minDmg), maxDmg)"
+          }
+        ],
+        "note": "Clamps HP-based damage relative to what a normal attack would do. Prevents it from being too weak or too strong."
+      },
+      {
+        "step": 6,
+        "description": "Deal damage to defender",
+        "formula": "healthTarget(defender, damage, HealthType.Hurt, false, buffConfigId)"
+      },
+      {
+        "step": 7,
+        "description": "Trigger HP_Hurt skill effects",
+        "note": "Checks defender's skill effects for HP_Hurt triggers and fires them"
+      }
+    ],
+
+    "simplified_formula": {
+      "unclamped": "damage = roundInt((roundInt(maxHP * skillPar) + roundInt(maxHP * resistPar * pierce_block(resist))) * injuryReduce)",
+      "clamped": "damage = clamp(unclamped, roundInt(normalDmg * limit[0]), roundInt(normalDmg * limit[1]))",
+      "where_normalDmg": "roundInt(max(roundInt(ATK - DEF * (1 + DEF_COE)), 1) * att_dam)"
+    }
+  },
+
+  "key_notes": [
+    "HP-based damage uses defender's MAX HP, not current HP",
+    "The resistance component uses the general 'resist' attribute (1021), not att_resist",
+    "Pierce/block mechanics apply to the resistance portion",
+    "PvP reduction applies",
+    "Damage is clamped relative to normal attack damage when limit array is provided",
+    "This buff fires immediately on application (onBegin), not over time"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "className": "ConfigSpirit",
+  "tableName": "Spirit",
+  "sourceLine": 262760,
+  "mainKey": "spirit_id",
+  "indexedKeys": {
+    "spirit_id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 14,
+  "fields": [
+    {
+      "name": "spirit_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "mame",
+      "index": 1,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "quality",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "spirit_part_amount",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "unit",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "path",
+      "index": 5,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "model_scale",
+      "index": 6,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "model_scale2",
+      "index": 7,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon",
+      "index": 8,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon_move",
+      "index": 9,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "icon_small",
+      "index": 10,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "icon_group",
+      "index": 11,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "bullet",
+      "index": 12,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "order",
+      "index": 13,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

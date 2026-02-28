@@ -1,0 +1,55 @@
+{
+  "className": "ConfigLeft_right_crush",
+  "tableName": "Left_right_crush",
+  "sourceLine": 242813,
+  "mainKey": "difficulty",
+  "indexedKeys": {
+    "difficulty": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 6,
+  "fields": [
+    {
+      "name": "difficulty",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "id",
+      "index": 1,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "effect",
+      "index": 2,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "picture_book",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "score",
+      "index": 4,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "text",
+      "index": 5,
+      "type": "string_ref",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

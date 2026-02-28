@@ -1,0 +1,42 @@
+{
+  "className": "ConfigActivity_boss_level",
+  "tableName": "Activity_boss_level",
+  "sourceLine": 216006,
+  "mainKey": "boss_id",
+  "indexedKeys": {
+    "boss_id": 0,
+    "level": 1
+  },
+  "usesConfigKey": false,
+  "fieldCount": 4,
+  "fields": [
+    {
+      "name": "boss_id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "level",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "boss_hp",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "spine",
+      "index": 3,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    }
+  ]
+}

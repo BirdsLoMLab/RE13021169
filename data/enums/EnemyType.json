@@ -1,0 +1,14 @@
+{
+  "name": "EnemyType",
+  "sourceLine": 22511,
+  "values": {
+    "Pink": 1,
+    "Orange": 2,
+    "Red": 3
+  },
+  "reverseMap": {
+    "1": "Pink",
+    "2": "Orange",
+    "3": "Red"
+  }
+}

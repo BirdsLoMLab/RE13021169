@@ -1,0 +1,35 @@
+{
+  "name": "checkSkillCirt",
+  "sourceLine": 322956,
+  "description": "Checks if a skill attack scores a critical hit. Unlike checkHit, this only checks crit (no miss calculation) and uses a strict less-than comparison instead of less-than-or-equal.",
+  "parameters": {
+    "attacker": "Unit performing the skill attack"
+  },
+  "attributes_used": {
+    "attacker": ["skill_crit_rate"]
+  },
+  "formula_steps": [
+    {
+      "step": 1,
+      "description": "Get skill crit rate",
+      "formula": "skill_crit_rate = attacker.skill_crit_rate"
+    },
+    {
+      "step": 2,
+      "description": "Convert to probability (out of 10000)",
+      "formula": "probability = roundInt(10000 * skill_crit_rate)"
+    },
+    {
+      "step": 3,
+      "description": "Early exit if no chance",
+      "formula": "if probability <= 0: return false"
+    },
+    {
+      "step": 4,
+      "description": "Roll and compare (strict less-than)",
+      "formula": "roll = randomInt(0, 10000); return (roll < probability)",
+      "note": "Uses strict '<' instead of '<=' unlike other check functions — this means probability of 1/10000 can never trigger (roll=0 is not < 0+1... actually roll=0 IS < 1, so it can trigger but with marginally lower chance than '<=' would give)"
+    }
+  ],
+  "simplified_formula": "triggers if randomInt(0, 10000) < roundInt(10000 * skill_crit_rate)"
+}

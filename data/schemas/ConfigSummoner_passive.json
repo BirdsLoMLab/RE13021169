@@ -1,0 +1,48 @@
+{
+  "className": "ConfigSummoner_passive",
+  "tableName": "Summoner_passive",
+  "sourceLine": 264361,
+  "mainKey": "id",
+  "indexedKeys": {
+    "id": 0
+  },
+  "usesConfigKey": false,
+  "fieldCount": 5,
+  "fields": [
+    {
+      "name": "id",
+      "index": 0,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "skill",
+      "index": 1,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "num",
+      "index": 2,
+      "type": "number",
+      "xor": false,
+      "optional": false
+    },
+    {
+      "name": "passive_skill",
+      "index": 3,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    },
+    {
+      "name": "petrace",
+      "index": 4,
+      "type": "optional_array",
+      "xor": false,
+      "optional": true
+    }
+  ]
+}
