@@ -21,7 +21,7 @@
 | Module | Lines | Description |
 |--------|-------|-------------|
 | EnumDefine | 278546-278700 | HealthType, AttackType, StateType, DmgType, RunMode, BuffGroupType (46), EffectTriggerType (16), SkillType (5), TargetFilter, SpBuffState, HitType, BindType, etc. |
-| AttribDefine (MetaAttrib) | 349630-349675 | All 89 attribute IDs (1001-1082, 6001-6007), MetaAttrib value calculation class |
+| AttribDefine (MetaAttrib) | 349630-349675 | 192 attribute IDs across 7 ranges (1-24, 1001-1082, 2001-2036, 3001-3024, 4001-4006, 5001-5012, 6001-6007, 10001-10030), MetaAttrib value calculation class |
 | buffMap registration | 332125 | Complete mapping of 80 buff action strings → implementing classes |
 | aiMap registration | 332125 | AI type mappings: common, player, boss, tfmonster, spirit, flypet, etc. |
 | skillMap registration | 332125 | Skill handler mappings: normal, counter, effect, passive, boss_effect, spirit_normal, etc. |
@@ -287,7 +287,7 @@
 ### Reference & Encyclopedia (25-31)
 | Doc | Title | Key Topics |
 |-----|-------|------------|
-| 25 | Buff Encyclopedia | All 46 BuffGroupTypes, 80 buff classes, damage pipeline |
+| 25 | Buff Encyclopedia | 46 named + 34 data-only BuffGroupTypes (76 total), 80 buff classes, damage pipeline |
 | 26 | Skill Effect & Triggers | EffectTriggerType cascades, StateTrigerType, cascade flow |
 | 27 | Fate System | ConfigFate, gacha, fusion, passive skills |
 | 28 | Path to Divinity | ConfigPath_affix, talent tree, attribute caps |
@@ -318,5 +318,13 @@ data/
 │   ├── damage_pipeline.json
 │   ├── stat_assembly.json
 │   └── attribute_calculation.json
-└── systems/          # Non-combat system JSONs (equipment, artifact, class, pets, etc.)
+├── systems/          # Non-combat system JSONs (equipment, artifact, class, pets, etc.)
+├── tables/           # 909 decoded config data tables (from decode_config_data.py)
+│   ├── Level.json    # 220 levels with pvp_injury_reduce values
+│   ├── Attribute.json # 192 attributes with caps (up_limit)
+│   ├── Buff.json     # 4,155 buff entries across 76 groups
+│   ├── Skill.json    # Complete skill configuration
+│   ├── Unit.json     # All unit base stats (97 fields, 77 XOR-protected)
+│   └── ...           # 904 additional config tables
+└── proto_schema.json # Client-server protocol definitions
 ```

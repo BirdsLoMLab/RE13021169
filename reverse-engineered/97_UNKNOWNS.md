@@ -6,25 +6,17 @@ Items that couldn't be fully resolved from static code analysis alone.
 
 ## A. Requires Runtime Data
 
-### 1. PvP Factor Table (configLevel)
-The code reads `configLevel.getDataByKey(level).pvp_injury_reduce` but the actual data values for each level (1-300+) are stored in external config data, not hardcoded in the script. We know the schema (level → pvp_injury_reduce) but not the actual numbers.
+### 1. PvP Factor Table (configLevel) — **RESOLVED**
+Complete table extracted from `data/tables/Level.json` (220 levels). Values range from 10,000 (1.0x at L1) to 7,540,000 (754.0x at L220). Key breakpoints: L50=11.0x, L100=56.9x, L150=280.6x, L200=609.0x. See DOCX Section 18 for full table.
 
-**To resolve:** Extract config data at runtime or from data files.
+### 2. Attribute Caps (up_limit) — **RESOLVED**
+Extracted from `data/tables/Attribute.json`. 11 attributes have caps: all resistances capped at 80% (8000), HP steal at 100% (10000), control_res at 100%, boss_def at 80%, season_cannon_att_def at 60%. All damage multipliers, crit stats, and Total DMG Bonus/RES are uncapped. See DOCX Section 19.
 
-### 2. Attribute Caps (up_limit)
-The code checks `getAttribMeta(id).config.up_limit` for attribute caps, but these limits come from external configuration (`configAttribute`), not hardcoded values. We see the mechanism but not the actual cap values.
+### 3. Skill Configuration Data — **RESOLVED**
+Full skill config decoded and available in `data/tables/Skill.json` and `data/tables/Skill_level.json` (18,838 records). Includes skillPar, param1-param5, _limit values, all skill types and effects.
 
-**To resolve:** Extract configAttribute data.
-
-### 3. Skill Configuration Data
-All skill parameters (skillPar, param1-param5) come from `configSkill` and `configSkill_level` tables. The `_limit` values for HP damage clamping (e.g., [0.8, 50]) are from these configs.
-
-**To resolve:** Extract skill config tables.
-
-### 4. Unit Type Configuration
-`configUnitType.getDataByKey(type)` provides suspend_time, vertigo_time, and other per-unit-type constants.
-
-**To resolve:** Extract configUnitType data.
+### 4. Unit Type Configuration — **RESOLVED**
+Decoded and available in `data/tables/UnitType.json`. Includes suspend_time, vertigo_time, and all per-unit-type constants.
 
 ---
 
@@ -64,7 +56,7 @@ Full stat assembly pipeline documented. See `data/formulas/stat_assembly.json` a
 ## C. Multiple Interpretations
 
 ### 9. BuffVampire's Scope — **RESOLVED**
-BuffVampire is confirmed to be a skill-applied buff, not always-present. It's the primary implementation for life steal mechanics. Total DMG Bonus/RES only affects calculations through BuffVampire (life steal) and spirit damage contexts, NOT normal/combo/counter/skill damage. See `data/formulas/buffs/vampire.json`.
+BuffVampire is confirmed to be a skill-applied buff, not always-present. It's the primary implementation for life steal mechanics. **CORRECTED:** Total DMG Bonus/RES is a universal final multiplier applied via `SkillRunner.healthTarget()` to ALL 13 damage types in `NeedAddDamHurtList` (normal, crit, combo, counter, bleed, real damage, spirit-to-player, shared, return). BuffVampire additionally uses the same formula independently for life steal heal amounts. See `07_TOTAL_DMG_BONUS_RES.md` for full analysis.
 
 ### 10. XOR in BuffVampire — **RESOLVED**
 The `1e4 ^ n` is indeed a XOR with the FixMath import variable as an obfuscation technique. The `skillDam[0]` value represents the skill damage percentage parameter. The fallback value of `1e4 ^ n` produces a scrambled default. See `data/formulas/buffs/vampire.json` for full formula.
@@ -98,13 +90,8 @@ The specific `configChapter_type` data determines which is PvE/PvP.
 
 ## E. Remaining Unknowns (Post-Analysis)
 
-### 16. Actual Config Row Data
-All 711 Config module **schemas** have been extracted (field names, types, indices), but actual **row data** (specific item stats, skill parameters, level requirements) is loaded from the server at runtime. The data format is known:
-- `loadData()` → JSON arrays
-- `loadBufferData()` → `bytes[i] = 255 & ~(32 ^ bytes[i])` → decompress → parse JSON
-- XOR fields: `this._data[N] ^ CONFIG_KEY` (CONFIG_KEY = 24455)
-
-**To resolve:** Use browser DevTools on the live game to dump runtime config data.
+### 16. Actual Config Row Data — **RESOLVED**
+All 909 config tables fully decoded from the 20260228 web capture via `decode_config_data.py`. Data available in `data/tables/` (909 JSON files). Key tables: Unit.json (all unit stats), Buff.json (4,155 buff entries), Skill.json, Level.json (220 levels with PvP factors), Attribute.json (192 attributes with caps), Equipment.json, and 900+ more.
 
 ### 17. Server-Side Battle Calculations
 Some battle calculations may have server-side validation or additional processing not visible in client code. The client calculates deterministically, but the server may override or validate results.
