@@ -72,7 +72,7 @@ run.font.color.rgb = RGBColor(0x66, 0x66, 0x66)
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-run = p.add_run('Plain English Edition — February 2026')
+run = p.add_run('Plain English Edition — March 2026')
 run.font.size = Pt(12)
 run.font.color.rgb = RGBColor(0x66, 0x66, 0x66)
 
@@ -335,7 +335,7 @@ add_body('  - Maximum for current HP skills: 50x your basic ATK damage')
 add_body('  - Maximum for max HP skills: 100x your basic ATK damage')
 add_body('  - Maximum for pal HP skills: 2000x your basic ATK damage')
 
-add_note('HP-based damage is NOT affected by DMG Resistance (resist) or Total DMG Bonus/RES. It completely skips those calculations. It only goes through PvP reduction and shield absorption.')
+add_note('HP-based damage skips DMG Resistance (resist, ID 1021) — it bypasses calHurt(). However, Total DMG Bonus/RES DOES apply because HP-based damage passes through healthTarget() with HealthType.Hurt, which is in NeedAddDamHurtList. After Total DMG, it goes through PvP reduction and shield absorption.')
 
 doc.add_page_break()
 
@@ -501,11 +501,12 @@ add_body('  - Type 1: Bonus = target\'s current HP * skill parameter')
 add_body('This bonus is ADDED to the damage, not multiplied. For example, if your base damage is 5000 and Fragile adds 1000, you deal 6000.')
 
 add_heading('13.4 Total DMG Bonus / Total DMG RES', 2)
-add_body('This system works differently from what community docs suggest:')
+add_body('This is a universal final damage multiplier applied through SkillRunner.healthTarget() to ALL 13 offensive damage types (normal, crit, combo, counter, bleed, real damage, spirit-to-player, shared damage, and return/reflect damage). It is subtractive:')
 add_code('multiplier = max(1 + TOTAL_DAM_ADD - TOTAL_DAM_DEF, 0.20)')
-add_body('It\'s subtractive: your Total DMG Bonus minus the enemy\'s Total DMG Resistance, added to 1. The result has a floor of 0.20 (20%) — damage can never be reduced below 20% by this system.')
+add_body('Your Total DMG Bonus minus the enemy\'s Total DMG Resistance, added to 1. The result has a floor of 0.20 (20%) — damage can never be reduced below 20% by this system.')
+add_body('This is applied AFTER all buff modifiers (Fragile, Extra Damage, Giant Slayer, boss damage) and BEFORE damage is queued for application. It is the last multiplicative layer before PvP reduction.')
 
-add_note('IMPORTANT: Total DMG Bonus/RES does NOT apply to all damage as a "final layer." Based on code analysis, it primarily applies through the life steal (BuffVampire) system and Spirit damage. Normal attacks, combos, counters, and skill damage do NOT have Total DMG Bonus/RES applied. They use the separate "resist" stat (DMG Resistance, ID 1021) instead.')
+add_note('Total DMG Bonus/RES is SEPARATE from DMG Resistance (resist, ID 1021). Both apply, but at different pipeline stages: DMG Resistance is applied early during calHurt(), while Total DMG is applied late in healthTarget(). They stack multiplicatively. Additionally, BuffVampire (life steal) uses the same formula independently for heal calculations.')
 
 doc.add_page_break()
 
@@ -526,19 +527,24 @@ add_body('6. Apply Boss Damage bonus if target is a boss')
 add_body('7. Add Fragile Effect bonus damage (flat addition)')
 add_body('8. Apply Extra Damage multiplier')
 add_body('9. Apply Giant Slayer HP-based bonus')
+add_body('10. Apply recordDamage bonus: damage * (1 + recordDamage[skillId] / 10000) — cumulative per-skill bonus from USE_SKILL_ADD buffs')
+add_body('11. Apply counterDamage multiplier: damage * skill.counterDamage — per-skill config multiplier (default 1.0)')
+
+add_heading('Delivery Phase (healthTarget)', 2)
+add_body('12. Total DMG Bonus/RES: damage * max(1 + total_dam_add - total_dam_def, 0.20) — applied to all 13 damage types when attacker != target')
 
 add_heading('Application Phase (applying the number)', 2)
-add_body('10. Skip if battle is transitioning between phases')
-add_body('11. PvP reduction: divide by injuryReduce (minimum 1 damage)')
-add_body('12. Season PvE bonus (if applicable)')
-add_body('13. Shield absorption: shields absorb as much as they can, remainder passes through')
-add_body('14. Block absorption: block buffs absorb remaining damage')
-add_body('15. Subtract remaining damage from HP')
-add_body('16. Death prevention checks: Time Reversal > Remake HP > Immune Death')
-add_body('17. If prevented from dying: HP stays at 1')
-add_body('18. Accumulate total damage dealt')
-add_body('19. Check HP change triggers')
-add_body('20. If HP <= 0: unit dies')
+add_body('13. Skip if battle is transitioning between phases')
+add_body('14. PvP reduction: divide by injuryReduce (minimum 1 damage)')
+add_body('15. Season PvE bonus (if applicable): damage * (1 + seasonPveDamAdd), team 1 only, season PvE chapters')
+add_body('16. Shield absorption: shields absorb as much as they can, remainder passes through')
+add_body('17. Block absorption: block buffs absorb remaining damage')
+add_body('18. Subtract remaining damage from HP')
+add_body('19. Death prevention checks: Time Reversal > Remake HP > Immune Death')
+add_body('20. If prevented from dying: HP stays at 1')
+add_body('21. Accumulate total damage dealt')
+add_body('22. Check HP change triggers')
+add_body('23. If HP <= 0: unit dies')
 
 add_heading('For Healing', 2)
 add_body('1. Multiply heal by treatDecay (0.3 in PvP = 30%)')
@@ -587,10 +593,10 @@ add_body('Community docs: Skill * (1 + SkillCritDMG)^0.98 — exponent on the mu
 add_body('Actual code: (Skill * (1 + SkillCritDMG))^0.98 — exponent on the whole product')
 add_body('This produces different results, especially at high damage values.')
 
-add_heading('3. Total DMG Bonus/RES is Not Universal', 2)
+add_heading('3. Total DMG Bonus/RES IS Universal (Confirmed)', 2)
 add_body('Community docs: Applied as a "final layer" to all damage')
-add_body('Actual code: Applied primarily through life steal (BuffVampire) and Spirit damage')
-add_body('Normal attacks, combos, counters, and most skill damage do NOT pass through Total DMG Bonus/RES. They use the separate "resist" stat instead.')
+add_body('Actual code: CONFIRMED — applied universally via SkillRunner.healthTarget() to all 13 damage types in NeedAddDamHurtList (normal, crit, combo, counter, bleed, real damage, shared damage, spirit-to-player, return/reflect).')
+add_body('This is indeed a final multiplicative layer, applied after all buff modifiers and before PvP reduction. Community understanding was correct on this point.')
 
 add_heading('4. Total DMG Floor is 20%', 2)
 add_body('Community docs: Floor unknown')
@@ -616,9 +622,113 @@ add_heading('9. Evasion Uses Diminishing Returns', 2)
 add_body('Community docs: Not detailed')
 add_body('Actual code: Evasion uses a power curve with exponent 0.9, creating diminishing returns at high values. PvP cap is 80%.')
 
-add_heading('10. HP-Based Damage Skips Resistances', 2)
+add_heading('10. HP-Based Damage Skips DMG Resistance but NOT Total DMG', 2)
 add_body('Community docs: Unclear')
-add_body('Actual code: HP-based damage is NOT affected by DMG Resistance (resist) or Total DMG Bonus/RES. It only goes through PvP reduction, clamping, and shield absorption.')
+add_body('Actual code: HP-based damage is NOT affected by DMG Resistance (resist, ID 1021) — it bypasses calHurt(). However, Total DMG Bonus/RES DOES apply because HP-based damage calls healthTarget() with HealthType.Hurt, which IS in NeedAddDamHurtList. It also goes through PvP reduction, clamping, and shield absorption.')
+
+# ============================================================
+# SECTION 17: RECENTLY DISCOVERED MECHANICS
+# ============================================================
+doc.add_page_break()
+add_heading('17. Recently Discovered Mechanics', 1)
+
+add_heading('17.1 Record Damage (Per-Skill Cumulative Bonus)', 2)
+add_body('The recordDamage system is a per-skill damage accumulator driven by USE_SKILL_ADD buffs (BuffGroupType 190). Each time a skill is used, the accumulator for that skill ID increases by the buff\'s value. The bonus is then applied multiplicatively to skill damage:')
+add_code('damage = roundInt(damage * round(1 + round(recordDamage[skillId] / 10000)))')
+add_body('For example, if recordDamage = 5000 (50%), then damage is multiplied by (1 + 0.5) = 1.5x.')
+add_body('The accumulator persists for the entire battle and is never reset. This means skills used more frequently get progressively stronger over the course of a fight. Applied in BuffSkillValue after Extra Damage and before resistance.')
+
+add_heading('17.2 Counter Damage Multiplier (Skill-Level)', 2)
+add_body('counterDamage is a per-skill multiplier that defaults to 1.0 (no effect). It comes from the skill configuration (param5[0]) and is applied to skill damage:')
+add_code('damage = roundInt(damage * skill.counterDamage)')
+add_body('Despite the name, this is NOT related to counter-attacks — it is a general skill-level multiplier set during skill creation. Applied immediately after recordDamage in the BuffSkillValue pipeline.')
+
+add_heading('17.3 Season PvE Damage Bonus', 2)
+add_body('seasonPveDamAdd is a server-controlled bonus that only applies to team 1 (defending team) during season PvE chapters:')
+add_code('damage = roundInt(damage * (1 + seasonPveDamAdd))')
+add_body('Applied in Unit.addDamage after PvP reduction and before shield absorption. The value comes from the server at battle start and persists for the entire battle. In non-season modes, this value is 0.')
+
+# ============================================================
+# SECTION 18: PVP INJURY REDUCE TABLE
+# ============================================================
+doc.add_page_break()
+add_heading('18. PvP Injury Reduce Table (Complete)', 1)
+
+add_body('The complete PvP damage reduction factor for all 220 levels, extracted from Level.json. The raw value is divided by 10,000 to get the actual factor. Damage is divided by this factor, so a factor of 25x means you deal 1/25th of your PvE damage in PvP:')
+
+add_table(
+    ['Avg Level', 'Raw Value', 'Factor', 'PvP Damage'],
+    [
+        ['1', '10,000', '1.0x', '100% of PvE'],
+        ['10', '14,000', '1.4x', '~71%'],
+        ['20', '34,500', '3.5x', '~29%'],
+        ['30', '58,000', '5.8x', '~17%'],
+        ['40', '85,000', '8.5x', '~12%'],
+        ['50', '110,000', '11.0x', '~9%'],
+        ['60', '137,500', '13.8x', '~7%'],
+        ['70', '192,000', '19.2x', '~5%'],
+        ['80', '276,000', '27.6x', '~4%'],
+        ['90', '396,000', '39.6x', '~3%'],
+        ['100', '569,000', '56.9x', '~2%'],
+        ['120', '1,173,000', '117.3x', '~0.9%'],
+        ['140', '2,216,000', '221.6x', '~0.5%'],
+        ['160', '3,423,000', '342.3x', '~0.3%'],
+        ['180', '4,717,000', '471.7x', '~0.2%'],
+        ['200', '6,090,000', '609.0x', '~0.16%'],
+        ['220', '7,540,000', '754.0x', '~0.13%'],
+    ]
+)
+add_body('The factor grows roughly exponentially through level 130, then transitions to roughly linear growth (~67-73 per level). At high levels, PvP damage is reduced to a tiny fraction of PvE damage — a level 200 fight deals about 0.16% of PvE damage.')
+
+# ============================================================
+# SECTION 19: ATTRIBUTE CAPS
+# ============================================================
+doc.add_page_break()
+add_heading('19. Attribute Caps', 1)
+
+add_body('The following attributes have hard upper limits enforced by the game (from the up_limit field in Attribute.json). When a stat reaches its cap, further bonuses are ignored:')
+
+add_table(
+    ['Attribute', 'ID', 'Cap', 'Meaning'],
+    [
+        ['att_hpsteal', '1014', '100%', 'ATK HP Steal'],
+        ['skill_hpsteal', '1015', '100%', 'Skill HP Steal'],
+        ['att_resist', '1018', '80%', 'Basic ATK Resistance'],
+        ['skill_resist', '1019', '80%', 'Skill Resistance'],
+        ['partner_resist', '1020', '80%', 'Pal Resistance'],
+        ['resist', '1021', '80%', 'DMG Resistance'],
+        ['double_hit_def', '1034', '80%', 'Combo Resistance'],
+        ['counter_def', '1035', '80%', 'Counter Resistance'],
+        ['control_res', '1042', '100%', 'Control Resistance'],
+        ['boss_def', '1052', '80%', 'Boss Defense'],
+        ['season_cannon_att_def', '1059', '60%', 'Cannon ATK Defense'],
+    ]
+)
+add_body('All other combat attributes — including ATK, HP, DEF, all damage multipliers, crit rate, crit damage, and Total DMG Bonus/RES — have NO cap. They can be stacked indefinitely.')
+
+# ============================================================
+# SECTION 20: EXTENDED ATTRIBUTE SYSTEM
+# ============================================================
+doc.add_page_break()
+add_heading('20. Extended Attribute System (192 Total Attributes)', 1)
+
+add_body('The game has 192 attributes organized across 7 ID ranges. The 82 core battle attributes (IDs 1001-1082) are documented in Section 2. Here are the additional ranges used by the stat assembly pipeline:')
+
+add_table(
+    ['ID Range', 'Count', 'Category', 'Examples'],
+    [
+        ['1-24', '4', 'Base Totals', 'total_att, total_hp, total_att_speed, total_def'],
+        ['1001-1082', '82', 'Core Battle', 'att, hp, def, crit_rate, etc. (Section 2)'],
+        ['2001-2036', '36', 'Bonus/Add', 'att_base_add, hp_add, def_base_add, crit_dam_add'],
+        ['3001-3024', '4', 'Cumulative Totals', 'att_total_add, hp_total_add, def_total_add'],
+        ['4001-4006', '6', 'Partner Effects', 'partner_crit_rate, partner_partner_dam, partner_att_speed'],
+        ['5001-5012', '12', 'Rogue Mode', 'rogue_att, rogue_def, rogue_hp, rogue_crit_dam'],
+        ['6001-6007', '7', 'Spirit System', 'spirit_dam_add, spirit_att, spirit_hp (Section 2)'],
+        ['10001-10030', '30', 'Season', 'season_att, season_hp, season_pve_dam_add'],
+    ]
+)
+add_body('The 2000-range attributes are percentage-based group bonuses that feed into the MetaAttrib calculation for their parent core attribute. For example, att_base_add (2001) and att_add (2002) both contribute to att (1001) through the group bonus system documented in Section 2\'s MetaAttrib formula.')
+add_body('The 4000-range partner attributes are dedicated modifiers for pal/pet units, while the 5000-range rogue attributes are bonuses specific to the rogue game mode. The 10000-range season attributes are used during seasonal content events (sailing, ships, etc.).')
 
 # ============================================================
 # SAVE

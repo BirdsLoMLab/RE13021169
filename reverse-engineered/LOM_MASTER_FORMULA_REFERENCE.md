@@ -1,7 +1,7 @@
 # LOM Master Formula Reference
 
 **Source:** `game_script_pretty.js` (457,538 lines)
-**Date:** 2026-02-28
+**Date:** 2026-03-01
 **Status:** Reverse-engineered from code — authoritative reference
 
 ---
@@ -105,6 +105,37 @@ if (num_type = 2): value = round(value / 10000)   // percentage display
 | 1071 | block | Block Value |
 | 1081 | total_dam_add | Total DMG Bonus |
 | 1082 | total_dam_def | Total DMG Resistance |
+
+### Extended Attribute Ranges (192 Total)
+Beyond the 82 core battle attributes (IDs 1001-1082), the Attribute table defines additional ranges:
+
+| ID Range | Count | Type | Purpose |
+|----------|-------|------|---------|
+| 1-24 | 4 | Base Totals | total_att (1), total_hp (2), total_att_speed (3), total_def (24) |
+| 2001-2036 | 36 | Bonus/Add | Group-based % bonuses (att_base_add, hp_add, def_base_add, etc.) |
+| 3001-3024 | 4 | Cumulative | att_total_add, hp_total_add, att_speed_total_add, def_total_add |
+| 4001-4006 | 6 | Partner | partner_crit_rate, partner_partner_dam, partner_crit_dam, partner_att_speed, partner_double_hit, partner_ignore_miss |
+| 5001-5012 | 12 | Rogue | Rogue-mode specialization bonuses (rogue_att, rogue_def, rogue_hp, etc.) |
+| 6001-6007 | 7 | Spirit | spirit_dam_add, spirit_dam_def, spirit_hp, spirit_att, etc. |
+| 10001-10030 | 30 | Season | Season-specific attributes (season_att, season_hp, season_pve_dam_add, etc.) |
+
+### Attribute Caps (from up_limit field in Attribute.json)
+
+| Attribute | ID | Cap | Meaning |
+|-----------|-----|-----|---------|
+| att_hpsteal | 1014 | 10000 (100%) | ATK HP Steal |
+| skill_hpsteal | 1015 | 10000 (100%) | Skill HP Steal |
+| att_resist | 1018 | 8000 (80%) | Basic ATK Resistance |
+| skill_resist | 1019 | 8000 (80%) | Skill Resistance |
+| partner_resist | 1020 | 8000 (80%) | Pal Resistance |
+| resist | 1021 | 8000 (80%) | DMG Resistance |
+| double_hit_def | 1034 | 8000 (80%) | Combo Resistance |
+| counter_def | 1035 | 8000 (80%) | Counter Resistance |
+| control_res | 1042 | 10000 (100%) | Control Resistance |
+| boss_def | 1052 | 8000 (80%) | Boss Defense |
+| season_cannon_att_def | 1059 | 6000 (60%) | Cannon ATK Defense |
+
+All damage multipliers, crit stats, and Total DMG Bonus/RES have no cap (up_limit = 0).
 
 ---
 
@@ -235,6 +266,37 @@ shield_hp = roundInt(base_shield × shieldDecay)  [when _isDec == 0]
 treatDecay = round(hp_recovery_correct / 10000) = 0.3 (default)
 heal = roundInt(base_heal × treatDecay)
 ```
+
+### 5.5 PvP Injury Reduce Table (Level.json)
+Complete table extracted from `data/tables/Level.json` (220 levels):
+
+| Level | pvp_injury_reduce | Factor |
+|-------|-------------------|--------|
+| 1 | 10000 | 1.0x |
+| 10 | 14000 | 1.4x |
+| 20 | 34500 | 3.5x |
+| 30 | 58000 | 5.8x |
+| 40 | 85000 | 8.5x |
+| 50 | 110000 | 11.0x |
+| 60 | 137500 | 13.8x |
+| 70 | 192000 | 19.2x |
+| 80 | 276000 | 27.6x |
+| 90 | 396000 | 39.6x |
+| 100 | 569000 | 56.9x |
+| 110 | 817000 | 81.7x |
+| 120 | 1173000 | 117.3x |
+| 130 | 1666000 | 166.6x |
+| 140 | 2216000 | 221.6x |
+| 150 | 2806000 | 280.6x |
+| 160 | 3423000 | 342.3x |
+| 170 | 4060000 | 406.0x |
+| 180 | 4717000 | 471.7x |
+| 190 | 5394000 | 539.4x |
+| 200 | 6090000 | 609.0x |
+| 210 | 6805000 | 680.5x |
+| 220 | 7540000 | 754.0x |
+
+Growth is roughly exponential through L130, then approximately linear (~67-73 per level).
 
 ---
 
@@ -396,6 +458,25 @@ Type 1: bonus = roundInt(target_currentHP × skillPar)
 damage += bonus
 ```
 
+### BuffUseSkillAdd / recordDamage (USE_SKILL_ADD) — Line 195894
+Per-skill cumulative damage bonus accumulator:
+```
+damage = roundInt(damage × round(1 + round(recordDamage[skillId] / 10000)))
+```
+- Driven by USE_SKILL_ADD buffs (BuffGroupType 190)
+- Applied in BuffSkillValue pipeline after EXTRA_DAMAGE, before resistance
+- `recordDamage` accumulates per skill ID; persists entire battle
+- Each skill use increases the accumulator, making repeated skill use progressively stronger
+
+### counterDamage (Skill Config Multiplier) — Line 195895
+Skill-level multiplier, default 1.0:
+```
+damage = roundInt(damage × skill.counterDamage)
+```
+- Set from skill config param5[0] at line 449218
+- Applied immediately after recordDamage
+- Despite the name, not related to counter-attacks — purely a per-skill config multiplier
+
 ---
 
 ## 14. Damage Application Pipeline
@@ -408,11 +489,17 @@ damage += bonus
    damage = round(damage × max(1 + total_dam_add - total_dam_def, 0.20))
 ```
 
+#### In BuffSkillValue pipeline (skill damage only):
+```
+0a. recordDamage bonus: damage = roundInt(damage × round(1 + round(recordDamage[skillId] / 10000)))
+0b. counterDamage multiplier: damage = roundInt(damage × skill.counterDamage)
+```
+
 #### In Unit.addDamage (Line 449270):
 ```
 1. runningToPart check → skip if transitioning
 2. PvP reduction: damage = max(roundInt(damage / injuryReduce), 1)
-3. Season PvE bonus (team 1 only)
+3. Season PvE bonus (team 1 only): damage = roundInt(damage × (1 + seasonPveDamAdd))
 4. Shield absorption (iterates all shields)
 5. Block absorption
 6. HP -= remaining damage

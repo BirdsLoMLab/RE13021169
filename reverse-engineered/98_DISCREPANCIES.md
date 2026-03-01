@@ -128,11 +128,25 @@ Miss/evasion uses `(100 × evasion)^0.9 / 100` with a PvP cap of 80%.
 ### U5. Stun Duration Reduction
 `stun_duration = VERTIGO_TIMES × round(1 - VERTIGO_RES)` — linear reduction.
 
-### U6. Season PvE Damage Bonus
-`seasonPveDamAdd` applies extra damage for team 1 in certain PvE modes.
+### U6. Season PvE Damage Bonus — **FULLY DOCUMENTED**
+`seasonPveDamAdd` is a server-controlled value that applies to team 1 only during season PvE chapters.
+- **Formula:** `damage = roundInt(damage × (1 + seasonPveDamAdd))`
+- **Applied at:** Unit.addDamage, after PvP reduction, before shield absorption
+- **Source:** BattleData from server (case 3 in parsing), stored as /10000
+- **Default:** 0 (no bonus in non-season modes)
 
-### U7. Record Damage Bonus
-`recordDamage` from skillctr accumulates and provides bonus damage: `damage × (1 + recordDamage/10000)`
+### U7. Record Damage Bonus — **FULLY DOCUMENTED**
+`recordDamage` is a per-skill cumulative damage bonus accumulator driven by USE_SKILL_ADD buffs (BuffGroupType 190).
+- **Formula:** `damage = roundInt(damage × round(1 + round(recordDamage[skillId] / 10000)))`
+- **Applied at:** BuffSkillValue line 195894, after EXTRA_DAMAGE before resistance
+- **Accumulation:** USE_SKILL_ADD buffs increment per skill ID, capped by buff limit
+- **Persistence:** Entire battle — never resets, making repeated skill use progressively stronger
+- **Example:** recordDamage = 5000 → damage × 1.5 (50% bonus)
 
-### U8. Counter Damage Multiplier on Skills
-`counterDamage` is an additional multiplier on BuffSkillValue skill damage.
+### U8. Counter Damage Multiplier on Skills — **FULLY DOCUMENTED**
+`counterDamage` is a per-skill config multiplier (default 1.0) from skill param5[0].
+- **Formula:** `damage = roundInt(damage × skill.counterDamage)`
+- **Applied at:** BuffSkillValue line 195895, immediately after recordDamage
+- **Initialization:** Line 428505: `this.counterDamage = 1`
+- **Set by:** Line 449218: `m.counterDamage = l` (from skill config)
+- **Note:** Despite the name, NOT related to counter-attacks — purely a per-skill config multiplier

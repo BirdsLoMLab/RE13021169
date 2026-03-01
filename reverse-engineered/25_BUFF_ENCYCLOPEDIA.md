@@ -2,7 +2,7 @@
 
 ## Overview
 
-The buff system is the core combat modifier framework. All damage bonuses, shields, crowd control, attribute modifications, and reactive triggers are implemented as buffs. There are **80 unique buff classes** organized into **46 BuffGroupType categories**. Buffs are instantiated via the `buffMap` registry at line 332125.
+The buff system is the core combat modifier framework. All damage bonuses, shields, crowd control, attribute modifications, and reactive triggers are implemented as buffs. There are **80 unique buff classes** organized into **46 named BuffGroupType categories** (76 total groups in data, including 34 unnamed data-only groups). Buffs are instantiated via the `buffMap` registry at line 332125.
 
 ---
 
@@ -89,6 +89,61 @@ The buff system is the core combat modifier framework. All damage bonuses, shiel
 | 440 | REDUCE_HEAL | Debuff | Healing reduction/amplification |
 | 450 | SPECIAL_EXTRA_BULLET_NUM | Modifier | Extra bullets with probability |
 | 460 | DAMAGE_TRIGGER | Trigger | Trigger at HP% damage threshold |
+
+---
+
+## Undocumented Buff Groups (Data-Only)
+
+The BuffGroupType enum defines 46 named groups (above). However, the actual Buff.json data uses **76 unique group values** — 34 groups exist only in data with no named enum entry. These data-only groups are used for filtering, categorization, and conditional logic without being referenced by name in code.
+
+### Data-Only Group Summary
+
+| Group | Count | Actions Used | Description |
+|-------|-------|-------------|-------------|
+| 0 | 1 | bleed | HP%-based bleed variant |
+| 2 | 2 | attrib, bleed | Attribute + bleed debuffs |
+| 5 | 53 | call_unit, call_spirit, copy_unit | **Unit summoning system** (largest data-only group) |
+| 6 | 1 | skill_effect | Skill effect trigger variant |
+| 7 | 1 | break_shield | Shield breaking |
+| 8 | 2 | reset_cd | Cooldown reset |
+| 11 | 1 | trap | Specialized trap |
+| 41 | 1 | skill_effect | Advanced skill effect trigger |
+| 141 | 9 | attrib, speed_random_buff | Speed/crit reduction debuffs |
+| 142 | 1 | attrib | Crit damage reduction debuff |
+| 143 | 5 | attrib | Utility attribute debuffs (resistance reduction) |
+| 144 | 1 | attrib | Attack reduction debuff |
+| 145 | 2 | attrib, frozen | Freeze + attribute debuff |
+| 151 | 2 | attrib, frozen | Freeze + attribute debuff variant |
+| 251 | 3 | skill_effect | Chained skill effect triggers |
+| 255 | 2 | attrib, skill_effect | Hybrid stat reduction + trigger |
+| 260 | 8 | attrib, ban_act, dizz, trap | Multi-CC combination (stun + trap) |
+| 271 | 4 | attrib, frozen | Freeze tier 1 (2s) + attribute debuffs |
+| 272 | 4 | attrib, frozen | Freeze tier 2 (2s) variant |
+| 273 | 4 | attrib, frozen | Freeze tier 3 (2s) variant |
+| 274 | 1 | frozen | Freeze tier 4 (2.5s) |
+| 275 | 1 | frozen | Freeze tier 5 (2.5s) |
+| 276 | 1 | frozen | Freeze tier 6 (2.5s) |
+| 277 | 1 | frozen | Freeze tier 7 (3s) |
+| 278 | 1 | frozen | Freeze tier 8 (3s) |
+| 279 | 1 | frozen | Freeze tier 9 (3s) |
+| 282 | 6 | attrib | Stat flip/mutation (positive AND negative attribute changes) |
+| 283 | 4 | trap | Advanced trap variants (types 729-732) |
+| 391 | 1 | skill_effect | Enemy-specific ability effect |
+| 392 | 1 | skill_effect | Enemy-specific ability effect |
+| 393 | 1 | skill_effect | Enemy-specific ability effect |
+| 394 | 1 | attrib | Enemy-specific attribute buff |
+| 401 | 9 | attrib, trap | Unit-specific attribute + trap combinations |
+| 504 | 4 | attrib, check | **Conditional buff logic** via "check" action |
+
+### Key Patterns
+
+**Tiered Freeze Escalation (Groups 271-279):** These form a freeze severity ladder — group 271 uses 2s freeze + compounding attribute debuffs, groups 274-276 use 2.5s freeze, and groups 277-279 use 3s freeze. This creates progressive crowd control where repeated freezes become more punishing.
+
+**Unit Summoning (Group 5):** The largest data-only group with 53 buffs covers the entire summon system: `call_unit` (basic summon), `call_spirit` (spirit summon), and `copy_unit` (clone/mirror). Some summons include complex attribute inheritance arrays in param5.
+
+**Conditional Logic (Group 504):** Uses the `check` action to evaluate conditions before applying effects. The check buff references another buff ID and an interval, creating branching buff logic.
+
+**Note:** These groups use the same buff classes as the named groups — the group ID is purely for runtime filtering via `getBuffByGroup()`.
 
 ---
 
