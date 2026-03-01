@@ -1,2 +1,9 @@
 # Generated/beautified files
 game_script_pretty.js
+
+# Decoded tables (too large for git — regenerate with decode_config_data.py)
+data/tables/
+
+# Upload archives and extracted data (large files, processed locally)
+uploads/*.7z
+uploads/*/
