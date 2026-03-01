@@ -70,9 +70,17 @@
 | Module | Lines | Description |
 |--------|-------|-------------|
 | BuffShield | 195173-195250 | Shield creation (4 calTypes), shield_hp_extra, shieldDecay, sub-buff on create/destroy |
-| BuffAttrib | 192380 | Attribute modification buffs |
-| BuffAttribContinue | ~192400 | Continuous attribute modification |
-| BuffAttribCondition | ~192450 | Conditional attribute modification |
+| BuffAttrib | 192380 | Attribute modification buffs (addValue flat / addMultiples scaling) |
+| BuffAttribContinue | 192517 | Continuous attribute modification |
+| BuffAttribCondition | 192431 | Conditional attribute modification |
+| BuffSpeedTrigger | 196105 | Speed-threshold triggered buff application |
+| BuffStateTrigger | 196181 | State-based trigger (Miss/Counter/Double/Skill/etc.) |
+| BuffSkillParse | 195553 | Auto-cast skill at configurable intervals |
+| BuffDeferDamage | 193504 | Damage deferral/absorption system |
+| BuffCurrentHp | 193455 | HP percentage illusion for trigger calculations |
+| BuffHpChangeTrigger | 194229 | HP threshold trigger with 3-frame delay |
+| BuffAddBuffTrigger | 192229 | Buff chain reaction trigger |
+| BuffTrap | 196418 | Trap deployment (periodic effect trigger) |
 | BuffInvincible | ~194070 | Invincibility buff |
 | BuffImmuneDeath | ~194100 | Death immunity |
 | BuffRemake | ~195050 | HP remake/restore |
