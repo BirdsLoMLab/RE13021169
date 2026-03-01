@@ -296,6 +296,7 @@
 | 31 | Config Table Reference | Master catalog of all 711 tables, XOR tables |
 | 32 | Class & Skill Reference | Complete class tree, Tier 5 passives/actives, attribute reference |
 | 33 | Systems Reference | Equipment, mounts, artifacts, pets, spirits, badges with stat values |
+| 34 | PvP Meta Analysis | Damage pipeline exploits, class tier list, build guides, matchup matrix |
 
 ### Meta (97-99)
 | Doc | Title |
