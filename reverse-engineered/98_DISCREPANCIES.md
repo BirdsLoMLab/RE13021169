@@ -150,3 +150,13 @@ Miss/evasion uses `(100 × evasion)^0.9 / 100` with a PvP cap of 80%.
 - **Initialization:** Line 428505: `this.counterDamage = 1`
 - **Set by:** Line 449218: `m.counterDamage = l` (from skill config)
 - **Note:** Despite the name, NOT related to counter-attacks — purely a per-skill config multiplier
+
+### U9. Buff Mutex/Stacking System — **FULLY DOCUMENTED**
+5 mutex types controlling buff stacking behavior in `SkillRunner.addBuff`:
+- **Mutex 1 (Replace):** Stop all existing instances, add new one
+- **Mutex 2 (Unique):** Reject new buff if any instance exists on target
+- **Mutex 3 (Stack w/ Max):** Coexist up to `add_max`; refresh existing durations; remove oldest when limit hit
+- **Mutex 4 (Unique per Caster):** One per caster; reject if same caster re-applies
+- **Mutex 5 (Refresh per Caster):** Like 4 but resets duration instead of rejecting
+- **Pre-mutex:** Control immunity check, IGNORE_BUFFIDS blocking, CONTROL_RES duration reduction, shield_time_extra extension
+- **Type 0 (Instant):** Execute + destroy immediately, never tracked
