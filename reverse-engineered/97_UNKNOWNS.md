@@ -93,11 +93,33 @@ The specific `configChapter_type` data determines which is PvE/PvP.
 ### 16. Actual Config Row Data — **RESOLVED**
 All 909 config tables fully decoded from the 20260228 web capture via `decode_config_data.py`. Data available in `data/tables/` (909 JSON files). Key tables: Unit.json (all unit stats), Buff.json (4,155 buff entries), Skill.json, Level.json (220 levels with PvP factors), Attribute.json (192 attributes with caps), Equipment.json, and 900+ more.
 
-### 17. Server-Side Battle Calculations
-Some battle calculations may have server-side validation or additional processing not visible in client code. The client calculates deterministically, but the server may override or validate results.
+### 17. Server-Side Battle Calculations — **PARTIALLY RESOLVED**
+Evidence from client code and protocol schemas (`proto_schema.json`):
+- **Deterministic client**: All calculations use `FixMath.round()`/`roundInt()` with no RNG or random seed — identical inputs always produce identical outputs
+- **Action replay protocol**: Client sends `operators` array (unit ID, frame number, skill ID per action) to server for complex battles (dungeon, GvG, escort_boss). Simple battles (farm, escort) only send `win_role_id`
+- **Server validation**: Every `_s2c` battle result message includes `code: int32` — 0 = success, non-zero = rejection. The server can re-simulate from the operator sequence since calculations are deterministic
+- **Anti-tamper**: MetaAttrib uses `_checkValue = 32 XOR baseValue` to detect memory manipulation of stat values
+- **Mode-dependent**: Different battle modes have different levels of server involvement — PvP modes (GvG, cross_war) send more detailed reports than PvE auto-battles
 
-### 18. Buff Stacking Rules (Mutex Types)
-The addBuff factory (line 431489) has 5 mutex/stacking types, but the specific behavior of each type (replace, stack, coexist, etc.) needs further analysis of the mutex handling code.
+**Still unknown:** Exact server validation tolerances, error code meanings, whether server always re-simulates or spot-checks, and how proc rates (crit/combo/counter triggers) are synchronized between client and server.
+
+### 18. Buff Stacking Rules (Mutex Types) — **RESOLVED**
+5 mutex types fully traced from `SkillRunner.addBuff`:
+
+| Mutex | Name | Behavior |
+|-------|------|----------|
+| 1 | Replace | Stop all existing instances of this buff ID on target, then add the new buff |
+| 2 | Unique | If any buff with this ID already exists on target, reject the new buff entirely |
+| 3 | Stack w/ Max | Multiple instances coexist up to `add_max` limit; all existing durations refreshed; oldest active removed when limit exceeded |
+| 4 | Unique per Caster | One instance per caster; if same caster re-applies, new buff is rejected |
+| 5 | Refresh per Caster | Like type 4, but resets the existing buff's duration instead of rejecting |
+
+Additional mechanics in addBuff:
+- **Type 0 (Instant)**: Buffs with `config.type == 0` execute `start()` + `destroy()` immediately without being tracked in BuffCtr
+- **Control immunity**: Before mutex, checks `notControlled`/`invincible` buffs → skips control-type buffs (dizz, ban_skill, throw_hit, bound, ban_act)
+- **CONTROL_RES duration reduction**: For stun (dizz param1==0) and ban_act: `duration = round(duration - round(duration × CONTROL_RES))`
+- **Shield time extension**: For shield buffs: `duration = round(duration + shield_time_extra)`
+- **IGNORE_BUFFIDS**: BuffGroupType that blocks specific buff IDs listed in its param5 array
 
 ### 19. AI System Behavior
 The AI map (aiMap at line 332125) defines behavior types: common, player, tfmonster, boss, spirit, flypet, etc. The specific targeting and action selection logic for each AI type hasn't been fully traced.

@@ -731,6 +731,55 @@ add_body('The 2000-range attributes are percentage-based group bonuses that feed
 add_body('The 4000-range partner attributes are dedicated modifiers for pal/pet units, while the 5000-range rogue attributes are bonuses specific to the rogue game mode. The 10000-range season attributes are used during seasonal content events (sailing, ships, etc.).')
 
 # ============================================================
+# SECTION 21: BUFF MUTEX / STACKING RULES
+# ============================================================
+doc.add_page_break()
+add_heading('21. Buff Stacking Rules (Mutex Types)', 1)
+
+add_body('When a buff is applied and the same buff ID already exists on the target, the "mutex" field in buff config determines what happens. There are 5 mutex types:')
+
+add_table(
+    ['Mutex', 'Name', 'Behavior'],
+    [
+        ['1', 'Replace', 'Stop ALL existing instances of this buff ID, then add the new buff'],
+        ['2', 'Unique', 'If any instance with this ID exists on target, reject the new buff entirely'],
+        ['3', 'Stack w/ Max', 'Multiple instances coexist up to add_max limit. Refreshes all existing durations. Removes oldest active buff when limit is exceeded'],
+        ['4', 'Unique per Caster', 'One instance per caster. If same caster re-applies, new buff is rejected'],
+        ['5', 'Refresh per Caster', 'Like type 4, but resets the existing buff\'s duration instead of rejecting'],
+    ]
+)
+
+add_body('Before mutex logic runs, several pre-checks occur:')
+add_body('1. Control immunity: if target has notControlled or invincible buff, control-type buffs (stun, ban_skill, throw, bound, ban_act) are skipped')
+add_body('2. IGNORE_BUFFIDS: if target has this buff group and its param5 array contains the incoming buff ID, the buff is blocked')
+add_body('3. CONTROL_RES duration reduction: for stun and ban_act buffs, duration is reduced by the target\'s Control Resistance:')
+add_code('duration = round(duration - round(duration * CONTROL_RES))')
+add_body('4. Shield time extension: for shield buffs, duration is increased by the shield_time_extra attribute')
+
+add_note('Buffs with config.type == 0 (Instant) bypass the mutex system entirely. They execute start() + destroy() immediately and are never tracked in the buff controller.')
+
+# ============================================================
+# SECTION 22: SERVER-SIDE BATTLE VALIDATION
+# ============================================================
+doc.add_page_break()
+add_heading('22. Server-Side Battle Validation', 1)
+
+add_body('The client runs all battle calculations deterministically using FixMath (fixed-point math with 4-decimal precision). No random number generator or seed is used — identical inputs always produce identical outputs. This enables server-side re-simulation.')
+
+add_heading('Client-Server Protocol', 2)
+add_body('Different battle modes send different levels of detail to the server:')
+add_body('Complex battles (dungeon, GvG, escort_boss): Client sends an "operators" array recording every action — unit ID, frame number, and skill ID. The server can replay the entire battle from this sequence.')
+add_body('Simple battles (farm, auto-escort): Client sends only the win_role_id (winner\'s ID) — minimal validation.')
+add_body('Every server response (_s2c message) includes a "code" field (int32). A value of 0 means success; non-zero means the server rejected the result.')
+
+add_heading('Anti-Tamper', 2)
+add_body('MetaAttrib (the attribute storage class) uses a check value to detect memory manipulation:')
+add_code('_checkValue = 32 XOR baseValue')
+add_body('When an attribute is read, the stored value is verified against this check. This prevents client-side memory editors from modifying stats without detection.')
+
+add_note('What remains unknown: exact server validation tolerances, error code meanings, whether the server always re-simulates or spot-checks, and how proc rates (crit/combo/counter triggers) are synchronized between client and server.')
+
+# ============================================================
 # SAVE
 # ============================================================
 out_path = os.path.expanduser('/home/user/RE13021169/reverse-engineered/LOM_Combat_Reference_Plain_English.docx')

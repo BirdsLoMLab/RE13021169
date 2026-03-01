@@ -21,6 +21,26 @@ The buff system is the core combat modifier framework. All damage bonuses, shiel
 9. AddBuffTrigger notification if active
 ```
 
+### Buff Mutex Types (Stacking Rules)
+
+The `mutex` field (ConfigBuff index 7) controls what happens when a buff is applied and the same buff ID already exists on the target:
+
+| Mutex | Name | Behavior |
+|-------|------|----------|
+| 1 | **Replace** | Stop all existing instances of this buff ID, then add the new one |
+| 2 | **Unique** | If any instance with this ID exists on target, reject the new buff |
+| 3 | **Stack w/ Max** | Multiple instances coexist up to `add_max` limit; refreshes all existing durations; removes oldest active buff when limit exceeded |
+| 4 | **Unique per Caster** | One instance per caster allowed; if same caster re-applies, new buff is rejected |
+| 5 | **Refresh per Caster** | Like type 4, but resets the existing buff's duration instead of rejecting |
+
+**Pre-mutex checks** (applied before mutex logic):
+- **Control immunity**: If target has `notControlled` or `invincible` buff, control-type buffs (dizz, ban_skill, throw_hit, bound, ban_act) are skipped entirely
+- **IGNORE_BUFFIDS**: If target has this buff group and its param5 array includes the incoming buff ID, the buff is blocked
+- **CONTROL_RES duration reduction**: For stun (dizz param1==0) and ban_act: `duration = round(duration - round(duration × CONTROL_RES))`
+- **Shield time extension**: For shield buffs: `duration = round(duration + shield_time_extra)`
+
+**Instant buffs** (config.type == 0): Execute `start()` + `destroy()` immediately without entering the buff tracker. Examples include instant heals, one-shot attribute checks, and immediate damage applications.
+
 ### ConfigBuff Schema (Line 222479, 16 Fields)
 
 | Index | Field | Description |
