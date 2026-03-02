@@ -203,6 +203,30 @@ function setPlayerPets(playerData, petList, bonusData) {
 
 **The pal's `double_hit` (1016) and `double_hit_dam` (1032) are loaded from ConfigPetlevel, NOT inherited from the player. The player's `partner_double_hit` (4005) is never transferred to pal units.**
 
+### 4001-4006 are display-only attributes (NOT combat stats)
+
+The 4000-range "partner" attributes are **not in the battle engine's `AttribDefine` enum at all**. The enum jumps from 1082 (`total_dam_def`) to 6001 (`spirit_dam_add`). They are `type=3` derived display attributes used only in the equipment UI:
+
+```javascript
+// ConfigGlobal.equip_attr — controls what shows in equipment details
+equip_attr: [1002, 1001, 1024, 1003, 1004, 1016, 1017, 1023, 1008, 1012, 1037, 4001, 4005]
+
+// ConfigGlobal.high_attr — controls which stats are highlighted
+high_attr: [1004, 1016, 1017, 1023, 1008, 1012, 1037, 4001, 4005]
+```
+
+When displayed, they are computed as derived ratios from other attributes via the `group` field:
+```javascript
+// getAttrValue for type==3 attributes
+if (0 == value && 3 == config.type && config.group != null) {
+    var a = getRoleAttrById(config.group - 1000);
+    var b = getRoleAttrById(config.group);
+    value = (a - b) / b * displayScale;  // derived ratio for UI display
+}
+```
+
+**`partner_double_hit` (4005) is purely an equipment display stat. It cannot be referenced by the battle engine, is never loaded into any battle unit, and has zero effect on combat.**
+
 ### Client version differences (byte offset ~8709215)
 
 The client version is similar but only inherits 3 attributes:
