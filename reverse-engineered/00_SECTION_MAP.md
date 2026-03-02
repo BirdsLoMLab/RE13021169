@@ -314,13 +314,14 @@
 | 33 | Systems Reference | Equipment, mounts, artifacts, pets, spirits, badges with stat values |
 | 34 | PvP Meta Analysis | Damage pipeline exploits, class tier list, build guides, matchup matrix |
 
-### Deep Dives (35-38)
+### Deep Dives (35-39)
 | Doc | Title | Key Topics |
 |-----|-------|------------|
 | 35 | Motorcycle Mount Deep Dive | Mount 404 3-phase cycle, speed stacking, SpeedTrigger, overdrive buffs |
 | 36 | Hidden Combat Mechanics | 0.98 skill crit exponent, DEFER_DAMAGE, speed cascade, PvP evasion formula |
 | 37 | DEF Coefficient, Giant Slayer & Cleanse | def_coe in all damage formulas, Giant Slayer from Artifact 703, buff cleansability reference |
 | 38 | Animation Speed Exploit | Weapon/artifact skin animation timing, first-hit advantage, artifact override trap |
+| 39 | Clone & HP-Threshold Triggers | Clone Strike init (no passives), Rampage talent mechanics, Phoenix mount interaction |
 
 ### Meta (97-99)
 | Doc | Title |
