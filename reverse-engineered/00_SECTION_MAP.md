@@ -90,6 +90,14 @@
 | BuffBlock | ~192900 | Block damage absorption |
 | BuffNotControll | ~195000 | Control immunity |
 
+### Animation & Model
+| Module | Lines | Description |
+|--------|-------|-------------|
+| AnimatorCtr | 178947-179023 | Animation controller: config from UnitModel, frame-by-frame execution, trigger events |
+| ConfigUnitModel | 267701-267920 | Unit model definitions with per-animation frame data (skill1-8, bigskill1-9) |
+| ConfigAppearance | 218762-218852 | Weapon/artifact appearance: ani field (index 8) determines attack animation |
+| getActSpeed | 431378-431389 | Attack speed calculation: `round(att_speed / round(30 / frameCount))` |
+
 ### PvP Systems
 | Module | Lines | Description |
 |--------|-------|-------------|
@@ -305,6 +313,14 @@
 | 32 | Class & Skill Reference | Complete class tree, Tier 5 passives/actives, attribute reference |
 | 33 | Systems Reference | Equipment, mounts, artifacts, pets, spirits, badges with stat values |
 | 34 | PvP Meta Analysis | Damage pipeline exploits, class tier list, build guides, matchup matrix |
+
+### Deep Dives (35-38)
+| Doc | Title | Key Topics |
+|-----|-------|------------|
+| 35 | Motorcycle Mount Deep Dive | Mount 404 3-phase cycle, speed stacking, SpeedTrigger, overdrive buffs |
+| 36 | Hidden Combat Mechanics | 0.98 skill crit exponent, DEFER_DAMAGE, speed cascade, PvP evasion formula |
+| 37 | DEF Coefficient, Giant Slayer & Cleanse | def_coe in all damage formulas, Giant Slayer from Artifact 703, buff cleansability reference |
+| 38 | Animation Speed Exploit | Weapon/artifact skin animation timing, first-hit advantage, artifact override trap |
 
 ### Meta (97-99)
 | Doc | Title |
