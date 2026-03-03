@@ -1,6 +1,6 @@
 # 42 — Counter/Regen Sage vs High-Pierce Prophet: Counterplay Guide
 
-> **Sources:** game_script.js (HurtUtil.ts, SkillHandleNormal.ts, Unit.ts, MetaAttrib.ts), AttribDefine.json, docs 02/06/32/33/34
+> **Sources:** game_script.js (HurtUtil.ts, SkillHandleNormal.ts, BuffSkillValue.ts, Unit.ts, MetaAttrib.ts), AttribDefine.json, docs 02/06/32/33/34
 > **Scope:** All viable mechanics a counter/regen Martial Sage can use against a high-ATK Prophet with high pierce, **excluding** ignore_pierce and block
 
 ---
@@ -40,17 +40,21 @@ This means there are **four independent defensive layers** the sage can stack th
 
 Block and pierce share a **single random roll** inside `calArmorAndBlock`. Pierce occupies the lower range `[0, pierce_rate]` and block occupies `(pierce_rate, pierce_rate + block_rate]`. Since the loop checks index 0 (pierce) first, high pierce directly compresses block's probability window. With "really high pierce," block's effective proc rate approaches zero.
 
-But dodge, DEF, resist, total_dam_def, and shields are all on **completely separate systems** with no roll-sharing.
+But DEF, resist, total_dam_def, and shields are all on **completely separate systems** with no roll-sharing. Dodge is also on a separate system, but **only applies to normal attacks** (see Section 1).
 
 ---
 
-## 1. The Proc Check Order (Critical Discovery)
+## 1. Two Completely Different Damage Paths (Critical Discovery)
 
-The exact execution order when the prophet attacks:
+### ⚠️ Normal Attacks vs Skills Use Different Code Paths
+
+This is the single most important mechanical distinction in this matchup. The game has **two fundamentally different damage paths**, and they have different interactions with dodge, counter, and pierce:
+
+### Path A: Normal Attacks (SkillHandleNormal.att)
 
 ```
-Step 1: COUNTER CHECK — checkCounterAct(defender, attacker)     ← FIRES FIRST
-Step 2: MISS/DODGE CHECK — checkHit(attacker, defender)         ← BEFORE pierce
+Step 1: COUNTER CHECK — checkCounterAct(defender, attacker)     ← COUNTER FIRES
+Step 2: MISS/DODGE CHECK — checkHit(attacker, defender)         ← DODGE CAN PROC
          If Miss → skip all damage, no pierce roll happens
 Step 3: DAMAGE CALC — normalHurt (includes calArmorAndBlock)    ← PIERCE ROLLS HERE
 Step 4: BUFF MODIFIERS
@@ -61,11 +65,68 @@ Step 7: COUNTER EXECUTES (queued from Step 1)
 Step 8: SHIELD absorbs → BLOCK BUFF absorbs → HP reduced
 ```
 
-**Two critical findings:**
+**For normal attacks:**
+- Counter is checked BEFORE dodge → **counter can proc even when the attack is dodged**
+- Dodge is checked BEFORE pierce → **if dodge procs, pierce never fires**
+- Pierce rolls inside `normalHurt` → reduces `att_resist`
 
-1. **Counter is checked BEFORE dodge/miss.** The counter roll happens at Step 1, before `checkHit` at Step 2. This means **counter can proc even when the attack will be dodged.** The sage dodges the damage AND counters back. Both work simultaneously.
+### Path B: Skill Attacks (BuffSkillValue.onBegin) — THE PROPHET'S MAIN DAMAGE
 
-2. **Dodge is checked BEFORE pierce.** If dodge procs at Step 2, the entire damage pipeline (Steps 3-8) is skipped. Pierce never fires. The attack deals zero damage.
+```
+Step 1: SKILL_RETURN CHECK — can the skill be reflected?       ← ONLY "DODGE" FOR SKILLS
+Step 2: BASE DAMAGE CALC — _calHurt(target, attacker)          ← NO COUNTER CHECK
+Step 3: SKILL MULTIPLIER — × skillPar × skill_dam_extra        ← NO DODGE/MISS CHECK
+Step 4: SKILL CRIT — checkSkillCirt(attacker)                  ← SEPARATE FROM NORMAL CRIT
+Step 5: RESISTANCE — _calResistPar() → calArmorAndBlock         ← PIERCE ROLLS HERE
+Step 6: DMG RES — calHurt (resist 1021)                        ← PIERCE DOES NOT TOUCH
+Step 7: BUFF MODIFIERS (EXTRA_DAMAGE, GIANT_SLAYER)
+Step 8: DEAL DAMAGE → healthTarget
+Step 9: SKILL LIFESTEAL
+Step 10: SKILL_REAL_DAMAGE bonus
+```
+
+**For skill attacks:**
+- **NO counter check** — skills do not trigger counter (attr 1017) at all
+- **NO dodge/miss check** — `checkHit` is never called; skills ALWAYS hit
+- Pierce still rolls via `calArmorAndBlock` in `_calResistPar()` → reduces `skill_resist`
+
+### Code proof that skills cannot be dodged
+
+From `BuffSkillValue.ts` (line 2769), the `checkHit` import exists but is ONLY used in a special `UseCrit` flag path:
+
+```javascript
+// checkHit is imported as variable 'k'
+// In the normal damage path, k is NEVER called
+// The only usage is:
+if (this._ignoreFlag & A.UseCrit && k(r, t, true) == g.Cirt) {
+    // k(r, t, TRUE) → the third arg forces miss = 0
+}
+```
+
+And from `checkHit` in HurtUtil:
+```javascript
+checkHit(attacker, defender, r) {
+    var o = r ? 0 : defender.data.getAttrib(miss);  // r=true → miss forced to 0
+}
+```
+
+Even in the rare `UseCrit` path, `checkHit` is called with `true`, which **explicitly forces dodge to zero.**
+
+### What this means for the Sage vs Prophet matchup
+
+The prophet is a **skill-spam class** whose main damage comes from Crane's Whisper (15157% AoE). This damage:
+- ❌ Cannot be dodged
+- ❌ Cannot trigger counter
+- ✅ Is affected by pierce (reduces skill_resist)
+- ✅ Is reduced by DEF, resist(1021), total_dam_def, shields
+
+The prophet's **auto-attacks** between skills:
+- ✅ Can be dodged
+- ✅ Can trigger counter
+- ✅ Are affected by pierce (reduces att_resist)
+- ✅ Are reduced by DEF, resist(1021), total_dam_def, shields
+
+**This is why Seal (Strategy A below) is the #1 counter-strategy** — it forces the prophet to only use normal attacks, where dodge AND counter both work.
 
 ---
 
@@ -94,44 +155,34 @@ From `32_CLASS_SKILLS_REFERENCE.md`:
 
 ## 3. The Strategies (Ranked by Effectiveness)
 
-### Strategy A: Dodge Stacking — "Can't Pierce What You Can't Hit"
+### Strategy A: Seal the Prophet — "The Matchup Converter"
 
-**Why it works:** Dodge is resolved at Step 2, before the pierce/block roll at Step 4. If dodge procs, the entire attack misses — zero damage, zero pierce, zero crit.
+**Why it's #1:** Seal (BuffBanSkill) prevents skill usage but allows normal attacks. Against a skill-spam prophet, this **transforms the entire matchup** from one the sage loses to one the sage wins.
 
-**The formula:**
-```
-effective_dodge = max(dodge_rate - hit_rate - ignore_dodge, 0)
-```
+**What seal does to the prophet:**
+1. **Prevents Crane's Whisper** → no shield-breaking, no Skill DMG RES debuff, no 15157% AoE burst
+2. **Forces normal attacks only** → every auto triggers the sage's counter AND can be dodged
+3. **Disables CD reduction passive** → no stun-based cooldown acceleration
+4. **Kills energy economy** → +20% energy regen is useless without skills to cast
 
-**Why it's strong against prophet specifically:**
-- Prophet passives grant: Skill Crit, ATK, Energy Regen, Skill Duration, CD Reduction
-- Prophet passives do **NOT** grant: hit_rate, ignore_dodge
-- This means the prophet has no inherent way to counter dodge stacking
-- Every point of dodge_rate the sage stacks is at full value (no subtraction)
+**What seal does FOR the sage:**
+1. **Unlocks dodge** — prophet's normal attacks CAN be dodged; skills CANNOT (see Section 1)
+2. **Unlocks counter** — counter only triggers on normal attacks; now every prophet attack triggers it
+3. **Protects shields** — no Crane's Whisper means no shield-breaking
+4. **Damage drops dramatically** — prophet goes from 15157% skill multiplier to basic att_dam
 
-**Synergy with counter (the hidden combo):**
-Since counter check (Step 1) happens BEFORE dodge (Step 2), the sage can:
-1. Counter procs → queued for execution
-2. Dodge procs → no damage taken
-3. Counter executes → deals damage back
+**Without seal:** The prophet's main damage (skills) bypasses both dodge and counter. The sage must survive purely through DEF/resist/total_dam_def/shields.
+**With seal:** The prophet is forced into the sage's specialty — a normal-attack slugfest where counter, dodge, shields, and regen all work.
 
-**Result: The sage takes zero damage AND deals counter damage.** This is the best possible outcome per incoming attack.
-
-**How to stack dodge:**
-- Equipment stats with `miss` (1008) — note: the actual attribute name is `miss`, not `dodge_rate`
-- Buff effects (BuffAttribAdd targeting 1008)
-- Spirit attributes
-
-**PvP caveats:**
-- Dodge has a **PvP cap** (`battle_up_limit`) — you cannot reach 100% dodge in PvP
-- The miss formula applies a **power curve correction** (`miss_correct`): `corrected = pow(100 * raw_miss, miss_correct/10000) / 100`. This means diminishing returns at high dodge values.
-- The effective dodge formula: `raw = max(miss - hit, 0)`, then corrected, then capped
-- Despite the cap, dodge is still extremely strong because it **completely avoids the attack** — no pierce, no crit, no damage
-- Pair with other layers (DEF, resist, counter) since dodge is probabilistic
+**Sources of seal:**
+- Specific buff types (BuffBanSkill / BuffSeal)
+- Skill effects that apply sealed status
+- Mount/artifact procs that apply seal
+- Key question: which sage-accessible skills or equipment apply seal? Check ConfigSkillEffect and buff tables.
 
 ---
 
-### Strategy B: DEF + General DMG RES Layering — "Pierce-Immune Defense Stack"
+### Strategy B: DEF + General DMG RES Layering — "Pierce-Immune Defense Stack" (Works vs Skills AND Normals)
 
 **Why it works:** The sage already has two pierce-immune defense layers from passives:
 
@@ -158,9 +209,7 @@ Even if pierce reduces `skill_resist` to 0, the sage still has `(1 - general_res
 
 ---
 
-### Strategy C: `total_dam_def` (1082) — "The Final Wall"
-
-**Why it works:** `total_dam_def` is applied at Step 9, the very end of the damage calculation before PvP division. It reduces ALL 13 damage types including skills, crits, combos, counters, bleeds, true damage, HP% damage, and reflect. Pierce has zero interaction with it.
+### Strategy C: `total_dam_def` (1082) — "The Final Wall" (Works vs Skills AND Normals)
 
 **The formula:**
 ```
@@ -199,9 +248,9 @@ final_multiplier = max(1 + total_dam_add - total_dam_def, 0.20)
 
 ---
 
-### Strategy E: Counter Rate + counter_dam Maximization — "Punish Every Auto"
+### Strategy E: Counter Rate + counter_dam Maximization — "Punish Every Auto" (Normal Attacks Only)
 
-**Why it works:** Counter fires independently of pierce (it's at Step 1/7, completely outside the pierce system). Every normal attack the prophet lands (or misses!) gives the sage a free reactive strike.
+**Why it works:** Counter fires independently of pierce (checked in Path A, Step 1). Every **normal attack** the prophet lands (or misses!) gives the sage a free reactive strike. Counter does NOT trigger on skill attacks (Path B has no counter check).
 
 **Sage's counter kit:**
 ```
@@ -233,31 +282,7 @@ if crit: counter_dmg × max(1.5, crit_dam / max(0.5, crit_def))
 
 ---
 
-### Strategy F: Seal the Prophet — "Force Normal Attacks"
-
-**Why it works:** This is potentially the single most devastating counter to the prophet's kit. Seal prevents skill usage but allows normal attacks.
-
-**What seal does to the prophet:**
-1. **Prevents Crane's Whisper** → no shield-breaking, no Skill DMG RES debuff, no AoE burst
-2. **Forces normal attacks only** → every auto triggers the sage's counter
-3. **Disables CD reduction passive** → no stun-based cooldown acceleration
-4. **Kills energy economy** → +20% energy regen is useless without skills to cast
-
-**What seal does FOR the sage:**
-1. Every prophet attack is now a normal attack → counter procs on every hit
-2. Shields are protected (no Crane's Whisper to break them)
-3. Prophet's damage output drops dramatically (no 15157% skill multiplier)
-4. The sage's regen/shield sustain can outpace normal attack damage
-
-**Sources of seal:**
-- Specific buff types (BuffSeal)
-- Skill effects that apply sealed status
-- Mount/artifact procs that apply seal
-- Key question: which sage-accessible skills or equipment apply seal? This requires checking available seal sources in ConfigSkillEffect and buff tables.
-
----
-
-### Strategy G: SKILL_COUNTER Buffs — "React to Skill Damage"
+### Strategy F: SKILL_COUNTER Buffs — "React to Skill Damage"
 
 **Why it works:** Normal counter (attr 1017) only triggers on normal attacks. But there's a separate system — `BuffGroupType.SKILL_COUNTER (220)` — that triggers reactive skill casts based on accumulated HP damage or hit counts. This CAN react to skill damage.
 
@@ -271,7 +296,7 @@ From the code (Unit._checkSkillCounter):
 
 ---
 
-### Strategy H: ATK Debuffs — "Shrink the Base"
+### Strategy G: ATK Debuffs — "Shrink the Base"
 
 **Why it works:** Pierce modifies resistance (Step 4), but the base damage `ATK - DEF` is calculated at Step 1. Reducing the prophet's ATK directly reduces the number that gets multiplied through all subsequent steps — including the pierce-enhanced multiplier.
 
@@ -289,7 +314,7 @@ A 20% ATK reduction creates a 40% reduction in base damage (in this example). Th
 
 ---
 
-### Strategy I: Speed Advantage — "Setup Before Burst"
+### Strategy H: Speed Advantage — "Setup Before Burst"
 
 **Why it works:** If the sage acts first, they can:
 1. Apply Blades Reunion (active skill) → debuff counter_def by 40%, enable 1% HP counter bonus
@@ -301,7 +326,7 @@ The prophet needs to cast Crane's Whisper to enable shield-breaking. If the sage
 
 ---
 
-### Strategy J: Skill Reflection — "Return Crane's Whisper"
+### Strategy I: Skill Reflection — "Return Crane's Whisper"
 
 **Clarification:** There is no generic "reflect X% of damage" buff in this game. However, there IS `BuffSkillReturn` (line 2767), which can **interrupt and reflect specific skills back** at the attacker.
 
@@ -345,6 +370,29 @@ All lifesteal is subject to `treatDecay` (0.3 in PvP = 30% effectiveness) and `R
 
 ---
 
+### Strategy J: Dodge Stacking — "Effective Only Against Normal Attacks"
+
+**Critical caveat:** As proven in Section 1, **skill attacks CANNOT be dodged.** `BuffSkillValue.onBegin()` has no `checkHit` call — skills always hit. Dodge only avoids **normal attacks** (which use `SkillHandleNormal.att()` with its `checkHit` call).
+
+**Against the prophet's normal attacks (gap-fillers between skills), dodge is excellent:**
+- Counter check (Step 1) happens BEFORE dodge (Step 2) → **counter still fires even on dodged attacks**
+- Dodge (Step 2) happens BEFORE pierce (Step 3) → **if dodge procs, pierce never fires**
+- Result: sage takes zero damage AND deals counter damage
+
+**The formula:**
+```
+effective_dodge = max(miss - hit - ignore_dodge, 0)
+```
+Then corrected by power curve: `corrected = pow(100 * raw, miss_correct/10000) / 100`, then PvP capped.
+
+**Against the prophet's skills (Crane's Whisper):** Completely useless. 0% avoidance.
+
+**Verdict:** Dodge is a supporting stat, not a build-defining one against prophet. Stack it for marginal value on auto-attacks, but **do NOT rely on it as a primary defense.** DEF, resist, total_dam_def are the primary defenses since they reduce ALL damage including skills.
+
+**When dodge DOES become build-defining:** If you have **Seal** (Strategy A). Seal forces the prophet to only normal attack, and dodge works on 100% of normal attacks. Seal + Dodge + Counter = the prophet can't hit you AND gets punished for trying.
+
+---
+
 ### Strategy K: Crit Defense — "Neuter the Skill Crits"
 
 **Why it works:** The prophet gets +15% Skill Crit Rate (+30% total with two passives stacking) and accesses crit through equipment. Their active adds Skill Crit DMG. The crit formula:
@@ -365,28 +413,28 @@ Given the sage's passives and the prophet matchup, here's the priority ordering:
 
 ### Tier 1: Build-defining (stack these first)
 
-1. **Dodge rate** — completely avoids pierce, works with counter, prophet has no counter-play
-2. **Counter rate + counter_dam** — punishes every auto-attack, synergizes with dodge
-3. **DEF + general resist (1021)** — pierce-immune layers the sage already has foundations for
-4. **total_dam_def (1082)** — universal damage reduction, up to 80%, pierce can't touch it
+1. **Seal source** — THE matchup converter. Forces prophet to normal attacks → unlocks dodge + counter + protects shields. Without seal, strategies E and J are halved in value.
+2. **DEF + general resist (1021)** — pierce-immune layers that reduce ALL damage (skills AND normals). Sage already has +30% DEF and +15% resist from passives.
+3. **total_dam_def (1082)** — universal damage reduction, up to 80%, pierce can't touch it, works vs skills AND normals.
 
-### Tier 2: Force multipliers
+### Tier 2: Core offense + conditional defense
 
-5. **Seal source** — transforms the matchup by disabling the prophet's entire kit
-6. **Speed (att_speed)** — act first to set up or control
-7. **Shield sources beyond base passive** — pierce-proof absorption, but must play around Crane's Whisper timing
-8. **Crit_def** — neuters the prophet's crit scaling
+4. **Counter rate + counter_dam** — punishes every normal attack (free action, synergizes with dodge). Only triggers on normals, but prophet still auto-attacks between skills. With seal, triggers on 100% of attacks.
+5. **Shield sources** — pierce-proof absorption, but must play around Crane's Whisper timing. With seal, shields are fully protected.
+6. **Speed (att_speed)** — act first to apply seal/debuffs before the prophet's rotation.
+7. **Crit_def** — neuters the prophet's skill crit scaling (skill crit uses `checkSkillCirt`, separate from normal crit).
 
-### Tier 3: Sustain optimization
+### Tier 3: Supporting stats
 
+8. **Dodge rate** — ONLY works vs normal attacks, NOT skills. Supporting stat unless you have seal (then it becomes Tier 1). With seal: dodge + counter = prophet can't hit you AND gets punished for trying.
 9. **att_hpsteal (1014)** — lifesteal on normal attack AND counter hits (subject to 30% treatDecay in PvP)
 10. **VAMPIRE buff (group 380)** — buff-based lifesteal on all attack types
-11. **Skill reflection (BuffSkillReturn)** — if accessible for Crane's Whisper (skill 1057), completely shuts down the prophet's burst
+11. **SKILL_COUNTER buffs (group 220)** — reactive damage on HP thresholds; CAN react to skill damage
 
 ### Tier 4: Situational / if accessible
 
-12. **ATK debuffs** — reduce prophet's base damage
-13. **SKILL_COUNTER buffs** — react to skill damage (covers counter's normal-attack-only limitation)
+12. **ATK debuffs** — reduce prophet's base damage (works vs both paths)
+13. **Skill reflection (BuffSkillReturn)** — if accessible for Crane's Whisper (skill 1057), completely shuts down the prophet's burst
 14. **Stun/control** — prevent prophet from acting, but prophet's kit is stun-synergistic (CD reduction per stun)
 
 ---
@@ -402,21 +450,42 @@ Given the sage's passives and the prophet matchup, here's the priority ordering:
 
 ---
 
-## 6. Summary: Why This Works
+## 6. Summary: The Two-Phase Strategy
 
-The core insight is that pierce is **much narrower** than most players assume. It only modifies one of four independent defensive layers. Against a counter/regen sage:
+The core revelation is that skills and normal attacks use **completely different code paths** with different defensive interactions:
 
 ```
-Prophet's pierce reduces:    type-specific resistance (Step 4)
-Sage's dodge avoids:         the entire attack (Step 2, before pierce)
-Sage's DEF reduces:          base damage (Step 1, before pierce)
-Sage's resist reduces:       post-calculation damage (Step 6, after pierce)
-Sage's total_dam_def reduces: final damage (Step 9, after everything)
-Sage's shields absorb:       remaining damage (Step 11, after everything)
-Sage's counter deals:        reactive damage (independent system)
-Sage's regen restores:       HP between attacks (independent system)
+                            vs NORMAL ATTACKS          vs SKILL ATTACKS
+                            (SkillHandleNormal)        (BuffSkillValue)
+                            ─────────────────          ────────────────
+Pierce applies?             YES (att_resist)           YES (skill_resist)
+Dodge works?                YES (checkHit)             NO (no checkHit)
+Counter triggers?           YES (checkCounterAct)      NO (no counter check)
+DEF reduces?                YES (Step 1)               YES (Step 1)
+resist (1021) reduces?      YES (Step 6)               YES (Step 6)
+total_dam_def reduces?      YES (Step 9)               YES (Step 9)
+Shields absorb?             YES (Step 11)              YES (Step 11)
 ```
 
-The prophet's pierce advantage is real but one-dimensional. The sage has access to **five independent defensive layers** (dodge, DEF, resist, total_dam_def, shields) plus **two reactive systems** (counter, regen) that pierce cannot interact with. Stack them correctly and the prophet's pierce advantage becomes a small fraction of the sage's total defensive profile.
+Pierce itself is narrower than assumed — it only modifies type-specific resistance (Step 4). But the prophet's real threat isn't just pierce, it's that their **main damage source (skills) bypasses both dodge and counter entirely.**
 
-**The kill condition:** The prophet runs out of time (2-minute PvP timer) while the sage sustains through counter + regen, or the sage's accumulated counter damage (amplified by Blades Reunion's 1% HP per counter) wears the prophet down.
+### Phase 1: Without Seal — Pure Tanking
+
+When the prophet is free to skill-spam, the sage must survive through the three pierce-immune defense layers that work on ALL damage:
+- **DEF** (base damage reduction)
+- **resist / 1021** (multiplicative DMG RES)
+- **total_dam_def / 1082** (final reduction, up to 80%)
+- **Shields** (absorption, but prophet's Crane's Whisper breaks them for 10-14s)
+
+Counter and dodge only help against the prophet's gap-filler auto-attacks.
+
+### Phase 2: With Seal — Full Counter Domination
+
+When the prophet is sealed:
+- Every attack is a normal attack → **counter fires on every hit**
+- Dodge works on every attack → **sage can avoid damage AND counter**
+- No Crane's Whisper → **shields are fully protected**
+- No skill multiplier → **prophet's damage drops from 15157% to basic att_dam**
+- Sage's regen/shield sustain easily outpaces normal attack damage
+
+**The kill condition:** Survive the prophet's skill burst (Phase 1) through DEF/resist/total_dam_def layering, then apply seal (Phase 2) to lock the prophet into normal attacks where counter/dodge/shields dominate. The prophet's accumulated counter damage (amplified by Blades Reunion's 1% HP per counter) wears them down, and the 2-minute PvP timer becomes the sage's ally.
