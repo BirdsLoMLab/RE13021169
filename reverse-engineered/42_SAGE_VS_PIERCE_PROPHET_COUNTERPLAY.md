@@ -126,7 +126,7 @@ The prophet's **auto-attacks** between skills:
 - ✅ Are affected by pierce (reduces att_resist)
 - ✅ Are reduced by DEF, resist(1021), total_dam_def, shields
 
-**This is why Seal (Strategy A below) is the #1 counter-strategy** — it forces the prophet to only use normal attacks, where dodge AND counter both work.
+**This is why the matchup is structurally unfavorable for the sage.** The prophet's main damage (skills) bypasses the sage's two best tools (dodge + counter). A theoretical "seal" mechanic that forces normal attacks would flip the matchup entirely — but as verified below, **seal (ban_skill) is dead code that doesn't actually function.**
 
 ---
 
@@ -155,34 +155,30 @@ From `32_CLASS_SKILLS_REFERENCE.md`:
 
 ## 3. The Strategies (Ranked by Effectiveness)
 
-### Strategy A: Seal the Prophet — "The Matchup Converter"
+### ~~Strategy A: Seal the Prophet~~ — DOES NOT EXIST
 
-**Why it's #1:** Seal (BuffBanSkill) prevents skill usage but allows normal attacks. Against a skill-spam prophet, this **transforms the entire matchup** from one the sage loses to one the sage wins.
+**⚠️ ban_skill (seal) is dead code.** Investigation revealed:
 
-**What seal does to the prophet:**
-1. **Prevents Crane's Whisper** → no shield-breaking, no Skill DMG RES debuff, no 15157% AoE burst
-2. **Forces normal attacks only** → every auto triggers the sage's counter AND can be dodged
-3. **Disables CD reduction passive** → no stun-based cooldown acceleration
-4. **Kills energy economy** → +20% energy regen is useless without skills to cast
+1. `statectr.banSkill` is defined and incremented/decremented by `BuffBanSkill`, but **no combat code ever checks `banSkill > 0`**. Compare with `banAct` which IS checked (`0==this.statectr.banAct` in AI) and `dizz` which IS checked (`this.dizz>0` in StateCtr.onUpdate).
+2. The string `"ban_skill"` appears exactly once in game_script.js — the `buffMap.ban_skill` registration. **Zero ConfigBuff entries reference it.**
+3. Even if a buff config existed, the counter is never read, so it would do nothing.
 
-**What seal does FOR the sage:**
-1. **Unlocks dodge** — prophet's normal attacks CAN be dodged; skills CANNOT (see Section 1)
-2. **Unlocks counter** — counter only triggers on normal attacks; now every prophet attack triggers it
-3. **Protects shields** — no Crane's Whisper means no shield-breaking
-4. **Damage drops dramatically** — prophet goes from 15157% skill multiplier to basic att_dam
+**The closest real alternatives:**
 
-**Without seal:** The prophet's main damage (skills) bypasses both dodge and counter. The sage must survive purely through DEF/resist/total_dam_def/shields.
-**With seal:** The prophet is forced into the sage's specialty — a normal-attack slugfest where counter, dodge, shields, and regen all work.
+| Mechanic | Effect | Prevents Skills? | Allows Normals? | Triggers Counter? |
+|----------|--------|-----------------|----------------|------------------|
+| **Stun (BuffDizz)** | Prevents ALL actions | Yes | **No** | **No** |
+| **Freeze (BuffFrozen)** | Prevents ALL actions | Yes | **No** | **No** |
+| **Pause CD (BuffPauseCd)** | Pauses skill cooldowns | Partially (delays, doesn't block) | Yes | Yes |
+| **Bound (BuffBound)** | Prevents movement | No | Yes | Yes |
 
-**Sources of seal:**
-- Specific buff types (BuffBanSkill / BuffSeal)
-- Skill effects that apply sealed status
-- Mount/artifact procs that apply seal
-- Key question: which sage-accessible skills or equipment apply seal? Check ConfigSkillEffect and buff tables.
+**There is no real "force normal attacks only" mechanic in the game.** Stun/freeze stop skills but ALSO stop auto-attacks, which means counter can't trigger. Pause CD delays skills coming off cooldown but doesn't prevent casting if already ready. Nothing cleanly converts skill-spam into normal attacks.
+
+**This is likely why the PvP matchup matrix rates Sage as losing to Prophet.** The prophet's skills bypass the sage's two best tools (counter + dodge), and the sage has no way to force the prophet out of skills.
 
 ---
 
-### Strategy B: DEF + General DMG RES Layering — "Pierce-Immune Defense Stack" (Works vs Skills AND Normals)
+### Strategy A (Actual): DEF + General DMG RES Layering — "Pierce-Immune Defense Stack" (Works vs Skills AND Normals)
 
 **Why it works:** The sage already has two pierce-immune defense layers from passives:
 
@@ -209,7 +205,7 @@ Even if pierce reduces `skill_resist` to 0, the sage still has `(1 - general_res
 
 ---
 
-### Strategy C: `total_dam_def` (1082) — "The Final Wall" (Works vs Skills AND Normals)
+### Strategy B: `total_dam_def` (1082) — "The Final Wall" (Works vs Skills AND Normals)
 
 **The formula:**
 ```
@@ -225,7 +221,7 @@ final_multiplier = max(1 + total_dam_add - total_dam_def, 0.20)
 
 ---
 
-### Strategy D: Shields — "Pierce-Proof Absorption"
+### Strategy C: Shields — "Pierce-Proof Absorption"
 
 **Why it works:** Shields absorb damage at Step 11, after ALL calculations (including pierce). The sage's auto-shield is a **trap buff** (undispellable by normal buff removal).
 
@@ -248,7 +244,7 @@ final_multiplier = max(1 + total_dam_add - total_dam_def, 0.20)
 
 ---
 
-### Strategy E: Counter Rate + counter_dam Maximization — "Punish Every Auto" (Normal Attacks Only)
+### Strategy D: Counter Rate + counter_dam Maximization — "Punish Every Auto" (Normal Attacks Only)
 
 **Why it works:** Counter fires independently of pierce (checked in Path A, Step 1). Every **normal attack** the prophet lands (or misses!) gives the sage a free reactive strike. Counter does NOT trigger on skill attacks (Path B has no counter check).
 
@@ -278,11 +274,11 @@ if crit: counter_dmg × max(1.5, crit_dam / max(0.5, crit_def))
 
 **Important limitation: Counter only triggers on NORMAL attacks, not skills.** Since the prophet is a skill-spam class, counter won't proc from Crane's Whisper or other skills. It only procs from the prophet's auto-attacks between skill casts.
 
-**Mitigation:** See Strategy F (Seal) and Strategy G (SKILL_COUNTER).
+**Mitigation:** See Strategy E (SKILL_COUNTER) — the only reactive damage system that works against skill attacks.
 
 ---
 
-### Strategy F: SKILL_COUNTER Buffs — "React to Skill Damage"
+### Strategy E: SKILL_COUNTER Buffs — "React to Skill Damage"
 
 **Why it works:** Normal counter (attr 1017) only triggers on normal attacks. But there's a separate system — `BuffGroupType.SKILL_COUNTER (220)` — that triggers reactive skill casts based on accumulated HP damage or hit counts. This CAN react to skill damage.
 
@@ -296,7 +292,7 @@ From the code (Unit._checkSkillCounter):
 
 ---
 
-### Strategy G: ATK Debuffs — "Shrink the Base"
+### Strategy F: ATK Debuffs — "Shrink the Base"
 
 **Why it works:** Pierce modifies resistance (Step 4), but the base damage `ATK - DEF` is calculated at Step 1. Reducing the prophet's ATK directly reduces the number that gets multiplied through all subsequent steps — including the pierce-enhanced multiplier.
 
@@ -314,7 +310,7 @@ A 20% ATK reduction creates a 40% reduction in base damage (in this example). Th
 
 ---
 
-### Strategy H: Speed Advantage — "Setup Before Burst"
+### Strategy G: Speed Advantage — "Setup Before Burst"
 
 **Why it works:** If the sage acts first, they can:
 1. Apply Blades Reunion (active skill) → debuff counter_def by 40%, enable 1% HP counter bonus
@@ -326,7 +322,7 @@ The prophet needs to cast Crane's Whisper to enable shield-breaking. If the sage
 
 ---
 
-### Strategy I: Skill Reflection — "Return Crane's Whisper"
+### Strategy H: Skill Reflection — "Return Crane's Whisper"
 
 **Clarification:** There is no generic "reflect X% of damage" buff in this game. However, there IS `BuffSkillReturn` (line 2767), which can **interrupt and reflect specific skills back** at the attacker.
 
@@ -370,7 +366,7 @@ All lifesteal is subject to `treatDecay` (0.3 in PvP = 30% effectiveness) and `R
 
 ---
 
-### Strategy J: Dodge Stacking — "Effective Only Against Normal Attacks"
+### Strategy I: Dodge Stacking — "Effective Only Against Normal Attacks"
 
 **Critical caveat:** As proven in Section 1, **skill attacks CANNOT be dodged.** `BuffSkillValue.onBegin()` has no `checkHit` call — skills always hit. Dodge only avoids **normal attacks** (which use `SkillHandleNormal.att()` with its `checkHit` call).
 
@@ -389,11 +385,11 @@ Then corrected by power curve: `corrected = pow(100 * raw, miss_correct/10000) /
 
 **Verdict:** Dodge is a supporting stat, not a build-defining one against prophet. Stack it for marginal value on auto-attacks, but **do NOT rely on it as a primary defense.** DEF, resist, total_dam_def are the primary defenses since they reduce ALL damage including skills.
 
-**When dodge DOES become build-defining:** If you have **Seal** (Strategy A). Seal forces the prophet to only normal attack, and dodge works on 100% of normal attacks. Seal + Dodge + Counter = the prophet can't hit you AND gets punished for trying.
+**When dodge IS valuable:** Against the prophet's auto-attacks between skill casts. If the prophet attacks 4 times between skills, dodge can avoid ~2-3 of those while counter fires on all 4. Against a prophet that auto-attacks frequently (lower energy regen / longer skill cooldowns), dodge provides more value.
 
 ---
 
-### Strategy K: Crit Defense — "Neuter the Skill Crits"
+### Strategy J: Crit Defense — "Neuter the Skill Crits"
 
 **Why it works:** The prophet gets +15% Skill Crit Rate (+30% total with two passives stacking) and accesses crit through equipment. Their active adds Skill Crit DMG. The crit formula:
 
@@ -409,33 +405,35 @@ If `crit_def` is high enough, the crit multiplier is clamped to 1.5× (the minim
 
 ## 4. Recommended Build Priority
 
-Given the sage's passives and the prophet matchup, here's the priority ordering:
+Given the sage's passives and the prophet matchup — and the fact that **seal does not exist** — here's the priority ordering:
 
-### Tier 1: Build-defining (stack these first)
+### Tier 1: Universal defenses that work vs BOTH skills and normal attacks
 
-1. **Seal source** — THE matchup converter. Forces prophet to normal attacks → unlocks dodge + counter + protects shields. Without seal, strategies E and J are halved in value.
-2. **DEF + general resist (1021)** — pierce-immune layers that reduce ALL damage (skills AND normals). Sage already has +30% DEF and +15% resist from passives.
-3. **total_dam_def (1082)** — universal damage reduction, up to 80%, pierce can't touch it, works vs skills AND normals.
+1. **DEF + general resist (1021)** — pierce-immune layers that reduce ALL damage. Sage already has +30% DEF and +15% resist from passives. These are the sage's most reliable defense against the prophet's skill spam.
+2. **total_dam_def (1082)** — universal damage reduction, up to 80%. Pierce can't touch it. Works against all 13 damage types including skill crits.
+3. **Shield sources** — pierce-proof absorption. Play around Crane's Whisper's 10-14s shield-breaking window.
 
-### Tier 2: Core offense + conditional defense
+### Tier 2: Reactive offense (normal attacks only)
 
-4. **Counter rate + counter_dam** — punishes every normal attack (free action, synergizes with dodge). Only triggers on normals, but prophet still auto-attacks between skills. With seal, triggers on 100% of attacks.
-5. **Shield sources** — pierce-proof absorption, but must play around Crane's Whisper timing. With seal, shields are fully protected.
-6. **Speed (att_speed)** — act first to apply seal/debuffs before the prophet's rotation.
-7. **Crit_def** — neuters the prophet's skill crit scaling (skill crit uses `checkSkillCirt`, separate from normal crit).
+4. **Counter rate + counter_dam** — punishes every normal attack (free action). Only triggers on normals, but prophet still auto-attacks between skills. This is where the sage's offense comes from.
+5. **Dodge rate** — ONLY works vs normal attacks, NOT skills. Supporting stat but compounds with counter (dodge + counter can both proc on the same attack).
+6. **att_hpsteal (1014)** — lifesteal on counter hits provides sustain.
 
-### Tier 3: Supporting stats
+### Tier 3: Skill-damage-specific defense
 
-8. **Dodge rate** — ONLY works vs normal attacks, NOT skills. Supporting stat unless you have seal (then it becomes Tier 1). With seal: dodge + counter = prophet can't hit you AND gets punished for trying.
-9. **att_hpsteal (1014)** — lifesteal on normal attack AND counter hits (subject to 30% treatDecay in PvP)
-10. **VAMPIRE buff (group 380)** — buff-based lifesteal on all attack types
-11. **SKILL_COUNTER buffs (group 220)** — reactive damage on HP thresholds; CAN react to skill damage
+7. **Crit_def** — neuters the prophet's skill crit scaling. Prophet has +30% skill crit from passives.
+8. **SKILL_COUNTER buffs (group 220)** — the ONLY reactive damage system that can trigger against skill attacks. If accessible, this fills the gap counter can't cover.
+9. **Skill reflection (BuffSkillReturn)** — if accessible for Crane's Whisper (skill 1057), interrupts and reflects the prophet's burst.
 
-### Tier 4: Situational / if accessible
+### Tier 4: Situational
 
-12. **ATK debuffs** — reduce prophet's base damage (works vs both paths)
-13. **Skill reflection (BuffSkillReturn)** — if accessible for Crane's Whisper (skill 1057), completely shuts down the prophet's burst
-14. **Stun/control** — prevent prophet from acting, but prophet's kit is stun-synergistic (CD reduction per stun)
+10. **ATK debuffs** — reduce prophet's base damage (works vs both paths)
+11. **Speed (att_speed)** — act first to set up shields/debuffs
+12. **Stun/Freeze** — prevents ALL prophet actions (skills AND normals). Useful for bursting the prophet down, but ALSO prevents counter from triggering. Prophet's kit is stun-synergistic (CD reduction per stun received).
+
+### The uncomfortable truth
+
+Without seal, the sage has **no way to force the prophet out of skills.** The prophet's main damage (15157% skill attacks) bypasses both dodge and counter. The sage's best tools only work against gap-filler auto-attacks. The sage must win through raw tankiness (DEF + resist + total_dam_def) and the damage they accumulate from countering auto-attacks between skills. This is an uphill matchup by design.
 
 ---
 
@@ -450,7 +448,7 @@ Given the sage's passives and the prophet matchup, here's the priority ordering:
 
 ---
 
-## 6. Summary: The Two-Phase Strategy
+## 6. Summary: An Honest Assessment
 
 The core revelation is that skills and normal attacks use **completely different code paths** with different defensive interactions:
 
@@ -467,25 +465,21 @@ total_dam_def reduces?      YES (Step 9)               YES (Step 9)
 Shields absorb?             YES (Step 11)              YES (Step 11)
 ```
 
-Pierce itself is narrower than assumed — it only modifies type-specific resistance (Step 4). But the prophet's real threat isn't just pierce, it's that their **main damage source (skills) bypasses both dodge and counter entirely.**
+### Why this matchup is structurally unfavorable
 
-### Phase 1: Without Seal — Pure Tanking
+The sage's two signature mechanics — **counter** and **dodge** — only work against normal attacks. The prophet's main damage source is **skill attacks**, which bypass both. And seal (the theoretical "force normal attacks only" mechanic) is **dead code** — `statectr.banSkill` is never checked by any combat logic.
 
-When the prophet is free to skill-spam, the sage must survive through the three pierce-immune defense layers that work on ALL damage:
-- **DEF** (base damage reduction)
-- **resist / 1021** (multiplicative DMG RES)
-- **total_dam_def / 1082** (final reduction, up to 80%)
-- **Shields** (absorption, but prophet's Crane's Whisper breaks them for 10-14s)
+This means the sage cannot convert the matchup. They must fight it on the prophet's terms: tanking skill damage through raw stats (DEF, resist, total_dam_def) while hoping to accumulate enough counter damage from the prophet's gap-filler auto-attacks.
 
-Counter and dodge only help against the prophet's gap-filler auto-attacks.
+### The sage's actual win condition
 
-### Phase 2: With Seal — Full Counter Domination
+1. **Survive skill bursts** through DEF + resist(1021) + total_dam_def(1082) layering. These three layers are completely pierce-immune.
+2. **Counter auto-attacks** between skill casts. Each counter is free damage + potential crit + lifesteal. With Blades Reunion active (+1% target HP per counter), this adds up.
+3. **Shield cycling** around Crane's Whisper cooldowns. Shields absorb after all calculations. During the ~5-10s gap when shield-breaking expires, shields provide significant damage absorption.
+4. **Run the clock** — the 2-minute PvP timer is the sage's ally if they can survive. The prophet needs to kill; the sage just needs to not die.
 
-When the prophet is sealed:
-- Every attack is a normal attack → **counter fires on every hit**
-- Dodge works on every attack → **sage can avoid damage AND counter**
-- No Crane's Whisper → **shields are fully protected**
-- No skill multiplier → **prophet's damage drops from 15157% to basic att_dam**
-- Sage's regen/shield sustain easily outpaces normal attack damage
+### The prophet's win condition
 
-**The kill condition:** Survive the prophet's skill burst (Phase 1) through DEF/resist/total_dam_def layering, then apply seal (Phase 2) to lock the prophet into normal attacks where counter/dodge/shields dominate. The prophet's accumulated counter damage (amplified by Blades Reunion's 1% HP per counter) wears them down, and the 2-minute PvP timer becomes the sage's ally.
+Cast Crane's Whisper to break shields and reduce skill_resist by 20%, then burst with pierced skill damage. If the sage dies before accumulating enough counter damage, the prophet wins.
+
+**Bottom line:** This IS the losing matchup the PvP matrix says it is. The sage has real tools (pierce-immune defense layers, counter on auto-attacks, shield cycling) but they're fighting with half their kit disabled. Stacking DEF + resist + total_dam_def to extreme levels while maximizing counter value on auto-attacks is the sage's best chance — but it's an uphill fight by design.
