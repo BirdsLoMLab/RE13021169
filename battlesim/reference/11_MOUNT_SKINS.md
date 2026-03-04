@@ -1,6 +1,6 @@
 # 11 — Mount Skins
 
-> Complete mount reference: 26 code-confirmed mount skin combat skills + 8 event/P2W mounts identified from web sources (34+ total). Includes effects, triggers, coefficients, buff IDs, and PvP notes. See also `mounts_master.json` for structured data.
+> Complete mount reference: all 64 mounts from LOM_Database-5.xlsx (data_mounts.ts). 19 mapped to reverse-engineered code skill IDs with buff/coefficient data. See also `mounts_master.json` for structured JSON.
 
 ---
 
@@ -8,553 +8,723 @@
 
 Mount skins grant combat skills via `ConfigMount_skin.skin_skill`. Each skin has progressive levels with increasing attribute bonuses and skill unlocks. Mount stats are baked into player attributes before battle — only the cosmetic model is loaded at battle time.
 
----
-
-## ConfigMount_skin Schema
-
-| Field | Description |
-|-------|-------------|
-| mount_id | Which mount this skin belongs to |
-| skin_level | Skin upgrade level (0 = base) |
-| expend | Unlock/upgrade cost |
-| skin_skill | Skills granted at this level |
-| attr | Attribute bonuses |
-| power | Combat power |
+**Source:** LOM_Database-5.xlsx → data_mounts.ts (Global filtered), cross-referenced with reverse-engineered game code.
 
 ---
 
-## Complete Mount Skin Combat Skills — Master Reference
+## Quick Reference — All 64 Mounts
 
-### 5001 — Default Mount
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5001 |
-| **Max Level** | 24 |
-| **Trigger** | Passive (always active) |
-| **Cooldown** | None |
-| **Effect** | Evasion bonus (scales with level) |
-| **Attribute** | miss (1008): +20% at lv1, +25% at lv2, +30% at lv3, **+75% at lv24** |
-| **Duration** | Permanent |
-| **PvP Notes** | At max level (+75%), approaches the 80% PvP evasion cap. Massive survivability. |
-
----
-
-### 5002 — Pyrebreaker
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5002 |
-| **Max Level** | 3 |
-| **Trigger** | Time-based (every 1s accumulation) |
-| **Cooldown** | 1s per stack |
-| **Effect 1** | Crit Rate (1004): +2%/s (200 per stack), cap +40% (4000) |
-| **Effect 2** | Crit DMG (1005): +10%/s (1000 per stack), cap +200% (20000) |
-| **PvP Notes** | Synergizes with Sacred Hunter (post-crit ATK +40%) and Darklord (skill crit builds). |
-
----
-
-### 5003 — Hot Wheels
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5003 |
-| **Max Level** | 3 |
-| **Trigger** | Time-based (every 1s accumulation) |
-| **Cooldown** | 1s per stack |
-| **Effect** | Pal ATK Speed (1003): +3%/s (300 per stack), cap +60% (6000) |
-| **Target** | Pal only |
-| **PvP Notes** | Best for Beastmaster/Supreme Spirit pal-focused builds. |
-
----
-
-### 5004 — White Tiger
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5004 |
-| **Max Level** | 3 |
-| **Trigger** | Combat condition (HP% comparison per hit) |
-| **Cooldown** | None |
-| **Buff Group** | ATTRIB_CONDITION (80) |
-| **Effect 1** | Target HP% < your HP% → +30% damage to target |
-| **Effect 2** | Target HP% > your HP% → -20% ATK on target |
-| **PvP Notes** | Dynamic scaling. Punishes tanks (more HP than you) AND glass cannons (less HP). |
-
----
-
-### 5005 — Blue Ox
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5005 |
-| **Max Level** | 3 |
-| **Trigger** | Passive (always active) |
-| **Cooldown** | None |
-| **Effect 1** | DMG Resistance (1021): +15% (1500) |
-| **Effect 2** | Control Duration: -50% (5000) |
-| **PvP Notes** | Anti-CC tank mount. Strong against stun/freeze-heavy opponents. |
-
----
-
-### 5006 — Blue Queen
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5006 |
-| **Max Level** | 1 |
-| **Trigger** | Time-based periodic (every 10s) |
-| **Cooldown** | 10s |
-| **Effect 1** | Distribute damage to 5 nearby enemies |
-| **Effect 2** | 2.5% target max HP damage (250) |
-| **PvP Notes** | Good for PvE. In PvP, the HP% damage is useful vs high-HP tanks. |
+| # | Name | Rarity | Skill ID | Passive | Key Effect |
+|---|------|--------|----------|---------|------------|
+| 1 | **Lily Pad** | Rare | — | — | *(tier mount — no combat skill)* |
+| 2 | **Quack Splash** | Rare | — | — | *(tier mount — no combat skill)* |
+| 3 | **Surfboard** | Rare | — | — | *(tier mount — no combat skill)* |
+| 4 | **Flyboard** | Rare | — | — | *(tier mount — no combat skill)* |
+| 5 | **Skyglider** | Epic | — | — | *(tier mount — no combat skill)* |
+| 6 | **Amethyst Gourd** | Epic | — | — | *(tier mount — no combat skill)* |
+| 7 | **Magic Broom** | Legendary | — | — | *(tier mount — no combat skill)* |
+| 8 | **Azure Feather** | Immortal | — | — | *(tier mount — no combat skill)* |
+| 9 | **Soaring Wings** | Supreme | — | — | *(tier mount — no combat skill)* |
+| 10 | **Cyan Phoenixes** | Supreme | — | — | *(tier mount — no combat skill)* |
+| 11 | **Hot Wheels** | Legendary | 5003 | Ignore Stun +6% | Boost Pal Attack Speed by 2% per second (up to 40%). |
+| 12 | **Pyrebreaker** | Legendary | 5002 | Ignore Evasion +10% | Increase base Crit rate by 1% and Crit DMG by 5% per second (up to 20%, 100%). |
+| 13 | **Skyshark** | Legendary | — | Global DEF +10% | Launches a shark missile every 12s, dealing 1600% AoE Skill DMG and restoring... |
+| 14 | **White Tiger** | Legendary | 5004 | Global Basic ATK DMG +10% | Targets with HP percentage below the caster take 15% increased DMG, while tho... |
+| 15 | **Boom Da Bang** | Legendary | — | Global DEF +10% | ATK, ATK SPD, Energy Regen SPD, and Pal ATK SPD increase by 4% every 10s, sta... |
+| 16 | **Blue Ox** | Legendary | 5005 | Pal Crit DMG +25% | Increase DMG RES by 10% and shorten the duration of control effects by 30%. |
+| 17 | **Round Frog** | Legendary | 5007 | Crit RES Bonus +40% | Every 10 second, defeat 1 enemies, boosting ATK by 15% for 5 seconds. If the ... |
+| 18 | **Blue Queen** | Legendary | 5006 | Crit DMG Bonus +40% | Distribute 10% of DMG dealt to up to 5 surrounding enemies when dealing DMG. |
+| 19 | **Rum Barrel** | Legendary | — | Global DEF +10% | For every 20% Max HP missing, deal 800% Basic ATK AoE DMG within a range, gai... |
+| 20 | **Blizzard Visitor** | Immortal | — | Global DEF +10% | Reduces all target's Movement SPD by 25%. For every 10% Movement SPD they los... |
+| 21 | **Silvery Crescent** | Immortal | 5024 | Global HP +10% | Gain Death Immunity for 2s upon taking lethal DMG, and immediately recover 10... |
+| 22 | **Diving Duck** | Immortal | — | Global DEF +10% | B.Duck creates splashes around every 11s, dealing 2000% Skill DMG, 800% Combo... |
+| 23 | **Scorpio** | Immortal | — | Global DEF +10% | Inflicts 1 stack of Poison on enemies in a small area every 15s, each stack d... |
+| 24 | **Wave Cruiser** | Immortal | — | Global HP +10% | Gains 5 wave stack(s) at the start of battle, each reducing enemy Final Crit ... |
+| 25 | **Storm Rider** | Immortal | — | Global DEF +10% | Increase DMG RES by 5% and shorten the duration of control effects by 15%. Th... |
+| 26 | **Horizon Racer** | Immortal | — | Global HP +10% | Every 10 second, summon a car, dealing 800% current basic attack AoE DMG and ... |
+| 27 | **AdaptoSlime** | Immortal | 5026 | Global HP +10% | Increases ATK by 15% for 10 seconds when HP drops below 80%. Gains a shield e... |
+| 28 | **Koi Paper Kite** | Immortal | 5016 | Global ATK +10% | Every 3 combo triggers an additional 500% AoE DMG. |
+| 29 | **Long-legged Bird** | Immortal | — | Global DEF +10% | There is a 50% chance to gain 4% ATK, 4% DMG RES and 10% Control Duration Red... |
+| 30 | **Heart's Desire** | Immortal | 5030 | Skill Crit DMG +10% | Every second for the first 20 seconds has a 60% chance to boost ATK by 1% and... |
+| 31 | **Book of the Universe** | Immortal | — | Global DEF +10% | When casting an active skill, the Character has a 15% chance to cast it again... |
+| 32 | **Time Machine** | Immortal | — | Global DEF +10% | For the first 20s after the battle starts, negates and stores 40% of all DMG ... |
+| 33 | **Sea of Lanterns** | Immortal | — | Global DEF +10% | After 15s into battle, becomes immune to DMG for 2s and gains 15% Final Crit ... |
+| 34 | **Dimensional Wings** | Immortal | — | Global DEF +10% | Gain 1 bar of Rage for every 15 basic attacks, 12 combos, 12 counters, 3 acti... |
+| 35 | **Mini Motorcycle** | Immortal | 5014 | Global HP +10% | With every 1 counter, increase global counter DMG by 10% for 3 seconds, up to... |
+| 36 | **Blazing Motorcycle** | Immortal | 5021 | Global DEF +10% | For every 10% lost HP, release a flame jet, dealing at least 500% of current ... |
+| 37 | **Cloud Drifter** | Immortal | 5009 | Global ATK +10% | Increase Skill Crit Rate by 10%. After a skill critical, boost ATK by 20% for... |
+| 38 | **Gator Menace** | Immortal | — | Global DEF +10% | After the battle starts, every 5 seconds, deal DMG equal to 4% of the maximum... |
+| 39 | **Pumpkin Carriage** | Immortal | — | Global DEF +10% | Deals 2000% AoE Skill DMG, 800% current Combo AoE DMG, and 800% current Count... |
+| 40 | **Ethereal Phoenix** | Immortal | 5060 | Global DEF +10% | Cleanse and ignore control effects for 1s for every 18% Max HP lost. Gain a s... |
+| 41 | **Nebular Shuttle** | Immortal | — | Global DEF +10% | Grants a shield equal to 10% Max HP every 11s after battle starts, lasting 8s... |
+| 42 | **Effulgent Fan** | Immortal | — | Global HP +10% | Every 11s, increases Crit Rate by 30% and Skill Crit Rate by 30% for 3s. For ... |
+| 43 | **Magic Carpet** | Immortal | — | Global ATK +10% | After casting skills 6 times, restore full energy to 1 random skills. |
+| 44 | **Panda Attack** | Immortal | — | Global DEF +10% | Every 10s, gains Control Immunity for 3-5s and boosts ATK by 5%-12% and DMG R... |
+| 45 | **Vibrant Watermelon Ship** | Immortal | 5034 | Global DEF +10% | Increases ATK by 10% and DEF by 30% every 11s for 5s. After this, a Watermelo... |
+| 46 | **Trembling Pepe** | Immortal | 5029 | Global DEF +10% | These two buffs will alternate to take effect every 8s: Gain a Shield with 8%... |
+| 47 | **Guardian Spaceship** | Immortal | — | Global DEF +10% | Gain a shield equal to 6% Max HP every 9s for 6s. 6s later, reflects 20% of t... |
+| 48 | **Purple Wing** | Immortal | 5008 | Global HP +10% | After the battle begins, immediately deals 5000% AoE DMG, and launches target... |
+| 49 | **Thunder Vanguard** | Supreme | — | Global HP +10% | Increase DEF by 36% after the battle starts. Ram forward every 8s, dealing 10... |
+| 50 | **Holy Dragon** | Supreme | 5033 | Global DEF +10% | Gain 3 stacks of Guard every 11s, each stack increasing DEF by 100% but losin... |
+| 51 | **Cheetah Zero** | Supreme | — | Global HP +10% | Gain Death Immunity for 3s when taking lethal damage. For the duration, ignor... |
+| 52 | **Speed of Death** | Supreme | 5057 | Global HP +10% | Gains 20% Evasion. Activates speed-up mode at the start of battle: Every 1 ev... |
+| 53 | **Cinder Wolf** | Supreme | — | Global HP +10% | Gains 10% ATK and 16% Final Crit RES after the battle starts. The first time ... |
+| 54 | **Dazzling Unicorn** | Supreme | — | Global DEF +10% | The unicorn spreads its wings every 12s, resisting DMG of the next active ski... |
+| 55 | **Skyward Blaze** | Supreme | — | Global HP +10% | Deals 600% current Basic ATK AoE DMG to an area every 10s and burns the targe... |
+| 56 | **Sparkling Flash** | Immortal | — | Global HP +10% | Every 8s after the battle starts, gain a support from Sparkling Flash (trigge... |
+| 57 | **Cloud Traveler** | Immortal | — | Global DEF +10% | Healing Amount increases by 0.3%. For every 15% Max HP lost, restores 7% of l... |
+| 58 | **Spectral Ride** | Immortal | — | Global HP +10% | When an opponent's HP drops below 88% for the first time, their ATK is reduce... |
+| 59 | **Immortal Tyrant** | Immortal | — | Global DEF +10% | Every 11s, releases the icy breath, reducing all enemies' Movement SPD, ATK S... |
+| 60 | **Best Buddy** | Immortal | — | Global DEF +10% | At the start of the battle, the Character gains 12% DMG RES, which decays by ... |
+| 61 | **Soaring Shroomie** | Immortal | — | Global HP +10% | Movement SPD increases by 20% at the start of battle and by an additional 10%... |
+| 62 | **Sanctuary Warmth** | Supreme | — | Global HP +10% | The first time HP drops below 70%/50%/30%, gain a Pink/Yellow/Purple Gift. Ea... |
+| 63 | **Dawn of Time** | Immortal | — | Global DEF +10% | Gains 16% DMG RES after the battle starts, which is reduced by 1/4 every 12s.... |
+| 64 | **Leo** | Immortal | — | Global HP +10% | Every 10s after battle starts, reduces all enemies' ATK, Crit Rate, Skill Cri... |
 
 ---
 
-### 5007 — Round Frog
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5007 |
-| **Max Level** | 3 |
-| **Trigger** | Kill trigger (every 10s check) |
-| **Cooldown** | Per kill |
-| **Effect 1** | On kill: ATK (1001) +30% (3000) for 5s |
-| **Effect 2** | On boss/player kill: Stun (dizz) 1s |
-| **PvP Notes** | PvE-focused (needs kills). In PvP, only boss kill stun is relevant. |
+## Tier Mounts (Cosmetic Progression)
+
+These 10 mounts are unlocked by reaching mount level milestones. They have no combat skills — purely cosmetic progression skins.
+
+| # | Name | Rarity |
+|---|------|--------|
+| 1 | Lily Pad | Rare |
+| 2 | Quack Splash | Rare |
+| 3 | Surfboard | Rare |
+| 4 | Flyboard | Rare |
+| 5 | Skyglider | Epic |
+| 6 | Amethyst Gourd | Epic |
+| 7 | Magic Broom | Legendary |
+| 8 | Azure Feather | Immortal |
+| 9 | Soaring Wings | Supreme |
+| 10 | Cyan Phoenixes | Supreme |
 
 ---
 
-### 5008 — Purple Wing
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5008 |
-| **Max Level** | 3 |
-| **Trigger** | Time-based periodic (every 11s) |
-| **Cooldown** | 11s |
-| **Effect 1** | 10000% AoE Skill damage (coefficient: 100000 = 100x basic ATK) |
-| **Effect 2** | Launch (throw_hit) 0.5s airborne |
-| **PvP Notes** | Strong periodic burst. 100x basic ATK every 11s is significant sustained DPS. |
+## Combat Skill Mounts — Full Details
+
+### 11. Hot Wheels (Skill ID 5003)
+
+**Rarity:** Legendary
+
+**Effect:** Boost Pal Attack Speed by 2% per second (up to 40%).
+
+**Passive:** Ignore Stun +6%
+
+**Code Skill ID:** 5003
 
 ---
 
-### 5009 — Cloud Drifter
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5009 |
-| **Max Level** | 3 |
-| **Trigger** | Skill crit (after skill critical hit) |
-| **Cooldown** | Per skill crit |
-| **Effect 1** | Skill Crit Rate (1037): +20% (2000) passive |
-| **Effect 2** | On skill crit: ATK (1001) +40% (4000) for 5s |
-| **PvP Notes** | S-tier for Darklord (+50% skill crit passive stacks). Good for Prophet. |
+### 12. Pyrebreaker (Skill ID 5002)
+
+**Rarity:** Legendary
+
+**Effect:** Increase base Crit rate by 1% and Crit DMG by 5% per second (up to 20%, 100%).
+
+**Passive:** Ignore Evasion +10%
+
+**Code Skill ID:** 5002
 
 ---
 
-### 5010 — Kun
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5010 |
-| **Max Level** | 1 |
-| **Trigger** | On damage received |
-| **Cooldown** | None |
-| **Buff Group** | DEFER_DAMAGE (400) |
-| **Effect** | Convert received burst damage into DoT over 5s (damage smoothing) |
-| **PvP Notes** | DEFER_DAMAGE has NO PvP decay — very efficient. Good vs burst builds. |
+### 13. Skyshark
+
+**Rarity:** Legendary
+
+**Effect:** Launches a shark missile every 12s, dealing 1600% AoE Skill DMG and restoring HP equal to the DMG dealt, up to 30% of Max HP, ignoring PvP reduction. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
 
 ---
 
-### 5013 — Cyclone Bamboo
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5013 |
-| **Max Level** | 1 |
-| **Trigger** | Conditional (while shielded) |
-| **Cooldown** | None |
-| **Effect 1** | Shields last +3s longer, +50% (5000) stronger |
-| **Effect 2** | ATK (1001): +10% (1000) |
-| **Effect 3** | Counter (1017): +25% (2500) while shielded |
-| **PvP Notes** | Synergizes with Martial Sage (8% HP shield passive) and Prophet (shield-related skills). |
+### 14. White Tiger (Skill ID 5004)
+
+**Rarity:** Legendary
+
+**Effect:** Targets with HP percentage below the caster take 15% increased DMG, while those with HP percentage above the caster have their ATK reduced by 10%.
+
+**Passive:** Global Basic ATK DMG +10%
+
+**Code Skill ID:** 5004
 
 ---
 
-### 5014 — Velocity Blitz
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5014 |
-| **Max Level** | 3 |
-| **Trigger** | Counter trigger (every counter-attack) |
-| **Cooldown** | Per counter |
-| **Effect** | Global Counter DMG (2031): +20% (2000) per counter, 3s duration, cap 60% (6000, 3 stacks) |
-| **PvP Notes** | S-tier for Warbringer (+30% counter rate, +140% counter DMG passive). |
+### 15. Boom Da Bang
+
+**Rarity:** Legendary
+
+**Effect:** ATK, ATK SPD, Energy Regen SPD, and Pal ATK SPD increase by 4% every 10s, stacking up to 6 times. (Triggers at the start of the battle.) At 6 stacks or when below 40% HP, stuns all enemies for 1.5s and reduces their DMG RES by 10% until the battle ends.
+
+**Passive:** Global DEF +10%
 
 ---
 
-### 5015 — AdaptoSlime
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5015 |
-| **Max Level** | 1 |
-| **Trigger** | HP threshold (cumulative 5% max HP damage taken) |
-| **Cooldown** | Resets after trigger |
-| **Effect** | 500% AoE damage (coefficient: 50000 = 5x basic ATK) |
-| **PvP Notes** | Frequent proc in PvP due to constant damage. Consistent AoE output. |
+### 16. Blue Ox (Skill ID 5005)
+
+**Rarity:** Legendary
+
+**Effect:** Increase DMG RES by 10% and shorten the duration of control effects by 30%.
+
+**Passive:** Pal Crit DMG +25%
+
+**Code Skill ID:** 5005
 
 ---
 
-### 5016 — Koi Paper Kite
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5016 |
-| **Max Level** | 3 |
-| **Trigger** | Combo count (every 3 combo hits) |
-| **Cooldown** | Per 3-combo cycle |
-| **Buff Group** | DOUBLE_TRIGGER (170) |
-| **Buff IDs** | 30003, 51141 |
-| **Effect** | 1000% AoE damage (coefficient: 100000 = 10x basic ATK) every 3 combos |
-| **PvP Notes** | S-tier for Plume Monarch (+30% combo rate, +3 extra combo bullets, +140% combo DMG). |
+### 17. Round Frog (Skill ID 5007)
+
+**Rarity:** Legendary
+
+**Effect:** Every 10 second, defeat 1 enemies, boosting ATK by 15% for 5 seconds. If the target is a Boss or player, stun for an additional 1 seconds.
+
+**Passive:** Crit RES Bonus +40%
+
+**Code Skill ID:** 5007
 
 ---
 
-### 5018 — Moon Rabbit
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5018 |
-| **Max Level** | 3 |
-| **Trigger** | Time-based periodic (every 10s) |
-| **Cooldown** | 10s |
-| **Effect 1** | DMG Resistance (1021): +15% (1500) passive |
-| **Effect 2** | Restore 25% of lost HP every 10s (2500) |
-| **PvP Notes** | Sustain mount. Good for Martial Sage. Heal affected by 30% PvP treatDecay. |
+### 18. Blue Queen (Skill ID 5006)
+
+**Rarity:** Legendary
+
+**Effect:** Distribute 10% of DMG dealt to up to 5 surrounding enemies when dealing DMG.
+
+**Passive:** Crit DMG Bonus +40%
+
+**Code Skill ID:** 5006
 
 ---
 
-### 5021 — Blazing Motorcycle
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5021 |
-| **Max Level** | 1 |
-| **Trigger** | HP-loss scaling (continuous) |
-| **Cooldown** | None |
-| **Effect** | Per 10% HP lost → 500% basic ATK damage (coefficient: 50000). At 50% HP = 2500% DMG. |
-| **PvP Notes** | S-tier for Warbringer (ATK +3% per 10% HP lost stacks). Synergizes with any HP-loss scaling. |
+### 19. Rum Barrel
+
+**Rarity:** Legendary
+
+**Effect:** For every 20% Max HP missing, deal 800% Basic ATK AoE DMG within a range, gain 10% ATK and take 10% less DMG for 5s (triggers at the start of the battle)
+
+**Passive:** Global DEF +10%
 
 ---
 
-### 5024 — Immortal Ascent
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5024 |
-| **Max Level** | 1 |
-| **Trigger** | Death trigger (when HP would reach 0) |
-| **Cooldown** | Once per combat |
-| **Buff Group** | IMMUNE_DEATH (230) |
-| **Effect 1** | 2s invulnerability on lethal damage |
-| **Effect 2** | Recover 10% max HP (1000) |
-| **PvP Notes** | Ultimate survival. 2s of invulnerability can turn fights. One-time use. |
+### 20. Blizzard Visitor
+
+**Rarity:** Immortal
+
+**Effect:** Reduces all target's Movement SPD by 25%. For every 10% Movement SPD they lose, reduces their ATK by 2% and increases the duration of control effects on them by 2%.
+
+**Passive:** Global DEF +10%
 
 ---
 
-### 5026 — AdaptoSlime+
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5026 |
-| **Max Level** | 3 |
-| **Trigger** | Dynamic HP% thresholds (80%, 60%, 30%) |
-| **Cooldown** | None |
-| **Buff Group** | ATTRIB_CONDITION (80), SHIELD (20) |
-| **Effect 1** | HP < 80%: ATK (1001) +30% (3000) |
-| **Effect 2** | HP < 60%: Shield = 20% max HP (2000) |
-| **Effect 3** | HP < 30%: Incoming DMG -20% (2000) |
-| **PvP Notes** | Three-tier survival. Each tier activates as HP drops, providing layered defense. |
+### 21. Silvery Crescent (Skill ID 5024) — Code: Immortal Ascent
+
+**Rarity:** Immortal
+
+**Effect:** Gain Death Immunity for 2s upon taking lethal DMG, and immediately recover 10% Max HP.
+
+**Passive:** Global HP +10%
+
+**Code Skill ID:** 5024
 
 ---
 
-### 5029 — Trembling Pepe
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5029 |
-| **Max Level** | 3 |
-| **Trigger** | Time-based alternating (every 8s) |
-| **Cooldown** | 8s cycle |
-| **State 1** | Shield = 16% max HP (1600) — Buff Group SHIELD (20) |
-| **State 2** | ATK (1001) +16% (1600) + Control Duration -40% (4000) |
-| **PvP Notes** | Flexible utility mount. Good all-around for any class. |
+### 22. Diving Duck
+
+**Rarity:** Immortal
+
+**Effect:** B.Duck creates splashes around every 11s, dealing 2000% Skill DMG, 800% Combo DMG and 800% Counter DMG to all enemies in the area and reducing their ATK by 10% until the battle ends; the effects don't stack. The skill deals 50% more DMG when cast again. When the skill hits the same target again, reduces their ATK by 3% more, stacking up to 2 times. (Casts 1 time immediately after battle starts.)
+
+**Passive:** Global DEF +10%
 
 ---
 
-### 5030 — Unrivaled Force
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5030 |
-| **Max Level** | 3 |
-| **Trigger** | Probabilistic time-based (60% chance/s for 20s, then burst) |
-| **Cooldown** | 1s interval / 20s phase |
-| **Phase 1** | 60% chance/s (6000): ATK (1001) +1.5% (150) + DMG RES (1021) +1.5% (150) per proc. Max 20 stacks = +30% each. |
-| **Phase 2** | After 20s: 16000% AoE (coefficient: 1600000 = 160x basic ATK) + launch (throw_hit) 0.5s |
-| **PvP Notes** | Massive 20s burst. If fight lasts 20s, 160x AoE can one-shot. Stacking phase provides good sustain. |
+### 23. Scorpio
+
+**Rarity:** Immortal
+
+**Effect:** Inflicts 1 stack of Poison on enemies in a small area every 15s, each stack dealing Bleed DMG equal to 0.8% of the target's current HP per second (ignores Immunity) until the battle ends. Poison stacks up to 10 times. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
 
 ---
 
-### 5033 — Neon Shadows
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5033 |
-| **Max Level** | 3 |
-| **Trigger** | Time-based periodic (every 11s accumulation) |
-| **Cooldown** | 11s cycle |
-| **Phase 1** | 3 Guard stacks: DEF (1024) +150% (15000) each = +450% DEF total |
-| **Phase 2** | On expire: 4000% Skill (400000) + 1600% Combo (160000) + 1600% Counter (160000) |
-| **PvP Notes** | Defense-into-burst mount. Near-unkillable during Guard phase, then big damage release. |
+### 24. Wave Cruiser
+
+**Rarity:** Immortal
+
+**Effect:** Gains 5 wave stack(s) at the start of battle, each reducing enemy Final Crit DMG, Final Pal Crit DMG and Final Skill Crit DMG by 4%. Breaks 1 wave stack every 6s or after every 20 basic attacks, increasing Movement SPD by 8% and ATK by 6% until the battle ends, stacking up to 5 times.
+
+**Passive:** Global HP +10%
 
 ---
 
-### 5034 — Bite the Watermelon
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5034 |
-| **Max Level** | 3 |
-| **Trigger** | Time-based periodic (every 11s) |
-| **Cooldown** | 11s |
-| **Effect 1** | ATK (1001) +20% (2000), DEF (1024) +50% (5000) every 11s |
-| **Effect 2** | Summon wave: 4000% Skill (400000) + 1600% Combo (160000) + 1600% Counter (160000) |
-| **PvP Notes** | Periodic multi-hit mount. Similar burst to Neon Shadows but with ATK/DEF buff instead of Guard stacking. |
+### 25. Storm Rider
+
+**Rarity:** Immortal
+
+**Effect:** Increase DMG RES by 5% and shorten the duration of control effects by 15%. The first time HP drops below 80%, increase DMG RES by 8% and shorten the duration of control effects by 25% for 8s. The first time HP drops below 60%, increase DMG RES by 8% and shorten the duration of control effects by 25% for 12s. The first time HP drops below 40%, increase DMG RES by 8% and shorten the duration of control effects by 25% until the battle ends. Each effect is counted independently and stackable.
+
+**Passive:** Global DEF +10%
 
 ---
 
-### 5048 — Phoenix Nirvana
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5048 |
-| **Max Level** | 1 |
-| **Trigger** | HP threshold (50%) |
-| **Cooldown** | None |
-| **Buff Group** | hpchange_trigger |
-| **Buff IDs** | 50482 → 50465, 50466, 50467 |
-| **Effect** | At 50% HP: activates buff chain. Exact sub-effects require binary config decode. |
-| **Obtain** | Event mount |
-| **PvP Notes** | Does NOT apply to clone units. HP threshold-based activation. |
-| **Data Confidence** | Partial — buff chain effects not fully decoded from binary |
+### 26. Horizon Racer
+
+**Rarity:** Immortal
+
+**Effect:** Every 10 second, summon a car, dealing 800% current basic attack AoE DMG and knocking back targets.
+
+**Passive:** Global HP +10%
 
 ---
 
-### 5057 — Speed of Death / Bike (Mount ID 404)
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5057 |
-| **Mount ID** | 404 |
-| **Max Level** | 3 |
-| **Trigger** | 3-phase cycle |
-| **Passive** | Evasion (1008): +20/25/30% by level (2000/2500/3000) |
+### 27. AdaptoSlime (Skill ID 5026)
 
-**Phase 1 — Speed Stacking:**
+**Rarity:** Immortal
 
-| Combat Event | Stacks Per | Every N Events | Buff ID |
-|-------------|-----------|----------------|---------|
-| Evade | 1 | 1 | 50610 |
-| Normal Attack | 1 | 8 | 50611 |
-| Combo | 1 | 8 | 50612 |
-| Counter | 1 | 8 | 50613 |
-| Skill | 1 | 2 | 50614 |
+**Effect:** Increases ATK by 15% for 10 seconds when HP drops below 80%. Gains a shield equal to 10% of max HP for 10 seconds when HP drops below 60%. Reduces DMG taken by 15% for 10 seconds when HP drops below 30%.
 
-Speed buff (50609): +8% (800) movement speed per stack, 50 max stacks.
+**Passive:** Global HP +10%
 
-**Phase 2 — Overdrive (at 200% speed / buff 50615):**
-
-| Buff ID | Effect |
-|---------|--------|
-| 50621 | 18% Trap AoE |
-| 50622 | 18% DMG RES |
-| 50623 | 20% ATK |
-| 50624 | 20% DEF |
-| 50625 | 20% ATK Speed |
-| 50626 | 20% Power Recovery |
-| 50631 | CC Immunity (5s) |
-
-Overdrive skill: 50573. Duration: 5s.
-
-**Phase 3 — Reset:**
-Reset buff 50629, clear buff 50630. All stacks cleared, restart Phase 1.
-
-| **PvP Notes** | S-tier mount. Synergizes extremely well with Sacred Hunter (evasion feeds speed stacks) and Martial Sage (counter feeds stacks + tankiness survives stacking phase). |
-|---------------|---|
+**Code Skill ID:** 5026
 
 ---
 
-### 5060 — Ethereal Phoenix (Mount ID 406)
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5060 |
-| **Mount ID** | 406 |
-| **Max Level** | 3 |
-| **Trigger** | HP loss (every 18% Max HP lost) |
-| **Cooldown** | Per 18% HP loss |
-| **Buff Group** | skill_counter |
-| **Buff ID** | 50650 |
-| **Effect 1** | Purify + ignore Control effects for 1s |
-| **Effect 2** | Shield = 8% Max HP for 5s |
-| **Effect 3** | When shield expires: ATK +4% permanent (max 6 stacks = +24%) |
-| **Obtain** | Draw event (code "star" redemption) |
-| **PvP Notes** | S-tier. Combines CC cleanse, shielding, and permanent ATK stacking. Excellent for sustained fights. |
+### 28. Koi Paper Kite (Skill ID 5016)
+
+**Rarity:** Immortal
+
+**Effect:** Every 3 combo triggers an additional 500% AoE DMG.
+
+**Passive:** Global ATK +10%
+
+**Code Skill ID:** 5016
 
 ---
 
-### 5124 — Time Pause
-| Property | Value |
-|----------|-------|
-| **Skill ID** | 5124 |
-| **Max Level** | 1 |
-| **Trigger** | HP loss (every 25% Max HP lost) |
-| **Cooldown** | Per 25% HP threshold |
-| **Effect 1** | Freeze ALL enemies for 2s (ignores Control Immunity!) |
-| **Effect 2** | ATK +25% |
-| **Obtain** | Event mount |
-| **PvP Notes** | S-tier. The ONLY effect that ignores Control Immunity. At 75%/50%/25% HP = 6s total freeze time. Game-changing. |
+### 29. Long-legged Bird
+
+**Rarity:** Immortal
+
+**Effect:** There is a 50% chance to gain 4% ATK, 4% DMG RES and 10% Control Duration Reduction every 4s after the battle starts. This lasts until the battle ends and stacks up to 3 times (the chances of the 3 effects are independently calculated). There is a 100% chance to grant the Summon 4% ATK, 4% DMG RES and 10% Control Duration Reduction until the Summon disappears, stacking up to 3 times. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
 
 ---
 
-## Event / P2W Mounts (Skill IDs Unknown — from web sources)
+### 30. Heart's Desire (Skill ID 5030) — Code: Unrivaled Force
 
-> These mounts are confirmed from game update notes, leaks, and community guides. Their internal skill IDs are in the gap ranges (5011-5012, 5017, 5019-5020, etc.) but cannot be mapped without the config binary.
+**Rarity:** Immortal
 
-### Cheetah Zero
-| Property | Value |
-|----------|-------|
-| **Skill ID** | Unknown (gap range) |
-| **Trigger** | Time-based (every 11s) |
-| **Cooldown** | 11s cycle |
-| **Obtain** | Firework Fest / Carnival Night spending event |
-| **Phase 1** | Shield = 16% Max HP (ignores PvP reduction & shield breaks) at cost of 10% current HP (ignores immunity) for 3s |
-| **Lock Phase** | During shield: CANNOT use Basic ATK, Combo, Counter, or Active Skills |
-| **Phase 2 — Burst** | Next Basic ATK: 1200% Basic ATK DMG (can crit) + 1200% Combo DMG (can crit) + 1200% Counter DMG (can crit) + 4000% Skill DMG AoE + Pal's next Basic ATK +200% |
-| **PvP Notes** | S-tier burst. 3s lockout is a trade-off but the post-shield burst is massive across all damage types. |
+**Effect:** Every second for the first 20 seconds has a 60% chance to boost ATK by 1% and DMG RES by 1% until the battle ends. After 20 seconds, deals 8000% AoE Skill DMG and launches the target airborne for 0.5 second.
+
+**Passive:** Skill Crit DMG +10%
+
+**Code Skill ID:** 5030
 
 ---
 
-### Magic Carpet
-| Property | Value |
-|----------|-------|
-| **Skill ID** | Unknown (gap range) |
-| **Trigger** | Skill cast counter (every 6 skill casts) |
-| **Cooldown** | Per 6-cast cycle |
-| **Obtain** | Event / Rush Tokens |
-| **Effect 1** | After casting 6 skills: fully restore energy of 1 random equipped skill |
-| **Effect 2** | Global ATK +10% |
-| **PvP Notes** | A-tier for Prophet/Darklord. Free skill recharges sustain skill rotation pressure. |
+### 31. Book of the Universe
+
+**Rarity:** Immortal
+
+**Effect:** When casting an active skill, the Character has a 15% chance to cast it again (excluding those cast by Past Revisited and Eye of Raven).
+
+**Passive:** Global DEF +10%
 
 ---
 
-### B. Duck
-| Property | Value |
-|----------|-------|
-| **Skill ID** | Unknown (gap range) |
-| **Trigger** | Time-based periodic (every 11s) |
-| **Cooldown** | 11s |
-| **Obtain** | Spending Event |
-| **Effect 1** | AoE splash: 2000% Skill DMG + 800% Combo DMG + 800% Counter DMG |
-| **Effect 2** | Reduce all enemies' ATK by 10% until end of battle (permanent debuff) |
-| **Passive** | Global DEF +10% |
-| **PvP Notes** | A-tier. The permanent ATK debuff stacks with each proc. Strong sustained pressure + enemy weakening. |
+### 32. Time Machine
+
+**Rarity:** Immortal
+
+**Effect:** For the first 20s after the battle starts, negates and stores 40% of all DMG taken and gains 8% of ATK, 10% of Final Crit DMG, 10% of Final Skill Crit DMG and 10% of Final Pal Crit DMG. After the first 20s of the battle, receives an additional 6% of the stored DMG (ignores Immunity) per second for 10s.
+
+**Passive:** Global DEF +10%
 
 ---
 
-### Time Machine
-| Property | Value |
-|----------|-------|
-| **Skill ID** | Unknown (gap range) |
-| **Trigger** | Time-based phased (20s + 10s) |
-| **Cooldown** | 30s total cycle |
-| **Obtain** | Firework Fest event |
-| **Phase 1 (0-20s)** | Negate/store 40% of all DMG taken. Gain +8% ATK, +10% Final Crit DMG, +10% Final Skill Crit DMG, +10% Final Pal Crit DMG |
-| **Phase 2 (20-30s)** | Deal 6% of total stored DMG (ignores immunity) per second for 10s |
-| **PvP Notes** | S-tier. Essentially invincible for first 20s (40% DMG negation + offensive buffs), then massive stored-DMG burst. Longer fights heavily favor this mount. |
+### 33. Sea of Lanterns
+
+**Rarity:** Immortal
+
+**Effect:** After 15s into battle, becomes immune to DMG for 2s and gains 15% Final Crit DMG, 15% Final Skill Crit DMG, and 15% Final Pal Crit DMG until the battle ends. Current HP changes into 40% Max HP during DMG immunity.
+
+**Passive:** Global DEF +10%
 
 ---
 
-### Dazzling Unicorn
-| Property | Value |
-|----------|-------|
-| **Skill ID** | Unknown (gap range) |
-| **Trigger** | Time-based (every 12s, triggers at battle start) |
-| **Cooldown** | 12s |
-| **Obtain** | Magi Saga / Magician Trials event (Apr 2025) |
-| **Skill Name** | Spiral Strike |
-| **Effect 1** | Resist DMG of next active skill hit (excludes Class/Avian/Summoning skills) |
-| **Effect 2** | During resist: DEF +50% + ignore all control effects |
-| **Effect 3** | After resisting: reflect active skill to attacker |
-| **Effect 4** | Gain +4% ATK and +4% DMG RES permanent (max 3 stacks = +12% each) |
-| **Passive** | Global DEF +10% |
-| **PvP Notes** | S-tier. Active skill reflection is devastating against Prophet/Darklord. Permanent stat stacking. |
+### 34. Dimensional Wings
+
+**Rarity:** Immortal
+
+**Effect:** Gain 1 bar of Rage for every 15 basic attacks, 12 combos, 12 counters, 3 active skill(s), or after taking damage equal to 18% of Max HP. Each bar of Rage increases DEF by 3%. At 5 bars, uses all Rage to increase DMG RES, ATK, Crit Rate, Skill Crit Rate, Pal Crit Rate, Crit DMG, Pal Crit DMG and Skill Crit DMG by 12% for 5s.
+
+**Passive:** Global DEF +10%
 
 ---
 
-### Silvery Crescent
-| Property | Value |
-|----------|-------|
-| **Skill ID** | Unknown |
-| **Obtain** | Feather Shop (80 Feather Passes) |
-| **Known Effect** | +12% speed |
-| **Combat Skill** | Not documented online — combat skill text unavailable |
-| **PvP Notes** | Unknown tier. Awaiting skill data. |
+### 35. Mini Motorcycle (Skill ID 5014) — Code: Velocity Blitz
+
+**Rarity:** Immortal
+
+**Effect:** With every 1 counter, increase global counter DMG by 10% for 3 seconds, up to a maximum of 30%. The duration refreshes with each new counter trigger.
+
+**Passive:** Global HP +10%
+
+**Code Skill ID:** 5014
 
 ---
 
-### Cyan Phoenixes
-| Property | Value |
-|----------|-------|
-| **Skill ID** | Unknown |
-| **Obtain** | Mount Level Tier 24 – 10 Star (max tier unlock) |
-| **Combat Skill** | Not documented online — combat skill text unavailable |
-| **PvP Notes** | Unknown tier. Tier 24 is endgame content. |
+### 36. Blazing Motorcycle (Skill ID 5021)
+
+**Rarity:** Immortal
+
+**Effect:** For every 10% lost HP, release a flame jet, dealing at least 500% of current basic attack DMG (scales with lost HP).
+
+**Passive:** Global DEF +10%
+
+**Code Skill ID:** 5021
+
+---
+
+### 37. Cloud Drifter (Skill ID 5009)
+
+**Rarity:** Immortal
+
+**Effect:** Increase Skill Crit Rate by 10%. After a skill critical, boost ATK by 20% for 5 seconds.
+
+**Passive:** Global ATK +10%
+
+**Code Skill ID:** 5009
+
+---
+
+### 38. Gator Menace
+
+**Rarity:** Immortal
+
+**Effect:** After the battle starts, every 5 seconds, deal DMG equal to 4% of the maximum HP to all targets within range, reducing their DMG RES by 2% and Crit RES by 20% until the battle ends, stacking up to 5 times.
+
+**Passive:** Global DEF +10%
+
+---
+
+### 39. Pumpkin Carriage
+
+**Rarity:** Immortal
+
+**Effect:** Deals 2000% AoE Skill DMG, 800% current Combo AoE DMG, and 800% current Counter AoE DMG every 11s after the battle starts, and the targets take DMG equal to 2% of current HP per second with ATK and DMG RES reduced by 10% for 5s. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
+
+---
+
+### 40. Ethereal Phoenix (Skill ID 5060) — Mount ID 406
+
+**Rarity:** Immortal
+
+**Effect:** Cleanse and ignore control effects for 1s for every 18% Max HP lost. Gain a shield equal to 8% Max HP, lasting 5s. After the shield expires, ATK increases by 4% until the battle ends, stacking up to 6 times.
+
+**Passive:** Global DEF +10%
+
+**Code Skill ID:** 5060
+
+---
+
+### 41. Nebular Shuttle
+
+**Rarity:** Immortal
+
+**Effect:** Grants a shield equal to 10% Max HP every 11s after battle starts, lasting 8s. Grants 6% DMG RES for the shield's duration; cleanses and increases Final DMG RES by 3% and ATK by 3% once the shield is lost, lasting until the end of battle. Stacks up to 3 times. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
+
+---
+
+### 42. Effulgent Fan
+
+**Rarity:** Immortal
+
+**Effect:** Every 11s, increases Crit Rate by 30% and Skill Crit Rate by 30% for 3s. For every 5 Crits or 1 Skill Crit hit during this period, fireworks deal 200% of current Basic ATK AoE DMG (can be Crit) to enemies and increase Final Crit DMG and Final Skill Crit DMG by 6% for 3s, stacking up to 5 times. (Triggers at the start of the battle.)
+
+**Passive:** Global HP +10%
+
+---
+
+### 43. Magic Carpet
+
+**Rarity:** Immortal
+
+**Effect:** After casting skills 6 times, restore full energy to 1 random skills.
+
+**Passive:** Global ATK +10%
+
+---
+
+### 44. Panda Attack
+
+**Rarity:** Immortal
+
+**Effect:** Every 10s, gains Control Immunity for 3-5s and boosts ATK by 5%-12% and DMG RES by 5%-12% for 10s. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
+
+---
+
+### 45. Vibrant Watermelon Ship (Skill ID 5034) — Code: Bite the Watermelon
+
+**Rarity:** Immortal
+
+**Effect:** Increases ATK by 10% and DEF by 30% every 11s for 5s. After this, a Watermelon Ship is summoned to unleash a wave that launches enemies for 0.5s, dealing 2000% Skill DMG, 800% current Combo DMG, and 800% current Counter DMG as AoE DMG. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
+
+**Code Skill ID:** 5034
+
+---
+
+### 46. Trembling Pepe (Skill ID 5029)
+
+**Rarity:** Immortal
+
+**Effect:** These two buffs will alternate to take effect every 8s: Gain a Shield with 8% of Max HP, lasting 8s. Gain 8% ATK and reduce the time of being controlled by 30% for 8s.
+
+**Passive:** Global DEF +10%
+
+**Code Skill ID:** 5029
+
+---
+
+### 47. Guardian Spaceship
+
+**Rarity:** Immortal
+
+**Effect:** Gain a shield equal to 6% Max HP every 9s for 6s. 6s later, reflects 20% of the total DMG received within the 6s to all enemies. (Only DMG absorbed and blocked by the shield can be reflected, not DMG ignored by Immunity.)
+
+**Passive:** Global DEF +10%
+
+---
+
+### 48. Purple Wing (Skill ID 5008)
+
+**Rarity:** Immortal
+
+**Effect:** After the battle begins, immediately deals 5000% AoE DMG, and launches targets within the range for 0.5 seconds. Releases every 11 seconds.
+
+**Passive:** Global HP +10%
+
+**Code Skill ID:** 5008
+
+---
+
+### 49. Thunder Vanguard
+
+**Rarity:** Supreme
+
+**Effect:** Increase DEF by 36% after the battle starts. Ram forward every 8s, dealing 1000% Skill DMG, 200% current Combo DMG (can be Crit), 200% current Counter DMG (can be Crit), and DMG equal to 4% Max HP to targets in the area. If targets are immune to damage or death, reduce their ATK by an additional 24% for 5s. Afterwards, DEF is reduced by 6% while ATK increases by 3%, stacking up to 6 times. (Triggers at the start of the battle.)
+
+**Passive:** Global HP +10%
+
+---
+
+### 50. Holy Dragon (Skill ID 5033) — Code: Neon Shadows
+
+**Rarity:** Supreme
+
+**Effect:** Gain 3 stacks of Guard every 11s, each stack increasing DEF by 100% but losing 1 stack every 1s. Deal 2000% Skill DMG, 800% current Combo DMG and 800% current Counter DMG at the end of Guard (triggers at the start of the battle)
+
+**Passive:** Global DEF +10%
+
+**Code Skill ID:** 5033
+
+---
+
+### 51. Cheetah Zero
+
+**Rarity:** Supreme
+
+**Effect:** Gain Death Immunity for 3s when taking lethal damage. For the duration, ignore new control effects (doesn't affect existing control), gain 10% ATK, 10% Crit Rate, 10% Final Crit DMG, 10% Skill Crit Rate, 10% Final Skill Crit DMG, 10% Pal Crit Rate, and 10% Final Pal Crit DMG, and the next basic attack deals 3000% Skill DMG, 1200% Current Combo DMG (can be Crit), 1200% Current Counter DMG (can be Crit), and DMG equal to 8% Max HP to enemies in the area. The character explodes at the end of the duration.
+
+**Passive:** Global HP +10%
+
+---
+
+### 52. Speed of Death (Skill ID 5057) — Code: Life and Death Speed — Mount ID 404
+
+**Rarity:** Supreme
+
+**Effect:** Gains 20% Evasion. Activates speed-up mode at the start of battle: Every 1 evasions, 8 basic attacks, 8 combos, 8 counters, or 2 active skills used increases Movement SPD by 8% until the burst ends. After Movement SPD reaches 200% of its initial value, activates charge mode: Increases DMG RES by 9% for 5s. After charge mode ends, activates burst mode: Cleanses and becomes immune to control effects, recovers 12% of lost HP per second, and increases DMG RES by 12%, ATK, DEF, ATK SPD, Energy Regen SPD and Pal ATK SPD by 32% for 5s. Returns to speed-up mode after the burst ends.
+
+**Passive:** Global HP +10%
+
+**Code Skill ID:** 5057
+
+---
+
+### 53. Cinder Wolf
+
+**Rarity:** Supreme
+
+**Effect:** Gains 10% ATK and 16% Final Crit RES after the battle starts. The first time HP drops below 39%, cleanses debuffs, becomes immune to damage for 1s, converts HP into 10% Max HP, and gains a shield equal to 45% of Max HP (ignores PvP reduction and shield breaks). For the shield's duration, reduces HP Regen by 100%, ignores control effects, but gains 10% DMG RES; the character's basic attacks deal 250% extra Skill DMG, 50% extra Combo DMG (can be Crit), 50% extra Counter DMG (can be Crit), while pals' basic attacks deal 50% extra Pal DMG (can be Crit).
+
+**Passive:** Global HP +10%
+
+---
+
+### 54. Dazzling Unicorn
+
+**Rarity:** Supreme
+
+**Effect:** The unicorn spreads its wings every 12s, resisting DMG of the next active skill hit on the Character (excluding Class, Avian, and Summoning Skills), during which the Character gains 50% DEF and ignores all control effects. After the unicorn resists DMG, the DEF boost and control immunity effects disappear. Meanwhile, the Chracter reflects the active skill to the attacker and gains 4% ATK and 4% DMG RES until the battle ends, up to 3 stacks. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
+
+---
+
+### 55. Skyward Blaze
+
+**Rarity:** Supreme
+
+**Effect:** Deals 600% current Basic ATK AoE DMG to an area every 10s and burns the targets, who will receive 40% current Basic ATK DMG per second until the battle ends, stacking up to 3 times. Gains an additional 4% ATK and DEF and 4% DMG RES until the battle ends, stacking up to 3 times. (Casts 1 time immediately after battle starts.)
+
+**Passive:** Global HP +10%
+
+---
+
+### 56. Sparkling Flash
+
+**Rarity:** Immortal
+
+**Effect:** Every 8s after the battle starts, gain a support from Sparkling Flash (triggers at the start of the battle). For every 10% HP over 50% Max HP, gain 2% ATK and DEF for 8s. If below 50% HP, restore 12% of lost HP and gain 10% DMG RES for 8s.
+
+**Passive:** Global HP +10%
+
+---
+
+### 57. Cloud Traveler
+
+**Rarity:** Immortal
+
+**Effect:** Healing Amount increases by 0.3%. For every 15% Max HP lost, restores 7% of lost HP and gains 5% DMG RES for 4s, stacking up 4 times.
+
+**Passive:** Global DEF +10%
+
+---
+
+### 58. Spectral Ride
+
+**Rarity:** Immortal
+
+**Effect:** When an opponent's HP drops below 88% for the first time, their ATK is reduced by 16%. Upon first falling below 66% HP, their DMG RES is decreased by 16%. At 44% HP, their ATK SPD, Pal ATK SPD, and Energy Regen are reduced by 16%. When HP falls below 22%, the enemy takes 1.6% of their max HP as damage per second, ignoring DMG Immunity.
+
+**Passive:** Global HP +10%
+
+---
+
+### 59. Immortal Tyrant
+
+**Rarity:** Immortal
+
+**Effect:** Every 11s, releases the icy breath, reducing all enemies' Movement SPD, ATK SPD, Pal ATK SPD, Energy Regen SPD, and HP Regen by 60%. Loses 1/5 of the effects every 1.2s (cannot be cleansed; triggers at the start of the battle.).
+
+**Passive:** Global DEF +10%
+
+---
+
+### 60. Best Buddy
+
+**Rarity:** Immortal
+
+**Effect:** At the start of the battle, the Character gains 12% DMG RES, which decays by 1/3 every 12s. Every 1% of the Character's Ignore Evasion grants pals 0.2% Ignore Evasion. For every 5 basic attacks or combo hits from a pal, restore the Character's HP by 1% Max HP and increase the pal's ATK SPD by 2%, stacking up to 10 times (independently counted for each pal).
+
+**Passive:** Global DEF +10%
+
+---
+
+### 61. Soaring Shroomie
+
+**Rarity:** Immortal
+
+**Effect:** Movement SPD increases by 20% at the start of battle and by an additional 10% every 5s after that, stacking up to 10 times. For every 10% Movement SPD that the Character has higher than the base value of 10%, increase their Evasion and ATK SPD by 3.2% (up to 32%), Crit DMG and Skill Crit DMG by 2.4% (up to 24%), and Final DMG RES by 1.6% (up to 16%).
+
+**Passive:** Global HP +10%
+
+---
+
+### 62. Sanctuary Warmth
+
+**Rarity:** Supreme
+
+**Effect:** The first time HP drops below 70%/50%/30%, gain a Pink/Yellow/Purple Gift. Each gift is gained cleanses debuffs and grants DMG and Control Immunity for 0.6s and a shield equal to 20% Max HP for 8s. While the shield persists, the Character's Final DMG RES increases by 10%. (Shields and Final DMG RES from differents gifts stack) When the shield expires, gain the following effects based on gift color: Pink: ATK increases by 10% and DEF by 30%. Yellow: Crit Rate, Pal Crit Rate, Final Crit DMG, Final Pal Crit DMG, and Final Skill Crit DMG increase by 10%. Purple: Restore 24% Max HP and deal 5000% Skill DMG, 1000% current Basic ATK DMG (can be Crit), 1000% current Combo DMG (can be Crit), and 1000% current Counter DMG (can be Crit) to all enemies. (DMG from the purple gift ignores DMG Immunity.)
+
+**Passive:** Global HP +10%
+
+---
+
+### 63. Dawn of Time
+
+**Rarity:** Immortal
+
+**Effect:** Gains 16% DMG RES after the battle starts, which is reduced by 1/4 every 12s. Every 12s, gains a shield equal to 10% Max HP that lasts 5s, and increases Final DMG Boost by 40% and all HP Regen effects by 60% for 3s. (Triggers at the start of the battle.)
+
+**Passive:** Global DEF +10%
+
+---
+
+### 64. Leo
+
+**Rarity:** Immortal
+
+**Effect:** Every 10s after battle starts, reduces all enemies' ATK, Crit Rate, Skill Crit Rate, Combo Rate, Counter Rate, Pal Crit Rate, and Pal Combo Rate by 20% for 6s (cannot be cleansed). Meanwhile, increases ATK, Crit Rate, Skill Crit Rate, Combo Rate, Counter Rate, Pal Crit Rate, and Pal Combo Rate by 20% for 6s. (Triggers at the start of the battle.)
+
+**Passive:** Global HP +10%
+
+---
+
+## Code-Only Skill IDs (No xlsx Match)
+
+These skill IDs were found in the reverse-engineered game code but don't have a clear match to any xlsx mount name.
+
+| Skill ID | Code Name | Effect Pattern | Possible Match |
+|----------|-----------|---------------|----------------|
+| 5001 | Default Mount | Evasion scaling (+75% at lv24) | Base mount system, not a skin |
+| 5010 | Kun | DEFER_DAMAGE smoothing (burst→DoT) | Storm Rider? Internal-only? |
+| 5013 | Cyclone Bamboo | Shield +50%, +3s, Counter +25% | Guardian Spaceship? Nebular Shuttle? |
+| 5015 | AdaptoSlime (basic) | 500% AoE per 5% HP damage | Older version of AdaptoSlime (5026) |
+| 5018 | Moon Rabbit | DMG RES +15%, heal 25% lost HP/10s | Sparkling Flash? Cloud Traveler? |
+| 5048 | Phoenix Nirvana | HP 50% buff chain (50482→50465-67) | Cinder Wolf? |
+| 5124 | Time Pause | Freeze ALL enemies 2s/25% HP (ignores CC immunity!) | Unreleased? |
 
 ---
 
 ## Alternate Names Reference
 
-Some mounts have different display names across code, web guides, and in-game:
-
-| Code Name | Alternate Names | Skill ID |
-|-----------|----------------|----------|
-| Life and Death Speed | **Speed of Death**, **Bike**, Motorcycle | 5057 |
-| Neon Shadows | **Holy Dragon** | 5033 |
-| Bite the Watermelon | **Watermelon Ship** | 5034 |
-| Velocity Blitz | **Mini Motorcycle** | 5014 |
-| Round Frog | **Pepe** | 5007 |
-| AdaptoSlime+ | **Adapto Slime** | 5026 |
+| In-Game Name (xlsx) | Code Name | Skill ID |
+|---------------------|-----------|----------|
+| Speed of Death | Life and Death Speed | 5057 |
+| Holy Dragon | Neon Shadows | 5033 |
+| Vibrant Watermelon Ship | Bite the Watermelon | 5034 |
+| Mini Motorcycle | Velocity Blitz | 5014 |
+| Silvery Crescent | Immortal Ascent | 5024 |
+| Heart's Desire | Unrivaled Force | 5030 |
+| Diving Duck | B. Duck (web name) | — |
+| Rum Barrel | Blazing Motorcycle variant? | — |
 
 ---
 
-## Quick Reference — All Mount Skills Summary
+## Class Synergies — Best Mount Per Class
 
-| Skill ID | Mount | Max Lv | Trigger | Key Effect | PvP Tier |
-|----------|-------|--------|---------|------------|----------|
-| 5001 | Default | 24 | Passive | Evasion +75% | A |
-| 5002 | Pyrebreaker | 3 | Time | Crit Rate/DMG stacking | B |
-| 5003 | Hot Wheels | 3 | Time | Pal ATK SPD +60% | B (pal builds) |
-| 5004 | White Tiger | 3 | Condition | HP%-based DMG/debuff | B |
-| 5005 | Blue Ox | 3 | Passive | DMG RES +15%, CC -50% | A |
-| 5006 | Blue Queen | 1 | 10s | AoE spread + HP% DMG | C |
-| 5007 | Round Frog | 3 | Kill | ATK +30% on kill | C (PvE) |
-| 5008 | Purple Wing | 3 | 11s | 10000% AoE + launch | B |
-| 5009 | Cloud Drifter | 3 | Skill crit | Skill Crit +20%, ATK +40% | S (Darklord) |
-| 5010 | Kun | 1 | On DMG | DEFER_DAMAGE smoothing | A |
-| 5013 | Cyclone Bamboo | 1 | Shielded | Shield buff + counter | B |
-| 5014 | Velocity Blitz | 3 | Counter | Counter DMG +60% cap | S (Warbringer) |
-| 5015 | AdaptoSlime | 1 | HP threshold | 500% AoE on 5% HP dmg | B |
-| 5016 | Koi Paper Kite | 3 | 3 combos | 1000% AoE per 3 combos | S (Plume Monarch) |
-| 5018 | Moon Rabbit | 3 | 10s | DMG RES +15%, heal 25% | B |
-| 5021 | Blazing Motorcycle | 1 | HP loss | 500%/10% HP lost | S (Warbringer) |
-| 5024 | Immortal Ascent | 1 | Death | 2s invuln + 10% HP | A |
-| 5026 | AdaptoSlime+ | 3 | HP thresholds | 3-tier ATK/shield/DR | A |
-| 5029 | Trembling Pepe | 3 | 8s alt | Shield OR ATK+CC-resist | A |
-| 5030 | Unrivaled Force | 3 | 20s phase | Stack → 16000% AoE burst | S |
-| 5033 | Neon Shadows | 3 | 11s | DEF stack → burst release | S |
-| 5034 | Bite the Watermelon | 3 | 11s | ATK/DEF + summon wave | A |
-| 5048 | Phoenix Nirvana | 1 | HP 50% | Buff chain (partial decode) | A |
-| 5057 | Speed of Death (Bike) | 3 | 3-phase | Speed stack → overdrive | S |
-| 5060 | Ethereal Phoenix | 3 | 18% HP loss | Shield + CC cleanse + ATK stack | S |
-| 5124 | Time Pause | 1 | 25% HP loss | Freeze all enemies 2s (ignores CC immunity!) | S |
-| — | **EVENT / P2W MOUNTS** | — | — | — | — |
-| ??? | Cheetah Zero | — | 11s cycle | 3s shield+lock → 1200% burst all types | S |
-| ??? | Magic Carpet | — | 6 casts | Restore 1 random skill + ATK +10% | A |
-| ??? | B. Duck | — | 11s | 2000%/800%/800% AoE + ATK -10% debuff | A |
-| ??? | Time Machine | — | 20s+10s | Store 40% DMG → release + crit buffs | S |
-| ??? | Dazzling Unicorn | — | 12s | Skill reflect + DEF +50% + ATK/DR stack | S |
-| ??? | Silvery Crescent | — | ? | Unknown skill | ? |
-| ??? | Cyan Phoenixes | — | ? | Unknown (Tier 24 unlock) | ? |
+| Class | Best Mount(s) | Reason |
+|-------|--------------|--------|
+| Martial Sage | Speed of Death, Dazzling Unicorn, Cinder Wolf | Counter feeds speed stacks; skill reflect; death immunity + shield |
+| Warbringer | Blazing Motorcycle, Mini Motorcycle, Cheetah Zero | HP-loss scaling; counter DMG stacking; death immunity burst |
+| Sacred Hunter | Speed of Death, Ethereal Phoenix, Default | Evasion feeds speed stacks; CC cleanse + shield; raw evasion |
+| Plume Monarch | Koi Paper Kite, Effulgent Fan | Combo rate feeds AoE; crit window synergy |
+| Prophet | Cloud Drifter, Magic Carpet, Book of the Universe | Skill crit synergy; skill energy restore; 15% skill recast |
+| Darklord | Cloud Drifter, Magic Carpet | Skill crit +20% stacks with +50% passive; free skill recharges |
+| Beastmaster | Hot Wheels, Best Buddy, Diving Duck | Pal ATK speed; pal heal + ignore evasion sharing; AoE + ATK debuff |
+| Supreme Spirit | Hot Wheels, Heart's Desire, Time Machine | Pal speed; late-game burst; stored DMG release |
 
 ---
 
@@ -601,56 +771,8 @@ On success: random branch gains +1
 
 ---
 
-## Mount Base Config
-
-### ConfigMount Key Fields (24 total)
-
-| Field | Description |
-|-------|-------------|
-| id | Mount ID |
-| name | Display name (string_ref) |
-| type | Category |
-| min_speed | Minimum movement speed |
-| max_speed | Maximum movement speed |
-| quality | Rarity tier |
-| animation | Animation set |
-| mount_location_adjust | Rider position |
-| pk_scale | PvP model scale |
-| maxNum | Max ownable |
-| maxTime | Duration (0 = permanent) |
-| fashion | Fashion/skin data |
-| power | Base combat power |
-
----
-
-## Battle Integration
-
-Mount stats are **pre-baked** into player attributes:
-```javascript
-setPlayerMount(player) {
-    player.mount = horseDataCache.use_look  // cosmetic only
-}
-```
-Only the cosmetic model is set during battle. All stat bonuses from levels, abilities, and skins are already included in the player's total attributes.
-
----
-
-## Class Synergies — Best Mount Per Class
-
-| Class | Best Mount(s) | Reason |
-|-------|--------------|--------|
-| Martial Sage | Bike, Cyclone Bamboo, Dazzling Unicorn | Counter feeds speed stacks; shield synergy; skill reflect |
-| Warbringer | Blazing Motorcycle, Velocity Blitz, Cheetah Zero | HP-loss scaling; counter DMG stacking; burst after shield |
-| Sacred Hunter | Bike, Default, Ethereal Phoenix | Evasion feeds speed stacks; CC cleanse + shield |
-| Plume Monarch | Koi Paper Kite, Cheetah Zero | Combo rate feeds combo AoE; burst from all damage types |
-| Prophet | Cloud Drifter, Magic Carpet, Dazzling Unicorn | Skill crit synergy; skill energy restoration; skill reflection |
-| Darklord | Cloud Drifter, Magic Carpet | Skill crit +20% stacks with +50% passive; free skill recharges |
-| Beastmaster | Hot Wheels, B. Duck | Pal ATK speed; AoE pressure + enemy ATK debuff |
-| Supreme Spirit | Hot Wheels, Unrivaled Force, Time Machine | Pal speed; late-game burst; stored DMG release |
-
----
-
 ## Data Files
 
-- **Structured data**: `battlesim/reference/mounts_master.json` — Complete JSON with all skill data, coefficients, buff IDs, and metadata
+- **Source spreadsheet**: `battlesim/reference/LOM_Database-5.xlsx` — Complete item database (data_mounts.ts)
+- **Structured data**: `battlesim/reference/mounts_master.json` — Complete JSON with all 64 mounts
 - **Config schemas**: ConfigMount (24 fields), ConfigMount_skin (6), ConfigMount_level (10), ConfigMount_ability (4), ConfigMount_abilitycost (4)
