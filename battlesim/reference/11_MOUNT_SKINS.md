@@ -1,6 +1,6 @@
 # 11 — Mount Skins
 
-> Complete mount reference: all 23 mount skin combat skills with effects, triggers, coefficients, buff IDs, and PvP notes. See also `mounts_master.json` for structured data.
+> Complete mount reference: 26 code-confirmed mount skin combat skills + 8 event/P2W mounts identified from web sources (34+ total). Includes effects, triggers, coefficients, buff IDs, and PvP notes. See also `mounts_master.json` for structured data.
 
 ---
 
@@ -315,7 +315,23 @@ Mount skins grant combat skills via `ConfigMount_skin.skin_skill`. Each skin has
 
 ---
 
-### 5057 — Life and Death Speed (Motorcycle, Mount ID 404)
+### 5048 — Phoenix Nirvana
+| Property | Value |
+|----------|-------|
+| **Skill ID** | 5048 |
+| **Max Level** | 1 |
+| **Trigger** | HP threshold (50%) |
+| **Cooldown** | None |
+| **Buff Group** | hpchange_trigger |
+| **Buff IDs** | 50482 → 50465, 50466, 50467 |
+| **Effect** | At 50% HP: activates buff chain. Exact sub-effects require binary config decode. |
+| **Obtain** | Event mount |
+| **PvP Notes** | Does NOT apply to clone units. HP threshold-based activation. |
+| **Data Confidence** | Partial — buff chain effects not fully decoded from binary |
+
+---
+
+### 5057 — Speed of Death / Bike (Mount ID 404)
 | Property | Value |
 |----------|-------|
 | **Skill ID** | 5057 |
@@ -358,6 +374,149 @@ Reset buff 50629, clear buff 50630. All stacks cleared, restart Phase 1.
 
 ---
 
+### 5060 — Ethereal Phoenix (Mount ID 406)
+| Property | Value |
+|----------|-------|
+| **Skill ID** | 5060 |
+| **Mount ID** | 406 |
+| **Max Level** | 3 |
+| **Trigger** | HP loss (every 18% Max HP lost) |
+| **Cooldown** | Per 18% HP loss |
+| **Buff Group** | skill_counter |
+| **Buff ID** | 50650 |
+| **Effect 1** | Purify + ignore Control effects for 1s |
+| **Effect 2** | Shield = 8% Max HP for 5s |
+| **Effect 3** | When shield expires: ATK +4% permanent (max 6 stacks = +24%) |
+| **Obtain** | Draw event (code "star" redemption) |
+| **PvP Notes** | S-tier. Combines CC cleanse, shielding, and permanent ATK stacking. Excellent for sustained fights. |
+
+---
+
+### 5124 — Time Pause
+| Property | Value |
+|----------|-------|
+| **Skill ID** | 5124 |
+| **Max Level** | 1 |
+| **Trigger** | HP loss (every 25% Max HP lost) |
+| **Cooldown** | Per 25% HP threshold |
+| **Effect 1** | Freeze ALL enemies for 2s (ignores Control Immunity!) |
+| **Effect 2** | ATK +25% |
+| **Obtain** | Event mount |
+| **PvP Notes** | S-tier. The ONLY effect that ignores Control Immunity. At 75%/50%/25% HP = 6s total freeze time. Game-changing. |
+
+---
+
+## Event / P2W Mounts (Skill IDs Unknown — from web sources)
+
+> These mounts are confirmed from game update notes, leaks, and community guides. Their internal skill IDs are in the gap ranges (5011-5012, 5017, 5019-5020, etc.) but cannot be mapped without the config binary.
+
+### Cheetah Zero
+| Property | Value |
+|----------|-------|
+| **Skill ID** | Unknown (gap range) |
+| **Trigger** | Time-based (every 11s) |
+| **Cooldown** | 11s cycle |
+| **Obtain** | Firework Fest / Carnival Night spending event |
+| **Phase 1** | Shield = 16% Max HP (ignores PvP reduction & shield breaks) at cost of 10% current HP (ignores immunity) for 3s |
+| **Lock Phase** | During shield: CANNOT use Basic ATK, Combo, Counter, or Active Skills |
+| **Phase 2 — Burst** | Next Basic ATK: 1200% Basic ATK DMG (can crit) + 1200% Combo DMG (can crit) + 1200% Counter DMG (can crit) + 4000% Skill DMG AoE + Pal's next Basic ATK +200% |
+| **PvP Notes** | S-tier burst. 3s lockout is a trade-off but the post-shield burst is massive across all damage types. |
+
+---
+
+### Magic Carpet
+| Property | Value |
+|----------|-------|
+| **Skill ID** | Unknown (gap range) |
+| **Trigger** | Skill cast counter (every 6 skill casts) |
+| **Cooldown** | Per 6-cast cycle |
+| **Obtain** | Event / Rush Tokens |
+| **Effect 1** | After casting 6 skills: fully restore energy of 1 random equipped skill |
+| **Effect 2** | Global ATK +10% |
+| **PvP Notes** | A-tier for Prophet/Darklord. Free skill recharges sustain skill rotation pressure. |
+
+---
+
+### B. Duck
+| Property | Value |
+|----------|-------|
+| **Skill ID** | Unknown (gap range) |
+| **Trigger** | Time-based periodic (every 11s) |
+| **Cooldown** | 11s |
+| **Obtain** | Spending Event |
+| **Effect 1** | AoE splash: 2000% Skill DMG + 800% Combo DMG + 800% Counter DMG |
+| **Effect 2** | Reduce all enemies' ATK by 10% until end of battle (permanent debuff) |
+| **Passive** | Global DEF +10% |
+| **PvP Notes** | A-tier. The permanent ATK debuff stacks with each proc. Strong sustained pressure + enemy weakening. |
+
+---
+
+### Time Machine
+| Property | Value |
+|----------|-------|
+| **Skill ID** | Unknown (gap range) |
+| **Trigger** | Time-based phased (20s + 10s) |
+| **Cooldown** | 30s total cycle |
+| **Obtain** | Firework Fest event |
+| **Phase 1 (0-20s)** | Negate/store 40% of all DMG taken. Gain +8% ATK, +10% Final Crit DMG, +10% Final Skill Crit DMG, +10% Final Pal Crit DMG |
+| **Phase 2 (20-30s)** | Deal 6% of total stored DMG (ignores immunity) per second for 10s |
+| **PvP Notes** | S-tier. Essentially invincible for first 20s (40% DMG negation + offensive buffs), then massive stored-DMG burst. Longer fights heavily favor this mount. |
+
+---
+
+### Dazzling Unicorn
+| Property | Value |
+|----------|-------|
+| **Skill ID** | Unknown (gap range) |
+| **Trigger** | Time-based (every 12s, triggers at battle start) |
+| **Cooldown** | 12s |
+| **Obtain** | Magi Saga / Magician Trials event (Apr 2025) |
+| **Skill Name** | Spiral Strike |
+| **Effect 1** | Resist DMG of next active skill hit (excludes Class/Avian/Summoning skills) |
+| **Effect 2** | During resist: DEF +50% + ignore all control effects |
+| **Effect 3** | After resisting: reflect active skill to attacker |
+| **Effect 4** | Gain +4% ATK and +4% DMG RES permanent (max 3 stacks = +12% each) |
+| **Passive** | Global DEF +10% |
+| **PvP Notes** | S-tier. Active skill reflection is devastating against Prophet/Darklord. Permanent stat stacking. |
+
+---
+
+### Silvery Crescent
+| Property | Value |
+|----------|-------|
+| **Skill ID** | Unknown |
+| **Obtain** | Feather Shop (80 Feather Passes) |
+| **Known Effect** | +12% speed |
+| **Combat Skill** | Not documented online — combat skill text unavailable |
+| **PvP Notes** | Unknown tier. Awaiting skill data. |
+
+---
+
+### Cyan Phoenixes
+| Property | Value |
+|----------|-------|
+| **Skill ID** | Unknown |
+| **Obtain** | Mount Level Tier 24 – 10 Star (max tier unlock) |
+| **Combat Skill** | Not documented online — combat skill text unavailable |
+| **PvP Notes** | Unknown tier. Tier 24 is endgame content. |
+
+---
+
+## Alternate Names Reference
+
+Some mounts have different display names across code, web guides, and in-game:
+
+| Code Name | Alternate Names | Skill ID |
+|-----------|----------------|----------|
+| Life and Death Speed | **Speed of Death**, **Bike**, Motorcycle | 5057 |
+| Neon Shadows | **Holy Dragon** | 5033 |
+| Bite the Watermelon | **Watermelon Ship** | 5034 |
+| Velocity Blitz | **Mini Motorcycle** | 5014 |
+| Round Frog | **Pepe** | 5007 |
+| AdaptoSlime+ | **Adapto Slime** | 5026 |
+
+---
+
 ## Quick Reference — All Mount Skills Summary
 
 | Skill ID | Mount | Max Lv | Trigger | Key Effect | PvP Tier |
@@ -384,7 +543,18 @@ Reset buff 50629, clear buff 50630. All stacks cleared, restart Phase 1.
 | 5030 | Unrivaled Force | 3 | 20s phase | Stack → 16000% AoE burst | S |
 | 5033 | Neon Shadows | 3 | 11s | DEF stack → burst release | S |
 | 5034 | Bite the Watermelon | 3 | 11s | ATK/DEF + summon wave | A |
-| 5057 | Motorcycle | 3 | 3-phase | Speed stack → overdrive | S |
+| 5048 | Phoenix Nirvana | 1 | HP 50% | Buff chain (partial decode) | A |
+| 5057 | Speed of Death (Bike) | 3 | 3-phase | Speed stack → overdrive | S |
+| 5060 | Ethereal Phoenix | 3 | 18% HP loss | Shield + CC cleanse + ATK stack | S |
+| 5124 | Time Pause | 1 | 25% HP loss | Freeze all enemies 2s (ignores CC immunity!) | S |
+| — | **EVENT / P2W MOUNTS** | — | — | — | — |
+| ??? | Cheetah Zero | — | 11s cycle | 3s shield+lock → 1200% burst all types | S |
+| ??? | Magic Carpet | — | 6 casts | Restore 1 random skill + ATK +10% | A |
+| ??? | B. Duck | — | 11s | 2000%/800%/800% AoE + ATK -10% debuff | A |
+| ??? | Time Machine | — | 20s+10s | Store 40% DMG → release + crit buffs | S |
+| ??? | Dazzling Unicorn | — | 12s | Skill reflect + DEF +50% + ATK/DR stack | S |
+| ??? | Silvery Crescent | — | ? | Unknown skill | ? |
+| ??? | Cyan Phoenixes | — | ? | Unknown (Tier 24 unlock) | ? |
 
 ---
 
@@ -469,14 +639,14 @@ Only the cosmetic model is set during battle. All stat bonuses from levels, abil
 
 | Class | Best Mount(s) | Reason |
 |-------|--------------|--------|
-| Martial Sage | Motorcycle, Cyclone Bamboo | Counter feeds speed stacks; shield synergy |
-| Warbringer | Blazing Motorcycle, Velocity Blitz | HP-loss scaling; counter DMG stacking |
-| Sacred Hunter | Motorcycle, Default | Evasion feeds speed stacks; raw evasion |
-| Plume Monarch | Koi Paper Kite | Combo rate + extra bullets feed combo AoE |
-| Prophet | Cloud Drifter, Cyclone Bamboo | Skill crit synergy; shield enhancement |
-| Darklord | Cloud Drifter | Skill crit rate +20% stacks with +50% passive |
-| Beastmaster | Hot Wheels | Pal ATK speed for pal-focused builds |
-| Supreme Spirit | Hot Wheels, Unrivaled Force | Pal speed or late-game burst |
+| Martial Sage | Bike, Cyclone Bamboo, Dazzling Unicorn | Counter feeds speed stacks; shield synergy; skill reflect |
+| Warbringer | Blazing Motorcycle, Velocity Blitz, Cheetah Zero | HP-loss scaling; counter DMG stacking; burst after shield |
+| Sacred Hunter | Bike, Default, Ethereal Phoenix | Evasion feeds speed stacks; CC cleanse + shield |
+| Plume Monarch | Koi Paper Kite, Cheetah Zero | Combo rate feeds combo AoE; burst from all damage types |
+| Prophet | Cloud Drifter, Magic Carpet, Dazzling Unicorn | Skill crit synergy; skill energy restoration; skill reflection |
+| Darklord | Cloud Drifter, Magic Carpet | Skill crit +20% stacks with +50% passive; free skill recharges |
+| Beastmaster | Hot Wheels, B. Duck | Pal ATK speed; AoE pressure + enemy ATK debuff |
+| Supreme Spirit | Hot Wheels, Unrivaled Force, Time Machine | Pal speed; late-game burst; stored DMG release |
 
 ---
 
