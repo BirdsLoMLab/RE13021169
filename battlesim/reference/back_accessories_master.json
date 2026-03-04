@@ -1,0 +1,293 @@
+{
+  "_source": "LOM_Database-5.xlsx",
+  "_total": 41,
+  "back_accessories": [
+    {
+      "index": 1,
+      "name": "Virtual Connection",
+      "rarity": "Legendary",
+      "effect": "Scan the target and analyze its weaknesses after battle starts: Basic attacks have a 10% chance to reduce the target's Basic ATK DMG RES by 2%, stacking up to 5 times. Combos have a 15% chance to reduce the target's Combo DMG RES by 2%, stacking up to 5 times. Counterstrikes have a 15% chance to reduce the target's Counter DMG RES by 2%, stacking up to 5 times. Skills have a 50% chance to reduce the target's Skill DMG RES by 2%, stacking up to 5 times.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 2,
+      "name": "Ingredients for Dinner",
+      "rarity": "Legendary",
+      "effect": "Inflict Deter on an enemy every time they have dealt 15 Basic Attacks in total or the first time their HP drops below 50%, with a 60% chance of inflicting Decay and a 60% chance of inflicting Weaken. Decay: Reduces the target's DMG RES by 4%, stacking up to 3 times. Weaken: Lowers the enemy's ATK by 4%, stacking up to 3 times.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 3,
+      "name": "Chrono Prism",
+      "rarity": "Legendary",
+      "effect": "When all enemies have no less than 60% HP, reduces their Basic ATK DMG RES, Skill DMG RES, Pal DMG RES, Combo DMG RES and Counter DMG RES by 10%. Otherwise, reduces their ATK by 10%. After the first 20s of the battle, all the reduction effects above are activated for all enemies.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 4,
+      "name": "Dawn Warwing",
+      "rarity": "Legendary",
+      "effect": "After the battle starts, gain 12% extra Evasion and Movement SPD that lasts till the battle ends. Reduce the duration of all enemies' Class Skills by 20% for 60s.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 5,
+      "name": "Metamorphosis",
+      "rarity": "Legendary",
+      "effect": "Every 11s, deals 1000% of current AoE DMG to the targets and reduces their ATK by 15%. The effect lasts until they launch 35 attacks (including basic attacks, combos, counterstrikes, and active skills). (Casts 1 time immediately after battle starts.)",
+      "passive_effect": "Global Counter DMG +5%"
+    },
+    {
+      "index": 6,
+      "name": "Mirror World",
+      "rarity": "Legendary",
+      "effect": "Reduces all enemies' Energy Regen SPD, HP Regen, ATK SPD and Pal ATK SPD by 10% after the battle starts. Allied pals have a 50% chance to become demonized. Demonized: Gains 30% Pal ATK SPD and deals extra damage equal to 1% of enemies' Current HP every 10 basic attacks.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 7,
+      "name": "Arackar Lock",
+      "rarity": "Legendary",
+      "effect": "Every 11s, deal 2000% Skill DMG, 800% current Combo DMG and 800% current Counter DMG and make the target take 4% more Skill, Combo and Counter DMG, stacking up to 3 times (triggers at the start of the battle).",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 8,
+      "name": "Frostland Specter",
+      "rarity": "Legendary",
+      "effect": "Deals DMG equal to 3% of current HP to all targets every 5s and reduces their ATK SPD, Regen, Energy Regen SPD and Pal ATK SPD by 12% for 3s. If a target's Movement SPD drops below 80%, the DMG dealt changes to 3.5% of current HP and the same stats are reduced by 12% for 5s instead. If a target's Movement SPD drops below 40%, the DMG dealt changes to 4% of current HP and stats are reduced by 15% for 5s instead. (Triggers at the start of the battle; Cannot be Cleansed.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 9,
+      "name": "Trapped Wrath",
+      "rarity": "Legendary",
+      "effect": "Each 5% missing HP grants a 40% chance of dealing AoE DMG equal to 400% Skill DMG, 160% Current Combo DMG, 160% Current Counter DMG, and 1% of the target's Max HP. Each 10% missing HP grants a 60% chance of dealing AoE DMG equal to 600% Skill DMG, 240% Current Combo DMG, 240% Current Counter DMG, and 1% of the target's Max HP. Each 20% missing HP grants a 100% chance of dealing AoE DMG equal to 1000% Skill DMG, 400% Current Combo DMG, 400% Current Counter DMG, and 2% of the target's Max HP.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 10,
+      "name": "Lord of Light",
+      "rarity": "Legendary",
+      "effect": "Reduce enemy's Crit RES by 10% after the battle starts. When Character HP first drops below 50%, trigger Avenging Light, increasing Character Crit Rate, Skill Crit Rate, and Pal Crit Rate by 6% and Final Crit DMG, Final Skill Crit DMG, and Final Pal Crit DMG by 8% for 20s.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 11,
+      "name": "Celestial Surprises",
+      "rarity": "Legendary",
+      "effect": "Every 11s, deals AoE Bleed DMG equal to 200% of your Basic ATK 5 times (ignores DMG Immunity), each time having a 50% chance of dealing extra DMG equal to 1.5% of Max HP (triggers at the start of the battle)",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 12,
+      "name": "Iridescent Aura",
+      "rarity": "Legendary",
+      "effect": "Gain 10% Skill Crit Rate. After every 4s, the next Skill Crit hit reduces all active skill cooldowns by 1s and increases Final Skill Crit DMG by 4% until the battle ends, stacking up to 5 times.",
+      "passive_effect": "Global ATK +10%"
+    },
+    {
+      "index": 13,
+      "name": "Summer Parasol",
+      "rarity": "Legendary",
+      "effect": "Switches between the two forms every 10s: Rainshade, gains 30% DEF and a shield equal to 10% Max HP. Sunshade, gains 12% ATK, 15% ATK SPD and 15% Energy Regen (casts 1 time immediately after battle starts).",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 14,
+      "name": "Fallen Angel",
+      "rarity": "Legendary",
+      "effect": "Lowers ATK by 8%, ATK SPD by 12%, Energy Regen SPD by 12%, and Pal ATK SPD by 12% after the battle starts, but gains 1% ATK, 1.5% ATK SPD, 1.5% Energy Regen SPD, and 1.5% Pal ATK SPD per second till the end of battle, stacking up to 20 times. Gains all the stacks the first time HP falls below 50%.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 15,
+      "name": "Emerald Embrace",
+      "rarity": "Legendary",
+      "effect": "After the battle begins, each combo increases combo DMG by 0.5%, stacking up to 60 times.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 16,
+      "name": "Miracle Mirage",
+      "rarity": "Legendary",
+      "effect": "Reduces all enemies' Combo Rate, Counter Rate, Skill Crit Rate and Pal Crit Rate by 15% after the battle starts. The effects are halved after 20s.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 17,
+      "name": "Pepe-style Thruster",
+      "rarity": "Legendary",
+      "effect": "8s into the battle or when HP first drops below 75%, you gain 5% ATK and all enemies lose 5% ATK. 15s into the battle or when HP first drops below 50%, you gain 5% DMG RES and all enemies lose 5% DMG RES 20s into the battle or when HP first drops below 25%, you regen 8% Max HP and deal DMG equal to 8% of your Max HP to all enemies.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 18,
+      "name": "19th Century",
+      "rarity": "Legendary",
+      "effect": "After 8s into battle or HP first drops below 80%, reduces all enemies' DMG RES by 5%. After 15s into battle or HP first drops below 60%, reduces all enemies' ATK SPD, Energy Regen SPD, and Pal ATK SPD by 10%. After 20s into battle or HP first drops below 40%, reduces all enemies' Basic ATK DMG RES, Skill DMG RES, Pal DMG RES, Combo DMG RES, and Counter DMG RES by 5%. After 30s into battle or HP first drops below 20%, triggers an additional 40% of all the effects above.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 19,
+      "name": "Bit Gateway",
+      "rarity": "Legendary",
+      "effect": "Increases DEF by 16% after the battle starts. After 15s into battle of HP first drops below 70%, increases ATK by 10%. After 30s into battle or HP first drops below 30%, increases DMG RES by 10% and restores 10% of lost HP second for 10s.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 20,
+      "name": "Ghost Behind",
+      "rarity": "Legendary",
+      "effect": "Evasion +20%. ATK +20% for 2s upon successful evasion.",
+      "passive_effect": "Global ATK +10%"
+    },
+    {
+      "index": 21,
+      "name": "Alien Dimension",
+      "rarity": "Legendary",
+      "effect": "After battle starts, block 30% Final DMG and increases ATK SPD by 24%, Energy Regen SPD by 24% and Pal ATK SPD by 24%. The effects are reduced by 1/3 every 12 seconds.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 22,
+      "name": "Cosmic Rescue",
+      "rarity": "Legendary",
+      "effect": "Gain a shield equal to 4% Max HP after battle starts and increase your ATK by 5%. Gain another shield equal to 6% Max HP and increase your ATK by 5% the first time your HP falls below 75%, then a shield equal to 8% Max HP and increase your ATK by 5% the first time your HP falls below 50%.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 23,
+      "name": "Till Death Apart",
+      "rarity": "Legendary",
+      "effect": "After battle starts, gain 5% of ATK, 8% of ATK SPD, 8% of Energy Regen SPD, and 8% of Pal ATK SPD for 20s. In Team Dungeons, the efectos increase by 50%, last throughout the battles, and are shared with allied characters.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 24,
+      "name": "Lustrous Plumage",
+      "rarity": "Legendary",
+      "effect": "At the start of battle, each basic attack raises DEF by 0.5%, stackable up to 40 times. Upon reaching maximum stacks, gain a 10% ATK Boost.",
+      "passive_effect": "Ignore Evasion +15%"
+    },
+    {
+      "index": 25,
+      "name": "Glory Glow",
+      "rarity": "Legendary",
+      "effect": "Attacks with tidal waves at the start of battle, increasing Movement SPD by 20% and reducing enemy Movement SPD by 20%. Detects self and enemy Movement SPD every 5s (once at the start of battle): For every 10% Movement SPD increased, increases ATK SPD, Energy Regen SPD and Pal ATK SPD by 2.5%, up to 25%. For every 10% enemy Movement SPD reduced, reduces enemy ATK SPD, Energy Regen SPD and Pal ATK SPD by 2.5%, up to 25%.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 26,
+      "name": "Shell Shade",
+      "rarity": "Legendary",
+      "effect": "Grants a shield equal to 10% Max HP every 11s after battle starts, lasting 8s. Increases Energy Regen by 50% for the shield's duration, and Final Skill DMG by 10% once the shield is lost, lasting until the end of battle. Stacks up to 2 times. (Triggers at the start of the battle.)",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 27,
+      "name": "Titan's Hold",
+      "rarity": "Legendary",
+      "effect": "Every 10 basic attack hits triggers a Combo Punch, dealing 1000% AoE Skill DMG, 200% current Combo AoE DMG (can be Crit) and reducing target's ATK by 4% for 5s, stacking up to 5 times. Every 30 basic attack or combo hits taken triggers a Counter Punch, dealing 1000% AoE Skill DMG and 200% current Counter AoE DMG (can be Crit) and gaining a shield equal to 3.2% Max HP for 2s.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 28,
+      "name": "Moonlit Wisp",
+      "rarity": "Legendary",
+      "effect": "After the battle begins, each releasing of an active skill increases skill DMG by 1.5%, stacking up to 10 times.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 29,
+      "name": "Republic of Heroes",
+      "rarity": "Legendary",
+      "effect": "After the battle starts, every 10% Max HP lost grants a shield equal to 6% Max HP that lasts 3s, triggering up to 1.5 times. Every 10 basic attack(s) restores HP equal to 400% DEF.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 30,
+      "name": "Firework Invite",
+      "rarity": "Legendary",
+      "effect": "Every 11s, releases 7 small fireworks within 3s, each dealing 250% AoE Skill DMG, 50% of current Combo AoE DMG (can be Crit), and 50% of current Counter AoE DMG (can be Crit) to all enemies. After 3s, deals extra DMG equal to 30% of the DMG taken by enemies during this time (including DMG absorbed and blocked by shields, but not DMG immune; ignores DMG immunity). (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 31,
+      "name": "To the Clouds",
+      "rarity": "Legendary",
+      "effect": "After 5 seconds into battle or DMG taken exceeds 20% Max HP, increase ATK by 5% and DEF by 10%. After 10 seconds into battle or DMG taken exceeds 40% of Max HP, reduce all enemies' ATK SPD, Energy Regen SPD and Pal ATK SPD by 10%. After 15 seconds into battle or DMG taken exceeds 60% of Max HP, increase Basic ATK DMG RES, Combo DMG RES, Counter DMG RES, Skill DMG RES and Pal DMG RES by 4%. After 20 seconds into battle or DMG taken exceeds 80% of Max HP, deal DMG equal to 8% of the target's Max HP to all enemies.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 32,
+      "name": "Lunar Radiance",
+      "rarity": "Legendary",
+      "effect": "For the first 15s, increases all HP Regen efectos by 3%, ATK by 1% and DEF by 2% per second. For the next 15s, reduces all HP Regen efectos by 3%, ATK by 1% and DEF by 2% per second. Rotates every 30s.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 33,
+      "name": "Song of Frost and Flame",
+      "rarity": "Legendary",
+      "effect": "Attacks with the flame sword and frost sword once each every 11s, dealing 1500% AoE Skill DMG, 300% current Combo AoE DMG (can be Crit), and 300% current Counter AoE DMG (can be Crit) with additional efectos. Flame Sword: Cleanses the character's debuffs and increases Pierce by 320 until the battle ends, stacking up to 6 times. Frost Sword: Reduces the target's Movement SPD, ATK SPD, Energy Regen SPD, and Pal ATK SPD by 20% (cannot be cleansed) for 4s. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 34,
+      "name": "Phoenix Frost",
+      "rarity": "Legendary",
+      "effect": "Block 8% of DMG when it exceeds 1% of your Max HP, 16% when it exceeds 2%, and 30% when it exceeds 5%.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 35,
+      "name": "Blade Pursuit",
+      "rarity": "Legendary",
+      "effect": "After the battle begins, each counter increases counter DMG by 0.5%, stacking up to 60 times.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 36,
+      "name": "Beastbone Breeze",
+      "rarity": "Legendary",
+      "effect": "Each pal's basic attack increases Pal DMG Multiplier by 1.5% after the battle starts, stacking up to 10 times (calculated independently for each pal).",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 37,
+      "name": "Top-Tier Bodyguard",
+      "rarity": "Legendary",
+      "effect": "When an enemy activates an Active Skill, they take 1% of their current HP as damage, and their Energy Regen is reduced by 16% for 2 seconds. This efecto can stack up to 3 times. (If multiple allies have the 'Power Guard' skill, only one instance will apply.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 38,
+      "name": "Punching Storm",
+      "rarity": "Legendary",
+      "effect": "Increase Stun Rate by 10%. Upon triggering Stun, deal an extra 1000% Skill DMG and 200% current Basic ATK DMG (can be Crit) to the target and reduce their Crit DMG, Pal Crit DMG, and Skill Crit DMG by 20% and Basic ATK DMG RES and Combo DMG RES by 10% for 2s.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 39,
+      "name": "Resolute Soul",
+      "rarity": "Legendary",
+      "effect": "The first time HP drops below 60%, Pierce increases by 1000. Below 45%, DMG RES increases by 10%. Below 30%, Final Crit DMG, Final Skill Crit DMG, and Final Pal Crit DMG increase by 10%. Below 25%, gain Unyielding for 5s: ATK, DEF, and Final DMG RES increase by 20%; basic attacks hits deal an additional 40% current Basic ATK DMG (can be Crit); combo hits deal an additional 40% current Combo DMG (can be Crit); counter hits deal an additional 40% current Counter DMG (can be Crit); also restore HP equal to the additional DMG dealt (additional DMG ignores DMG Immunity, and healing ignores PvP reduction).",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 40,
+      "name": "Frost Mirage",
+      "rarity": "Legendary",
+      "effect": "After every 10 basic attacks, launch a snowball at a single target, dealing 200% current Basic ATK DMG (can be Crit). After every 10 Combo hits, launch a snowball at a single target, dealing 200% current Combo DMG (can be Crit). After every 10 Counters, launch a snowball at a single target, dealing 200% current Counter DMG (can be Crit). After every 2 active skills, launch a snowball at a single target, dealing 1000% Skill DMG. Each snowball launched increases ATK SPD by 1.2% until the battle ends, stacking up to 20 times. Snowball hits reduce the target's ATK SPD, Pal ATK SPD, Energy Regen SPD, and Movement SPD by 16% for 1.5s.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 41,
+      "name": "Repose in Time",
+      "rarity": "Legendary",
+      "effect": "Gains 6% Final DMG RES after the battle starts, which is reduced by 1/4 every 12s. Every 12s, recovers 10% Max HP and uses a random active skill. Each active skill may only be used once, and the effect no longer triggers once all skills are used. (Triggers for the first time 12s into battle.).",
+      "passive_effect": "Global HP +10%"
+    }
+  ]
+}

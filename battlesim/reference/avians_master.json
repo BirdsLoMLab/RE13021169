@@ -1,0 +1,228 @@
+{
+  "_source": "LOM_Database-5.xlsx",
+  "_total": 34,
+  "avians": [
+    {
+      "index": 1,
+      "name": "Aggressive Lemon",
+      "rarity": "Normal",
+      "effect": "Regenerates 5% of lost HP every 5s"
+    },
+    {
+      "index": 2,
+      "name": "Gleam Candle",
+      "rarity": "Normal",
+      "effect": "Deals 240% AoE Skill DMG 5 times every 11s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 3,
+      "name": "Coconut Ball",
+      "rarity": "Normal",
+      "effect": "Increases ATK SPD by 5% immediately after battle starts and by 2% more for every 10% HP lost."
+    },
+    {
+      "index": 4,
+      "name": "Sheep Balloon",
+      "rarity": "Normal",
+      "effect": "Deals 500% of current Basic ATK AoE DMG and imprisons the target for 1s every 13s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 5,
+      "name": "Tomato Egg",
+      "rarity": "Normal",
+      "effect": "Deals 325% of current Basic ATK AoE DMG every 12s and increases Basic ATK DMG by 30% for 5s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 6,
+      "name": "Smart Assistant",
+      "rarity": "Normal",
+      "effect": "Increases Pal ATK SPD by 5% every 5s after battle starts, stacking up to 5 times."
+    },
+    {
+      "index": 7,
+      "name": "Yoghurt Cocoa",
+      "rarity": "Normal",
+      "effect": "Each Pal Crit Increases its Final Crit DMG by 2%, stacking up to 5 times."
+    },
+    {
+      "index": 8,
+      "name": "Astronaut Teal",
+      "rarity": "Normal",
+      "effect": "Deals 450% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of current HP for 6s.",
+      "event_exclusive": true,
+      "collaboration": "B.Duck Collab"
+    },
+    {
+      "index": 9,
+      "name": "Impulse Penguin",
+      "rarity": "Advanced",
+      "effect": "Increases Counter DMG by 4% every 10s after battle starts, stacking up to 5 times."
+    },
+    {
+      "index": 10,
+      "name": "Dense Cloud",
+      "rarity": "Advanced",
+      "effect": "Deals 1400% AoE Skill DMG every 13s after battle starts and increases Energy Regen by 25% for 5s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 11,
+      "name": "3-Round Shooter",
+      "rarity": "Advanced",
+      "effect": "Deals 75% extra AoE Combo DMG every 4 combos."
+    },
+    {
+      "index": 12,
+      "name": "Honeypot Warrior",
+      "rarity": "Advanced",
+      "effect": "Deals DMG equal to 2.5% Max HP every 5s after battle starts. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 13,
+      "name": "Pumpkin Witch",
+      "rarity": "Advanced",
+      "effect": "Every Skill Crit deals 600% extra AoE Skill DMG."
+    },
+    {
+      "index": 14,
+      "name": "Bell Ring",
+      "rarity": "Advanced",
+      "effect": "Every Crit has a 20% chance to deal 60% extra Basic ATK DMG Bleed DMG (Ignores DMG Immunity)."
+    },
+    {
+      "index": 15,
+      "name": "Sunshine Bringer",
+      "rarity": "Advanced",
+      "effect": "Deals 560% of current Basic ATK AoE DMG every 16s after battle starts and reduces the duration of control received by 15% for 5s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 16,
+      "name": "Travelling Jellyfish",
+      "rarity": "Advanced",
+      "effect": "Deals 612.5% of current Basic ATK AoE DMG every 15s after battle starts and reduces the target's ATK SPD by 20% for 5s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 17,
+      "name": "Whirlwind Leaf",
+      "rarity": "Advanced",
+      "effect": "Deals 220% extra AoE Skill DMG every 4 Basic Attacks."
+    },
+    {
+      "index": 18,
+      "name": "Crispy Moth",
+      "rarity": "Advanced",
+      "effect": "Deals 630% of current Basic ATK AoE DMG every 17s after battle starts and stuns the target for 1s."
+    },
+    {
+      "index": 19,
+      "name": "Yoghurt Champ",
+      "rarity": "Advanced",
+      "effect": "Each Pal Crit increases its Final Crit DMG by 2%, stacking up to 5 times. Each Pal Combo increases its Final Combo DMG by 2%, stacking up to 5 times."
+    },
+    {
+      "index": 20,
+      "name": "Astronaut Pinky",
+      "rarity": "Advanced",
+      "effect": "Deals 675% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of Max HP for 6s.",
+      "event_exclusive": true,
+      "collaboration": "B.Duck Collab"
+    },
+    {
+      "index": 21,
+      "name": "Maniac Love",
+      "rarity": "Advanced",
+      "effect": "Fire Cupid's Arrows at random targets every 5s (triggers at the start of the battle). If the target is oneself, reduce DEF by 30% and convert 3 time(s) of the reduced DEF into ATK for 5s. If the target is an enemy, deal 165% of AoE Skill DMG, 70% of current AoE Combo DMG (can be Crit), and 70% of current AoE Counter DMG (can be Crit) and reduce their Final DMG RES by 10% for 5s.",
+      "event_exclusive": true,
+      "collaboration": "Rabbid Collab",
+      "limited_breeding": true,
+      "food_required": true
+    },
+    {
+      "index": 22,
+      "name": "Dream Moment",
+      "rarity": "Advanced",
+      "effect": "Gain a shield that absorbs 6% of Max HP every 12s, lasting for 6s. After a shield expires, deal 320% of AoE Skill DMG, 120% of current AoE Combo DMG, and 120% of current AoE Counter DMG and increase ATK SPD by 20% for 6s. (Triggers at the start of the battle.)",
+      "event_exclusive": true,
+      "collaboration": "Rabbid Collab",
+      "limited_breeding": true,
+      "food_required": true
+    },
+    {
+      "index": 23,
+      "name": "Pet - Genos",
+      "rarity": "Advanced",
+      "effect": "Every 15s after the battle starts, all enemies take 360% Skill DMG, 120% current Basic ATK DMG (can be Crit), 120% current Combo DMG (can be Crit), and 120% current Counter DMG (can be Crit) 5 times and lose 50% DEF for 5s (cannot be cleansed).",
+      "event_exclusive": true,
+      "collaboration": "One-Punch Man Collab",
+      "limited_breeding": true,
+      "food_required": true
+    },
+    {
+      "index": 24,
+      "name": "Anubis",
+      "rarity": "Rare",
+      "effect": "Deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG every 15s after battle starts and reduces the target's ATK by 15% for 5s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 25,
+      "name": "Midnight Firefly",
+      "rarity": "Rare",
+      "effect": "Deal 240% of current Basic ATK DMG every 16s after battle starts and reduce the target's DMG RES by 15% for 5 seconds. Deal 600% Skill DMG, 240% of current Combo DMG, and 240% of current Counter DMG again after a short delay. (Triggers at start of the battle.)"
+    },
+    {
+      "index": 26,
+      "name": "Moonbound Spirit",
+      "rarity": "Rare",
+      "effect": "Deals 300% Skill DMG, 120% current Combo DMG, and 120% current Counter DMG every 5s after battle starts, with a 50% chance to deal extra DMG equal to 3% of the target's Max HP. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 27,
+      "name": "Horus, Sky God",
+      "rarity": "Rare",
+      "effect": "Every 6s, deals 240% Skill DMG, 100% of current Combo DMG, 100% of current Counter DMG, plus an amount equal to 2% of the target's current HP. After every 3 casts, deals an additional 480% Skill DMG, 200% of current Combo DMG, and 200% of current Counter DMG and directly defeats the target if its HP is below 5%, after which dealing DMG equal to 2% of the target's Max HP per second for 3s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 28,
+      "name": "Magic Cat",
+      "rarity": "Rare",
+      "effect": "Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG and activates Feline Magic 5 times within 2s, each time reducing the cooldown of a random Active Skill by 2s. This prioritizes skills in cooldown and can be used on the same skill repeatedly. (Triggers 1s after the start of the battle.)"
+    },
+    {
+      "index": 29,
+      "name": "Puppy Gaze",
+      "rarity": "Rare",
+      "effect": "Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG and increases Pal ATK SPD by 50% for 5s. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 30,
+      "name": "Deity of Purrs",
+      "rarity": "Rare",
+      "effect": "For every 16 times healed (including HP regen, healing, active skill and healing effects of passive skills, Lifesteal of Spectral Chant excluded), deals DMG equal to 4% of current HP to targets within the range."
+    },
+    {
+      "index": 31,
+      "name": "Michelle",
+      "rarity": "Rare",
+      "effect": "For every 50 instances of damage taken, enemies take an additional 200% AoE DMG, 80% of current Combo AoE DMG, 80% of current Counter AoE DMG, and 2% of current HP AoE DMG and become stunned for 0.5s."
+    },
+    {
+      "index": 32,
+      "name": "Astronaut B.Duck",
+      "rarity": "Rare",
+      "effect": "Every 16s, deals 800% Skill DMG, 320% of current Combo DMG and 320% of current Counter DMG and gains a shield equal to 10% of Max HP for 6s, during which ATK increases by 15%.",
+      "event_exclusive": true,
+      "collaboration": "B.Duck Collab"
+    },
+    {
+      "index": 33,
+      "name": "Lunar Sprite",
+      "rarity": "Rare",
+      "effect": "After the battle starts, the Character's DEF increases by 60% and ATK increases by 10% every 15s for 5s, during which the Character restores 3% of lost HP for every 10 basic attack or combo hits taken. (Triggers at the start of the battle.)"
+    },
+    {
+      "index": 34,
+      "name": "Dharma",
+      "rarity": "Advanced",
+      "effect": "Every 20s after the battle starts, gains 3 stacks of Toughness (capped at 3), each of which increases DMG RES by 3.5%. For every 12% Max HP taken as DMG loses 1 stack of Toughness. (Triggers at the start of the battle.)"
+    }
+  ]
+}
