@@ -1,0 +1,707 @@
+{
+  "_meta": {
+    "description": "Master reference of all mounts and mount skin combat skills in Legend of Mushroom",
+    "source": "game_script.js (ConfigMount, ConfigMount_skin, ConfigSkill), reverse-engineered docs",
+    "notes": [
+      "Mount names are from reverse-engineered English localization — may not match all server translations",
+      "Skill IDs 5001-5034 are mount skin skills; 5039-5062,5080-5084 are artifact skin skills",
+      "Mount ID 404 (Motorcycle) has a unique 3-phase combat cycle documented in 35_MOTORCYCLE_MOUNT_DEEP_DIVE.md",
+      "All mount stats are pre-baked into player attributes before battle — only cosmetic model loads at battle time",
+      "Skill coefficients are /10000 fixed-point (e.g., 100000 = 10.0x = 1000%)"
+    ],
+    "config_schema": {
+      "ConfigMount": "24 fields — id, name, type, path, binds, icon, icon_small, icon_group, maxNum, maxTime, quality, sort, min_speed, max_speed, open_time, animation, mount_location_adjust, position, scale, if_activity, pk_scale, fashion, fashion_eff, power",
+      "ConfigMount_skin": "6 fields — mount_id, skin_level, expend, skin_skill, attr, power",
+      "ConfigMount_level": "10 fields — level, name, order, star, expend_exp, expend_goods, attr, base_skill, unlock, power",
+      "ConfigMount_ability": "4 fields — id (branch 1-3), level, value_plus, power",
+      "ConfigMount_abilitycost": "4 fields — total_level, cost, success_rate, success_guaranteed"
+    }
+  },
+
+  "mount_skin_skills": [
+    {
+      "skill_id": 5001,
+      "mount_name": "Default Mount",
+      "mount_id": null,
+      "max_level": 24,
+      "skill_type": 3,
+      "trigger": "passive",
+      "trigger_condition": "Always active",
+      "cooldown": null,
+      "effect_summary": "Evasion bonus (scales with level)",
+      "effects": [
+        {
+          "type": "attribute_buff",
+          "attr_id": 1008,
+          "attr_name": "miss (evasion)",
+          "values_by_level": {
+            "1": 2000,
+            "2": 2500,
+            "3": 3000,
+            "24": 7500
+          },
+          "display": "+20% to +75% evasion",
+          "duration": "permanent"
+        }
+      ],
+      "pvp_notes": "At max level (+75%), approaches the 80% PvP evasion cap. Massive survivability."
+    },
+    {
+      "skill_id": 5002,
+      "mount_name": "Pyrebreaker",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based",
+      "trigger_condition": "Every 1s accumulation",
+      "cooldown": "1s per stack",
+      "effect_summary": "Crit Rate +2%/s (cap 40%), Crit DMG +10%/s (cap 200%)",
+      "effects": [
+        {
+          "type": "stacking_buff",
+          "attr_id": 1004,
+          "attr_name": "crit_rate",
+          "per_stack": 200,
+          "cap": 4000,
+          "display": "+2%/s crit rate, capped at +40%"
+        },
+        {
+          "type": "stacking_buff",
+          "attr_id": 1005,
+          "attr_name": "crit_dam",
+          "per_stack": 1000,
+          "cap": 20000,
+          "display": "+10%/s crit damage, capped at +200%"
+        }
+      ],
+      "pvp_notes": "Synergizes with Sacred Hunter (post-crit ATK +40%) and Darklord (skill crit builds)."
+    },
+    {
+      "skill_id": 5003,
+      "mount_name": "Hot Wheels",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based",
+      "trigger_condition": "Every 1s accumulation",
+      "cooldown": "1s per stack",
+      "effect_summary": "Pal ATK SPD +3%/s (cap 60%)",
+      "effects": [
+        {
+          "type": "stacking_buff",
+          "target": "pal",
+          "attr_id": 1003,
+          "attr_name": "att_speed",
+          "per_stack": 300,
+          "cap": 6000,
+          "display": "+3%/s pal attack speed, capped at +60%"
+        }
+      ],
+      "pvp_notes": "Best for Beastmaster/Supreme Spirit pal-focused builds."
+    },
+    {
+      "skill_id": 5004,
+      "mount_name": "White Tiger",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "combat_condition",
+      "trigger_condition": "HP% comparison with target (every hit)",
+      "cooldown": null,
+      "effect_summary": "Targets below your HP% take +30% DMG; above have ATK -20%",
+      "effects": [
+        {
+          "type": "conditional_buff",
+          "condition": "target HP% < your HP%",
+          "buff_group": 80,
+          "buff_group_name": "ATTRIB_CONDITION",
+          "effect": "+30% damage to target"
+        },
+        {
+          "type": "conditional_debuff",
+          "condition": "target HP% > your HP%",
+          "buff_group": 80,
+          "buff_group_name": "ATTRIB_CONDITION",
+          "effect": "-20% ATK on target"
+        }
+      ],
+      "pvp_notes": "Dynamic scaling. Punishes tanks (more HP than you) AND glass cannons (less HP)."
+    },
+    {
+      "skill_id": 5005,
+      "mount_name": "Blue Ox",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "passive",
+      "trigger_condition": "Always active",
+      "cooldown": null,
+      "effect_summary": "DMG RES +15%, Control Duration -50%",
+      "effects": [
+        {
+          "type": "attribute_buff",
+          "attr_id": 1021,
+          "attr_name": "resist",
+          "value": 1500,
+          "display": "+15% damage resistance"
+        },
+        {
+          "type": "cc_reduction",
+          "reduction": 5000,
+          "display": "-50% control effect duration"
+        }
+      ],
+      "pvp_notes": "Anti-CC tank mount. Strong against stun/freeze-heavy opponents."
+    },
+    {
+      "skill_id": 5006,
+      "mount_name": "Blue Queen",
+      "mount_id": null,
+      "max_level": 1,
+      "skill_type": 3,
+      "trigger": "time_based_periodic",
+      "trigger_condition": "Every 10s",
+      "cooldown": "10s",
+      "effect_summary": "Distribute DMG to 5 enemies; +2.5% target max HP every 10s",
+      "effects": [
+        {
+          "type": "aoe_spread",
+          "target_count": 5,
+          "display": "Damage distributed to 5 nearby enemies"
+        },
+        {
+          "type": "hp_percent_damage",
+          "percent": 250,
+          "display": "2.5% target max HP damage every 10s"
+        }
+      ],
+      "pvp_notes": "Good for PvE. In PvP, the HP% damage is useful vs high-HP tanks."
+    },
+    {
+      "skill_id": 5007,
+      "mount_name": "Round Frog",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "kill_trigger",
+      "trigger_condition": "When enemy dies (10s check)",
+      "cooldown": "per kill",
+      "effect_summary": "Every 10s kill → ATK +30% for 5s; boss/player → stun 1s",
+      "effects": [
+        {
+          "type": "on_kill_buff",
+          "attr_id": 1001,
+          "attr_name": "att",
+          "value": 3000,
+          "duration": 5,
+          "display": "ATK +30% for 5s on kill"
+        },
+        {
+          "type": "on_kill_cc",
+          "target": "boss_or_player",
+          "cc_type": "dizz",
+          "duration": 1,
+          "display": "Stun boss/player 1s on kill"
+        }
+      ],
+      "pvp_notes": "PvE-focused (needs kills). In PvP, only boss kill stun is relevant."
+    },
+    {
+      "skill_id": 5008,
+      "mount_name": "Purple Wing",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based_periodic",
+      "trigger_condition": "Every 11s",
+      "cooldown": "11s",
+      "effect_summary": "10000% AoE DMG + launch 0.5s",
+      "effects": [
+        {
+          "type": "aoe_damage",
+          "coefficient": 100000,
+          "coefficient_display": "10000% (100x basic ATK)",
+          "damage_type": "skill",
+          "display": "10000% AoE Skill damage"
+        },
+        {
+          "type": "cc",
+          "cc_type": "throw_hit",
+          "duration": 0.5,
+          "display": "Launch targets 0.5s airborne"
+        }
+      ],
+      "pvp_notes": "Strong periodic burst. 100x basic ATK every 11s is significant sustained DPS."
+    },
+    {
+      "skill_id": 5009,
+      "mount_name": "Cloud Drifter",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "skill_crit",
+      "trigger_condition": "After skill critical hit",
+      "cooldown": "per skill crit",
+      "effect_summary": "Skill Crit +20%; after skill crit ATK +40% for 5s",
+      "effects": [
+        {
+          "type": "attribute_buff",
+          "attr_id": 1037,
+          "attr_name": "skill_crit_rate",
+          "value": 2000,
+          "display": "+20% skill crit rate (passive)"
+        },
+        {
+          "type": "on_skill_crit_buff",
+          "attr_id": 1001,
+          "attr_name": "att",
+          "value": 4000,
+          "duration": 5,
+          "display": "ATK +40% for 5s after skill crit"
+        }
+      ],
+      "pvp_notes": "S-tier for Darklord (+50% skill crit passive stacks). Good for Prophet."
+    },
+    {
+      "skill_id": 5010,
+      "mount_name": "Kun",
+      "mount_id": null,
+      "max_level": 1,
+      "skill_type": 3,
+      "trigger": "on_damage_received",
+      "trigger_condition": "When taking damage",
+      "cooldown": null,
+      "effect_summary": "Convert received DMG into DoT over 5s",
+      "effects": [
+        {
+          "type": "damage_conversion",
+          "mechanic": "DEFER_DAMAGE",
+          "buff_group": 400,
+          "spread_duration": 5,
+          "display": "Incoming burst damage spread over 5 seconds"
+        }
+      ],
+      "pvp_notes": "Damage smoothing — converts burst into DoT. Good vs burst builds. Note: DEFER_DAMAGE has NO PvP decay, making it very efficient."
+    },
+    {
+      "skill_id": 5013,
+      "mount_name": "Cyclone Bamboo",
+      "mount_id": null,
+      "max_level": 1,
+      "skill_type": 3,
+      "trigger": "conditional",
+      "trigger_condition": "While shielded",
+      "cooldown": null,
+      "effect_summary": "Shield +3s duration, +50% effect, ATK +10%, Counter +25% under shield",
+      "effects": [
+        {
+          "type": "shield_enhancement",
+          "duration_bonus": 3,
+          "effect_bonus": 5000,
+          "display": "Shields last 3s longer, 50% stronger"
+        },
+        {
+          "type": "attribute_buff",
+          "attr_id": 1001,
+          "attr_name": "att",
+          "value": 1000,
+          "display": "ATK +10%"
+        },
+        {
+          "type": "conditional_buff",
+          "condition": "while shielded",
+          "attr_id": 1017,
+          "attr_name": "counter",
+          "value": 2500,
+          "display": "Counter +25% while shielded"
+        }
+      ],
+      "pvp_notes": "Synergizes with Martial Sage (8% HP shield passive) and Prophet (shield-related skills)."
+    },
+    {
+      "skill_id": 5014,
+      "mount_name": "Velocity Blitz",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "counter_trigger",
+      "trigger_condition": "Every 1 counter-attack",
+      "cooldown": "per counter",
+      "effect_summary": "Every counter → Global Counter DMG +20% for 3s (cap 60%)",
+      "effects": [
+        {
+          "type": "stacking_buff",
+          "attr_id": 2031,
+          "attr_name": "global_counter_dam",
+          "per_stack": 2000,
+          "cap": 6000,
+          "duration": 3,
+          "display": "+20% counter DMG per counter, 3s duration, 60% cap (3 stacks)"
+        }
+      ],
+      "pvp_notes": "S-tier for Warbringer (+30% counter rate, +140% counter DMG passive)."
+    },
+    {
+      "skill_id": 5015,
+      "mount_name": "AdaptoSlime",
+      "mount_id": null,
+      "max_level": 1,
+      "skill_type": 3,
+      "trigger": "hp_threshold",
+      "trigger_condition": "Cumulative 5% max HP damage taken",
+      "cooldown": "resets after trigger",
+      "effect_summary": "After 5% max HP cumulative damage → 500% basic ATK AoE",
+      "effects": [
+        {
+          "type": "threshold_aoe",
+          "threshold_percent": 500,
+          "coefficient": 50000,
+          "coefficient_display": "500% (5x basic ATK)",
+          "display": "500% AoE damage when 5% max HP damage taken"
+        }
+      ],
+      "pvp_notes": "Frequent proc in PvP due to constant damage. Consistent AoE output."
+    },
+    {
+      "skill_id": 5016,
+      "mount_name": "Koi Paper Kite",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "combo_count",
+      "trigger_condition": "Every 3 combo hits",
+      "cooldown": "per 3-combo cycle",
+      "effect_summary": "Every 3 combos → 1000% AoE DMG",
+      "effects": [
+        {
+          "type": "combo_triggered_aoe",
+          "combo_count": 3,
+          "coefficient": 100000,
+          "coefficient_display": "1000% (10x basic ATK)",
+          "buff_group": 170,
+          "buff_group_name": "DOUBLE_TRIGGER",
+          "display": "1000% AoE every 3 combo hits"
+        }
+      ],
+      "buff_ids": [30003, 51141],
+      "pvp_notes": "S-tier for Plume Monarch (+30% combo rate, +3 extra combo bullets, +140% combo DMG)."
+    },
+    {
+      "skill_id": 5018,
+      "mount_name": "Moon Rabbit",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based_periodic",
+      "trigger_condition": "Every 10s",
+      "cooldown": "10s",
+      "effect_summary": "DMG RES +15%, restore 25% lost HP every 10s",
+      "effects": [
+        {
+          "type": "attribute_buff",
+          "attr_id": 1021,
+          "attr_name": "resist",
+          "value": 1500,
+          "display": "+15% damage resistance (passive)"
+        },
+        {
+          "type": "periodic_heal",
+          "heal_percent": 2500,
+          "interval": 10,
+          "display": "Restore 25% of lost HP every 10s"
+        }
+      ],
+      "pvp_notes": "Sustain mount. Good for Martial Sage (stacks with 8% HP regen). Heal affected by 30% PvP treatDecay."
+    },
+    {
+      "skill_id": 5021,
+      "mount_name": "Blazing Motorcycle",
+      "mount_id": null,
+      "max_level": 1,
+      "skill_type": 3,
+      "trigger": "hp_scaling",
+      "trigger_condition": "Continuous — scales with HP lost",
+      "cooldown": null,
+      "effect_summary": "Per 10% lost HP → flame dealing 500%+ basic ATK DMG",
+      "effects": [
+        {
+          "type": "hp_loss_scaling_damage",
+          "per_10_percent_hp_lost": 50000,
+          "display": "500% basic ATK per 10% HP lost. At 50% HP = 2500% damage"
+        }
+      ],
+      "pvp_notes": "S-tier for Warbringer (ATK +3% per 10% HP lost stacks). Synergizes with any HP-loss scaling."
+    },
+    {
+      "skill_id": 5024,
+      "mount_name": "Immortal Ascent",
+      "mount_id": null,
+      "max_level": 1,
+      "skill_type": 3,
+      "trigger": "death_trigger",
+      "trigger_condition": "When HP would reach 0",
+      "cooldown": "once per combat",
+      "effect_summary": "Death Immunity for 2s + recover 10% max HP (once)",
+      "effects": [
+        {
+          "type": "immune_death",
+          "buff_group": 230,
+          "buff_group_name": "IMMUNE_DEATH",
+          "duration": 2,
+          "display": "2s invulnerability on lethal damage"
+        },
+        {
+          "type": "heal",
+          "heal_percent": 1000,
+          "display": "Recover 10% max HP"
+        }
+      ],
+      "pvp_notes": "Ultimate survival. 2s of invulnerability can turn fights. One-time use."
+    },
+    {
+      "skill_id": 5026,
+      "mount_name": "AdaptoSlime+",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "hp_threshold_multi",
+      "trigger_condition": "Dynamic HP% thresholds (80%, 60%, 30%)",
+      "cooldown": null,
+      "effect_summary": "Below 80% HP: ATK +30%; below 60%: shield 20% HP; below 30%: DMG -20%",
+      "effects": [
+        {
+          "type": "conditional_buff",
+          "condition": "HP < 80%",
+          "buff_group": 80,
+          "attr_id": 1001,
+          "value": 3000,
+          "display": "ATK +30% below 80% HP"
+        },
+        {
+          "type": "conditional_shield",
+          "condition": "HP < 60%",
+          "buff_group": 20,
+          "shield_percent": 2000,
+          "display": "Shield = 20% max HP below 60% HP"
+        },
+        {
+          "type": "conditional_debuff",
+          "condition": "HP < 30%",
+          "damage_reduction": 2000,
+          "display": "Incoming DMG -20% below 30% HP"
+        }
+      ],
+      "pvp_notes": "Three-tier survival. Each tier activates as HP drops, providing layered defense."
+    },
+    {
+      "skill_id": 5029,
+      "mount_name": "Trembling Pepe",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based_alternating",
+      "trigger_condition": "Every 8s alternation",
+      "cooldown": "8s cycle",
+      "effect_summary": "Alternating 8s buffs: shield 16% HP OR ATK +16% + Control -40%",
+      "effects": [
+        {
+          "type": "alternating_state",
+          "state_1": {
+            "buff_group": 20,
+            "shield_percent": 1600,
+            "display": "Shield = 16% max HP"
+          },
+          "state_2": {
+            "attr_buffs": [
+              {"attr_id": 1001, "value": 1600, "display": "ATK +16%"},
+              {"cc_reduction": 4000, "display": "Control duration -40%"}
+            ]
+          },
+          "cycle_duration": 8,
+          "display": "Alternates between shield and ATK/CC-resist every 8s"
+        }
+      ],
+      "pvp_notes": "Flexible utility mount. Good all-around for any class."
+    },
+    {
+      "skill_id": 5030,
+      "mount_name": "Unrivaled Force",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based_probabilistic",
+      "trigger_condition": "60% chance per second for 20s, then burst",
+      "cooldown": "1s interval / 20s phase",
+      "effect_summary": "60% chance/s: ATK +1.5%, DMG RES +1.5%. After 20s: 16000% AoE + launch",
+      "effects": [
+        {
+          "type": "probabilistic_stacking",
+          "probability": 6000,
+          "attr_buffs": [
+            {"attr_id": 1001, "per_stack": 150, "display": "+1.5% ATK per proc"},
+            {"attr_id": 1021, "per_stack": 150, "display": "+1.5% DMG RES per proc"}
+          ],
+          "max_stacks": 20,
+          "phase_duration": 20,
+          "display": "60% chance/s to gain +1.5% ATK and +1.5% DMG RES (up to +30% each)"
+        },
+        {
+          "type": "burst_aoe",
+          "trigger": "after 20s phase",
+          "coefficient": 1600000,
+          "coefficient_display": "16000% (160x basic ATK)",
+          "cc_type": "throw_hit",
+          "cc_duration": 0.5,
+          "display": "16000% AoE + launch all targets"
+        }
+      ],
+      "pvp_notes": "Massive 20s burst. If fight lasts 20s, 160x AoE can one-shot. Stacking phase provides good sustain."
+    },
+    {
+      "skill_id": 5033,
+      "mount_name": "Neon Shadows",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based_periodic",
+      "trigger_condition": "Every 11s accumulation",
+      "cooldown": "11s cycle",
+      "effect_summary": "3 Guard stacks (DEF +150% each), on expire: 4000% Skill + 1600% Combo + 1600% Counter",
+      "effects": [
+        {
+          "type": "stacking_buff",
+          "attr_id": 1024,
+          "attr_name": "def",
+          "per_stack": 15000,
+          "max_stacks": 3,
+          "display": "+150% DEF per Guard stack (3 stacks = +450% DEF)"
+        },
+        {
+          "type": "burst_on_expire",
+          "trigger": "when Guard stacks expire",
+          "coefficients": {
+            "skill": 400000,
+            "combo": 160000,
+            "counter": 160000
+          },
+          "display": "4000% Skill + 1600% Combo + 1600% Counter burst"
+        }
+      ],
+      "pvp_notes": "Defense-into-burst mount. Near-unkillable during Guard phase, then big damage release."
+    },
+    {
+      "skill_id": 5034,
+      "mount_name": "Bite the Watermelon",
+      "mount_id": null,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "time_based_periodic",
+      "trigger_condition": "Every 11s",
+      "cooldown": "11s",
+      "effect_summary": "ATK +20%, DEF +50% every 11s. Summon wave: 4000% Skill + 1600% Combo + 1600% Counter",
+      "effects": [
+        {
+          "type": "periodic_buff",
+          "interval": 11,
+          "attr_buffs": [
+            {"attr_id": 1001, "value": 2000, "display": "ATK +20%"},
+            {"attr_id": 1024, "value": 5000, "display": "DEF +50%"}
+          ],
+          "display": "ATK +20%, DEF +50% every 11s"
+        },
+        {
+          "type": "summon_wave",
+          "coefficients": {
+            "skill": 400000,
+            "combo": 160000,
+            "counter": 160000
+          },
+          "display": "Summon damage wave: 4000% Skill + 1600% Combo + 1600% Counter"
+        }
+      ],
+      "pvp_notes": "Periodic multi-hit mount. Similar burst to Neon Shadows but with ATK/DEF buff instead of Guard stacking."
+    },
+    {
+      "skill_id": 5057,
+      "mount_name": "Life and Death Speed (Motorcycle)",
+      "mount_id": 404,
+      "max_level": 3,
+      "skill_type": 3,
+      "trigger": "3_phase_cycle",
+      "trigger_condition": "Phase 1: Speed stacking from combat events. Phase 2: Overdrive at 200% speed. Phase 3: Reset.",
+      "cooldown": "variable (depends on stacking speed)",
+      "effect_summary": "Speed stacking → overdrive at 200% speed → CC immunity + ATK/DEF/RES bonuses → reset",
+      "effects": [
+        {
+          "type": "passive_evasion",
+          "attr_id": 1008,
+          "values_by_level": {"1": 2000, "2": 2500, "3": 3000},
+          "display": "+20/25/30% evasion (passive)"
+        },
+        {
+          "type": "phase_1_speed_stacking",
+          "triggers": {
+            "evade": {"stacks": 1, "per_n": 1, "buff_id": 50610},
+            "normal_attack": {"stacks": 1, "per_n": 8, "buff_id": 50611},
+            "combo": {"stacks": 1, "per_n": 8, "buff_id": 50612},
+            "counter": {"stacks": 1, "per_n": 8, "buff_id": 50613},
+            "skill": {"stacks": 1, "per_n": 2, "buff_id": 50614}
+          },
+          "speed_buff_id": 50609,
+          "per_stack_speed": 800,
+          "max_stacks": 50,
+          "display": "+8% movement speed per stack, 50 max stacks"
+        },
+        {
+          "type": "phase_2_overdrive",
+          "threshold_buff_id": 50615,
+          "speed_threshold": 20000,
+          "overdrive_skill": 50573,
+          "overdrive_buffs": {
+            "50621": "18% Trap AoE",
+            "50622": "18% DMG RES",
+            "50623": "20% ATK",
+            "50624": "20% DEF",
+            "50625": "20% ATK Speed",
+            "50626": "20% Power Recovery",
+            "50631": "CC Immunity (5s)"
+          },
+          "overdrive_duration": 5,
+          "display": "At 200% speed: 5s overdrive with +20% ATK/DEF/SPD, +18% RES, CC immunity"
+        },
+        {
+          "type": "phase_3_reset",
+          "reset_buff_id": 50629,
+          "clear_buff_id": 50630,
+          "display": "After overdrive expires: reset all stacks, restart Phase 1"
+        }
+      ],
+      "pvp_notes": "S-tier mount. 3-phase cycle: stack speed from combat events → overdrive with massive buffs + CC immunity → reset. Synergizes extremely well with Sacred Hunter (evasion feeds speed stacks) and Martial Sage (counter feeds stacks + tankiness survives stacking phase)."
+    }
+  ],
+
+  "mount_level_system": {
+    "max_level": 300,
+    "max_stats": {
+      "2001_global_atk": 104837000,
+      "2003_global_hp": 104837000,
+      "2005_global_def": 104837000
+    },
+    "exp_currency": "Item 1008",
+    "level_milestones": "Levels with star=1 unlock new mounts via unlock field"
+  },
+
+  "mount_ability_system": {
+    "branches": 3,
+    "upgrade_currency": "Item 1025",
+    "success_mechanic": "Random branch +1 on success; pity via success_guaranteed",
+    "display_formula": "value_plus shown as value / 100 %"
+  },
+
+  "battle_integration": {
+    "loading": "setPlayerMount(player) sets player.mount = cosmetic model ID only",
+    "stat_baking": "All mount stats (level, ability, skin) pre-baked into player attributes before battle",
+    "update_flag": "MountUpdate flag in battle update system",
+    "cosmetic_only_in_battle": true
+  }
+}
