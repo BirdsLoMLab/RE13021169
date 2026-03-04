@@ -622,8 +622,31 @@
       "pvp_notes": "Periodic multi-hit mount. Similar burst to Neon Shadows but with ATK/DEF buff instead of Guard stacking."
     },
     {
+      "skill_id": 5048,
+      "mount_name": "Phoenix Nirvana",
+      "mount_id": null,
+      "max_level": 1,
+      "skill_type": 3,
+      "trigger": "hp_threshold",
+      "trigger_condition": "HP drops below 50%",
+      "cooldown": null,
+      "effect_summary": "At 50% HP: buff chain (50482 hpchange_trigger + 50465-50467)",
+      "effects": [
+        {
+          "type": "hpchange_trigger",
+          "buff_id": 50482,
+          "threshold_percent": 5000,
+          "chained_buffs": [50465, 50466, 50467],
+          "display": "HP threshold trigger at 50% — activates buff chain"
+        }
+      ],
+      "pvp_notes": "HP threshold mount. Buff chain activates when HP drops below 50%. Does NOT apply to clones.",
+      "data_confidence": "partial — buff effects not fully decoded"
+    },
+    {
       "skill_id": 5057,
-      "mount_name": "Life and Death Speed (Motorcycle)",
+      "mount_name": "Speed of Death (Bike)",
+      "alt_names": ["Life and Death Speed", "Motorcycle", "Bike"],
       "mount_id": 404,
       "max_level": 3,
       "skill_type": 3,
@@ -679,6 +702,128 @@
       "pvp_notes": "S-tier mount. 3-phase cycle: stack speed from combat events → overdrive with massive buffs + CC immunity → reset. Synergizes extremely well with Sacred Hunter (evasion feeds speed stacks) and Martial Sage (counter feeds stacks + tankiness survives stacking phase)."
     }
   ],
+
+  "event_p2w_mounts": {
+    "_note": "These mounts were identified from web sources (theriagames.com, talkandroid.com, bluestacks.com). Skill IDs are in the undocumented gap ranges (5011-5012, 5017, 5019-5020, 5022-5023, 5025, 5027-5028, 5031-5032, 5035-5047, 5049-5056, 5058-5059, 5061+). Exact skill ID mapping requires the config binary.",
+    "mounts": [
+      {
+        "name": "Ethereal Phoenix",
+        "skill_id": 5060,
+        "mount_id": 406,
+        "source": "code + web",
+        "obtain": "Draw event (code 'star' redemption)",
+        "skill_name": "Ethereal Phoenix",
+        "effect": "For every 18% Max HP Loss: Purify and ignore Control effects for 1s; Obtain Shield = 8% Max HP for 5s. When Shield expires: ATK +4% permanent (max 6 stacks).",
+        "buff_ids": [50650],
+        "buff_action": "skill_counter",
+        "pvp_tier": "S"
+      },
+      {
+        "name": "Phoenix Nirvana",
+        "skill_id": 5048,
+        "mount_id": null,
+        "source": "code",
+        "obtain": "Unknown (event)",
+        "skill_name": "Phoenix Nirvana",
+        "effect": "HP threshold trigger at 50%: activates buff chain (50482 hpchange_trigger → 50465-50467).",
+        "buff_ids": [50482, 50465, 50466, 50467],
+        "buff_action": "hpchange_trigger",
+        "pvp_tier": "A",
+        "data_confidence": "partial"
+      },
+      {
+        "name": "Cheetah Zero",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (theriagames.com)",
+        "obtain": "Firework Fest / Carnival Night spending event",
+        "skill_name": "Cheetah Zero",
+        "effect": "Every 11s: gains shield = 16% Max HP (ignores PvP reduction and shield breaks) at cost of 10% current HP (ignores immunity) for 3s. During shield: cannot use basic ATK, Combo, Counter, or Active Skills. After shield expires: next Basic ATK deals 1200% Basic ATK DMG (can crit), 1200% Combo DMG (can crit), 1200% Counter DMG (can crit), 4000% Skill DMG to AoE, and increases pal's next Basic ATK DMG by 200%.",
+        "pvp_tier": "S"
+      },
+      {
+        "name": "Magic Carpet",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (theriagames.com, talkandroid.com)",
+        "obtain": "Event / Rush Tokens",
+        "skill_name": "Magic Carpet",
+        "effect": "After casting 6 skills, fully restore energy of 1 random skill. Global ATK +10%.",
+        "pvp_tier": "A"
+      },
+      {
+        "name": "Horizon Racer",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (talkandroid.com)",
+        "obtain": "Event",
+        "skill_name": "Horizon Racer",
+        "effect": "Every 10s: deal 800% basic ATK AoE DMG + knockback enemies.",
+        "pvp_tier": "B"
+      },
+      {
+        "name": "B. Duck",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (theriagames.com)",
+        "obtain": "Spending Event",
+        "skill_name": "B. Duck Splash",
+        "effect": "Every 11s: deal 2000% Skill DMG + 800% Combo DMG + 800% Counter DMG AoE. Reduces enemy ATK by 10% until end of battle. Global DEF +10%.",
+        "pvp_tier": "A"
+      },
+      {
+        "name": "Time Machine",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (theriagames.com)",
+        "obtain": "Firework Fest event",
+        "skill_name": "Time Machine",
+        "effect": "First 20s: negate/store 40% of all DMG taken. Gain +8% ATK, +10% Final Crit DMG, +10% Final Skill Crit DMG, +10% Final Pal Crit DMG. After 20s: deal 6% of stored DMG (ignores immunity) per second for 10s.",
+        "pvp_tier": "S"
+      },
+      {
+        "name": "Dazzling Unicorn",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (theriagames.com, twitter @legendofmush)",
+        "obtain": "Magi Saga / Magician Trials event (Apr 2025)",
+        "skill_name": "Spiral Strike",
+        "effect": "Every 12s: unicorn resists DMG of next active skill hit (excluding Class/Avian/Summoning Skills). During resist: +50% DEF + ignore all control effects. After resisting: reflect active skill to attacker, gain +4% ATK and +4% DMG RES permanent (max 3 stacks). Global DEF +10%. Triggers at battle start.",
+        "pvp_tier": "S"
+      },
+      {
+        "name": "Silvery Crescent",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (theriagames.com)",
+        "obtain": "Feather Shop (80 Feather Passes)",
+        "skill_name": "Unknown",
+        "effect": "+12% speed (additional combat skill not documented online)",
+        "pvp_tier": "unknown"
+      },
+      {
+        "name": "Cyan Phoenixes",
+        "skill_id": null,
+        "mount_id": null,
+        "source": "web (theriagames.com)",
+        "obtain": "Mount Level Tier 24 (max tier unlock)",
+        "skill_name": "Unknown",
+        "effect": "Unlocked at Tier 24 – 10 Star mount level. Combat skill not documented online.",
+        "pvp_tier": "unknown"
+      }
+    ]
+  },
+
+  "alternate_names": {
+    "_note": "Some mounts have different display names in different contexts (web guides vs code vs in-game)",
+    "mappings": [
+      {"code_name": "Life and Death Speed", "alt_names": ["Speed of Death", "Bike", "Motorcycle"], "skill_id": 5057},
+      {"code_name": "Neon Shadows", "alt_names": ["Holy Dragon"], "skill_id": 5033, "note": "Web descriptions match but with level 1 values vs our level 3 values"},
+      {"code_name": "Bite the Watermelon", "alt_names": ["Watermelon Ship"], "skill_id": 5034, "note": "Web descriptions match at lower level values"},
+      {"code_name": "Velocity Blitz", "alt_names": ["Mini Motorcycle"], "skill_id": 5014, "note": "Counter DMG stacking mechanic matches"},
+      {"code_name": "Purple Wing", "alt_names": ["Horizon Racer"], "skill_id": 5008, "note": "AoE burst every 10-11s matches, but coefficients differ"}
+    ]
+  },
 
   "mount_level_system": {
     "max_level": 300,
