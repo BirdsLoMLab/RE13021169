@@ -1,852 +1,519 @@
 {
-  "_meta": {
-    "description": "Master reference of all mounts and mount skin combat skills in Legend of Mushroom",
-    "source": "game_script.js (ConfigMount, ConfigMount_skin, ConfigSkill), reverse-engineered docs",
-    "notes": [
-      "Mount names are from reverse-engineered English localization — may not match all server translations",
-      "Skill IDs 5001-5034 are mount skin skills; 5039-5062,5080-5084 are artifact skin skills",
-      "Mount ID 404 (Motorcycle) has a unique 3-phase combat cycle documented in 35_MOTORCYCLE_MOUNT_DEEP_DIVE.md",
-      "All mount stats are pre-baked into player attributes before battle — only cosmetic model loads at battle time",
-      "Skill coefficients are /10000 fixed-point (e.g., 100000 = 10.0x = 1000%)"
-    ],
-    "config_schema": {
-      "ConfigMount": "24 fields — id, name, type, path, binds, icon, icon_small, icon_group, maxNum, maxTime, quality, sort, min_speed, max_speed, open_time, animation, mount_location_adjust, position, scale, if_activity, pk_scale, fashion, fashion_eff, power",
-      "ConfigMount_skin": "6 fields — mount_id, skin_level, expend, skin_skill, attr, power",
-      "ConfigMount_level": "10 fields — level, name, order, star, expend_exp, expend_goods, attr, base_skill, unlock, power",
-      "ConfigMount_ability": "4 fields — id (branch 1-3), level, value_plus, power",
-      "ConfigMount_abilitycost": "4 fields — total_level, cost, success_rate, success_guaranteed"
+  "_source": "LOM_Database-5.xlsx (data_mounts.ts Global filtered) + reverse-engineered code skill IDs",
+  "_total_mounts": 64,
+  "_tier_mounts_no_skill": 10,
+  "_combat_skill_mounts": 54,
+  "_code_mapped": 19,
+  "_code_only_skills": 7,
+  "mounts": [
+    {
+      "index": 1,
+      "name": "Lily Pad",
+      "rarity": "Rare",
+      "is_tier_mount": true
+    },
+    {
+      "index": 2,
+      "name": "Quack Splash",
+      "rarity": "Rare",
+      "is_tier_mount": true
+    },
+    {
+      "index": 3,
+      "name": "Surfboard",
+      "rarity": "Rare",
+      "is_tier_mount": true
+    },
+    {
+      "index": 4,
+      "name": "Flyboard",
+      "rarity": "Rare",
+      "is_tier_mount": true
+    },
+    {
+      "index": 5,
+      "name": "Skyglider",
+      "rarity": "Epic",
+      "is_tier_mount": true
+    },
+    {
+      "index": 6,
+      "name": "Amethyst Gourd",
+      "rarity": "Epic",
+      "is_tier_mount": true
+    },
+    {
+      "index": 7,
+      "name": "Magic Broom",
+      "rarity": "Legendary",
+      "is_tier_mount": true
+    },
+    {
+      "index": 8,
+      "name": "Azure Feather",
+      "rarity": "Immortal",
+      "is_tier_mount": true
+    },
+    {
+      "index": 9,
+      "name": "Soaring Wings",
+      "rarity": "Supreme",
+      "is_tier_mount": true
+    },
+    {
+      "index": 10,
+      "name": "Cyan Phoenixes",
+      "rarity": "Supreme",
+      "is_tier_mount": true
+    },
+    {
+      "index": 11,
+      "name": "Hot Wheels",
+      "rarity": "Legendary",
+      "effect": "Boost Pal Attack Speed by 2% per second (up to 40%).",
+      "passive_effect": "Ignore Stun +6%",
+      "skill_id": 5003
+    },
+    {
+      "index": 12,
+      "name": "Pyrebreaker",
+      "rarity": "Legendary",
+      "effect": "Increase base Crit rate by 1% and Crit DMG by 5% per second (up to 20%, 100%).",
+      "passive_effect": "Ignore Evasion +10%",
+      "skill_id": 5002
+    },
+    {
+      "index": 13,
+      "name": "Skyshark",
+      "rarity": "Legendary",
+      "effect": "Launches a shark missile every 12s, dealing 1600% AoE Skill DMG and restoring HP equal to the DMG dealt, up to 30% of Max HP, ignoring PvP reduction. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 14,
+      "name": "White Tiger",
+      "rarity": "Legendary",
+      "effect": "Targets with HP percentage below the caster take 15% increased DMG, while those with HP percentage above the caster have their ATK reduced by 10%.",
+      "passive_effect": "Global Basic ATK DMG +10%",
+      "skill_id": 5004
+    },
+    {
+      "index": 15,
+      "name": "Boom Da Bang",
+      "rarity": "Legendary",
+      "effect": "ATK, ATK SPD, Energy Regen SPD, and Pal ATK SPD increase by 4% every 10s, stacking up to 6 times. (Triggers at the start of the battle.) At 6 stacks or when below 40% HP, stuns all enemies for 1.5s and reduces their DMG RES by 10% until the battle ends.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 16,
+      "name": "Blue Ox",
+      "rarity": "Legendary",
+      "effect": "Increase DMG RES by 10% and shorten the duration of control effects by 30%.",
+      "passive_effect": "Pal Crit DMG +25%",
+      "skill_id": 5005
+    },
+    {
+      "index": 17,
+      "name": "Round Frog",
+      "rarity": "Legendary",
+      "effect": "Every 10 second, defeat 1 enemies, boosting ATK by 15% for 5 seconds. If the target is a Boss or player, stun for an additional 1 seconds.",
+      "passive_effect": "Crit RES Bonus +40%",
+      "skill_id": 5007
+    },
+    {
+      "index": 18,
+      "name": "Blue Queen",
+      "rarity": "Legendary",
+      "effect": "Distribute 10% of DMG dealt to up to 5 surrounding enemies when dealing DMG.",
+      "passive_effect": "Crit DMG Bonus +40%",
+      "skill_id": 5006
+    },
+    {
+      "index": 19,
+      "name": "Rum Barrel",
+      "rarity": "Legendary",
+      "effect": "For every 20% Max HP missing, deal 800% Basic ATK AoE DMG within a range, gain 10% ATK and take 10% less DMG for 5s (triggers at the start of the battle)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 20,
+      "name": "Blizzard Visitor",
+      "rarity": "Immortal",
+      "effect": "Reduces all target's Movement SPD by 25%. For every 10% Movement SPD they lose, reduces their ATK by 2% and increases the duration of control effects on them by 2%.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 21,
+      "name": "Silvery Crescent",
+      "rarity": "Immortal",
+      "effect": "Gain Death Immunity for 2s upon taking lethal DMG, and immediately recover 10% Max HP.",
+      "passive_effect": "Global HP +10%",
+      "skill_id": 5024,
+      "code_name": "Immortal Ascent"
+    },
+    {
+      "index": 22,
+      "name": "Diving Duck",
+      "rarity": "Immortal",
+      "effect": "B.Duck creates splashes around every 11s, dealing 2000% Skill DMG, 800% Combo DMG and 800% Counter DMG to all enemies in the area and reducing their ATK by 10% until the battle ends; the effects don't stack. The skill deals 50% more DMG when cast again. When the skill hits the same target again, reduces their ATK by 3% more, stacking up to 2 times. (Casts 1 time immediately after battle starts.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 23,
+      "name": "Scorpio",
+      "rarity": "Immortal",
+      "effect": "Inflicts 1 stack of Poison on enemies in a small area every 15s, each stack dealing Bleed DMG equal to 0.8% of the target's current HP per second (ignores Immunity) until the battle ends. Poison stacks up to 10 times. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 24,
+      "name": "Wave Cruiser",
+      "rarity": "Immortal",
+      "effect": "Gains 5 wave stack(s) at the start of battle, each reducing enemy Final Crit DMG, Final Pal Crit DMG and Final Skill Crit DMG by 4%. Breaks 1 wave stack every 6s or after every 20 basic attacks, increasing Movement SPD by 8% and ATK by 6% until the battle ends, stacking up to 5 times.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 25,
+      "name": "Storm Rider",
+      "rarity": "Immortal",
+      "effect": "Increase DMG RES by 5% and shorten the duration of control effects by 15%. The first time HP drops below 80%, increase DMG RES by 8% and shorten the duration of control effects by 25% for 8s. The first time HP drops below 60%, increase DMG RES by 8% and shorten the duration of control effects by 25% for 12s. The first time HP drops below 40%, increase DMG RES by 8% and shorten the duration of control effects by 25% until the battle ends. Each effect is counted independently and stackable.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 26,
+      "name": "Horizon Racer",
+      "rarity": "Immortal",
+      "effect": "Every 10 second, summon a car, dealing 800% current basic attack AoE DMG and knocking back targets.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 27,
+      "name": "AdaptoSlime",
+      "rarity": "Immortal",
+      "effect": "Increases ATK by 15% for 10 seconds when HP drops below 80%. Gains a shield equal to 10% of max HP for 10 seconds when HP drops below 60%. Reduces DMG taken by 15% for 10 seconds when HP drops below 30%.",
+      "passive_effect": "Global HP +10%",
+      "skill_id": 5026
+    },
+    {
+      "index": 28,
+      "name": "Koi Paper Kite",
+      "rarity": "Immortal",
+      "effect": "Every 3 combo triggers an additional 500% AoE DMG.",
+      "passive_effect": "Global ATK +10%",
+      "skill_id": 5016
+    },
+    {
+      "index": 29,
+      "name": "Long-legged Bird",
+      "rarity": "Immortal",
+      "effect": "There is a 50% chance to gain 4% ATK, 4% DMG RES and 10% Control Duration Reduction every 4s after the battle starts. This lasts until the battle ends and stacks up to 3 times (the chances of the 3 effects are independently calculated). There is a 100% chance to grant the Summon 4% ATK, 4% DMG RES and 10% Control Duration Reduction until the Summon disappears, stacking up to 3 times. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 30,
+      "name": "Heart's Desire",
+      "rarity": "Immortal",
+      "effect": "Every second for the first 20 seconds has a 60% chance to boost ATK by 1% and DMG RES by 1% until the battle ends. After 20 seconds, deals 8000% AoE Skill DMG and launches the target airborne for 0.5 second.",
+      "passive_effect": "Skill Crit DMG +10%",
+      "skill_id": 5030,
+      "code_name": "Unrivaled Force"
+    },
+    {
+      "index": 31,
+      "name": "Book of the Universe",
+      "rarity": "Immortal",
+      "effect": "When casting an active skill, the Character has a 15% chance to cast it again (excluding those cast by Past Revisited and Eye of Raven).",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 32,
+      "name": "Time Machine",
+      "rarity": "Immortal",
+      "effect": "For the first 20s after the battle starts, negates and stores 40% of all DMG taken and gains 8% of ATK, 10% of Final Crit DMG, 10% of Final Skill Crit DMG and 10% of Final Pal Crit DMG. After the first 20s of the battle, receives an additional 6% of the stored DMG (ignores Immunity) per second for 10s.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 33,
+      "name": "Sea of Lanterns",
+      "rarity": "Immortal",
+      "effect": "After 15s into battle, becomes immune to DMG for 2s and gains 15% Final Crit DMG, 15% Final Skill Crit DMG, and 15% Final Pal Crit DMG until the battle ends. Current HP changes into 40% Max HP during DMG immunity.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 34,
+      "name": "Dimensional Wings",
+      "rarity": "Immortal",
+      "effect": "Gain 1 bar of Rage for every 15 basic attacks, 12 combos, 12 counters, 3 active skill(s), or after taking damage equal to 18% of Max HP. Each bar of Rage increases DEF by 3%. At 5 bars, uses all Rage to increase DMG RES, ATK, Crit Rate, Skill Crit Rate, Pal Crit Rate, Crit DMG, Pal Crit DMG and Skill Crit DMG by 12% for 5s.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 35,
+      "name": "Mini Motorcycle",
+      "rarity": "Immortal",
+      "effect": "With every 1 counter, increase global counter DMG by 10% for 3 seconds, up to a maximum of 30%. The duration refreshes with each new counter trigger.",
+      "passive_effect": "Global HP +10%",
+      "skill_id": 5014,
+      "code_name": "Velocity Blitz"
+    },
+    {
+      "index": 36,
+      "name": "Blazing Motorcycle",
+      "rarity": "Immortal",
+      "effect": "For every 10% lost HP, release a flame jet, dealing at least 500% of current basic attack DMG (scales with lost HP).",
+      "passive_effect": "Global DEF +10%",
+      "skill_id": 5021
+    },
+    {
+      "index": 37,
+      "name": "Cloud Drifter",
+      "rarity": "Immortal",
+      "effect": "Increase Skill Crit Rate by 10%. After a skill critical, boost ATK by 20% for 5 seconds.",
+      "passive_effect": "Global ATK +10%",
+      "skill_id": 5009
+    },
+    {
+      "index": 38,
+      "name": "Gator Menace",
+      "rarity": "Immortal",
+      "effect": "After the battle starts, every 5 seconds, deal DMG equal to 4% of the maximum HP to all targets within range, reducing their DMG RES by 2% and Crit RES by 20% until the battle ends, stacking up to 5 times.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 39,
+      "name": "Pumpkin Carriage",
+      "rarity": "Immortal",
+      "effect": "Deals 2000% AoE Skill DMG, 800% current Combo AoE DMG, and 800% current Counter AoE DMG every 11s after the battle starts, and the targets take DMG equal to 2% of current HP per second with ATK and DMG RES reduced by 10% for 5s. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 40,
+      "name": "Ethereal Phoenix",
+      "rarity": "Immortal",
+      "effect": "Cleanse and ignore control effects for 1s for every 18% Max HP lost. Gain a shield equal to 8% Max HP, lasting 5s. After the shield expires, ATK increases by 4% until the battle ends, stacking up to 6 times.",
+      "passive_effect": "Global DEF +10%",
+      "skill_id": 5060,
+      "mount_id": 406
+    },
+    {
+      "index": 41,
+      "name": "Nebular Shuttle",
+      "rarity": "Immortal",
+      "effect": "Grants a shield equal to 10% Max HP every 11s after battle starts, lasting 8s. Grants 6% DMG RES for the shield's duration; cleanses and increases Final DMG RES by 3% and ATK by 3% once the shield is lost, lasting until the end of battle. Stacks up to 3 times. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 42,
+      "name": "Effulgent Fan",
+      "rarity": "Immortal",
+      "effect": "Every 11s, increases Crit Rate by 30% and Skill Crit Rate by 30% for 3s. For every 5 Crits or 1 Skill Crit hit during this period, fireworks deal 200% of current Basic ATK AoE DMG (can be Crit) to enemies and increase Final Crit DMG and Final Skill Crit DMG by 6% for 3s, stacking up to 5 times. (Triggers at the start of the battle.)",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 43,
+      "name": "Magic Carpet",
+      "rarity": "Immortal",
+      "effect": "After casting skills 6 times, restore full energy to 1 random skills.",
+      "passive_effect": "Global ATK +10%"
+    },
+    {
+      "index": 44,
+      "name": "Panda Attack",
+      "rarity": "Immortal",
+      "effect": "Every 10s, gains Control Immunity for 3-5s and boosts ATK by 5%-12% and DMG RES by 5%-12% for 10s. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 45,
+      "name": "Vibrant Watermelon Ship",
+      "rarity": "Immortal",
+      "effect": "Increases ATK by 10% and DEF by 30% every 11s for 5s. After this, a Watermelon Ship is summoned to unleash a wave that launches enemies for 0.5s, dealing 2000% Skill DMG, 800% current Combo DMG, and 800% current Counter DMG as AoE DMG. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%",
+      "skill_id": 5034,
+      "code_name": "Bite the Watermelon"
+    },
+    {
+      "index": 46,
+      "name": "Trembling Pepe",
+      "rarity": "Immortal",
+      "effect": "These two buffs will alternate to take effect every 8s: Gain a Shield with 8% of Max HP, lasting 8s. Gain 8% ATK and reduce the time of being controlled by 30% for 8s.",
+      "passive_effect": "Global DEF +10%",
+      "skill_id": 5029
+    },
+    {
+      "index": 47,
+      "name": "Guardian Spaceship",
+      "rarity": "Immortal",
+      "effect": "Gain a shield equal to 6% Max HP every 9s for 6s. 6s later, reflects 20% of the total DMG received within the 6s to all enemies. (Only DMG absorbed and blocked by the shield can be reflected, not DMG ignored by Immunity.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 48,
+      "name": "Purple Wing",
+      "rarity": "Immortal",
+      "effect": "After the battle begins, immediately deals 5000% AoE DMG, and launches targets within the range for 0.5 seconds. Releases every 11 seconds.",
+      "passive_effect": "Global HP +10%",
+      "skill_id": 5008
+    },
+    {
+      "index": 49,
+      "name": "Thunder Vanguard",
+      "rarity": "Supreme",
+      "effect": "Increase DEF by 36% after the battle starts. Ram forward every 8s, dealing 1000% Skill DMG, 200% current Combo DMG (can be Crit), 200% current Counter DMG (can be Crit), and DMG equal to 4% Max HP to targets in the area. If targets are immune to damage or death, reduce their ATK by an additional 24% for 5s. Afterwards, DEF is reduced by 6% while ATK increases by 3%, stacking up to 6 times. (Triggers at the start of the battle.)",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 50,
+      "name": "Holy Dragon",
+      "rarity": "Supreme",
+      "effect": "Gain 3 stacks of Guard every 11s, each stack increasing DEF by 100% but losing 1 stack every 1s. Deal 2000% Skill DMG, 800% current Combo DMG and 800% current Counter DMG at the end of Guard (triggers at the start of the battle)",
+      "passive_effect": "Global DEF +10%",
+      "skill_id": 5033,
+      "code_name": "Neon Shadows"
+    },
+    {
+      "index": 51,
+      "name": "Cheetah Zero",
+      "rarity": "Supreme",
+      "effect": "Gain Death Immunity for 3s when taking lethal damage. For the duration, ignore new control effects (doesn't affect existing control), gain 10% ATK, 10% Crit Rate, 10% Final Crit DMG, 10% Skill Crit Rate, 10% Final Skill Crit DMG, 10% Pal Crit Rate, and 10% Final Pal Crit DMG, and the next basic attack deals 3000% Skill DMG, 1200% Current Combo DMG (can be Crit), 1200% Current Counter DMG (can be Crit), and DMG equal to 8% Max HP to enemies in the area. The character explodes at the end of the duration.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 52,
+      "name": "Speed of Death",
+      "rarity": "Supreme",
+      "effect": "Gains 20% Evasion. Activates speed-up mode at the start of battle: Every 1 evasions, 8 basic attacks, 8 combos, 8 counters, or 2 active skills used increases Movement SPD by 8% until the burst ends. After Movement SPD reaches 200% of its initial value, activates charge mode: Increases DMG RES by 9% for 5s. After charge mode ends, activates burst mode: Cleanses and becomes immune to control effects, recovers 12% of lost HP per second, and increases DMG RES by 12%, ATK, DEF, ATK SPD, Energy Regen SPD and Pal ATK SPD by 32% for 5s. Returns to speed-up mode after the burst ends.",
+      "passive_effect": "Global HP +10%",
+      "skill_id": 5057,
+      "code_name": "Life and Death Speed",
+      "mount_id": 404
+    },
+    {
+      "index": 53,
+      "name": "Cinder Wolf",
+      "rarity": "Supreme",
+      "effect": "Gains 10% ATK and 16% Final Crit RES after the battle starts. The first time HP drops below 39%, cleanses debuffs, becomes immune to damage for 1s, converts HP into 10% Max HP, and gains a shield equal to 45% of Max HP (ignores PvP reduction and shield breaks). For the shield's duration, reduces HP Regen by 100%, ignores control effects, but gains 10% DMG RES; the character's basic attacks deal 250% extra Skill DMG, 50% extra Combo DMG (can be Crit), 50% extra Counter DMG (can be Crit), while pals' basic attacks deal 50% extra Pal DMG (can be Crit).",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 54,
+      "name": "Dazzling Unicorn",
+      "rarity": "Supreme",
+      "effect": "The unicorn spreads its wings every 12s, resisting DMG of the next active skill hit on the Character (excluding Class, Avian, and Summoning Skills), during which the Character gains 50% DEF and ignores all control effects. After the unicorn resists DMG, the DEF boost and control immunity effects disappear. Meanwhile, the Chracter reflects the active skill to the attacker and gains 4% ATK and 4% DMG RES until the battle ends, up to 3 stacks. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 55,
+      "name": "Skyward Blaze",
+      "rarity": "Supreme",
+      "effect": "Deals 600% current Basic ATK AoE DMG to an area every 10s and burns the targets, who will receive 40% current Basic ATK DMG per second until the battle ends, stacking up to 3 times. Gains an additional 4% ATK and DEF and 4% DMG RES until the battle ends, stacking up to 3 times. (Casts 1 time immediately after battle starts.)",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 56,
+      "name": "Sparkling Flash",
+      "rarity": "Immortal",
+      "effect": "Every 8s after the battle starts, gain a support from Sparkling Flash (triggers at the start of the battle). For every 10% HP over 50% Max HP, gain 2% ATK and DEF for 8s. If below 50% HP, restore 12% of lost HP and gain 10% DMG RES for 8s.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 57,
+      "name": "Cloud Traveler",
+      "rarity": "Immortal",
+      "effect": "Healing Amount increases by 0.3%. For every 15% Max HP lost, restores 7% of lost HP and gains 5% DMG RES for 4s, stacking up 4 times.",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 58,
+      "name": "Spectral Ride",
+      "rarity": "Immortal",
+      "effect": "When an opponent's HP drops below 88% for the first time, their ATK is reduced by 16%. Upon first falling below 66% HP, their DMG RES is decreased by 16%. At 44% HP, their ATK SPD, Pal ATK SPD, and Energy Regen are reduced by 16%. When HP falls below 22%, the enemy takes 1.6% of their max HP as damage per second, ignoring DMG Immunity.",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 59,
+      "name": "Immortal Tyrant",
+      "rarity": "Immortal",
+      "effect": "Every 11s, releases the icy breath, reducing all enemies' Movement SPD, ATK SPD, Pal ATK SPD, Energy Regen SPD, and HP Regen by 60%. Loses 1/5 of the effects every 1.2s (cannot be cleansed; triggers at the start of the battle.).",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 60,
+      "name": "Best Buddy",
+      "rarity": "Immortal",
+      "effect": "At the start of the battle, the Character gains 12% DMG RES, which decays by 1/3 every 12s. Every 1% of the Character's Ignore Evasion grants pals 0.2% Ignore Evasion. For every 5 basic attacks or combo hits from a pal, restore the Character's HP by 1% Max HP and increase the pal's ATK SPD by 2%, stacking up to 10 times (independently counted for each pal).",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 61,
+      "name": "Soaring Shroomie",
+      "rarity": "Immortal",
+      "effect": "Movement SPD increases by 20% at the start of battle and by an additional 10% every 5s after that, stacking up to 10 times. For every 10% Movement SPD that the Character has higher than the base value of 10%, increase their Evasion and ATK SPD by 3.2% (up to 32%), Crit DMG and Skill Crit DMG by 2.4% (up to 24%), and Final DMG RES by 1.6% (up to 16%).",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 62,
+      "name": "Sanctuary Warmth",
+      "rarity": "Supreme",
+      "effect": "The first time HP drops below 70%/50%/30%, gain a Pink/Yellow/Purple Gift. Each gift is gained cleanses debuffs and grants DMG and Control Immunity for 0.6s and a shield equal to 20% Max HP for 8s. While the shield persists, the Character's Final DMG RES increases by 10%. (Shields and Final DMG RES from differents gifts stack) When the shield expires, gain the following effects based on gift color: Pink: ATK increases by 10% and DEF by 30%. Yellow: Crit Rate, Pal Crit Rate, Final Crit DMG, Final Pal Crit DMG, and Final Skill Crit DMG increase by 10%. Purple: Restore 24% Max HP and deal 5000% Skill DMG, 1000% current Basic ATK DMG (can be Crit), 1000% current Combo DMG (can be Crit), and 1000% current Counter DMG (can be Crit) to all enemies. (DMG from the purple gift ignores DMG Immunity.)",
+      "passive_effect": "Global HP +10%"
+    },
+    {
+      "index": 63,
+      "name": "Dawn of Time",
+      "rarity": "Immortal",
+      "effect": "Gains 16% DMG RES after the battle starts, which is reduced by 1/4 every 12s. Every 12s, gains a shield equal to 10% Max HP that lasts 5s, and increases Final DMG Boost by 40% and all HP Regen effects by 60% for 3s. (Triggers at the start of the battle.)",
+      "passive_effect": "Global DEF +10%"
+    },
+    {
+      "index": 64,
+      "name": "Leo",
+      "rarity": "Immortal",
+      "effect": "Every 10s after battle starts, reduces all enemies' ATK, Crit Rate, Skill Crit Rate, Combo Rate, Counter Rate, Pal Crit Rate, and Pal Combo Rate by 20% for 6s (cannot be cleansed). Meanwhile, increases ATK, Crit Rate, Skill Crit Rate, Combo Rate, Counter Rate, Pal Crit Rate, and Pal Combo Rate by 20% for 6s. (Triggers at the start of the battle.)",
+      "passive_effect": "Global HP +10%"
     }
-  },
-
-  "mount_skin_skills": [
+  ],
+  "code_only_skill_ids": [
     {
       "skill_id": 5001,
-      "mount_name": "Default Mount",
-      "mount_id": null,
-      "max_level": 24,
-      "skill_type": 3,
-      "trigger": "passive",
-      "trigger_condition": "Always active",
-      "cooldown": null,
-      "effect_summary": "Evasion bonus (scales with level)",
-      "effects": [
-        {
-          "type": "attribute_buff",
-          "attr_id": 1008,
-          "attr_name": "miss (evasion)",
-          "values_by_level": {
-            "1": 2000,
-            "2": 2500,
-            "3": 3000,
-            "24": 7500
-          },
-          "display": "+20% to +75% evasion",
-          "duration": "permanent"
-        }
-      ],
-      "pvp_notes": "At max level (+75%), approaches the 80% PvP evasion cap. Massive survivability."
-    },
-    {
-      "skill_id": 5002,
-      "mount_name": "Pyrebreaker",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based",
-      "trigger_condition": "Every 1s accumulation",
-      "cooldown": "1s per stack",
-      "effect_summary": "Crit Rate +2%/s (cap 40%), Crit DMG +10%/s (cap 200%)",
-      "effects": [
-        {
-          "type": "stacking_buff",
-          "attr_id": 1004,
-          "attr_name": "crit_rate",
-          "per_stack": 200,
-          "cap": 4000,
-          "display": "+2%/s crit rate, capped at +40%"
-        },
-        {
-          "type": "stacking_buff",
-          "attr_id": 1005,
-          "attr_name": "crit_dam",
-          "per_stack": 1000,
-          "cap": 20000,
-          "display": "+10%/s crit damage, capped at +200%"
-        }
-      ],
-      "pvp_notes": "Synergizes with Sacred Hunter (post-crit ATK +40%) and Darklord (skill crit builds)."
-    },
-    {
-      "skill_id": 5003,
-      "mount_name": "Hot Wheels",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based",
-      "trigger_condition": "Every 1s accumulation",
-      "cooldown": "1s per stack",
-      "effect_summary": "Pal ATK SPD +3%/s (cap 60%)",
-      "effects": [
-        {
-          "type": "stacking_buff",
-          "target": "pal",
-          "attr_id": 1003,
-          "attr_name": "att_speed",
-          "per_stack": 300,
-          "cap": 6000,
-          "display": "+3%/s pal attack speed, capped at +60%"
-        }
-      ],
-      "pvp_notes": "Best for Beastmaster/Supreme Spirit pal-focused builds."
-    },
-    {
-      "skill_id": 5004,
-      "mount_name": "White Tiger",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "combat_condition",
-      "trigger_condition": "HP% comparison with target (every hit)",
-      "cooldown": null,
-      "effect_summary": "Targets below your HP% take +30% DMG; above have ATK -20%",
-      "effects": [
-        {
-          "type": "conditional_buff",
-          "condition": "target HP% < your HP%",
-          "buff_group": 80,
-          "buff_group_name": "ATTRIB_CONDITION",
-          "effect": "+30% damage to target"
-        },
-        {
-          "type": "conditional_debuff",
-          "condition": "target HP% > your HP%",
-          "buff_group": 80,
-          "buff_group_name": "ATTRIB_CONDITION",
-          "effect": "-20% ATK on target"
-        }
-      ],
-      "pvp_notes": "Dynamic scaling. Punishes tanks (more HP than you) AND glass cannons (less HP)."
-    },
-    {
-      "skill_id": 5005,
-      "mount_name": "Blue Ox",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "passive",
-      "trigger_condition": "Always active",
-      "cooldown": null,
-      "effect_summary": "DMG RES +15%, Control Duration -50%",
-      "effects": [
-        {
-          "type": "attribute_buff",
-          "attr_id": 1021,
-          "attr_name": "resist",
-          "value": 1500,
-          "display": "+15% damage resistance"
-        },
-        {
-          "type": "cc_reduction",
-          "reduction": 5000,
-          "display": "-50% control effect duration"
-        }
-      ],
-      "pvp_notes": "Anti-CC tank mount. Strong against stun/freeze-heavy opponents."
-    },
-    {
-      "skill_id": 5006,
-      "mount_name": "Blue Queen",
-      "mount_id": null,
-      "max_level": 1,
-      "skill_type": 3,
-      "trigger": "time_based_periodic",
-      "trigger_condition": "Every 10s",
-      "cooldown": "10s",
-      "effect_summary": "Distribute DMG to 5 enemies; +2.5% target max HP every 10s",
-      "effects": [
-        {
-          "type": "aoe_spread",
-          "target_count": 5,
-          "display": "Damage distributed to 5 nearby enemies"
-        },
-        {
-          "type": "hp_percent_damage",
-          "percent": 250,
-          "display": "2.5% target max HP damage every 10s"
-        }
-      ],
-      "pvp_notes": "Good for PvE. In PvP, the HP% damage is useful vs high-HP tanks."
-    },
-    {
-      "skill_id": 5007,
-      "mount_name": "Round Frog",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "kill_trigger",
-      "trigger_condition": "When enemy dies (10s check)",
-      "cooldown": "per kill",
-      "effect_summary": "Every 10s kill → ATK +30% for 5s; boss/player → stun 1s",
-      "effects": [
-        {
-          "type": "on_kill_buff",
-          "attr_id": 1001,
-          "attr_name": "att",
-          "value": 3000,
-          "duration": 5,
-          "display": "ATK +30% for 5s on kill"
-        },
-        {
-          "type": "on_kill_cc",
-          "target": "boss_or_player",
-          "cc_type": "dizz",
-          "duration": 1,
-          "display": "Stun boss/player 1s on kill"
-        }
-      ],
-      "pvp_notes": "PvE-focused (needs kills). In PvP, only boss kill stun is relevant."
-    },
-    {
-      "skill_id": 5008,
-      "mount_name": "Purple Wing",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based_periodic",
-      "trigger_condition": "Every 11s",
-      "cooldown": "11s",
-      "effect_summary": "10000% AoE DMG + launch 0.5s",
-      "effects": [
-        {
-          "type": "aoe_damage",
-          "coefficient": 100000,
-          "coefficient_display": "10000% (100x basic ATK)",
-          "damage_type": "skill",
-          "display": "10000% AoE Skill damage"
-        },
-        {
-          "type": "cc",
-          "cc_type": "throw_hit",
-          "duration": 0.5,
-          "display": "Launch targets 0.5s airborne"
-        }
-      ],
-      "pvp_notes": "Strong periodic burst. 100x basic ATK every 11s is significant sustained DPS."
-    },
-    {
-      "skill_id": 5009,
-      "mount_name": "Cloud Drifter",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "skill_crit",
-      "trigger_condition": "After skill critical hit",
-      "cooldown": "per skill crit",
-      "effect_summary": "Skill Crit +20%; after skill crit ATK +40% for 5s",
-      "effects": [
-        {
-          "type": "attribute_buff",
-          "attr_id": 1037,
-          "attr_name": "skill_crit_rate",
-          "value": 2000,
-          "display": "+20% skill crit rate (passive)"
-        },
-        {
-          "type": "on_skill_crit_buff",
-          "attr_id": 1001,
-          "attr_name": "att",
-          "value": 4000,
-          "duration": 5,
-          "display": "ATK +40% for 5s after skill crit"
-        }
-      ],
-      "pvp_notes": "S-tier for Darklord (+50% skill crit passive stacks). Good for Prophet."
+      "code_name": "Default Mount",
+      "notes": "Base mount system - evasion scaling. Not a skin, part of ConfigMount_level.",
+      "is_code_only": true
     },
     {
       "skill_id": 5010,
-      "mount_name": "Kun",
-      "mount_id": null,
-      "max_level": 1,
-      "skill_type": 3,
-      "trigger": "on_damage_received",
-      "trigger_condition": "When taking damage",
-      "cooldown": null,
-      "effect_summary": "Convert received DMG into DoT over 5s",
-      "effects": [
-        {
-          "type": "damage_conversion",
-          "mechanic": "DEFER_DAMAGE",
-          "buff_group": 400,
-          "spread_duration": 5,
-          "display": "Incoming burst damage spread over 5 seconds"
-        }
-      ],
-      "pvp_notes": "Damage smoothing — converts burst into DoT. Good vs burst builds. Note: DEFER_DAMAGE has NO PvP decay, making it very efficient."
+      "code_name": "Kun",
+      "notes": "DEFER_DAMAGE smoothing. Possible match: Storm Rider or internal-only.",
+      "is_code_only": true
     },
     {
       "skill_id": 5013,
-      "mount_name": "Cyclone Bamboo",
-      "mount_id": null,
-      "max_level": 1,
-      "skill_type": 3,
-      "trigger": "conditional",
-      "trigger_condition": "While shielded",
-      "cooldown": null,
-      "effect_summary": "Shield +3s duration, +50% effect, ATK +10%, Counter +25% under shield",
-      "effects": [
-        {
-          "type": "shield_enhancement",
-          "duration_bonus": 3,
-          "effect_bonus": 5000,
-          "display": "Shields last 3s longer, 50% stronger"
-        },
-        {
-          "type": "attribute_buff",
-          "attr_id": 1001,
-          "attr_name": "att",
-          "value": 1000,
-          "display": "ATK +10%"
-        },
-        {
-          "type": "conditional_buff",
-          "condition": "while shielded",
-          "attr_id": 1017,
-          "attr_name": "counter",
-          "value": 2500,
-          "display": "Counter +25% while shielded"
-        }
-      ],
-      "pvp_notes": "Synergizes with Martial Sage (8% HP shield passive) and Prophet (shield-related skills)."
-    },
-    {
-      "skill_id": 5014,
-      "mount_name": "Velocity Blitz",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "counter_trigger",
-      "trigger_condition": "Every 1 counter-attack",
-      "cooldown": "per counter",
-      "effect_summary": "Every counter → Global Counter DMG +20% for 3s (cap 60%)",
-      "effects": [
-        {
-          "type": "stacking_buff",
-          "attr_id": 2031,
-          "attr_name": "global_counter_dam",
-          "per_stack": 2000,
-          "cap": 6000,
-          "duration": 3,
-          "display": "+20% counter DMG per counter, 3s duration, 60% cap (3 stacks)"
-        }
-      ],
-      "pvp_notes": "S-tier for Warbringer (+30% counter rate, +140% counter DMG passive)."
+      "code_name": "Cyclone Bamboo",
+      "notes": "Shield enhancement + counter. Possible match: Guardian Spaceship or Nebular Shuttle.",
+      "is_code_only": true
     },
     {
       "skill_id": 5015,
-      "mount_name": "AdaptoSlime",
-      "mount_id": null,
-      "max_level": 1,
-      "skill_type": 3,
-      "trigger": "hp_threshold",
-      "trigger_condition": "Cumulative 5% max HP damage taken",
-      "cooldown": "resets after trigger",
-      "effect_summary": "After 5% max HP cumulative damage → 500% basic ATK AoE",
-      "effects": [
-        {
-          "type": "threshold_aoe",
-          "threshold_percent": 500,
-          "coefficient": 50000,
-          "coefficient_display": "500% (5x basic ATK)",
-          "display": "500% AoE damage when 5% max HP damage taken"
-        }
-      ],
-      "pvp_notes": "Frequent proc in PvP due to constant damage. Consistent AoE output."
-    },
-    {
-      "skill_id": 5016,
-      "mount_name": "Koi Paper Kite",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "combo_count",
-      "trigger_condition": "Every 3 combo hits",
-      "cooldown": "per 3-combo cycle",
-      "effect_summary": "Every 3 combos → 1000% AoE DMG",
-      "effects": [
-        {
-          "type": "combo_triggered_aoe",
-          "combo_count": 3,
-          "coefficient": 100000,
-          "coefficient_display": "1000% (10x basic ATK)",
-          "buff_group": 170,
-          "buff_group_name": "DOUBLE_TRIGGER",
-          "display": "1000% AoE every 3 combo hits"
-        }
-      ],
-      "buff_ids": [30003, 51141],
-      "pvp_notes": "S-tier for Plume Monarch (+30% combo rate, +3 extra combo bullets, +140% combo DMG)."
+      "code_name": "AdaptoSlime (basic)",
+      "notes": "HP threshold AoE. Older/simpler version of AdaptoSlime (5026).",
+      "is_code_only": true
     },
     {
       "skill_id": 5018,
-      "mount_name": "Moon Rabbit",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based_periodic",
-      "trigger_condition": "Every 10s",
-      "cooldown": "10s",
-      "effect_summary": "DMG RES +15%, restore 25% lost HP every 10s",
-      "effects": [
-        {
-          "type": "attribute_buff",
-          "attr_id": 1021,
-          "attr_name": "resist",
-          "value": 1500,
-          "display": "+15% damage resistance (passive)"
-        },
-        {
-          "type": "periodic_heal",
-          "heal_percent": 2500,
-          "interval": 10,
-          "display": "Restore 25% of lost HP every 10s"
-        }
-      ],
-      "pvp_notes": "Sustain mount. Good for Martial Sage (stacks with 8% HP regen). Heal affected by 30% PvP treatDecay."
-    },
-    {
-      "skill_id": 5021,
-      "mount_name": "Blazing Motorcycle",
-      "mount_id": null,
-      "max_level": 1,
-      "skill_type": 3,
-      "trigger": "hp_scaling",
-      "trigger_condition": "Continuous — scales with HP lost",
-      "cooldown": null,
-      "effect_summary": "Per 10% lost HP → flame dealing 500%+ basic ATK DMG",
-      "effects": [
-        {
-          "type": "hp_loss_scaling_damage",
-          "per_10_percent_hp_lost": 50000,
-          "display": "500% basic ATK per 10% HP lost. At 50% HP = 2500% damage"
-        }
-      ],
-      "pvp_notes": "S-tier for Warbringer (ATK +3% per 10% HP lost stacks). Synergizes with any HP-loss scaling."
-    },
-    {
-      "skill_id": 5024,
-      "mount_name": "Immortal Ascent",
-      "mount_id": null,
-      "max_level": 1,
-      "skill_type": 3,
-      "trigger": "death_trigger",
-      "trigger_condition": "When HP would reach 0",
-      "cooldown": "once per combat",
-      "effect_summary": "Death Immunity for 2s + recover 10% max HP (once)",
-      "effects": [
-        {
-          "type": "immune_death",
-          "buff_group": 230,
-          "buff_group_name": "IMMUNE_DEATH",
-          "duration": 2,
-          "display": "2s invulnerability on lethal damage"
-        },
-        {
-          "type": "heal",
-          "heal_percent": 1000,
-          "display": "Recover 10% max HP"
-        }
-      ],
-      "pvp_notes": "Ultimate survival. 2s of invulnerability can turn fights. One-time use."
-    },
-    {
-      "skill_id": 5026,
-      "mount_name": "AdaptoSlime+",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "hp_threshold_multi",
-      "trigger_condition": "Dynamic HP% thresholds (80%, 60%, 30%)",
-      "cooldown": null,
-      "effect_summary": "Below 80% HP: ATK +30%; below 60%: shield 20% HP; below 30%: DMG -20%",
-      "effects": [
-        {
-          "type": "conditional_buff",
-          "condition": "HP < 80%",
-          "buff_group": 80,
-          "attr_id": 1001,
-          "value": 3000,
-          "display": "ATK +30% below 80% HP"
-        },
-        {
-          "type": "conditional_shield",
-          "condition": "HP < 60%",
-          "buff_group": 20,
-          "shield_percent": 2000,
-          "display": "Shield = 20% max HP below 60% HP"
-        },
-        {
-          "type": "conditional_debuff",
-          "condition": "HP < 30%",
-          "damage_reduction": 2000,
-          "display": "Incoming DMG -20% below 30% HP"
-        }
-      ],
-      "pvp_notes": "Three-tier survival. Each tier activates as HP drops, providing layered defense."
-    },
-    {
-      "skill_id": 5029,
-      "mount_name": "Trembling Pepe",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based_alternating",
-      "trigger_condition": "Every 8s alternation",
-      "cooldown": "8s cycle",
-      "effect_summary": "Alternating 8s buffs: shield 16% HP OR ATK +16% + Control -40%",
-      "effects": [
-        {
-          "type": "alternating_state",
-          "state_1": {
-            "buff_group": 20,
-            "shield_percent": 1600,
-            "display": "Shield = 16% max HP"
-          },
-          "state_2": {
-            "attr_buffs": [
-              {"attr_id": 1001, "value": 1600, "display": "ATK +16%"},
-              {"cc_reduction": 4000, "display": "Control duration -40%"}
-            ]
-          },
-          "cycle_duration": 8,
-          "display": "Alternates between shield and ATK/CC-resist every 8s"
-        }
-      ],
-      "pvp_notes": "Flexible utility mount. Good all-around for any class."
-    },
-    {
-      "skill_id": 5030,
-      "mount_name": "Unrivaled Force",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based_probabilistic",
-      "trigger_condition": "60% chance per second for 20s, then burst",
-      "cooldown": "1s interval / 20s phase",
-      "effect_summary": "60% chance/s: ATK +1.5%, DMG RES +1.5%. After 20s: 16000% AoE + launch",
-      "effects": [
-        {
-          "type": "probabilistic_stacking",
-          "probability": 6000,
-          "attr_buffs": [
-            {"attr_id": 1001, "per_stack": 150, "display": "+1.5% ATK per proc"},
-            {"attr_id": 1021, "per_stack": 150, "display": "+1.5% DMG RES per proc"}
-          ],
-          "max_stacks": 20,
-          "phase_duration": 20,
-          "display": "60% chance/s to gain +1.5% ATK and +1.5% DMG RES (up to +30% each)"
-        },
-        {
-          "type": "burst_aoe",
-          "trigger": "after 20s phase",
-          "coefficient": 1600000,
-          "coefficient_display": "16000% (160x basic ATK)",
-          "cc_type": "throw_hit",
-          "cc_duration": 0.5,
-          "display": "16000% AoE + launch all targets"
-        }
-      ],
-      "pvp_notes": "Massive 20s burst. If fight lasts 20s, 160x AoE can one-shot. Stacking phase provides good sustain."
-    },
-    {
-      "skill_id": 5033,
-      "mount_name": "Neon Shadows",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based_periodic",
-      "trigger_condition": "Every 11s accumulation",
-      "cooldown": "11s cycle",
-      "effect_summary": "3 Guard stacks (DEF +150% each), on expire: 4000% Skill + 1600% Combo + 1600% Counter",
-      "effects": [
-        {
-          "type": "stacking_buff",
-          "attr_id": 1024,
-          "attr_name": "def",
-          "per_stack": 15000,
-          "max_stacks": 3,
-          "display": "+150% DEF per Guard stack (3 stacks = +450% DEF)"
-        },
-        {
-          "type": "burst_on_expire",
-          "trigger": "when Guard stacks expire",
-          "coefficients": {
-            "skill": 400000,
-            "combo": 160000,
-            "counter": 160000
-          },
-          "display": "4000% Skill + 1600% Combo + 1600% Counter burst"
-        }
-      ],
-      "pvp_notes": "Defense-into-burst mount. Near-unkillable during Guard phase, then big damage release."
-    },
-    {
-      "skill_id": 5034,
-      "mount_name": "Bite the Watermelon",
-      "mount_id": null,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "time_based_periodic",
-      "trigger_condition": "Every 11s",
-      "cooldown": "11s",
-      "effect_summary": "ATK +20%, DEF +50% every 11s. Summon wave: 4000% Skill + 1600% Combo + 1600% Counter",
-      "effects": [
-        {
-          "type": "periodic_buff",
-          "interval": 11,
-          "attr_buffs": [
-            {"attr_id": 1001, "value": 2000, "display": "ATK +20%"},
-            {"attr_id": 1024, "value": 5000, "display": "DEF +50%"}
-          ],
-          "display": "ATK +20%, DEF +50% every 11s"
-        },
-        {
-          "type": "summon_wave",
-          "coefficients": {
-            "skill": 400000,
-            "combo": 160000,
-            "counter": 160000
-          },
-          "display": "Summon damage wave: 4000% Skill + 1600% Combo + 1600% Counter"
-        }
-      ],
-      "pvp_notes": "Periodic multi-hit mount. Similar burst to Neon Shadows but with ATK/DEF buff instead of Guard stacking."
+      "code_name": "Moon Rabbit",
+      "notes": "DMG RES + heal every 10s. Possible match: Sparkling Flash or Cloud Traveler.",
+      "is_code_only": true
     },
     {
       "skill_id": 5048,
-      "mount_name": "Phoenix Nirvana",
-      "mount_id": null,
-      "max_level": 1,
-      "skill_type": 3,
-      "trigger": "hp_threshold",
-      "trigger_condition": "HP drops below 50%",
-      "cooldown": null,
-      "effect_summary": "At 50% HP: buff chain (50482 hpchange_trigger + 50465-50467)",
-      "effects": [
-        {
-          "type": "hpchange_trigger",
-          "buff_id": 50482,
-          "threshold_percent": 5000,
-          "chained_buffs": [50465, 50466, 50467],
-          "display": "HP threshold trigger at 50% — activates buff chain"
-        }
-      ],
-      "pvp_notes": "HP threshold mount. Buff chain activates when HP drops below 50%. Does NOT apply to clones.",
-      "data_confidence": "partial — buff effects not fully decoded"
+      "code_name": "Phoenix Nirvana",
+      "notes": "HP threshold at 50%, buff chain. Possible match: Cinder Wolf.",
+      "is_code_only": true
     },
     {
-      "skill_id": 5057,
-      "mount_name": "Speed of Death (Bike)",
-      "alt_names": ["Life and Death Speed", "Motorcycle", "Bike"],
-      "mount_id": 404,
-      "max_level": 3,
-      "skill_type": 3,
-      "trigger": "3_phase_cycle",
-      "trigger_condition": "Phase 1: Speed stacking from combat events. Phase 2: Overdrive at 200% speed. Phase 3: Reset.",
-      "cooldown": "variable (depends on stacking speed)",
-      "effect_summary": "Speed stacking → overdrive at 200% speed → CC immunity + ATK/DEF/RES bonuses → reset",
-      "effects": [
-        {
-          "type": "passive_evasion",
-          "attr_id": 1008,
-          "values_by_level": {"1": 2000, "2": 2500, "3": 3000},
-          "display": "+20/25/30% evasion (passive)"
-        },
-        {
-          "type": "phase_1_speed_stacking",
-          "triggers": {
-            "evade": {"stacks": 1, "per_n": 1, "buff_id": 50610},
-            "normal_attack": {"stacks": 1, "per_n": 8, "buff_id": 50611},
-            "combo": {"stacks": 1, "per_n": 8, "buff_id": 50612},
-            "counter": {"stacks": 1, "per_n": 8, "buff_id": 50613},
-            "skill": {"stacks": 1, "per_n": 2, "buff_id": 50614}
-          },
-          "speed_buff_id": 50609,
-          "per_stack_speed": 800,
-          "max_stacks": 50,
-          "display": "+8% movement speed per stack, 50 max stacks"
-        },
-        {
-          "type": "phase_2_overdrive",
-          "threshold_buff_id": 50615,
-          "speed_threshold": 20000,
-          "overdrive_skill": 50573,
-          "overdrive_buffs": {
-            "50621": "18% Trap AoE",
-            "50622": "18% DMG RES",
-            "50623": "20% ATK",
-            "50624": "20% DEF",
-            "50625": "20% ATK Speed",
-            "50626": "20% Power Recovery",
-            "50631": "CC Immunity (5s)"
-          },
-          "overdrive_duration": 5,
-          "display": "At 200% speed: 5s overdrive with +20% ATK/DEF/SPD, +18% RES, CC immunity"
-        },
-        {
-          "type": "phase_3_reset",
-          "reset_buff_id": 50629,
-          "clear_buff_id": 50630,
-          "display": "After overdrive expires: reset all stacks, restart Phase 1"
-        }
-      ],
-      "pvp_notes": "S-tier mount. 3-phase cycle: stack speed from combat events → overdrive with massive buffs + CC immunity → reset. Synergizes extremely well with Sacred Hunter (evasion feeds speed stacks) and Martial Sage (counter feeds stacks + tankiness survives stacking phase)."
+      "skill_id": 5124,
+      "code_name": "Time Pause",
+      "notes": "Freeze all enemies per 25% HP loss. No xlsx match - may be unreleased.",
+      "is_code_only": true
     }
-  ],
-
-  "event_p2w_mounts": {
-    "_note": "These mounts were identified from web sources (theriagames.com, talkandroid.com, bluestacks.com). Skill IDs are in the undocumented gap ranges (5011-5012, 5017, 5019-5020, 5022-5023, 5025, 5027-5028, 5031-5032, 5035-5047, 5049-5056, 5058-5059, 5061+). Exact skill ID mapping requires the config binary.",
-    "mounts": [
-      {
-        "name": "Ethereal Phoenix",
-        "skill_id": 5060,
-        "mount_id": 406,
-        "source": "code + web",
-        "obtain": "Draw event (code 'star' redemption)",
-        "skill_name": "Ethereal Phoenix",
-        "effect": "For every 18% Max HP Loss: Purify and ignore Control effects for 1s; Obtain Shield = 8% Max HP for 5s. When Shield expires: ATK +4% permanent (max 6 stacks).",
-        "buff_ids": [50650],
-        "buff_action": "skill_counter",
-        "pvp_tier": "S"
-      },
-      {
-        "name": "Phoenix Nirvana",
-        "skill_id": 5048,
-        "mount_id": null,
-        "source": "code",
-        "obtain": "Unknown (event)",
-        "skill_name": "Phoenix Nirvana",
-        "effect": "HP threshold trigger at 50%: activates buff chain (50482 hpchange_trigger → 50465-50467).",
-        "buff_ids": [50482, 50465, 50466, 50467],
-        "buff_action": "hpchange_trigger",
-        "pvp_tier": "A",
-        "data_confidence": "partial"
-      },
-      {
-        "name": "Cheetah Zero",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (theriagames.com)",
-        "obtain": "Firework Fest / Carnival Night spending event",
-        "skill_name": "Cheetah Zero",
-        "effect": "Every 11s: gains shield = 16% Max HP (ignores PvP reduction and shield breaks) at cost of 10% current HP (ignores immunity) for 3s. During shield: cannot use basic ATK, Combo, Counter, or Active Skills. After shield expires: next Basic ATK deals 1200% Basic ATK DMG (can crit), 1200% Combo DMG (can crit), 1200% Counter DMG (can crit), 4000% Skill DMG to AoE, and increases pal's next Basic ATK DMG by 200%.",
-        "pvp_tier": "S"
-      },
-      {
-        "name": "Magic Carpet",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (theriagames.com, talkandroid.com)",
-        "obtain": "Event / Rush Tokens",
-        "skill_name": "Magic Carpet",
-        "effect": "After casting 6 skills, fully restore energy of 1 random skill. Global ATK +10%.",
-        "pvp_tier": "A"
-      },
-      {
-        "name": "Horizon Racer",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (talkandroid.com)",
-        "obtain": "Event",
-        "skill_name": "Horizon Racer",
-        "effect": "Every 10s: deal 800% basic ATK AoE DMG + knockback enemies.",
-        "pvp_tier": "B"
-      },
-      {
-        "name": "B. Duck",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (theriagames.com)",
-        "obtain": "Spending Event",
-        "skill_name": "B. Duck Splash",
-        "effect": "Every 11s: deal 2000% Skill DMG + 800% Combo DMG + 800% Counter DMG AoE. Reduces enemy ATK by 10% until end of battle. Global DEF +10%.",
-        "pvp_tier": "A"
-      },
-      {
-        "name": "Time Machine",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (theriagames.com)",
-        "obtain": "Firework Fest event",
-        "skill_name": "Time Machine",
-        "effect": "First 20s: negate/store 40% of all DMG taken. Gain +8% ATK, +10% Final Crit DMG, +10% Final Skill Crit DMG, +10% Final Pal Crit DMG. After 20s: deal 6% of stored DMG (ignores immunity) per second for 10s.",
-        "pvp_tier": "S"
-      },
-      {
-        "name": "Dazzling Unicorn",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (theriagames.com, twitter @legendofmush)",
-        "obtain": "Magi Saga / Magician Trials event (Apr 2025)",
-        "skill_name": "Spiral Strike",
-        "effect": "Every 12s: unicorn resists DMG of next active skill hit (excluding Class/Avian/Summoning Skills). During resist: +50% DEF + ignore all control effects. After resisting: reflect active skill to attacker, gain +4% ATK and +4% DMG RES permanent (max 3 stacks). Global DEF +10%. Triggers at battle start.",
-        "pvp_tier": "S"
-      },
-      {
-        "name": "Silvery Crescent",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (theriagames.com)",
-        "obtain": "Feather Shop (80 Feather Passes)",
-        "skill_name": "Unknown",
-        "effect": "+12% speed (additional combat skill not documented online)",
-        "pvp_tier": "unknown"
-      },
-      {
-        "name": "Cyan Phoenixes",
-        "skill_id": null,
-        "mount_id": null,
-        "source": "web (theriagames.com)",
-        "obtain": "Mount Level Tier 24 (max tier unlock)",
-        "skill_name": "Unknown",
-        "effect": "Unlocked at Tier 24 – 10 Star mount level. Combat skill not documented online.",
-        "pvp_tier": "unknown"
-      }
-    ]
-  },
-
-  "alternate_names": {
-    "_note": "Some mounts have different display names in different contexts (web guides vs code vs in-game)",
-    "mappings": [
-      {"code_name": "Life and Death Speed", "alt_names": ["Speed of Death", "Bike", "Motorcycle"], "skill_id": 5057},
-      {"code_name": "Neon Shadows", "alt_names": ["Holy Dragon"], "skill_id": 5033, "note": "Web descriptions match but with level 1 values vs our level 3 values"},
-      {"code_name": "Bite the Watermelon", "alt_names": ["Watermelon Ship"], "skill_id": 5034, "note": "Web descriptions match at lower level values"},
-      {"code_name": "Velocity Blitz", "alt_names": ["Mini Motorcycle"], "skill_id": 5014, "note": "Counter DMG stacking mechanic matches"},
-      {"code_name": "Purple Wing", "alt_names": ["Horizon Racer"], "skill_id": 5008, "note": "AoE burst every 10-11s matches, but coefficients differ"}
-    ]
-  },
-
-  "mount_level_system": {
-    "max_level": 300,
-    "max_stats": {
-      "2001_global_atk": 104837000,
-      "2003_global_hp": 104837000,
-      "2005_global_def": 104837000
-    },
-    "exp_currency": "Item 1008",
-    "level_milestones": "Levels with star=1 unlock new mounts via unlock field"
-  },
-
-  "mount_ability_system": {
-    "branches": 3,
-    "upgrade_currency": "Item 1025",
-    "success_mechanic": "Random branch +1 on success; pity via success_guaranteed",
-    "display_formula": "value_plus shown as value / 100 %"
-  },
-
-  "battle_integration": {
-    "loading": "setPlayerMount(player) sets player.mount = cosmetic model ID only",
-    "stat_baking": "All mount stats (level, ability, skin) pre-baked into player attributes before battle",
-    "update_flag": "MountUpdate flag in battle update system",
-    "cosmetic_only_in_battle": true
-  }
+  ]
 }
