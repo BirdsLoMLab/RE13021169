@@ -12,7 +12,7 @@ Mount skins grant combat skills via `ConfigMount_skin.skin_skill`. Each skin has
 
 ---
 
-## Quick Reference — All 64 Mounts
+## Quick Reference — All 72 Mounts
 
 | # | Name | Rarity | Mount ID | Skill ID | Skill Name | Passive |
 |---|------|--------|----------|----------|------------|---------|

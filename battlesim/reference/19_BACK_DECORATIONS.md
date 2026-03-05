@@ -4,7 +4,7 @@
 
 ---
 
-## Quick Reference — All 41 Back Accessories
+## Quick Reference — All 45 Back Accessories
 
 | # | Name | Rarity | Passive | Key Effect |
 |---|------|--------|---------|------------|
