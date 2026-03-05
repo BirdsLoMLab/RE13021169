@@ -289,11 +289,11 @@
 | Doc | Title | Key Topics |
 |-----|-------|------------|
 | 14 | Class/Job System | ConfigJobs, job_figure, model, wakeup |
-| 15 | Equipment System | 5 equip slots, upgrade, enchant |
+| 15 | Equipment System | *(merged into battlesim/reference/13_EQUIPMENT.md)* |
 | 16 | Sailing/Season System | Ships, cannons, season buffs |
 | 17 | Pet/Pal System | Battle loading, stat inheritance, combat formulas |
 | 18 | Avian/Bird System | ConfigFly, hatching, breeding |
-| 19 | Spirit System | spiritNormalHit, affix system |
+| 19 | Spirit System | *(merged into battlesim/reference/14_SPIRITS.md)* |
 | 20 | Mount System | Cosmetic + stat baking, abilities |
 | 21 | Hero/Angel System | *(merged into battlesim/reference/15_ANGELS.md)* |
 | 22 | Skill Effect System | SkillType, skill handlers, effect triggers |

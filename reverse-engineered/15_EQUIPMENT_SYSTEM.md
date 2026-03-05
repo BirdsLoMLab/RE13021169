@@ -1,6 +1,10 @@
 # 15 — Equipment System
 
-## Code Locations
+> **MERGED**: This content has been consolidated into `battlesim/reference/13_EQUIPMENT.md` which now contains the complete equipment system reference: 10 slots, 20-field ConfigEquipment schema, refinement, advancement, resonance, suit sets, treasure boxes, loadout presets, appearance system, and full network protocol.
+
+See `battlesim/reference/13_EQUIPMENT.md` for the unified reference.
+
+## Code Locations (archived)
 **Config Module:** ConfigEquipment.ts
 **Lines:** 229175+ in `game_script_pretty.js`
 **UI/Logic Lines:** 279245-281600+ in `game_script_pretty.js`

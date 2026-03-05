@@ -29,8 +29,8 @@
 | 10 | `10_BUFFS_AND_STATUS.md` | 80 buff classes, 76 buff groups, mutex rules, full damage pipeline, per-class params |
 | 11 | `11_MOUNT_SKINS.md` | All 72 mounts with combat effects, skill IDs, skin progression (xlsx + config) |
 | 12 | `12_ARTIFACT_SKINS_AND_GEMS.md` | All 43 artifacts with full effect text, skill IDs (xlsx + config) |
-| 13 | `13_EQUIPMENT.md` | Advancement, resonance, refinement, suits |
-| 14 | `14_SPIRITS.md` | 20 spirits + spirit damage formula + affixes |
+| 13 | `13_EQUIPMENT.md` | 10 slots, 20-field schema, refinement, advancement, resonance, suits, loadouts, appearance |
+| 14 | `14_SPIRITS.md` | 20 spirits, config tables, stat formulas, spiritNormalHit, affixes, crafting, gacha |
 | 15 | `15_ANGELS.md` | Angels/Star Heroes: formation, skills, star progression, energy pool, all 33 heroes |
 | 16 | `16_FATE_CARDS.md` | Attribute bonuses + fusion passive skills |
 | 17 | `17_PATH_TO_DIVINITY.md` | Affix/talent tree with per-attribute caps |

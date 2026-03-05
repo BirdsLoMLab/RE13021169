@@ -1,6 +1,10 @@
 # 19 — Spirit / Guardian Spirit System
 
-## Overview
+> **MERGED**: This content has been consolidated into `battlesim/reference/14_SPIRITS.md` which now contains the complete spirit system reference: 20 spirits, config tables with source lines, stat formulas, spiritNormalHit code, affix system, crafting, gacha, and battle loading code.
+
+See `battlesim/reference/14_SPIRITS.md` for the unified reference.
+
+## Overview (archived)
 
 Guardian Spirits are summoned combat entities with their own HP, ATK, skills, and a unique damage formula (`spiritNormalHit`). They feature an affix slot system for bonus attributes, a crafting system, and a gacha draw system. Spirits scale from their level config and partially from the parent player's damage output.
 
