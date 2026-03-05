@@ -1,228 +1,437 @@
 # 05 — Active Skills
 
-> All active skills with IDs, parameters, and the skill effect system.
+> Complete active skill reference: all 38 skills from LOM_Database-5.xlsx. 8 event-exclusive skills. See also `skills_master.json` for structured JSON.
 
 ---
 
-## Skill System Architecture
+## Quick Reference — All 38 Skills
 
-### ConfigSkill Schema (14 fields)
-| Field | Description |
-|-------|-------------|
-| id | Skill ID |
-| name | Localized name |
-| type | 1=Active, 2=Passive_Add, 3=Passive_Effect, 4=Partner_Skill, 5=Fly_Skill |
-| priority | Execution priority |
-| desc | Description |
-| cd | Cooldown (seconds) |
-| cost | Energy cost |
-| par | Base skill parameter (damage %) |
-| effect | Effect IDs triggered by this skill |
-| release_time | Cast time |
-| is_show | UI visibility |
-| icon | Icon asset |
-| ownEffect | Owner stat modifications [[attrId, value], ...] |
-| level_up_desc | Level-up description |
-
-### ConfigSkill_level Schema (8 fields)
-| Field | Description |
-|-------|-------------|
-| id | Skill ID |
-| level | Skill level |
-| cd | Cooldown at this level |
-| cost | Energy cost at this level |
-| par | Damage parameter at this level |
-| desc_parm | Description format parameters |
-| ownEffect | Stat mods at this level |
-| effect | Effects at this level |
-
----
-
-## T5 Active Skills (8 Total)
-
-All T5 actives have the same base damage scaling at lv220: **~15157-15166% AoE DMG**.
-
-| ID | Skill Name | Class | Unique Effect |
-|----|-----------|-------|---------------|
-| 1053 | Blades Reunion | Martial Sage | -40% Counter DMG RES; each counter deals +1% target current HP |
-| 1054 | Shattering Axe | Warbringer | -40% Counter DMG RES; gain 0.15 DEF per ATK + 0.75 ATK per DEF for 8s |
-| 1055 | Piercing Boneforge | Sacred Hunter | -40% Combo DMG RES; block energy regen on 6 skills for 4s |
-| 1056 | Sun Pursuit | Plume Monarch | -40% Combo DMG RES; ignore enemy evasion for 10s |
-| 1057 | Crane's Whisper | Prophet | -20% Skill DMG RES; break enemy shields instantly for 10s |
-| 1058 | Galaxy Dive | Darklord | -20% Skill DMG RES; +50% Skill Crit DMG for 10s |
-| 1066 | Tamer of Beasts | Beastmaster | -20% Pal DMG RES; pals ignore evasion for 10s |
-| 1067 | Wilting Souls | Supreme Spirit | -20% Pal DMG RES; pals 40% chance +1% target HP for 8s |
+| # | Name | Rarity | CD | Passive | Event | Key Effect |
+|---|------|--------|----|---------|-------|------------|
+| 1 | **Spore Bomb** | Normal | 7s | Base HP, ATK, DEF +1% | — | Trigger an explosion on the target 2 time(s), each time dealing 68% DM... |
+| 2 | **Schroom Cap** | Normal | 9s | Base HP, ATK, DEF +1% | — | Summon a Mushroom Cap, dealing 194% AoE DMG. |
+| 3 | **Spore Barrage** | Normal | 7s | Base HP, ATK, DEF +1% | — | Throw 5 spore(s), each dealing 33.1% DMG. |
+| 4 | **Boulder Impact** | Unique | 12s | Base HP, ATK, DEF +1.5% | — | Summon a Giant Rock, dealing 76% DMG to the target every second, lasti... |
+| 5 | **Thorn Thicket** | Unique | 8s | Base HP, ATK, DEF +1.5% | — | Set up 1 trap(s), dealing 53% DMG every second and slowing the target ... |
+| 6 | **Lead the Charge** | Unique | 14s | Base HP, ATK, DEF +1.5% | — | Deal 438% DMG to the nearest target and increase Basic Attack DMG by 3... |
+| 7 | **Entangling Vines** | Well | 8s | Base HP, ATK, DEF +2.2% | — | Set up 1 trap(s), dealing 394% DMG to enemies triggering the trap and ... |
+| 8 | **Speed Surge** | Well | 14s | Base HP, ATK, DEF +2.2% | — | Deal 656% DMG to the nearest target and increase Attack Speed by 30% f... |
+| 9 | **Spider Weaver** | Well | 10s | Base HP, ATK, DEF +2.2% | — | Summon a Spider, dealing 96% AoE DMG every second, lasting for 5 secon... |
+| 10 | **Pineapple Plunge** | Rare | 11s | Base HP, ATK, DEF +4% | — | Continuously summon 5 Pinneapple(s), each dealing 197% AoE DMG. |
+| 11 | **Pearl Release** | Rare | 11s | Base HP, ATK, DEF +4% | — | Summon a Clam, dealing 789% AoE DMG and slowing targets within the ran... |
+| 12 | **Sprawling Vine** | Rare | 11s | Base HP, ATK, DEF +4% | — | Summon vines, dealing 789% AoE DMG and imprisoning targets within the ... |
+| 13 | **Batty Trace** | Mythic | 15s | Base HP, ATK, DEF +8% | — | Summon a bat, dealing 315% AoE DMG every second, lasting for 5 seconds... |
+| 14 | **Nature's Renewal** | Mythic | 25s | Base HP, ATK, DEF +8% | — | Deals 1775% DMG to the target and recover 30% of max HP within 5 secon... |
+| 15 | **Shroom Shield** | Mythic | 19s | Base HP, ATK, DEF +8% | — | Deal 1183% DMG to the target and gain a shield equal to 20% of max HP,... |
+| 16 | **Durian Bomb** | Epic | 18s | Base HP, ATK, DEF +16% | — | Continuously summon 3 Durian(s), each dealing 888% AoE DMG and slowing... |
+| 17 | **Easy Breezy** | Epic | 15s | Base HP, ATK, DEF +16% | — | Throw a Cactus, dealing 1657% AoE DMG and reducing the ATK of targets ... |
+| 18 | **Take It Slow** | Epic | 12s | Base HP, ATK, DEF +16% | — | Throw a Cactus, dealing 1635% AoE DMG and reducing the ATK Speed of ta... |
+| 19 | **Coin Bomb** | Epic | 13s | Base HP, ATK, DEF +16% | — | Throw coins, dealing 1450% AoE DMG and increasing Basic Attack DMG by ... |
+| 20 | **Slime Bomb** | Epic | 13s | Base HP, ATK, DEF +16% | — | Summon a slime, dealing 1450% AoE DMG and increasing pals DMG by 30%, ... |
+| 21 | **Meteor Fall** | Epic | 13s | Base HP, ATK, DEF +16% | — | Summon meteors, dealing 1450% AoE DMG and increasing Skill DMG by 30%,... |
+| 22 | **Disarm** | Legendary | 16s | Base HP, ATK, DEF +32% | — | Jet Water Columns, dealing 2682% AoE DMG and disarming targets within ... |
+| 23 | **Dazzled** | Legendary | 19s | Base HP, ATK, DEF +32% | — | Jet Poison Mist, dealing 3134% AoR DMG and stunning targets within the... |
+| 24 | **Smoke Bomb** | Legendary | 13s | Base HP, ATK, DEF +32% | — | Throw a Smoke Bomb, dealing 2176% AoE DMG and increasing the DMG recei... |
+| 25 | **Grim Reaper** | Legendary | 9s | Base HP, ATK, DEF +32% | — | Summon ghosts, dealing 1443% DMG. Ghosts instantly defeat targets with... |
+| 26 | **Heroic Descent** | Legendary | 19s | Base HP, ATK, DEF +32% | — | Summon a Hero Spirit with 3 Attack Speed. The Spirit deals 148% DMG wi... |
+| 27 | **Wild Gust** | Legendary | 16s | Base HP, ATK, DEF +32% | — | Summon a Gale, dealing 2642% AoE DMG and increasing ATK by 15% for 5 s... |
+| 28 | **Blitz Assault** | Immortal | 24s | Base HP, ATK, DEF +64% | — | Summon Golden Lightning, dealing 5829% DMG and providing 3 seconds of ... |
+| 29 | **Blade Pierce** | Immortal | 19s | Base HP, ATK, DEF +64% | — | Throw Sharp Blades, dealing 4663% DMG and causing the target to lose 1... |
+| 30 | **Clone Strike** | Immortal | 29s | Base HP, ATK, DEF +64% | — | Generate a clone with 30% of the shroom's HP. The clone lasts for 10 s... |
+| 31 | **Hundred Slashes** | Immortal | 19s | Base HP, ATK, DEF +64% | Yes | Deal 4663% DMG and gain 20% Basic ATK DMG RES and 0.5% ATK Bonus based... |
+| 32 | **Windborne Arrow** | Immortal | 19s | Base HP, ATK, DEF +64% | Yes | Deal 2665% DMG and inflict vulnerability for 5 seconds. During this pe... |
+| 33 | **Crimson Moonfall** | Immortal | 8s | Base HP, ATK, DEF +64% | Yes | Deal 2098% DMG. Each successive cast increases the DMG by 50%, stackin... |
+| 34 | **Dragonic Resonance** | Immortal | 15s | Base HP, ATK, DEF +64% | Yes | Inflict 3731% initial DMG, followed by a 0.5 second delay, then deal 2... |
+| 35 | **Worldly Snare** | Immortal | 24s | Base HP, ATK, DEF +64% | Yes | Deal 5413% DMG and increase Crit Rate by 10%. For every 1% Crit Rate, ... |
+| 36 | **Star Array** | Immortal | 19s | Base HP, ATK, DEF +64% | Yes | Deal 4330% DMG and increase Skill Crit Rate by 10%. For every 1% Skill... |
+| 37 | **Winged Dreams** | Immortal | 24s | Base HP, ATK, DEF +64% | Yes | Deal 5413% DMG and grant all pals a 20% Combo Rate. Every 1% Combo Rat... |
+| 38 | **Ancestral Will** | Immortal | 24s | Base HP, ATK, DEF +64% | Yes | Deal 5413% DMG and grant all pals a 10% Crit Rate. Every 1% Crit Rate ... |
 
 ---
 
-## Skill Effect System
+## Full Details
 
-### EffectTriggerType Enum (15 Types)
+### 1. Spore Bomb
 
-| ID | Name | When Triggered |
-|----|------|----------------|
-| 0 | Active | Manually activated |
-| 1 | Start | Battle start |
-| 2 | Passive | Always active |
-| 4 | Counter | On counter attack |
-| 5 | HP_Hurt | When HP damaged |
-| 6 | HP_Heal | When HP healed |
-| 7 | Kill | On kill |
-| 8 | Dead | On death |
-| 9 | Crit | On critical hit |
-| 10 | Dodge | On dodge |
-| 11 | Double | On combo trigger |
-| 12 | Normal | On normal attack |
-| 13 | Stun | On stun trigger |
-| 14 | Shield | On shield break |
-| 16 | GetDodge | When dodged by target |
+**Rarity:** Normal | **Cooldown:** 7s
 
-### ConfigSkilleffcet Schema (16 fields)
+**Effect:** Trigger an explosion on the target 2 time(s), each time dealing 68% DMG.
 
-| Field | Description |
-|-------|-------------|
-| id | Effect ID |
-| trigger_type | EffectTriggerType |
-| trigger_probability | Trigger chance (/10000) |
-| trigger_parm | Trigger parameters |
-| effect_id | Buff IDs to apply |
-| effect_duration | Buff durations |
-| effect_target | Target selection |
-| effect_par | Effect parameters (skillPar override) |
-| bullet_num | Number of projectiles |
-| parse_skill | Secondary skill to trigger |
-| parse_probability | Secondary trigger chance |
-| parse_target | Secondary target |
-| parse_parm | Secondary parameters |
-| delay_time | Delay before effect triggers |
-| T1045 | Flag: if true, skip skill_dam_extra modifier |
-| is_share_damage | Flag: if true, damage is shared type |
-
-### Effect Chain Flow
-```
-1. Skill activates → effect[] array lists ConfigSkilleffcet IDs
-2. Each effect checks trigger_type and trigger_probability
-3. On trigger: applies buff(effect_id) with duration(effect_duration) to target(effect_target)
-4. If parse_skill != 0: chain into another skill (recursive)
-5. If parse_probability check passes: apply parse effects
-```
+**Passive:** Base HP, ATK, DEF +1%
 
 ---
 
-## Passive Skill IDs by Class
+### 2. Schroom Cap
 
-### Warriors (Shared Lv30-40)
-| ID | Level | Effect |
-|----|-------|--------|
-| 2001 | Lv30 | Counter +30%, Counter Mult +30% |
-| 2005 | Lv40 | DEF +30% |
+**Rarity:** Normal | **Cooldown:** 9s
 
-### Martial Sage Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2008 | Lv50 | DMG RES +15% |
-| 2033 | Lv70 | 8% Max HP regen every 5s |
-| 2022 | Lv100 | Shield = 8% max HP every 10s |
+**Effect:** Summon a Mushroom Cap, dealing 194% AoE DMG.
 
-### Warbringer Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2020 | Lv50 | Counter DMG +140% |
-| 2123 | Lv70 | 20% AoE counter on hit |
-| 2028 | Lv100 | Per 10% HP lost → ATK +3% |
-
-### Archers (Shared Lv30-40)
-| ID | Level | Effect |
-|----|-------|--------|
-| 2003 | Lv30 | Combo +30% |
-| 2007 | Lv40 | ATK SPD +15%, Hit +10% |
-
-### Sacred Hunter Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2021 | Lv50 | Crit DMG +20% |
-| 2126 | Lv70 | Basic ATK deals +1% target current HP |
-| 2031 | Lv100 | After crit → ATK +40% for 1s |
-
-### Plume Monarch Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2013 | Lv50 | Combo DMG +140% |
-| 2118 | Lv70 | +3 extra combo bullets |
-| 2032 | Lv100 | +2 extra basic attack bullets |
-
-### Mages (Shared Lv30-40)
-| ID | Level | Effect |
-|----|-------|--------|
-| 2002 | Lv30 | Skill Crit +15% |
-| 2004 | Lv40 | ATK +12% |
-
-### Prophet Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2016 | Lv50 | Energy Regen +20% |
-| 2124 | Lv70 | Prolong skills +40%, DMG +10% |
-| 2029 | Lv100 | Per stun → skill CD -0.3s |
-
-### Darklord Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2017 | Lv50 | Skill Crit DMG +50%, Skill Crit +15% |
-| 2125 | Lv70 | 20% extra true DMG on skills |
-| 2030 | Lv100 | Per 10% HP lost → Skill DMG +3% |
-
-### Beast (Shared Lv30-40)
-| ID | Level | Effect |
-|----|-------|--------|
-| 2101 | Lv30 | +1 Pal slot |
-| 2102 | Lv40 | Pal SPD +10%, Hit +10% |
-
-### Beastmaster Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2103 | Lv50 | Pal Crit +25%, Crit DMG +20% |
-| 2114 | Lv70 | Pal DMG Mult +20% |
-| 2105 | Lv100 | Per 10% HP lost → Pal DMG +3% |
-
-### Supreme Spirit Exclusive
-| ID | Level | Effect |
-|----|-------|--------|
-| 2106 | Lv50 | Deploy Effects +20% |
-| 2117 | Lv70 | Race-based bonus (first 2 pals) |
-| 2108 | Lv100 | Race-count-based bonus |
+**Passive:** Base HP, ATK, DEF +1%
 
 ---
 
-## Skill Damage Pipeline (BuffSkillValue)
+### 3. Spore Barrage
 
-11 calculation types (`calType`):
+**Rarity:** Normal | **Cooldown:** 7s
 
-| Type | Name | Formula |
-|------|------|---------|
-| 0 | Attribute | Uses param3 attribute directly |
-| 1 | ATK-DEF | `max(roundInt(ATK - DEF*(1+DEF_COE)), 1)` |
-| 2 | HP Difference | Target max HP - current HP |
-| 3 | Current HP | `current_HP * skillPar` |
-| 4 | Max HP | `max_HP * skillPar` |
-| 5 | Partner Damage | Pal-specific calculation |
-| 6 | Fixed Value | `skillPar` directly |
-| 7 | Attribute Ratio | Attribute value * skillPar |
-| 8 | ATK Only | `ATK * skillPar` |
-| 9 | DEF Only | `DEF * skillPar` |
-| 10 | Combined | Multi-attribute formula |
+**Effect:** Throw 5 spore(s), each dealing 33.1% DMG.
 
-### Post-Calculation Chain
-```
-1. Base damage from calType
-2. × skillPar × active_skilldamage_par
-3. + SKILL_DAMAGE_ADD flat bonus
-4. × skill_dam_extra (unless T1045 flag)
-5. Skill crit check → × (1 + skill_crit_dam) → pow(0.98)
-6. Normal crit check (if UseCrit) → × max(1.5, crit_dam / max(0.5, crit_def))
-7. × boss_dam
-8. × RECORD_DAMAGE bonus
-9. × (1 - skill_resist) resistance
-10. calHurt (DMG RES, PvE)
-11. EXTRA_DAMAGE → GIANT_SLAYER
-12. healthTarget (Total DMG, shields, HP)
-```
+**Passive:** Base HP, ATK, DEF +1%
+
+---
+
+### 4. Boulder Impact
+
+**Rarity:** Unique | **Cooldown:** 12s
+
+**Effect:** Summon a Giant Rock, dealing 76% DMG to the target every second, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +1.5%
+
+---
+
+### 5. Thorn Thicket
+
+**Rarity:** Unique | **Cooldown:** 8s
+
+**Effect:** Set up 1 trap(s), dealing 53% DMG every second and slowing the target by 40%, last for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +1.5%
+
+---
+
+### 6. Lead the Charge
+
+**Rarity:** Unique | **Cooldown:** 14s
+
+**Effect:** Deal 438% DMG to the nearest target and increase Basic Attack DMG by 30% for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +1.5%
+
+---
+
+### 7. Entangling Vines
+
+**Rarity:** Well | **Cooldown:** 8s
+
+**Effect:** Set up 1 trap(s), dealing 394% DMG to enemies triggering the trap and imprisoning them for 1 second.
+
+**Passive:** Base HP, ATK, DEF +2.2%
+
+---
+
+### 8. Speed Surge
+
+**Rarity:** Well | **Cooldown:** 14s
+
+**Effect:** Deal 656% DMG to the nearest target and increase Attack Speed by 30% for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +2.2%
+
+---
+
+### 9. Spider Weaver
+
+**Rarity:** Well | **Cooldown:** 10s
+
+**Effect:** Summon a Spider, dealing 96% AoE DMG every second, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +2.2%
+
+---
+
+### 10. Pineapple Plunge
+
+**Rarity:** Rare | **Cooldown:** 11s
+
+**Effect:** Continuously summon 5 Pinneapple(s), each dealing 197% AoE DMG.
+
+**Passive:** Base HP, ATK, DEF +4%
+
+---
+
+### 11. Pearl Release
+
+**Rarity:** Rare | **Cooldown:** 11s
+
+**Effect:** Summon a Clam, dealing 789% AoE DMG and slowing targets within the range by 40%, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +4%
+
+---
+
+### 12. Sprawling Vine
+
+**Rarity:** Rare | **Cooldown:** 11s
+
+**Effect:** Summon vines, dealing 789% AoE DMG and imprisoning targets within the range for 1 second.
+
+**Passive:** Base HP, ATK, DEF +4%
+
+---
+
+### 13. Batty Trace
+
+**Rarity:** Mythic | **Cooldown:** 15s
+
+**Effect:** Summon a bat, dealing 315% AoE DMG every second, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +8%
+
+---
+
+### 14. Nature's Renewal
+
+**Rarity:** Mythic | **Cooldown:** 25s
+
+**Effect:** Deals 1775% DMG to the target and recover 30% of max HP within 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +8%
+
+---
+
+### 15. Shroom Shield
+
+**Rarity:** Mythic | **Cooldown:** 19s
+
+**Effect:** Deal 1183% DMG to the target and gain a shield equal to 20% of max HP, lasting for 10 seconds.
+
+**Passive:** Base HP, ATK, DEF +8%
+
+---
+
+### 16. Durian Bomb
+
+**Rarity:** Epic | **Cooldown:** 18s
+
+**Effect:** Continuously summon 3 Durian(s), each dealing 888% AoE DMG and slowing targets by 40%, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +16%
+
+---
+
+### 17. Easy Breezy
+
+**Rarity:** Epic | **Cooldown:** 15s
+
+**Effect:** Throw a Cactus, dealing 1657% AoE DMG and reducing the ATK of targets within the range by 20%, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +16%
+
+---
+
+### 18. Take It Slow
+
+**Rarity:** Epic | **Cooldown:** 12s
+
+**Effect:** Throw a Cactus, dealing 1635% AoE DMG and reducing the ATK Speed of targets within the range by 40%, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +16%
+
+---
+
+### 19. Coin Bomb
+
+**Rarity:** Epic | **Cooldown:** 13s
+
+**Effect:** Throw coins, dealing 1450% AoE DMG and increasing Basic Attack DMG by 35%, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +16%
+
+---
+
+### 20. Slime Bomb
+
+**Rarity:** Epic | **Cooldown:** 13s
+
+**Effect:** Summon a slime, dealing 1450% AoE DMG and increasing pals DMG by 30%, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +16%
+
+---
+
+### 21. Meteor Fall
+
+**Rarity:** Epic | **Cooldown:** 13s
+
+**Effect:** Summon meteors, dealing 1450% AoE DMG and increasing Skill DMG by 30%, lasting for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +16%
+
+---
+
+### 22. Disarm
+
+**Rarity:** Legendary | **Cooldown:** 16s
+
+**Effect:** Jet Water Columns, dealing 2682% AoE DMG and disarming targets within the range for 3 seconds.
+
+**Passive:** Base HP, ATK, DEF +32%
+
+---
+
+### 23. Dazzled
+
+**Rarity:** Legendary | **Cooldown:** 19s
+
+**Effect:** Jet Poison Mist, dealing 3134% AoR DMG and stunning targets within the range for 1.5 seconds.
+
+**Passive:** Base HP, ATK, DEF +32%
+
+---
+
+### 24. Smoke Bomb
+
+**Rarity:** Legendary | **Cooldown:** 13s
+
+**Effect:** Throw a Smoke Bomb, dealing 2176% AoE DMG and increasing the DMG received by targets within the range by 30% for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +32%
+
+---
+
+### 25. Grim Reaper
+
+**Rarity:** Legendary | **Cooldown:** 9s
+
+**Effect:** Summon ghosts, dealing 1443% DMG. Ghosts instantly defeat targets with less than 5% HP.
+
+**Passive:** Base HP, ATK, DEF +32%
+
+---
+
+### 26. Heroic Descent
+
+**Rarity:** Legendary | **Cooldown:** 19s
+
+**Effect:** Summon a Hero Spirit with 3 Attack Speed. The Spirit deals 148% DMG with each basic attack, lasts for 10 seconds, and reamins untargetable by enemies.
+
+**Passive:** Base HP, ATK, DEF +32%
+
+---
+
+### 27. Wild Gust
+
+**Rarity:** Legendary | **Cooldown:** 16s
+
+**Effect:** Summon a Gale, dealing 2642% AoE DMG and increasing ATK by 15% for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +32%
+
+---
+
+### 28. Blitz Assault
+
+**Rarity:** Immortal | **Cooldown:** 24s
+
+**Effect:** Summon Golden Lightning, dealing 5829% DMG and providing 3 seconds of DMG immunity.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 29. Blade Pierce
+
+**Rarity:** Immortal | **Cooldown:** 19s
+
+**Effect:** Throw Sharp Blades, dealing 4663% DMG and causing the target to lose 1.5% of their max HP per second for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 30. Clone Strike
+
+**Rarity:** Immortal | **Cooldown:** 29s
+
+**Effect:** Generate a clone with 30% of the shroom's HP. The clone lasts for 10 seconds and deals 200% DMG with each basic attack.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 31. Hundred Slashes (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 19s
+
+**Effect:** Deal 4663% DMG and gain 20% Basic ATK DMG RES and 0.5% ATK Bonus based on current HP for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 32. Windborne Arrow (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 19s
+
+**Effect:** Deal 2665% DMG and inflict vulnerability for 5 seconds. During this period, any non-skill DMG dealt to the target also applies an extra 100% DMG.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 33. Crimson Moonfall (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 8s
+
+**Effect:** Deal 2098% DMG. Each successive cast increases the DMG by 50%, stacking up to 3 times.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 34. Dragonic Resonance (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 15s
+
+**Effect:** Inflict 3731% initial DMG, followed by a 0.5 second delay, then deal 2% of the target's max HP as DMG. Additionally, deal extra 1% DMG of the target's max HP for every 10% DMG.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 35. Worldly Snare (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 24s
+
+**Effect:** Deal 5413% DMG and increase Crit Rate by 10%. For every 1% Crit Rate, gain an additional 3% Crit DMG. This effect lasts for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 36. Star Array (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 19s
+
+**Effect:** Deal 4330% DMG and increase Skill Crit Rate by 10%. For every 1% Skill Crit Rate, gain an additional 3% Skill Crit DMG. This effect lasts for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 37. Winged Dreams (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 24s
+
+**Effect:** Deal 5413% DMG and grant all pals a 20% Combo Rate. Every 1% Combo Rate increases a pal's Combo Multiplier by 0.5%. This effect lasts for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+### 38. Ancestral Will (Event Exclusive)
+
+**Rarity:** Immortal | **Cooldown:** 24s
+
+**Effect:** Deal 5413% DMG and grant all pals a 10% Crit Rate. Every 1% Crit Rate increases a pal's Crit DMG by 5%. This effect lasts for 5 seconds.
+
+**Passive:** Base HP, ATK, DEF +64%
+
+---
+
+## Data Files
+
+- **Source spreadsheet**: `battlesim/reference/LOM_Database-5.xlsx`
+- **Structured data**: `battlesim/reference/skills_master.json`

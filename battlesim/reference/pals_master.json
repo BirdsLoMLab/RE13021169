@@ -1,0 +1,726 @@
+{
+  "_source": "LOM_Database-5.xlsx",
+  "_total": 90,
+  "pals": [
+    {
+      "index": 1,
+      "name": "Hatched Chick",
+      "rarity": "Normal",
+      "family_type": "Chicken",
+      "effect": "Increase 5% Base Basic ATK Multiplier",
+      "dmg_multiplier": "3.5"
+    },
+    {
+      "index": 2,
+      "name": "Flying Fox",
+      "rarity": "Normal",
+      "family_type": "Sprite",
+      "effect": "Skill DMG +8%",
+      "dmg_multiplier": "3.5"
+    },
+    {
+      "index": 3,
+      "name": "Bird Shroom",
+      "rarity": "Normal",
+      "family_type": "Bird",
+      "effect": "Attack Speed +5%",
+      "dmg_multiplier": "1.647"
+    },
+    {
+      "index": 4,
+      "name": "Small Yellow Snail",
+      "rarity": "Normal",
+      "family_type": "Snail",
+      "effect": "Reduces enemy movement speed by +15%",
+      "dmg_multiplier": "3.111"
+    },
+    {
+      "index": 5,
+      "name": "Pink Hydrosprite",
+      "rarity": "Unique",
+      "family_type": "Specter",
+      "effect": "Active Skill Base Energy Regen +5%",
+      "dmg_multiplier": "3.5"
+    },
+    {
+      "index": 6,
+      "name": "Panda",
+      "rarity": "Unique",
+      "family_type": "Panda",
+      "effect": "HP Regen +10%",
+      "dmg_multiplier": "3.818"
+    },
+    {
+      "index": 7,
+      "name": "Fawn",
+      "rarity": "Unique",
+      "family_type": "Deer",
+      "effect": "DMG RES +5%",
+      "dmg_multiplier": "3.231"
+    },
+    {
+      "index": 8,
+      "name": "Kitten",
+      "rarity": "Well",
+      "family_type": "Cat",
+      "effect": "After using active skills, detonates enemies, dealing 100% DMG",
+      "dmg_multiplier": "4.2"
+    },
+    {
+      "index": 9,
+      "name": "Snow Pudding",
+      "rarity": "Well",
+      "family_type": "Snow Sprite",
+      "effect": "Reduce enemy attack speed by 5%",
+      "dmg_multiplier": "6.3"
+    },
+    {
+      "index": 10,
+      "name": "Baby Cactus",
+      "rarity": "Well",
+      "family_type": null,
+      "effect": "Every 3 basic attacks deal an extra 15% DMG",
+      "dmg_multiplier": "4.5"
+    },
+    {
+      "index": 11,
+      "name": "Xmas Turkey",
+      "rarity": "Well",
+      "family_type": "Chicken",
+      "effect": "Increase 8% Base Basic ATK Multiplier",
+      "dmg_multiplier": "3.937"
+    },
+    {
+      "index": 12,
+      "name": "Ami",
+      "rarity": "Well",
+      "family_type": null,
+      "effect": "Skill DMG +15%",
+      "dmg_multiplier": "7.887"
+    },
+    {
+      "index": 13,
+      "name": "Rainshade Bird",
+      "rarity": "Well",
+      "family_type": "Bird",
+      "effect": "Attack Speed +8%",
+      "dmg_multiplier": "3.706"
+    },
+    {
+      "index": 14,
+      "name": "Thorn Snail",
+      "rarity": "Well",
+      "family_type": "Snail",
+      "effect": "Reduces enemy movement speed by 20%",
+      "dmg_multiplier": "7"
+    },
+    {
+      "index": 15,
+      "name": "Rebellious Banana",
+      "rarity": "Well",
+      "family_type": "Banana",
+      "effect": "Combo +5%",
+      "dmg_multiplier": "3.316"
+    },
+    {
+      "index": 16,
+      "name": "Arcane Cat",
+      "rarity": "Rare",
+      "family_type": "Cat",
+      "effect": "After using active skills, detonates enemies, dealing 150% DMG",
+      "dmg_multiplier": "6.309"
+    },
+    {
+      "index": 17,
+      "name": "Nature Spirit",
+      "rarity": "Rare",
+      "family_type": "Specter",
+      "effect": "Active Skill Base Energy Regen +10%",
+      "dmg_multiplier": "7.887"
+    },
+    {
+      "index": 18,
+      "name": "Snow Ball",
+      "rarity": "Rare",
+      "family_type": "Snow Sprite",
+      "effect": "Reduce enemy attack speed by 8%",
+      "dmg_multiplier": "9.464"
+    },
+    {
+      "index": 19,
+      "name": "Cub Cactus",
+      "rarity": "Rare",
+      "family_type": null,
+      "effect": "Every 3 basic attacks deal an extra 20% DMG",
+      "dmg_multiplier": "6.76"
+    },
+    {
+      "index": 20,
+      "name": "Panda Mallet",
+      "rarity": "Rare",
+      "family_type": "Panda",
+      "effect": "HP Regen +20%",
+      "dmg_multiplier": "8.604"
+    },
+    {
+      "index": 21,
+      "name": "Stag",
+      "rarity": "Rare",
+      "family_type": "Deer",
+      "effect": "DMG RES +8%",
+      "dmg_multiplier": "7.28"
+    },
+    {
+      "index": 22,
+      "name": "Ultra-Clean Fighter",
+      "rarity": "Rare",
+      "family_type": null,
+      "effect": "Counter +8%",
+      "dmg_multiplier": "5.258"
+    },
+    {
+      "index": 23,
+      "name": "Wizard Cat",
+      "rarity": "Mythic",
+      "family_type": "Cat",
+      "effect": "After using active skills, detonates enemies, dealing 200% DMG",
+      "dmg_multiplier": "9.464"
+    },
+    {
+      "index": 24,
+      "name": "Aggressive Hydrosprite",
+      "rarity": "Mythic",
+      "family_type": "Specter",
+      "effect": "Active Skill Base Energy Regen +15%",
+      "dmg_multiplier": "11.83"
+    },
+    {
+      "index": 25,
+      "name": "Snow Sprite",
+      "rarity": "Mythic",
+      "family_type": "Snow Sprite",
+      "effect": "Reduce enemy attack speed by 10%",
+      "dmg_multiplier": "14.196"
+    },
+    {
+      "index": 26,
+      "name": "Energetic Cactus",
+      "rarity": "Mythic",
+      "family_type": null,
+      "effect": "Every 3 basic attacks deal an extra 30% DMG",
+      "dmg_multiplier": "10.14"
+    },
+    {
+      "index": 27,
+      "name": "Chicken Fighter",
+      "rarity": "Mythic",
+      "family_type": "Chicken",
+      "effect": "Increase 10% Base Basic ATK Multiplier",
+      "dmg_multiplier": "8.872"
+    },
+    {
+      "index": 28,
+      "name": "Po Kong",
+      "rarity": "Mythic",
+      "family_type": "Sprite",
+      "effect": "Skill DMG +25%",
+      "dmg_multiplier": "11.83"
+    },
+    {
+      "index": 29,
+      "name": "Azure Bird",
+      "rarity": "Mythic",
+      "family_type": "Bird",
+      "effect": "Attack Speed +10%",
+      "dmg_multiplier": "8.351"
+    },
+    {
+      "index": 30,
+      "name": "Apprentice Panda",
+      "rarity": "Mythic",
+      "family_type": "Panda",
+      "effect": "HP Regen +30%",
+      "dmg_multiplier": "12.905"
+    },
+    {
+      "index": 31,
+      "name": "Moss Snail",
+      "rarity": "Mythic",
+      "family_type": "Snail",
+      "effect": "Reduces enemy movement speed by 30%",
+      "dmg_multiplier": "15.773"
+    },
+    {
+      "index": 32,
+      "name": "Floral Deer",
+      "rarity": "Mythic",
+      "family_type": "Deer",
+      "effect": "DMG RES +10%",
+      "dmg_multiplier": "10.92"
+    },
+    {
+      "index": 33,
+      "name": "Fortune Dragon",
+      "rarity": "Epic",
+      "family_type": "Dragon",
+      "effect": "Increase Basic Attack Crit DMG by 20% and Skill Crit Rate by 8%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 34,
+      "name": "Abaddon",
+      "rarity": "Epic",
+      "family_type": "Abaddon",
+      "effect": "Gain a 10-second shield equal to 8% of Max HP after battle starts. Increase ATK by 8% for 10 seconds after the shield is lost",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 35,
+      "name": "Davi",
+      "rarity": "Epic",
+      "family_type": "Davi",
+      "effect": "Gain 8% Skill Crit Rate and 8% Final Skill Crit DMG for 15 seconds after battle starts",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 36,
+      "name": "Frej",
+      "rarity": "Epic",
+      "family_type": "Frej",
+      "effect": "Gain 8% Crit Rate and 8% Final Crit DMG for 15 seconds after battle starts",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 37,
+      "name": "Tamamo",
+      "rarity": "Epic",
+      "family_type": "Tamamo",
+      "effect": "Gain 8% Pal Crit Rate and 8% Final Pal Crit DMG for 15 seconds after battle starts",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 38,
+      "name": "Coffee Cat",
+      "rarity": "Epic",
+      "family_type": "Cat",
+      "effect": "After using active skills, detonates enemies, dealing 250% DMG",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 39,
+      "name": "Triumphant Hydrosprite",
+      "rarity": "Epic",
+      "family_type": "Specter",
+      "effect": "Active Skill Base Energy Regen +20%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 40,
+      "name": "Snow Goblin",
+      "rarity": "Epic",
+      "family_type": "Snow Sprite",
+      "effect": "Reduce enemy attack speed by 12%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 41,
+      "name": "Floral Cactus",
+      "rarity": "Epic",
+      "family_type": null,
+      "effect": "Every 3 basic attacks deal an extra 35% DMG",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 42,
+      "name": "Kongfu Chicken",
+      "rarity": "Epic",
+      "family_type": "Chicken",
+      "effect": "Increase 12% Base Basic ATK Multiplier",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 43,
+      "name": "Piercer Beast",
+      "rarity": "Epic",
+      "family_type": "Sprite",
+      "effect": "Skill DMG +40%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 44,
+      "name": "Caw-Caw Owl",
+      "rarity": "Epic",
+      "family_type": null,
+      "effect": "Attack Speed +12%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 45,
+      "name": "Toothpick Eggplant",
+      "rarity": "Epic",
+      "family_type": "Eggplant",
+      "effect": "Crit Rate +10%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 46,
+      "name": "Warrior Panda",
+      "rarity": "Epic",
+      "family_type": "Panda",
+      "effect": "HP Regen +35%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 47,
+      "name": "Ice Cream Snail",
+      "rarity": "Epic",
+      "family_type": "Snail",
+      "effect": "Reduces enemy movement speed by 35%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 48,
+      "name": "Divine Deer",
+      "rarity": "Epic",
+      "family_type": "Deer",
+      "effect": "DMG RES +12%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 49,
+      "name": "Mecha Dragon",
+      "rarity": "Epic",
+      "family_type": null,
+      "effect": "Crit DMG Bonus +20%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 50,
+      "name": "Spark Squirrel",
+      "rarity": "Epic",
+      "family_type": null,
+      "effect": "Pal DMG Multiplier +15%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 51,
+      "name": "B.Duck",
+      "rarity": "Epic",
+      "family_type": "B.Duck",
+      "effect": "Extends all shield durations by 1.5s",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 52,
+      "name": "Travel Camel",
+      "rarity": "Epic",
+      "family_type": "Camel",
+      "effect": "Enemy Basic ATK DMG -10%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 53,
+      "name": "Rabbids Coming",
+      "rarity": "Epic",
+      "family_type": "Rabbids Coming",
+      "effect": "Reduce enemy Movement SPD by 15% and ATK SPD by 5%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 54,
+      "name": "Benny",
+      "rarity": "Legendary",
+      "family_type": "Rabbit",
+      "effect": "Increase Crit Rate by 5%. Benny's attacks have a 30% chance to launch targets for 0.5 second",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 55,
+      "name": "Mona",
+      "rarity": "Legendary",
+      "family_type": "Mona",
+      "effect": "Increase Evasion by 10% and Boss DMG by 30%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 56,
+      "name": "Cat Prince",
+      "rarity": "Legendary",
+      "family_type": "Cat",
+      "effect": "After using active skills, detonates enemies, dealing 300% DMG",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 57,
+      "name": "Warlord Hydrosprite",
+      "rarity": "Legendary",
+      "family_type": "Specter",
+      "effect": "Active Skill Base Energy Regen +25%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 58,
+      "name": "Snow General",
+      "rarity": "Legendary",
+      "family_type": "Snow Sprite",
+      "effect": "Reduce enemy attack speed by 15%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 59,
+      "name": "Cowboy Cactus",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Every 3 basic attacks deal an extra 40% DMG",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 60,
+      "name": "Chicken Hood",
+      "rarity": "Legendary",
+      "family_type": "Chicken",
+      "effect": "Increase 15% Base Basic ATK Multiplier",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 61,
+      "name": "Fiery Tail",
+      "rarity": "Legendary",
+      "family_type": "Sprite",
+      "effect": "Skill DMG +60%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 62,
+      "name": "Hero Bird",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Attack Speed +15%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 63,
+      "name": "Kongfu Master",
+      "rarity": "Legendary",
+      "family_type": "Panda",
+      "effect": "HP Regen +40%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 64,
+      "name": "Tipsy Snail",
+      "rarity": "Legendary",
+      "family_type": "Snail",
+      "effect": "Reduces enemy movement speed by 40%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 65,
+      "name": "Angel Deer",
+      "rarity": "Legendary",
+      "family_type": "Deer",
+      "effect": "DMG RES +15%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 66,
+      "name": "Righteous Banana",
+      "rarity": "Legendary",
+      "family_type": "Banana",
+      "effect": "Combo +10%, Combo DMG +100%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 67,
+      "name": "Rainbow Guardian",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Counter +10%, Counter DMG +100%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 68,
+      "name": "Gingerbread",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Boss DMG +30%, Boss DMG RES +10%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 69,
+      "name": "Pepe",
+      "rarity": "Legendary",
+      "family_type": "Pepe",
+      "effect": "Healing +0.1%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 70,
+      "name": "Night Spritefox",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Skill Crit +5%, Skill Crit DMG +10%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 71,
+      "name": "Hellflame Feather",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Hellflame Feather's basic attacks deal extra DMG equal to 0.5% of the target's current HP",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 72,
+      "name": "Puppy Fervor",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Increases all shields' effects by 20%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 73,
+      "name": "Pirate Parrot",
+      "rarity": "Legendary",
+      "family_type": "Pirate Parrot",
+      "effect": "Pal Crit DMG +75%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 74,
+      "name": "Floral Panda",
+      "rarity": "Legendary",
+      "family_type": "Floral Panda",
+      "effect": "Base Regen +0.1%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 75,
+      "name": "Moon Hare",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Pal DMG +60%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 76,
+      "name": "Alpaca Bell",
+      "rarity": "Legendary",
+      "family_type": "Alpaca",
+      "effect": "Reduces all enemies' ATK by 6%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 77,
+      "name": "Serpent Spring",
+      "rarity": "Legendary",
+      "family_type": "Snake",
+      "effect": "Reduces all enemies' Final Crit RES by 8%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 78,
+      "name": "Mellow Cloud",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Increases all enemies' ATK SPD by 10%, but reduces their Final Basic ATK DMG, Combo DMG and Counter DMG by 15%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 79,
+      "name": "Blackeye",
+      "rarity": "Legendary",
+      "family_type": "Blackeye",
+      "effect": "Pal Ignore Evasion +20%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 80,
+      "name": "Moonlit Lonewolf",
+      "rarity": "Legendary",
+      "family_type": "Wolf",
+      "effect": "Enemy HP Regen -10%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 81,
+      "name": "Mushroom Burglar",
+      "rarity": "Legendary",
+      "family_type": "Mushroom Burglar",
+      "effect": "Every attack or combo of 7 by Mushroom Burglar increases Character ATK by 2% and reduces all enemies' ATK by 2%, stacking up to 4 times",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 82,
+      "name": "Moonspirit Hound",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Reduce all enemies' Pal DMG RES by 8%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 83,
+      "name": "Skeleton Minion",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Adds 1500 Pal Inspire",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 84,
+      "name": "Treasure Dragon",
+      "rarity": "Immortal",
+      "family_type": "Dragon",
+      "effect": "Increase Basic Attack Crit DMG by 50% and Skill Crit Rate by 20%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 85,
+      "name": "Hipster Tortoise",
+      "rarity": "Immortal",
+      "family_type": "Turtle",
+      "effect": "When HP is below 50%, gain a shield equal to 30% of max HP. (Cooldown: 60 seconds.)",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 86,
+      "name": "Electric Pup",
+      "rarity": "Immortal",
+      "family_type": "Dog",
+      "effect": "Increase counter DMG by 60%, and restore 1% of lost HP on counter",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 87,
+      "name": "Alpine Fox",
+      "rarity": "Immortal",
+      "family_type": "Fox",
+      "effect": "Extend stun duration by 30%, and reduce stunned enemies' DMG RES by 15%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 88,
+      "name": "Pirate Octopus",
+      "rarity": "Immortal",
+      "family_type": "Octopus",
+      "effect": "Increase Combo DMG by 60%, and with every 3 combos, deal an extra 60% current Combo DMG",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 89,
+      "name": "Wealthy Lizard",
+      "rarity": "Immortal",
+      "family_type": "Lizard",
+      "effect": "Increase Pal DMG by 80% and Ignore Evasion by 10%",
+      "dmg_multiplier": null
+    },
+    {
+      "index": 90,
+      "name": "Fortune Envoy",
+      "rarity": "Legendary",
+      "family_type": null,
+      "effect": "Increases Global Crit DMG by 15%",
+      "dmg_multiplier": null
+    }
+  ]
+}

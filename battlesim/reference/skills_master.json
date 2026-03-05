@@ -1,0 +1,319 @@
+{
+  "_source": "LOM_Database-5.xlsx",
+  "_total": 38,
+  "event_exclusive_count": 8,
+  "skills": [
+    {
+      "index": 1,
+      "name": "Spore Bomb",
+      "rarity": "Normal",
+      "cooldown": "7s",
+      "effect": "Trigger an explosion on the target 2 time(s), each time dealing 68% DMG.",
+      "passive_effect": "Base HP, ATK, DEF +1%"
+    },
+    {
+      "index": 2,
+      "name": "Schroom Cap",
+      "rarity": "Normal",
+      "cooldown": "9s",
+      "effect": "Summon a Mushroom Cap, dealing 194% AoE DMG.",
+      "passive_effect": "Base HP, ATK, DEF +1%"
+    },
+    {
+      "index": 3,
+      "name": "Spore Barrage",
+      "rarity": "Normal",
+      "cooldown": "7s",
+      "effect": "Throw 5 spore(s), each dealing 33.1% DMG.",
+      "passive_effect": "Base HP, ATK, DEF +1%"
+    },
+    {
+      "index": 4,
+      "name": "Boulder Impact",
+      "rarity": "Unique",
+      "cooldown": "12s",
+      "effect": "Summon a Giant Rock, dealing 76% DMG to the target every second, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +1.5%"
+    },
+    {
+      "index": 5,
+      "name": "Thorn Thicket",
+      "rarity": "Unique",
+      "cooldown": "8s",
+      "effect": "Set up 1 trap(s), dealing 53% DMG every second and slowing the target by 40%, last for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +1.5%"
+    },
+    {
+      "index": 6,
+      "name": "Lead the Charge",
+      "rarity": "Unique",
+      "cooldown": "14s",
+      "effect": "Deal 438% DMG to the nearest target and increase Basic Attack DMG by 30% for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +1.5%"
+    },
+    {
+      "index": 7,
+      "name": "Entangling Vines",
+      "rarity": "Well",
+      "cooldown": "8s",
+      "effect": "Set up 1 trap(s), dealing 394% DMG to enemies triggering the trap and imprisoning them for 1 second.",
+      "passive_effect": "Base HP, ATK, DEF +2.2%"
+    },
+    {
+      "index": 8,
+      "name": "Speed Surge",
+      "rarity": "Well",
+      "cooldown": "14s",
+      "effect": "Deal 656% DMG to the nearest target and increase Attack Speed by 30% for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +2.2%"
+    },
+    {
+      "index": 9,
+      "name": "Spider Weaver",
+      "rarity": "Well",
+      "cooldown": "10s",
+      "effect": "Summon a Spider, dealing 96% AoE DMG every second, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +2.2%"
+    },
+    {
+      "index": 10,
+      "name": "Pineapple Plunge",
+      "rarity": "Rare",
+      "cooldown": "11s",
+      "effect": "Continuously summon 5 Pinneapple(s), each dealing 197% AoE DMG.",
+      "passive_effect": "Base HP, ATK, DEF +4%"
+    },
+    {
+      "index": 11,
+      "name": "Pearl Release",
+      "rarity": "Rare",
+      "cooldown": "11s",
+      "effect": "Summon a Clam, dealing 789% AoE DMG and slowing targets within the range by 40%, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +4%"
+    },
+    {
+      "index": 12,
+      "name": "Sprawling Vine",
+      "rarity": "Rare",
+      "cooldown": "11s",
+      "effect": "Summon vines, dealing 789% AoE DMG and imprisoning targets within the range for 1 second.",
+      "passive_effect": "Base HP, ATK, DEF +4%"
+    },
+    {
+      "index": 13,
+      "name": "Batty Trace",
+      "rarity": "Mythic",
+      "cooldown": "15s",
+      "effect": "Summon a bat, dealing 315% AoE DMG every second, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +8%"
+    },
+    {
+      "index": 14,
+      "name": "Nature's Renewal",
+      "rarity": "Mythic",
+      "cooldown": "25s",
+      "effect": "Deals 1775% DMG to the target and recover 30% of max HP within 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +8%"
+    },
+    {
+      "index": 15,
+      "name": "Shroom Shield",
+      "rarity": "Mythic",
+      "cooldown": "19s",
+      "effect": "Deal 1183% DMG to the target and gain a shield equal to 20% of max HP, lasting for 10 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +8%"
+    },
+    {
+      "index": 16,
+      "name": "Durian Bomb",
+      "rarity": "Epic",
+      "cooldown": "18s",
+      "effect": "Continuously summon 3 Durian(s), each dealing 888% AoE DMG and slowing targets by 40%, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +16%"
+    },
+    {
+      "index": 17,
+      "name": "Easy Breezy",
+      "rarity": "Epic",
+      "cooldown": "15s",
+      "effect": "Throw a Cactus, dealing 1657% AoE DMG and reducing the ATK of targets within the range by 20%, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +16%"
+    },
+    {
+      "index": 18,
+      "name": "Take It Slow",
+      "rarity": "Epic",
+      "cooldown": "12s",
+      "effect": "Throw a Cactus, dealing 1635% AoE DMG and reducing the ATK Speed of targets within the range by 40%, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +16%"
+    },
+    {
+      "index": 19,
+      "name": "Coin Bomb",
+      "rarity": "Epic",
+      "cooldown": "13s",
+      "effect": "Throw coins, dealing 1450% AoE DMG and increasing Basic Attack DMG by 35%, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +16%"
+    },
+    {
+      "index": 20,
+      "name": "Slime Bomb",
+      "rarity": "Epic",
+      "cooldown": "13s",
+      "effect": "Summon a slime, dealing 1450% AoE DMG and increasing pals DMG by 30%, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +16%"
+    },
+    {
+      "index": 21,
+      "name": "Meteor Fall",
+      "rarity": "Epic",
+      "cooldown": "13s",
+      "effect": "Summon meteors, dealing 1450% AoE DMG and increasing Skill DMG by 30%, lasting for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +16%"
+    },
+    {
+      "index": 22,
+      "name": "Disarm",
+      "rarity": "Legendary",
+      "cooldown": "16s",
+      "effect": "Jet Water Columns, dealing 2682% AoE DMG and disarming targets within the range for 3 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +32%"
+    },
+    {
+      "index": 23,
+      "name": "Dazzled",
+      "rarity": "Legendary",
+      "cooldown": "19s",
+      "effect": "Jet Poison Mist, dealing 3134% AoR DMG and stunning targets within the range for 1.5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +32%"
+    },
+    {
+      "index": 24,
+      "name": "Smoke Bomb",
+      "rarity": "Legendary",
+      "cooldown": "13s",
+      "effect": "Throw a Smoke Bomb, dealing 2176% AoE DMG and increasing the DMG received by targets within the range by 30% for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +32%"
+    },
+    {
+      "index": 25,
+      "name": "Grim Reaper",
+      "rarity": "Legendary",
+      "cooldown": "9s",
+      "effect": "Summon ghosts, dealing 1443% DMG. Ghosts instantly defeat targets with less than 5% HP.",
+      "passive_effect": "Base HP, ATK, DEF +32%"
+    },
+    {
+      "index": 26,
+      "name": "Heroic Descent",
+      "rarity": "Legendary",
+      "cooldown": "19s",
+      "effect": "Summon a Hero Spirit with 3 Attack Speed. The Spirit deals 148% DMG with each basic attack, lasts for 10 seconds, and reamins untargetable by enemies.",
+      "passive_effect": "Base HP, ATK, DEF +32%"
+    },
+    {
+      "index": 27,
+      "name": "Wild Gust",
+      "rarity": "Legendary",
+      "cooldown": "16s",
+      "effect": "Summon a Gale, dealing 2642% AoE DMG and increasing ATK by 15% for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +32%"
+    },
+    {
+      "index": 28,
+      "name": "Blitz Assault",
+      "rarity": "Immortal",
+      "cooldown": "24s",
+      "effect": "Summon Golden Lightning, dealing 5829% DMG and providing 3 seconds of DMG immunity.",
+      "passive_effect": "Base HP, ATK, DEF +64%"
+    },
+    {
+      "index": 29,
+      "name": "Blade Pierce",
+      "rarity": "Immortal",
+      "cooldown": "19s",
+      "effect": "Throw Sharp Blades, dealing 4663% DMG and causing the target to lose 1.5% of their max HP per second for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +64%"
+    },
+    {
+      "index": 30,
+      "name": "Clone Strike",
+      "rarity": "Immortal",
+      "cooldown": "29s",
+      "effect": "Generate a clone with 30% of the shroom's HP. The clone lasts for 10 seconds and deals 200% DMG with each basic attack.",
+      "passive_effect": "Base HP, ATK, DEF +64%"
+    },
+    {
+      "index": 31,
+      "name": "Hundred Slashes",
+      "rarity": "Immortal",
+      "cooldown": "19s",
+      "effect": "Deal 4663% DMG and gain 20% Basic ATK DMG RES and 0.5% ATK Bonus based on current HP for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    },
+    {
+      "index": 32,
+      "name": "Windborne Arrow",
+      "rarity": "Immortal",
+      "cooldown": "19s",
+      "effect": "Deal 2665% DMG and inflict vulnerability for 5 seconds. During this period, any non-skill DMG dealt to the target also applies an extra 100% DMG.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    },
+    {
+      "index": 33,
+      "name": "Crimson Moonfall",
+      "rarity": "Immortal",
+      "cooldown": "8s",
+      "effect": "Deal 2098% DMG. Each successive cast increases the DMG by 50%, stacking up to 3 times.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    },
+    {
+      "index": 34,
+      "name": "Dragonic Resonance",
+      "rarity": "Immortal",
+      "cooldown": "15s",
+      "effect": "Inflict 3731% initial DMG, followed by a 0.5 second delay, then deal 2% of the target's max HP as DMG. Additionally, deal extra 1% DMG of the target's max HP for every 10% DMG.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    },
+    {
+      "index": 35,
+      "name": "Worldly Snare",
+      "rarity": "Immortal",
+      "cooldown": "24s",
+      "effect": "Deal 5413% DMG and increase Crit Rate by 10%. For every 1% Crit Rate, gain an additional 3% Crit DMG. This effect lasts for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    },
+    {
+      "index": 36,
+      "name": "Star Array",
+      "rarity": "Immortal",
+      "cooldown": "19s",
+      "effect": "Deal 4330% DMG and increase Skill Crit Rate by 10%. For every 1% Skill Crit Rate, gain an additional 3% Skill Crit DMG. This effect lasts for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    },
+    {
+      "index": 37,
+      "name": "Winged Dreams",
+      "rarity": "Immortal",
+      "cooldown": "24s",
+      "effect": "Deal 5413% DMG and grant all pals a 20% Combo Rate. Every 1% Combo Rate increases a pal's Combo Multiplier by 0.5%. This effect lasts for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    },
+    {
+      "index": 38,
+      "name": "Ancestral Will",
+      "rarity": "Immortal",
+      "cooldown": "24s",
+      "effect": "Deal 5413% DMG and grant all pals a 10% Crit Rate. Every 1% Crit Rate increases a pal's Crit DMG by 5%. This effect lasts for 5 seconds.",
+      "passive_effect": "Base HP, ATK, DEF +64%",
+      "event_exclusive": true
+    }
+  ]
+}
