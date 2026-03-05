@@ -21,23 +21,23 @@
 | 02 | `02_PVP_CONSTANTS.md` | 220-level PvP injury reduce table, shield/heal decay, ELO |
 | 03 | `03_ATTRIBUTES.md` | All 89+ combat attributes with IDs, keys, initial values, caps |
 | 04 | `04_CLASSES.md` | All 8 T5 classes: passives, actives, ownEffect arrays |
-| 05 | `05_ACTIVE_SKILLS.md` | All 38 active skills with cooldowns, effects, passives (xlsx) |
-| 06 | `06_PALS_AND_PETS.md` | All 90 pals with family types, DMG multipliers, effects (xlsx) |
-| 07 | `07_AVIANS.md` | All 34 avians + 102 avian affixes with full effect text (xlsx) |
-| 08 | `08_TALENTS.md` | 6 final talents + 7 leveled talents |
+| 05 | `05_ACTIVE_SKILLS.md` | All 38 active skills with cooldowns, effects, passives, config IDs, cast times, targeting (xlsx + config) |
+| 06 | `06_PALS_AND_PETS.md` | All 90 pals with family types, DMG multipliers, effects, config IDs (xlsx + config) |
+| 07 | `07_AVIANS.md` | All 35 avians + 102 avian affixes with full effect text (xlsx + config) |
+| 08 | `08_TALENTS.md` | Back/Wing talent trees: 120 nodes, 4 class paths, 12 final talents (config) |
 | 09 | `09_RELICS.md` | All 5 relics with combat effects |
 | 10 | `10_BUFFS_AND_STATUS.md` | 46 buff group types, mutex rules, bleed, shields, death prevention |
-| 11 | `11_MOUNT_SKINS.md` | All 64 mounts with combat effects, 19 code-mapped (xlsx) |
-| 12 | `12_ARTIFACT_SKINS_AND_GEMS.md` | All 40 artifacts with full effect text (xlsx) |
+| 11 | `11_MOUNT_SKINS.md` | All 72 mounts with combat effects, skill IDs, skin progression (xlsx + config) |
+| 12 | `12_ARTIFACT_SKINS_AND_GEMS.md` | All 43 artifacts with full effect text, skill IDs (xlsx + config) |
 | 13 | `13_EQUIPMENT.md` | Advancement, resonance, refinement, suits |
 | 14 | `14_SPIRITS.md` | 20 spirits + spirit damage formula + affixes |
 | 15 | `15_ANGELS.md` | Formation, battle skills, star progression, energy pool |
 | 16 | `16_FATE_CARDS.md` | Attribute bonuses + fusion passive skills |
 | 17 | `17_PATH_TO_DIVINITY.md` | Affix/talent tree with per-attribute caps |
 | 18 | `18_RINGS_AND_BADGES.md` | Ring skills, Path trunk links, badge levels |
-| 19 | `19_BACK_DECORATIONS.md` | All 41 back accessories with full effect text (xlsx) |
+| 19 | `19_BACK_DECORATIONS.md` | All 45 back accessories with full effect text, skill IDs, skin progression (xlsx + config) |
 | 20 | `20_SPECIAL_MECHANICS.md` | 0.98 exponent, clones, speed cascade, animation exploit |
-| 21 | `21_STAR_HEROES.md` | All 33 star heroes: main/support skills, costs, limits (xlsx) |
+| 21 | `21_STAR_HEROES.md` | All 33 star heroes: main/support skills, costs, limits, config IDs (xlsx + config) |
 
 ## Key Constants Quick Reference
 
