@@ -1,6 +1,6 @@
 # 04 — Classes
 
-> All 8 Tier 5 classes: passives, actives, ownEffect arrays.
+> All 8 Tier 5 classes: passives, actives, ownEffect arrays, full ConfigJobs schema, job awakening system.
 
 ---
 
@@ -208,20 +208,60 @@ Beast Path (job_class=5):
 
 ---
 
-## ConfigJobs Schema (28 Fields)
+## ConfigJobs Schema (Line 239943, 28 Fields)
 
-| # | Field | Type | Description |
-|---|-------|------|-------------|
-| 0 | id | number | Unique job ID |
-| 1 | name | string_ref | Localized name |
-| 2 | type | number | Job type (equipment wearability) |
-| 5 | skill | array | Active skill IDs |
-| 6 | passive_skill | array | Passive skill IDs |
-| 7 | passive_imprint | array | GvG passive imprint skills |
-| 9 | job_change | array | Available promotion targets |
-| 20 | front_job | number | Pre-requisite job ID |
-| 21 | unlock | number | Unlock level |
-| 27 | job_class | number | Class grouping (2=Warrior, 3=Archer, 4=Mage, 5=Beast) |
+**No XOR encoding** — `usesConfigKey: false`. Indexed by `id` and `type`.
+
+| # | Field | Type | Opt | Description |
+|---|-------|------|-----|-------------|
+| 0 | id | number | | Unique job ID (e.g. 1511 = Martial Sage) |
+| 1 | name | string_ref | | Localized name |
+| 2 | type | number | | Job type (equipment wearability, matches ConfigEquipment.wearable) |
+| 3 | job_pos | string_ref | | Position/role description |
+| 4 | desc | string_ref | | Job description text |
+| 5 | skill | optional_array | ✓ | Active skill IDs |
+| 6 | passive_skill | optional_array | ✓ | Passive skill IDs (unlocked at level thresholds) |
+| 7 | passive_imprint | optional_array | ✓ | GvG passive imprint skills |
+| 8 | change_times | number | | Number of job changes to reach this tier |
+| 9 | job_change | optional_array | ✓ | Available promotion target job IDs |
+| 10 | model | number | | Character model ID |
+| 11 | fashion | optional_array | ✓ | Fashion/outfit options |
+| 12 | recommend_skill | optional_array | ✓ | Recommended active skills for this class |
+| 13 | recommend_pet | optional_array | ✓ | Recommended pets for this class |
+| 14 | transmog_list | optional_array | ✓ | Available transmog appearances |
+| 15 | default_transomg | optional_array | ✓ | Default transmog settings (note: typo in source) |
+| 16 | arms_icon | number | | Weapon icon resource ID |
+| 17 | arms_name | string_ref | | Weapon name |
+| 18 | arms_desc | string_ref | | Weapon description |
+| 19 | job_desc | string_ref | | Extended job description |
+| 20 | front_job | number | | Pre-requisite job ID (previous tier) |
+| 21 | unlock | number | | Unlock level requirement |
+| 22 | scale | number | | Character model scale |
+| 23 | position | optional_array | ✓ | Model position offset |
+| 24 | job_icon | number | | Job icon resource ID |
+| 25 | skin | number | | Default skin ID |
+| 26 | job_sign | number | | Job emblem/sign resource ID |
+| 27 | job_class | number | | Class grouping (2=Warrior, 3=Archer, 4=Mage, 5=Beast) |
+
+**Combat-relevant fields:** `type` (equipment eligibility), `skill` (active skills), `passive_skill` (passive skills + ownEffect arrays), `passive_imprint` (GvG passives), `job_class` (class path).
+
+---
+
+## ConfigJobs_wakeup — Job Awakening (Line 239885, 5 Fields)
+
+**No XOR encoding** — `usesConfigKey: false`. Indexed by `[id, level]`.
+
+Job awakening is a leveling system that grants bonus attributes to a class after reaching T5.
+
+| # | Field | Type | Opt | Description |
+|---|-------|------|-----|-------------|
+| 0 | id | number | | Job ID (matches ConfigJobs.id) |
+| 1 | level | number | | Awakening level |
+| 2 | value_plus | optional_array | ✓ | Attribute bonuses `[[attr_id, value], ...]` |
+| 3 | cost | optional_array | ✓ | Upgrade cost `[[item_id, amount], ...]` |
+| 4 | power | number | | Combat power gained at this level |
+
+Each awakening level grants cumulative `value_plus` attribute bonuses added to the player's stat assembly.
 
 ---
 
@@ -258,3 +298,14 @@ Beast Path (job_class=5):
 | 2021 | ATK speed % |
 | 2024 | skill buff duration |
 | 2032 | pal DMG multiplier bonus |
+
+---
+
+## Dependencies
+
+- **ConfigEquipment** — Equipment `wearable` field matches `ConfigJobs.type`
+- **ConfigSkill / ConfigSkill_level** — Active skill IDs from `ConfigJobs.skill`
+- **ConfigAttribute** — All attribute IDs in ownEffect arrays and awakening value_plus
+- **ConfigBuff** — Buff IDs referenced by passive skills (20033, 20036, 20028, etc.)
+- **05_ACTIVE_SKILLS.md** — Full active skill details (IDs 1053-1058, 1066-1067)
+- **10_BUFFS_AND_STATUS.md** — Buff mechanics for class passive effects
