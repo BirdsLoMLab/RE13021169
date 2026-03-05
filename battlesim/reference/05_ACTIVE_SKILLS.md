@@ -1,6 +1,6 @@
 # 05 — Active Skills
 
-> Complete active skill reference: all 38 skills from LOM_Database-5.xlsx. 8 event-exclusive skills. See also `skills_master.json` for structured JSON.
+> Complete active skill reference: all 38 skills from LOM_Database-5.xlsx, enriched with config binary data (skill IDs, cast times, target types, effect IDs, 200–300 level scaling per skill). 8 event-exclusive skills. See also `skills_master.json` for structured JSON.
 
 ---
 
@@ -431,7 +431,65 @@
 
 ---
 
+## Config Binary Data — Skill IDs, Cast Times, Targeting
+
+> Decoded from `ConfigActive_skill` binary table. Each skill maps to a `skill_id`, cast timing, targeting mode, and effect chain.
+
+**Quality Mapping:** 1=Normal, 2=Unique, 3=Well, 4=Rare, 5=Mythic, 6=Epic, 7=Legendary, 8=Immortal
+
+**Target Type Format:** `[team, count, mode]` — team: 4=enemy; count: 1=single; mode: 0=nearest, 1=current, 3=AoE, 4=summon
+
+| # | Name | Skill ID | Cast | Interval | Target | Effect IDs | Event | Levels |
+|---|------|----------|------|----------|--------|------------|-------|--------|
+| 1 | Spore Bomb | 1001 | 0.5s | 0.4s | [4,1,1] | 10012 | — | 200 |
+| 2 | Schroom Cap | 1002 | 1.0s | 1.2s | [4,1,3] | 10021 | — | 200 |
+| 3 | Spore Barrage | 1003 | 1.5s | 0.3s | [4,1,3] | 10031 | — | 200 |
+| 4 | Boulder Impact | 1004 | 1.0s | 1.2s | [4,1,3] | 10041 | — | 200 |
+| 5 | Thorn Thicket | 1006 | 1.0s | 1.2s | [4,1,3] | 10061, 10062 | — | 200 |
+| 6 | Lead the Charge | 1007 | 1.0s | 1.2s | [4,1,0] | 10072 | — | 200 |
+| 7 | Entangling Vines | 1005 | 1.0s | 1.2s | [4,1,3] | 10051 | — | 200 |
+| 8 | Speed Surge | 1008 | 1.0s | 1.2s | [4,1,0] | 10082 | — | 200 |
+| 9 | Spider Weaver | 1009 | 1.5s | 2.0s | [4,1,1] | 10091 | — | 200 |
+| 10 | Pineapple Plunge | 1011 | 4.0s | 1.0s | [4,1,3] | 10111 | — | 200 |
+| 11 | Pearl Release | 1014 | 1.0s | 1.2s | [4,1,3] | 10141 | — | 200 |
+| 12 | Sprawling Vine | 1015 | 1.0s | 1.2s | [4,1,3] | 10151 | — | 200 |
+| 13 | Batty Trace | 1012 | 1.0s | 1.2s | [4,1,4] | 10121 | — | 300 |
+| 14 | Nature's Renewal | 1019 | 5.0s | 6.0s | [4,1,0] | 10191, 10192 | — | 300 |
+| 15 | Shroom Shield | 1036 | 1.0s | 1.2s | [4,1,0] | 10361, 10362 | — | 300 |
+| 16 | Durian Bomb | 1020 | 2.0s | 1.0s | [4,1,3] | 10201 | — | 300 |
+| 17 | Easy Breezy | 1023 | 1.0s | 1.2s | [4,1,3] | 10231 | — | 300 |
+| 18 | Take It Slow | 1024 | 1.0s | 1.2s | [4,1,3] | 10241 | — | 300 |
+| 19 | Coin Bomb | 1044 | 1.0s | 1.2s | [4,1,0] | 10441 | — | 300 |
+| 20 | Slime Bomb | 1045 | 1.0s | 1.2s | [4,1,0] | 10451 | — | 300 |
+| 21 | Meteor Fall | 1046 | 1.0s | 1.2s | [4,1,0] | 10461 | — | 300 |
+| 22 | Disarm | 1021 | 1.0s | 1.2s | [4,1,3] | 10211 | — | 300 |
+| 23 | Dazzled | 1022 | 1.0s | 1.2s | [4,1,3] | 10221 | — | 300 |
+| 24 | Smoke Bomb | 1029 | 1.0s | 1.2s | [4,1,3] | 10291 | — | 300 |
+| 25 | Grim Reaper | 1047 | 1.0s | 1.2s | [4,1,0] | 10471 | — | 300 |
+| 26 | Heroic Descent | 1048 | 1.0s | 1.2s | self | 10481 | — | 300 |
+| 27 | Wild Gust | 1049 | 1.0s | 1.2s | [4,1,0] | 10491 | — | 300 |
+| 28 | Blitz Assault | 1050 | 1.0s | 1.2s | [4,1,0] | 10501, 10502 | — | 300 |
+| 29 | Blade Pierce | 1051 | 1.0s | 1.2s | [4,1,3] | 10511, 10512 | — | 300 |
+| 30 | Clone Strike | 1052 | 1.0s | 1.2s | self | 10521 | — | 300 |
+| 31 | Hundred Slashes | 1060 | 1.0s | 1.2s | [4,1,0] | 10601–10603 | Yes | 300 |
+| 32 | Windborne Arrow | 1062 | 1.0s | 1.2s | [4,1,0] | 10621, 10622 | Yes | 300 |
+| 33 | Crimson Moonfall | 1063 | 1.0s | 1.2s | [4,1,0] | 10631, 10632 | Yes | 300 |
+| 34 | Dragonic Resonance | 1059 | 1.0s | 1.2s | [4,1,0] | 10591, 10592 | Yes | 300 |
+| 35 | Worldly Snare | 1061 | 1.0s | 1.2s | [4,1,0] | 10611–10613 | Yes | 300 |
+| 36 | Star Array | 1064 | 1.0s | 1.2s | [4,1,0] | 10641–10643 | Yes | 300 |
+| 37 | Winged Dreams | 1068 | 1.0s | 1.2s | [4,1,0] | 10681, 10682 | Yes | 300 |
+| 38 | Ancestral Will | 1069 | 1.0s | 1.2s | [4,1,0] | 10691, 10692 | Yes | 300 |
+
+**Notes:**
+- Normal–Rare skills (quality 1–4) scale to 200 levels; Mythic+ (quality 5–8) scale to 300 levels.
+- `release_time` = cast animation duration; `release_interval` = minimum time between consecutive casts.
+- `skill_effect_ids` reference `ConfigActive_skill_effect` entries which define the actual damage coefficients, buff applications, and projectile behavior.
+- Skills 26 (Heroic Descent) and 30 (Clone Strike) have no `target_type` — they target self (summon clone/spirit).
+
+---
+
 ## Data Files
 
 - **Source spreadsheet**: `battlesim/reference/LOM_Database-5.xlsx`
 - **Structured data**: `battlesim/reference/skills_master.json`
+- **Config tables**: `data/tables/Active_skill.json`, `data/tables/Active_skill_level.json`
