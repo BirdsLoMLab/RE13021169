@@ -449,45 +449,108 @@ const SKILLS_DATA = [
   { id: 38, name: 'Ancestral Will', cd: 720, dmgPct: 5413, effects: [{type:'attrib',id:1004,val:0.10,dur:150}] },
 ];
 
-// Pals — id, name, rarity, dmgMult, effect description, stat mods
+// Pals — complete 90-pal list from reference/06_PALS_AND_PETS.md
+// dmgMult: pal damage multiplier (for Normal-Mythic); Epic+ pals use parent damage base
 const PALS_DATA = [
   { id: 0, name: '(None)', dmgMult: 0, statMods: [], desc: '' },
+  // --- Normal ---
   { id: 1, name: 'Hatched Chick', dmgMult: 3.5, statMods: [{id:1039,val:0.05}], desc: 'Basic ATK Multi +5%' },
+  { id: 2, name: 'Flying Fox', dmgMult: 3.5, statMods: [{id:1045,val:0.08}], desc: 'Skill DMG +8%' },
+  { id: 3, name: 'Bird Shroom', dmgMult: 1.647, statMods: [{id:1003,val:0.05}], desc: 'ATK Speed +5%' },
+  { id: 4, name: 'Small Yellow Snail', dmgMult: 3.111, statMods: [], desc: 'Enemy move speed -15%' },
+  // --- Unique ---
+  { id: 5, name: 'Pink Hydrosprite', dmgMult: 3.5, statMods: [{id:1013,val:0.05}], desc: 'Energy Regen +5%' },
   { id: 6, name: 'Panda', dmgMult: 3.818, statMods: [{id:1012,val:0.10}], desc: 'HP Regen +10%' },
   { id: 7, name: 'Fawn', dmgMult: 3.231, statMods: [{id:1021,val:0.05}], desc: 'DMG RES +5%' },
+  // --- Well ---
+  { id: 8, name: 'Kitten', dmgMult: 4.2, statMods: [], desc: 'Skill detonate 100% DMG' },
+  { id: 9, name: 'Snow Pudding', dmgMult: 6.3, statMods: [], desc: 'Enemy ATK Speed -5%' },
+  { id: 10, name: 'Baby Cactus', dmgMult: 4.5, statMods: [], desc: 'Every 3 ATKs +15% DMG' },
+  { id: 11, name: 'Xmas Turkey', dmgMult: 3.937, statMods: [{id:1039,val:0.08}], desc: 'Basic ATK Multi +8%' },
   { id: 12, name: 'Ami', dmgMult: 7.887, statMods: [{id:1045,val:0.15}], desc: 'Skill DMG +15%' },
+  { id: 13, name: 'Rainshade Bird', dmgMult: 3.706, statMods: [{id:1003,val:0.08}], desc: 'ATK Speed +8%' },
+  { id: 14, name: 'Thorn Snail', dmgMult: 7, statMods: [], desc: 'Enemy move speed -20%' },
+  { id: 15, name: 'Rebellious Banana', dmgMult: 3.316, statMods: [{id:1016,val:0.05}], desc: 'Combo +5%' },
+  // --- Rare ---
+  { id: 16, name: 'Arcane Cat', dmgMult: 6.309, statMods: [], desc: 'Skill detonate 150% DMG' },
+  { id: 17, name: 'Nature Spirit', dmgMult: 7.887, statMods: [{id:1013,val:0.10}], desc: 'Energy Regen +10%' },
+  { id: 18, name: 'Snow Ball', dmgMult: 9.464, statMods: [], desc: 'Enemy ATK Speed -8%' },
+  { id: 19, name: 'Cub Cactus', dmgMult: 6.76, statMods: [], desc: 'Every 3 ATKs +20% DMG' },
+  { id: 20, name: 'Panda Mallet', dmgMult: 8.604, statMods: [{id:1012,val:0.20}], desc: 'HP Regen +20%' },
   { id: 21, name: 'Stag', dmgMult: 7.28, statMods: [{id:1021,val:0.08}], desc: 'DMG RES +8%' },
-  { id: 27, name: 'Chicken Fighter', dmgMult: 8.872, statMods: [{id:1039,val:0.10}], desc: 'Base ATK Multi +10%' },
+  { id: 22, name: 'Ultra-Clean Fighter', dmgMult: 5.258, statMods: [{id:1017,val:0.08}], desc: 'Counter +8%' },
+  // --- Mythic ---
+  { id: 23, name: 'Wizard Cat', dmgMult: 9.464, statMods: [], desc: 'Skill detonate 200% DMG' },
+  { id: 24, name: 'Aggressive Hydrosprite', dmgMult: 11.83, statMods: [{id:1013,val:0.15}], desc: 'Energy Regen +15%' },
+  { id: 25, name: 'Snow Sprite', dmgMult: 14.196, statMods: [], desc: 'Enemy ATK Speed -10%' },
+  { id: 26, name: 'Energetic Cactus', dmgMult: 10.14, statMods: [], desc: 'Every 3 ATKs +30% DMG' },
+  { id: 27, name: 'Chicken Fighter', dmgMult: 8.872, statMods: [{id:1039,val:0.10}], desc: 'Basic ATK Multi +10%' },
   { id: 28, name: 'Po Kong', dmgMult: 11.83, statMods: [{id:1045,val:0.25}], desc: 'Skill DMG +25%' },
   { id: 29, name: 'Azure Bird', dmgMult: 8.351, statMods: [{id:1003,val:0.10}], desc: 'ATK Speed +10%' },
   { id: 30, name: 'Apprentice Panda', dmgMult: 12.905, statMods: [{id:1012,val:0.30}], desc: 'HP Regen +30%' },
+  { id: 31, name: 'Moss Snail', dmgMult: 15.773, statMods: [], desc: 'Enemy move speed -30%' },
   { id: 32, name: 'Floral Deer', dmgMult: 10.92, statMods: [{id:1021,val:0.10}], desc: 'DMG RES +10%' },
-  { id: 33, name: 'Fortune Dragon', dmgMult: 10, statMods: [{id:1005,val:0.20},{id:1037,val:0.08}], desc: 'Crit DMG +20%, Skill Crit +8%', isBaseline: true },
-  { id: 34, name: 'Abaddon', dmgMult: 10, statMods: [], desc: 'Shield 8% HP on start, then ATK +8%', isBaseline: false },
-  { id: 35, name: 'Davi', dmgMult: 10, statMods: [{id:1037,val:0.08},{id:1038,val:0.08}], desc: 'Skill Crit +8%, Skill Crit DMG +8% for 15s' },
-  { id: 36, name: 'Frej', dmgMult: 10, statMods: [{id:1004,val:0.08},{id:1005,val:0.08}], desc: 'Crit +8%, Crit DMG +8% for 15s' },
-  { id: 37, name: 'Tamamo', dmgMult: 10, statMods: [{id:1004,val:0.08},{id:1005,val:0.08}], desc: 'Pal Crit +8%, Pal Crit DMG +8% for 15s' },
-  { id: 42, name: 'Kongfu Chicken', dmgMult: 15, statMods: [{id:1039,val:0.12}], desc: 'Base ATK Multi +12%' },
+  // --- Epic ---
+  { id: 33, name: 'Fortune Dragon', dmgMult: 15, statMods: [{id:1005,val:0.20},{id:1037,val:0.08}], desc: 'Crit DMG +20%, Skill Crit +8%', isBaseline: true },
+  { id: 34, name: 'Abaddon', dmgMult: 15, statMods: [], desc: 'Shield 8% HP, then ATK +8%' },
+  { id: 35, name: 'Davi', dmgMult: 15, statMods: [{id:1037,val:0.08},{id:1038,val:0.08}], desc: 'Skill Crit +8%, Skill Crit DMG +8% (15s)' },
+  { id: 36, name: 'Frej', dmgMult: 15, statMods: [{id:1004,val:0.08},{id:1005,val:0.08}], desc: 'Crit +8%, Crit DMG +8% (15s)' },
+  { id: 37, name: 'Tamamo', dmgMult: 15, statMods: [], desc: 'Pal Crit +8%, Pal Crit DMG +8% (15s)' },
+  { id: 38, name: 'Coffee Cat', dmgMult: 15, statMods: [], desc: 'Skill detonate 250% DMG' },
+  { id: 39, name: 'Triumphant Hydrosprite', dmgMult: 15, statMods: [{id:1013,val:0.20}], desc: 'Energy Regen +20%' },
+  { id: 40, name: 'Snow Goblin', dmgMult: 15, statMods: [], desc: 'Enemy ATK Speed -12%' },
+  { id: 41, name: 'Floral Cactus', dmgMult: 15, statMods: [], desc: 'Every 3 ATKs +35% DMG' },
+  { id: 42, name: 'Kongfu Chicken', dmgMult: 15, statMods: [{id:1039,val:0.12}], desc: 'Basic ATK Multi +12%' },
   { id: 43, name: 'Piercer Beast', dmgMult: 15, statMods: [{id:1045,val:0.40}], desc: 'Skill DMG +40%' },
   { id: 44, name: 'Caw-Caw Owl', dmgMult: 14, statMods: [{id:1003,val:0.12}], desc: 'ATK Speed +12%' },
   { id: 45, name: 'Toothpick Eggplant', dmgMult: 12, statMods: [{id:1004,val:0.10}], desc: 'Crit Rate +10%', isBaseline: true },
   { id: 46, name: 'Warrior Panda', dmgMult: 15, statMods: [{id:1012,val:0.35}], desc: 'HP Regen +35%' },
+  { id: 47, name: 'Ice Cream Snail', dmgMult: 15, statMods: [], desc: 'Enemy move speed -35%' },
   { id: 48, name: 'Divine Deer', dmgMult: 13, statMods: [{id:1021,val:0.12}], desc: 'DMG RES +12%', isBaseline: true },
   { id: 49, name: 'Mecha Dragon', dmgMult: 12, statMods: [{id:1005,val:0.20}], desc: 'Crit DMG +20%', isBaseline: true },
   { id: 50, name: 'Spark Squirrel', dmgMult: 12, statMods: [{id:1040,val:0.15}], desc: 'Pal DMG Multi +15%' },
-  { id: 54, name: 'Benny', dmgMult: 15, statMods: [{id:1004,val:0.05}], desc: 'Crit +5%, 30% Launch on pal atk' },
-  { id: 55, name: 'Mona', dmgMult: 15, statMods: [{id:1008,val:0.10},{id:1046,val:0.30}], desc: 'Evasion +10%, Boss DMG +30%' },
-  { id: 56, name: 'Cat Prince', dmgMult: 18, statMods: [], desc: 'Active skill detonates 300% DMG' },
+  { id: 51, name: 'B.Duck', dmgMult: 12, statMods: [{id:1050,val:0.05}], desc: 'Shield duration +1.5s' },
+  { id: 52, name: 'Travel Camel', dmgMult: 12, statMods: [], desc: 'Enemy Basic ATK DMG -10%' },
+  { id: 53, name: 'Rabbids Coming', dmgMult: 12, statMods: [], desc: 'Enemy move -15%, ATK SPD -5%' },
+  // --- Legendary ---
+  { id: 54, name: 'Benny', dmgMult: 18, statMods: [{id:1004,val:0.05}], desc: 'Crit +5%, 30% Launch on pal atk' },
+  { id: 55, name: 'Mona', dmgMult: 18, statMods: [{id:1008,val:0.10},{id:1046,val:0.30}], desc: 'Evasion +10%, Boss DMG +30%' },
+  { id: 56, name: 'Cat Prince', dmgMult: 18, statMods: [], desc: 'Skill detonate 300% DMG' },
   { id: 57, name: 'Warlord Hydrosprite', dmgMult: 16, statMods: [{id:1013,val:0.25}], desc: 'Energy Regen +25%' },
-  { id: 60, name: 'Chicken Hood', dmgMult: 18, statMods: [{id:1039,val:0.15}], desc: 'Base ATK Multi +15%' },
+  { id: 58, name: 'Snow General', dmgMult: 16, statMods: [], desc: 'Enemy ATK Speed -15%' },
+  { id: 59, name: 'Cowboy Cactus', dmgMult: 16, statMods: [], desc: 'Every 3 ATKs +40% DMG' },
+  { id: 60, name: 'Chicken Hood', dmgMult: 18, statMods: [{id:1039,val:0.15}], desc: 'Basic ATK Multi +15%' },
   { id: 61, name: 'Fiery Tail', dmgMult: 18, statMods: [{id:1045,val:0.60}], desc: 'Skill DMG +60%' },
   { id: 62, name: 'Hero Bird', dmgMult: 16, statMods: [{id:1003,val:0.15}], desc: 'ATK Speed +15%' },
   { id: 63, name: 'Kongfu Master', dmgMult: 18, statMods: [{id:1012,val:0.40}], desc: 'HP Regen +40%' },
+  { id: 64, name: 'Tipsy Snail', dmgMult: 16, statMods: [], desc: 'Enemy move speed -40%' },
   { id: 65, name: 'Angel Deer', dmgMult: 16, statMods: [{id:1021,val:0.15}], desc: 'DMG RES +15%', isBaseline: true },
   { id: 66, name: 'Righteous Banana', dmgMult: 16, statMods: [{id:1016,val:0.10},{id:1032,val:1.00}], desc: 'Combo +10%, Combo DMG +100%' },
   { id: 67, name: 'Rainbow Guardian', dmgMult: 16, statMods: [{id:1017,val:0.10},{id:1033,val:1.00}], desc: 'Counter +10%, Counter DMG +100%' },
+  { id: 68, name: 'Gingerbread', dmgMult: 16, statMods: [{id:1046,val:0.30}], desc: 'Boss DMG +30%, Boss DMG RES +10%' },
   { id: 69, name: 'Pepe', dmgMult: 15, statMods: [{id:1012,val:0.001}], desc: 'Healing +0.1%' },
   { id: 70, name: 'Night Spritefox', dmgMult: 15, statMods: [{id:1037,val:0.05},{id:1038,val:0.10}], desc: 'Skill Crit +5%, Skill Crit DMG +10%' },
+  { id: 71, name: 'Hellflame Feather', dmgMult: 16, statMods: [], desc: '0.5% target current HP on pal ATK' },
+  { id: 72, name: 'Puppy Fervor', dmgMult: 16, statMods: [{id:1051,val:0.20}], desc: 'All shields +20%' },
+  { id: 73, name: 'Pirate Parrot', dmgMult: 16, statMods: [], desc: 'Pal Crit DMG +75%' },
+  { id: 74, name: 'Floral Panda', dmgMult: 16, statMods: [{id:1012,val:0.001}], desc: 'Base Regen +0.1%' },
+  { id: 75, name: 'Moon Hare', dmgMult: 16, statMods: [{id:1040,val:0.60}], desc: 'Pal DMG +60%' },
+  { id: 76, name: 'Alpaca Bell', dmgMult: 16, statMods: [], desc: 'All enemy ATK -6%' },
+  { id: 77, name: 'Serpent Spring', dmgMult: 16, statMods: [], desc: 'All enemy Crit RES -8%' },
+  { id: 78, name: 'Mellow Cloud', dmgMult: 16, statMods: [], desc: 'Enemy ATK SPD +10% but ATK/Combo/Counter DMG -15%' },
+  { id: 79, name: 'Blackeye', dmgMult: 16, statMods: [], desc: 'Pal Ignore Evasion +20%' },
+  { id: 80, name: 'Moonlit Lonewolf', dmgMult: 16, statMods: [], desc: 'Enemy HP Regen -10%' },
+  { id: 81, name: 'Mushroom Burglar', dmgMult: 16, statMods: [], desc: 'Per 7 ATKs: self ATK +2%, enemy ATK -2% (4 stacks)' },
+  { id: 82, name: 'Moonspirit Hound', dmgMult: 16, statMods: [], desc: 'Enemy Pal DMG RES -8%' },
+  { id: 83, name: 'Skeleton Minion', dmgMult: 16, statMods: [{id:1074,val:1500}], desc: 'Pal Inspire +1500' },
+  { id: 84, name: 'Fortune Envoy', dmgMult: 16, statMods: [{id:1005,val:0.15}], desc: 'Global Crit DMG +15%' },
+  // --- Immortal ---
+  { id: 85, name: 'Treasure Dragon', dmgMult: 20, statMods: [{id:1005,val:0.50},{id:1037,val:0.20}], desc: 'Crit DMG +50%, Skill Crit +20%', isBaseline: true },
+  { id: 86, name: 'Hipster Tortoise', dmgMult: 20, statMods: [], desc: '<50% HP: 30% MaxHP shield (60s CD)' },
+  { id: 87, name: 'Electric Pup', dmgMult: 20, statMods: [{id:1033,val:0.60}], desc: 'Counter DMG +60%, +1% lost HP on counter' },
+  { id: 88, name: 'Alpine Fox', dmgMult: 20, statMods: [], desc: 'Stun dur +30%, stunned enemy DMG RES -15%' },
+  { id: 89, name: 'Pirate Octopus', dmgMult: 20, statMods: [{id:1032,val:0.60}], desc: 'Combo DMG +60%, every 3 combos +60% combo DMG' },
+  { id: 90, name: 'Wealthy Lizard', dmgMult: 20, statMods: [{id:1040,val:0.80},{id:1007,val:0.10}], desc: 'Pal DMG +80%, Ign Evasion +10%' },
 ];
 
 // Star Hero types: 1=ATK, 2=DEF, 3=HP, 4=Skill
@@ -504,6 +567,195 @@ const STAR_HEROES = [
   { id: 9, name: 'Titan', type: 3, statMods: [{id:1002,pct:0.10},{id:1081,val:0.05}] },
 ];
 
+// Mount skins — passive combat bonuses from reference/11_MOUNT_SKINS.md
+// statMod: {id, val} for flat add, {id, pct} for multiplicative, {id, val, isMult:true} for base*mult
+const MOUNT_DATA = [
+  { id: 0, name: '(None)', statMods: [], desc: '' },
+  { id: 1, name: 'Hot Wheels', statMods: [{id:1042,val:0.06}], desc: 'Ign Stun +6%' },
+  { id: 2, name: 'Pyrebreaker', statMods: [{id:1007,val:0.10}], desc: 'Ign Evasion +10%' },
+  { id: 3, name: 'White Tiger', statMods: [{id:1039,val:0.10}], desc: 'Basic ATK +10%' },
+  { id: 4, name: 'Blue Ox', statMods: [{id:1005,val:0.25}], desc: 'Pal Crit DMG +25%' },
+  { id: 5, name: 'Round Frog', statMods: [{id:1006,val:0.40}], desc: 'Crit RES +40%' },
+  { id: 6, name: 'Blue Queen', statMods: [{id:1005,val:0.40}], desc: 'Crit DMG +40%' },
+  { id: 7, name: "Heart's Desire", statMods: [{id:1038,val:0.10}], desc: 'Skill Crit DMG +10%' },
+  { id: 8, name: 'Koi Paper Kite', statMods: [{id:1001,pct:0.10}], desc: 'ATK +10%' },
+  { id: 9, name: 'Cloud Drifter', statMods: [{id:1001,pct:0.10}], desc: 'ATK +10%' },
+  { id: 10, name: 'Magic Carpet', statMods: [{id:1001,pct:0.10}], desc: 'ATK +10%' },
+  { id: 11, name: 'Silvery Crescent', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 12, name: 'Wave Cruiser', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 13, name: 'Horizon Racer', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 14, name: 'AdaptoSlime', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 15, name: 'Mini Motorcycle', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 16, name: 'Effulgent Fan', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 17, name: 'Purple Wing', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 18, name: 'Thunder Vanguard', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 19, name: 'Cheetah Zero', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 20, name: 'Speed of Death', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 21, name: 'Cinder Wolf', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 22, name: 'Skyward Blaze', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 23, name: 'Sparkling Flash', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 24, name: 'Spectral Ride', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 25, name: 'Soaring Shroomie', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 26, name: 'Sanctuary Warmth', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 27, name: 'Leo', statMods: [{id:1002,pct:0.10}], desc: 'HP +10%' },
+  { id: 28, name: 'Skyshark', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 29, name: 'Boom Da Bang', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 30, name: 'Rum Barrel', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 31, name: 'Blizzard Visitor', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 32, name: 'Diving Duck', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 33, name: 'Scorpio', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 34, name: 'Storm Rider', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 35, name: 'Long-legged Bird', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 36, name: 'Book of the Universe', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 37, name: 'Time Machine', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 38, name: 'Sea of Lanterns', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 39, name: 'Dimensional Wings', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 40, name: 'Blazing Motorcycle', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 41, name: 'Gator Menace', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 42, name: 'Pumpkin Carriage', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 43, name: 'Ethereal Phoenix', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 44, name: 'Nebular Shuttle', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 45, name: 'Panda Attack', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 46, name: 'Vibrant Watermelon Ship', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 47, name: 'Trembling Pepe', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 48, name: 'Guardian Spaceship', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 49, name: 'Holy Dragon', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 50, name: 'Dazzling Unicorn', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 51, name: 'Cloud Traveler', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 52, name: 'Immortal Tyrant', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 53, name: 'Best Buddy', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+  { id: 54, name: 'Dawn of Time', statMods: [{id:1024,pct:0.10}], desc: 'DEF +10%' },
+];
+
+// Artifact skins — passive + noted active from reference/12_ARTIFACT_SKINS_AND_GEMS.md
+const ARTIFACT_DATA = [
+  { id: 0, name: '(None)', statMods: [], desc: '' },
+  { id: 1, name: 'Beastroar Bow', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Crit stacking → AoE burst' },
+  { id: 2, name: "Chaotic Warlord's Hammer", statMods: [{id:1039,val:0.10}], desc: 'Basic ATK+10% | 30% AoE splash' },
+  { id: 3, name: 'Flaming Carnage', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Crit bleed + Crit RES debuff' },
+  { id: 4, name: 'Candy Gatling', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Multi-hit bullets' },
+  { id: 5, name: 'Divine Champion', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Stack→AoE burst + DEF debuff' },
+  { id: 6, name: 'Skyward Blade', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Sword aura every 10 ATKs' },
+  { id: 7, name: 'Thundering Hammer', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 10s AoE + airborne' },
+  { id: 8, name: 'Moment of Brilliance', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 11s burst ignores immunity' },
+  { id: 9, name: 'Storm Destroyer', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 11s AoE + paralyze + stat debuff' },
+  { id: 10, name: 'Spear of Creation', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Element cycling' },
+  { id: 11, name: 'Cryoshield Flame', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Frostbite stacks + execute <4%' },
+  { id: 12, name: 'Dance of Tides', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Tidal stacking + AoE' },
+  { id: 13, name: 'Pixel Universe', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Charge→5000% AoE burst' },
+  { id: 14, name: 'Unchained Staff', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | HP-threshold freeze' },
+  { id: 15, name: 'Extreme Caution', statMods: [{id:1032,val:0.05}], desc: 'Combo+5% | 0.5% MaxHP dmg + heal reduction' },
+  { id: 16, name: 'Chrono Loop', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | ATK SPD buffs, <5% HP reset' },
+  { id: 17, name: 'Countdown Blast', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Shield→burst window' },
+  { id: 18, name: 'Punch of Triumph', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Final DMG RES +10%, charge burst' },
+  { id: 19, name: 'Fearless Stride', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Final DMG RES +10%, CD extend' },
+  { id: 20, name: 'Thousandfold Pagoda', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 10s 6% MaxHP AoE + debuffs' },
+  { id: 21, name: "Demeter's Sickle", statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | HP diff scaling +0.6%/1% (cap 30%)' },
+  { id: 22, name: 'Castle Candelabrum', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 15% lifesteal (decays over time)' },
+  { id: 23, name: 'Staff of Hermes', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | -8% enemy DMG RES, skill heals' },
+  { id: 24, name: "Lantern's Scroll", statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 10s AoE + HP/ATK comparison' },
+  { id: 25, name: 'Moonhunt Bow', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Heal +12%, 8s AoE + self-heal' },
+  { id: 26, name: 'Spring Chord', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 11s confuse (self-dmg)' },
+  { id: 27, name: 'Under the Dome', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 14s enemy clone summon' },
+  { id: 28, name: "Siren's Whisper", statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 14s CC-immune summon' },
+  { id: 29, name: 'Tear Attack', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 12s Pepe bomb summon' },
+  { id: 30, name: 'Eye of Raven', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | 20s random skill cast' },
+  { id: 31, name: 'Eternal Flame', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Timed stacking buffs' },
+  { id: 32, name: 'Sovereign Dragon', statMods: [{id:1021,val:0.10}], desc: 'DMG RES+10% | 5s summon AoE' },
+  { id: 33, name: 'Webbed Chainsaw', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Tear stacks + 8% MaxHP' },
+  { id: 34, name: 'Double-edged String', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Action-type scaling AoE' },
+  { id: 35, name: 'Sanguine Love', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Clone energy +10%, bound buff' },
+  { id: 36, name: 'Universe Encyclopedia', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | World state switching' },
+  { id: 37, name: 'Fate', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | +10% ATK/DEF/RES, stacking w/ penalty' },
+  { id: 38, name: 'Skeletal Bloom', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | 30% MaxHP burst + self-dmg' },
+  { id: 39, name: 'Thunder Verdict', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | +10% SPD, % MaxHP procs' },
+  { id: 40, name: 'Scale of Justice', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | HP/ATK comparison effects' },
+];
+
+// Back decorations — passive + noted active from reference/19_BACK_DECORATIONS.md
+const BACK_DATA = [
+  { id: 0, name: '(None)', statMods: [], desc: '' },
+  { id: 1, name: 'Virtual Connection', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Reduce enemy ATK/Combo/Counter/Skill RES' },
+  { id: 2, name: 'Ingredients for Dinner', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | 15 ATKs → debuff enemy' },
+  { id: 3, name: 'Chrono Prism', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | HP-based debuff switching' },
+  { id: 4, name: 'Dawn Warwing', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Evasion +12%, class skill -20%' },
+  { id: 5, name: 'Metamorphosis', statMods: [{id:1033,val:0.05}], desc: 'Counter DMG+5% | 11s AoE + ATK debuff' },
+  { id: 6, name: 'Mirror World', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Enemy regen/spd -10%' },
+  { id: 7, name: 'Arackar Lock', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | 11s AoE + 4% fragile' },
+  { id: 8, name: 'Frostland Specter', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | 5s AoE + stat debuffs' },
+  { id: 9, name: 'Trapped Wrath', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Missing HP → AoE burst' },
+  { id: 10, name: 'Lord of Light', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Crit RES -10%, <50% HP crit buff' },
+  { id: 11, name: 'Celestial Surprises', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | 11s bleed AoE' },
+  { id: 12, name: 'Iridescent Aura', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Skill Crit +10%, CDR +skill crit stacking' },
+  { id: 13, name: 'Summer Parasol', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | 10s form switch (DEF/ATK)' },
+  { id: 14, name: 'Fallen Angel', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Stacking buffs over time' },
+  { id: 15, name: 'Emerald Embrace', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Per combo: Combo DMG +0.5% (60 stacks)' },
+  { id: 16, name: 'Miracle Mirage', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Enemy combo/counter/crit -15%' },
+  { id: 17, name: 'Pepe-style Thruster', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Progressive buffs/debuffs' },
+  { id: 18, name: '19th Century', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Progressive enemy debuffs' },
+  { id: 19, name: 'Bit Gateway', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | DEF +16%, timed buffs' },
+  { id: 20, name: 'Ghost Behind', statMods: [{id:1001,pct:0.10}], desc: 'ATK+10% | Evasion +20%, ATK on evasion' },
+  { id: 21, name: 'Alien Dimension', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Block 30% DMG, SPD buffs (decaying)' },
+  { id: 22, name: 'Cosmic Rescue', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Shield generation + ATK stacking' },
+  { id: 23, name: 'Till Death Apart', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | ATK/SPD buffs for 20s' },
+  { id: 24, name: 'Lustrous Plumage', statMods: [{id:1007,val:0.15}], desc: 'Ign Evasion+15% | DEF stacking per ATK' },
+  { id: 25, name: 'Glory Glow', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Movement SPD scaling' },
+  { id: 26, name: 'Shell Shade', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | 11s shield + energy regen' },
+  { id: 27, name: "Titan's Hold", statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | 10 ATKs → Combo Punch AoE' },
+  { id: 28, name: 'Moonlit Wisp', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Per skill: Skill DMG +1.5% (10 stacks)' },
+  { id: 29, name: 'Republic of Heroes', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | HP shields + DEF-based heal' },
+  { id: 30, name: 'Firework Invite', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | 11s firework AoE' },
+  { id: 31, name: 'To the Clouds', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Progressive threshold buffs' },
+  { id: 32, name: 'Lunar Radiance', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | 15s cycle buff/debuff' },
+  { id: 33, name: 'Song of Frost and Flame', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | 11s dual AoE + cleanse + debuff' },
+  { id: 34, name: 'Phoenix Frost', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Threshold-based DMG blocking' },
+  { id: 35, name: 'Blade Pursuit', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Per counter: Counter DMG +0.5% (60 stacks)' },
+  { id: 36, name: 'Beastbone Breeze', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Per pal ATK: Pal DMG +1.5% (10/pal)' },
+  { id: 37, name: 'Top-Tier Bodyguard', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Enemy skill → 1% HP dmg + energy debuff' },
+  { id: 38, name: 'Punching Storm', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Stun +10%, stun → burst + debuffs' },
+  { id: 39, name: 'Resolute Soul', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | HP threshold buffs (Pierce/RES/Crit)' },
+  { id: 40, name: 'Frost Mirage', statMods: [{id:1024,pct:0.10}], desc: 'DEF+10% | Snowball procs + SPD stacking' },
+  { id: 41, name: 'Repose in Time', statMods: [{id:1002,pct:0.10}], desc: 'HP+10% | Final DMG RES +6%, 12s heal + skill' },
+];
+
+// Avians — from reference/07_AVIANS.md (35 avians)
+const AVIAN_DATA = [
+  { id: 0, name: '(None)', desc: '' },
+  { id: 1001, name: 'Aggressive Lemon', desc: 'Regen 5% lost HP/5s' },
+  { id: 1002, name: 'Gleam Candle', desc: '240% AoE Skill DMG x5 every 11s' },
+  { id: 1003, name: 'Coconut Ball', desc: 'ATK SPD +5% +2%/10% HP lost' },
+  { id: 1004, name: 'Sheep Balloon', desc: '500% ATK AoE + imprison 1s every 13s' },
+  { id: 1005, name: 'Tomato Egg', desc: '325% ATK AoE + Basic ATK +30% (5s) every 12s' },
+  { id: 1006, name: 'Smart Assistant', desc: 'Pal ATK SPD +5%/5s (5 stacks)' },
+  { id: 1007, name: 'Yoghurt Cocoa', desc: 'Pal Crit → Final Crit DMG +2% (5 stacks)' },
+  { id: 9001, name: 'Astronaut Teal', desc: '450% ATK AoE + 10% MaxHP shield every 16s' },
+  { id: 2001, name: 'Impulse Penguin', desc: 'Counter DMG +4%/10s (5 stacks)' },
+  { id: 2002, name: 'Dense Cloud', desc: '1400% AoE Skill DMG + Energy +12% every 13s' },
+  { id: 2003, name: '3-Round Shooter', desc: '75% AoE Combo DMG every 4 combos' },
+  { id: 2004, name: 'Honeypot Warrior', desc: '2.5% MaxHP DMG every 5s' },
+  { id: 2005, name: 'Pumpkin Witch', desc: 'Skill Crit → 600% AoE Skill DMG' },
+  { id: 2006, name: 'Bell Ring', desc: 'Crit → 20% chance 60% ATK bleed (ign DMG immune)' },
+  { id: 2007, name: 'Sunshine Bringer', desc: '560% ATK AoE + debuff every 16s' },
+  { id: 2008, name: 'Travelling Jellyfish', desc: '612.5% ATK AoE + debuff every 15s' },
+  { id: 2009, name: 'Whirlwind Leaf', desc: '220% AoE Skill DMG every 4 ATKs' },
+  { id: 2010, name: 'Crispy Moth', desc: '630% ATK AoE + stun every 17s' },
+  { id: 2011, name: 'Yoghurt Champ', desc: 'Pal Crit DMG stacking + Combo DMG +2%' },
+  { id: 9002, name: 'Astronaut Pinky', desc: '675% ATK AoE + 10% MaxHP shield every 16s' },
+  { id: 8001, name: 'Maniac Love', desc: 'Cupid arrows every 5s' },
+  { id: 8002, name: 'Dream Moment', desc: '6% MaxHP shield/12s + heal on break' },
+  { id: 8101, name: 'Pet - Genos', desc: '360% Skill + 120% ATK AoE + debuffs every 15s' },
+  { id: 3001, name: 'Anubis', desc: '765% Skill + 305% Combo/Counter AoE every 13s' },
+  { id: 3002, name: 'Midnight Firefly', desc: '240% ATK AoE + enemy RES -4% every 16s' },
+  { id: 3003, name: 'Moonbound Spirit', desc: '300% Skill + 120% Combo/Counter AoE every 6s' },
+  { id: 3004, name: 'Horus, Sky God', desc: '240% Skill + Combo/Counter AoE every 6s' },
+  { id: 3005, name: 'Magic Cat', desc: '765% Skill + 305% Combo/Counter AoE every 15s' },
+  { id: 3006, name: 'Puppy Gaze', desc: '765% Skill + Combo/Counter AoE + heal every 15s' },
+  { id: 3007, name: 'Deity of Purrs', desc: 'Per 16 heals → 4% current HP DMG' },
+  { id: 3008, name: 'Michelle', desc: 'Per 50 dmg taken → 200% AoE + stun' },
+  { id: 9003, name: 'Astronaut B.Duck', desc: '800% Skill + Combo/Counter AoE every 16s' },
+  { id: 3012, name: 'Lunar Sprite', desc: 'DEF+60%, ATK+10%, heal 3.5%/10 hits' },
+  { id: 2016, name: 'Dharma', desc: 'Toughness stacks + shield + ATK on expiry' },
+];
 
 // Attribute definitions: [id, name, label, defaultValue, isRate]
 const ATTRIB_DEFS = [
@@ -1501,15 +1753,14 @@ const UI = {
 
     // Guardian (Star Heroes) — 3 cards, must be same type
     html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Guardian (Star Heroes)</h2><div class="stat-group-body collapsed">`;
-    html += `<div class="stat-row-full"><label>Main:</label><select id="${prefix}-hero0">`;
-    for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
-    html += `</select></div>`;
-    html += `<div class="stat-row-full"><label>Sub 1:</label><select id="${prefix}-hero1">`;
-    for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
-    html += `</select></div>`;
-    html += `<div class="stat-row-full"><label>Sub 2:</label><select id="${prefix}-hero2">`;
-    for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
-    html += `</select></div>`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--gold);margin-bottom:2px;">All 3 cards must be the same type (ATK/DEF/HP). Main = battle skills, Subs = passive only.</div>`;
+    for (let slot = 0; slot < 3; slot++) {
+      let label = slot === 0 ? 'Main' : 'Sub ' + slot;
+      html += `<div class="stat-row-full"><label>${label}:</label><select id="${prefix}-hero${slot}" onchange="UI.validateHeroes('${prefix}')">`;
+      for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
+      html += `</select></div>`;
+    }
+    html += `<div id="${prefix}-heroWarn" style="grid-column:1/-1;font-size:10px;color:var(--red);display:none;">Type mismatch! All heroes must share the same type.</div>`;
     // Guardian inputs
     html += `<div class="stat-row"><label>Guardian Lv</label><input type="number" id="${prefix}-guardianLv" value="1" min="1" max="100"></div>`;
     html += `<div class="stat-row"><label>Tenacity Boost</label><input type="number" id="${prefix}-tenacity" value="0" step="0.01"></div>`;
@@ -1518,55 +1769,33 @@ const UI = {
     html += `<div class="stat-row"><label>Global TPen</label><input type="number" id="${prefix}-gTpen" value="0" step="0.01"></div>`;
     html += `</div></div>`;
 
-    // Mount
-    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Mount</h2><div class="stat-group-body collapsed">`;
+    // Mount — full catalog from reference/11_MOUNT_SKINS.md
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Mount Skin</h2><div class="stat-group-body collapsed">`;
     html += `<div class="stat-row-full"><label>Mount:</label><select id="${prefix}-mount">`;
-    html += `<option value="0">(None)</option>`;
-    html += `<option value="globalATK">Global ATK +10%</option>`;
-    html += `<option value="globalDEF">Global DEF +10%</option>`;
-    html += `<option value="globalHP">Global HP +10%</option>`;
-    html += `<option value="critDMG">Crit DMG +40%</option>`;
-    html += `<option value="palCritDMG">Pal Crit DMG +25%</option>`;
-    html += `<option value="ignoreEvasion">Ignore Evasion +10%</option>`;
-    html += `<option value="basicATK">Basic ATK DMG +10%</option>`;
-    html += `<option value="skillCritDMG">Skill Crit DMG +10%</option>`;
+    for (let m of MOUNT_DATA) html += `<option value="${m.id}">${m.name}${m.desc?' — '+m.desc:''}</option>`;
     html += `</select></div>`;
     html += `</div></div>`;
 
-    // Artifact
-    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Artifact</h2><div class="stat-group-body collapsed">`;
+    // Artifact — full catalog from reference/12_ARTIFACT_SKINS_AND_GEMS.md
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Artifact Skin</h2><div class="stat-group-body collapsed">`;
     html += `<div class="stat-row-full"><label>Artifact:</label><select id="${prefix}-artifact">`;
-    html += `<option value="0">(None)</option>`;
-    html += `<option value="globalATK">Global ATK +10%</option>`;
-    html += `<option value="basicATK">Basic ATK DMG +10%</option>`;
-    html += `<option value="comboDMG">Combo DMG +5%</option>`;
-    html += `<option value="dmgRES">DMG RES +10%</option>`;
+    for (let a of ARTIFACT_DATA) html += `<option value="${a.id}">${a.name}${a.desc?' — '+a.desc:''}</option>`;
     html += `</select></div>`;
     html += `</div></div>`;
 
-    // Back Accessory
+    // Back Accessory — full catalog from reference/19_BACK_DECORATIONS.md
     html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Back Accessory</h2><div class="stat-group-body collapsed">`;
     html += `<div class="stat-row-full"><label>Back:</label><select id="${prefix}-back">`;
-    html += `<option value="0">(None)</option>`;
-    html += `<option value="globalDEF">Global DEF +10%</option>`;
-    html += `<option value="globalHP">Global HP +10%</option>`;
-    html += `<option value="globalATK">Global ATK +10%</option>`;
-    html += `<option value="counterDMG">Counter DMG +5%</option>`;
-    html += `<option value="ignoreEvasion">Ignore Evasion +15%</option>`;
+    for (let b of BACK_DATA) html += `<option value="${b.id}">${b.name}${b.desc?' — '+b.desc:''}</option>`;
     html += `</select></div>`;
     html += `</div></div>`;
 
-    // Avian + Affixes (simplified)
+    // Avian + Affixes — full list from reference/07_AVIANS.md
     html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Avian & Affixes</h2><div class="stat-group-body collapsed">`;
     html += `<div class="stat-row-full"><label>Avian:</label><select id="${prefix}-avian">`;
-    html += `<option value="0">(None — stats from affixes only)</option>`;
-    html += `<option value="hpRegen">HP Regen 5% lost HP / 5s</option>`;
-    html += `<option value="skillDMG">AoE Skill DMG every 11-16s</option>`;
-    html += `<option value="atkSPD">ATK SPD stacking</option>`;
-    html += `<option value="counterDMG">Counter DMG stacking</option>`;
-    html += `<option value="comboDMG">AoE Combo DMG proc</option>`;
+    for (let a of AVIAN_DATA) html += `<option value="${a.id}">${a.name}${a.desc?' — '+a.desc:''}</option>`;
     html += `</select></div>`;
-    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--fg2);margin:2px 0;">Avian affix stats are included in your stat inputs. Only select avian for its active effect.</div>`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--fg2);margin:2px 0;">Avian affix stats (entries) are included in your stat inputs. The avian's active effect is simulated.</div>`;
     html += `</div></div>`;
 
     // Special Back Talents (non-stat)
@@ -1619,6 +1848,23 @@ const UI = {
     if (body) body.classList.toggle('collapsed');
   },
 
+  validateHeroes(prefix) {
+    let types = [];
+    for (let i = 0; i < 3; i++) {
+      let el = document.getElementById(`${prefix}-hero${i}`);
+      if (!el) continue;
+      let hid = parseInt(el.value);
+      let hero = STAR_HEROES.find(h => h.id === hid);
+      if (hero && hero.type > 0) types.push(hero.type);
+    }
+    let warn = document.getElementById(`${prefix}-heroWarn`);
+    if (types.length >= 2 && new Set(types).size > 1) {
+      warn.style.display = '';
+    } else {
+      warn.style.display = 'none';
+    }
+  },
+
   onClassChange(prefix) {
     let classId = parseInt(document.getElementById(`${prefix}-class`).value);
     let classData = CLASS_TREE[classId];
@@ -1667,31 +1913,19 @@ const UI = {
       }
     }
 
-    // Apply mount passive
-    let mount = document.getElementById(`${prefix}-mount`).value;
-    if (mount === 'globalATK') stats[1001] = FM.roundInt(stats[1001] * 1.10);
-    else if (mount === 'globalDEF') stats[1024] = FM.roundInt(stats[1024] * 1.10);
-    else if (mount === 'globalHP') stats[1002] = FM.roundInt(stats[1002] * 1.10);
-    else if (mount === 'critDMG') stats[1005] = FM.round(stats[1005] + 0.40);
-    else if (mount === 'palCritDMG') stats[1005] = FM.round(stats[1005] + 0.25);
-    else if (mount === 'ignoreEvasion') stats[1007] = FM.round(stats[1007] + 0.10);
-    else if (mount === 'basicATK') stats[1039] = FM.round(stats[1039] + 0.10);
-    else if (mount === 'skillCritDMG') stats[1038] = FM.round(stats[1038] + 0.10);
-
-    // Apply artifact passive
-    let artifact = document.getElementById(`${prefix}-artifact`).value;
-    if (artifact === 'globalATK') stats[1001] = FM.roundInt(stats[1001] * 1.10);
-    else if (artifact === 'basicATK') stats[1039] = FM.round(stats[1039] + 0.10);
-    else if (artifact === 'comboDMG') stats[1032] = FM.round(stats[1032] + 0.05);
-    else if (artifact === 'dmgRES') stats[1021] = FM.round(stats[1021] + 0.10);
-
-    // Apply back accessory passive
-    let back = document.getElementById(`${prefix}-back`).value;
-    if (back === 'globalDEF') stats[1024] = FM.roundInt(stats[1024] * 1.10);
-    else if (back === 'globalHP') stats[1002] = FM.roundInt(stats[1002] * 1.10);
-    else if (back === 'globalATK') stats[1001] = FM.roundInt(stats[1001] * 1.10);
-    else if (back === 'counterDMG') stats[1033] = FM.round(stats[1033] + 0.05);
-    else if (back === 'ignoreEvasion') stats[1007] = FM.round(stats[1007] + 0.15);
+    // Apply mount/artifact/back passive stat mods (data-driven)
+    function applyItemMods(itemData, elId) {
+      let itemId = parseInt(document.getElementById(elId).value);
+      let item = itemData.find(i => i.id === itemId);
+      if (!item) return;
+      for (let mod of item.statMods) {
+        if (mod.pct !== undefined && stats[mod.id] !== undefined) stats[mod.id] = FM.roundInt(stats[mod.id] * (1 + mod.pct));
+        else if (mod.val !== undefined && stats[mod.id] !== undefined) stats[mod.id] = FM.round(stats[mod.id] + mod.val);
+      }
+    }
+    applyItemMods(MOUNT_DATA, `${prefix}-mount`);
+    applyItemMods(ARTIFACT_DATA, `${prefix}-artifact`);
+    applyItemMods(BACK_DATA, `${prefix}-back`);
 
     return stats;
   },
