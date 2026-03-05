@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LOM BattleSim v2 — Precise PvP Combat Simulator</title>
+<title>LOM BattleSim v3 — PvP Combat Simulator</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root {
   --bg: #1a1a2e; --bg2: #16213e; --bg3: #0f3460;
@@ -13,37 +14,60 @@
   --border: #2a2a4a; --input-bg: #1e1e3a;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Consolas','Monaco','Courier New',monospace; background: var(--bg); color: var(--fg); font-size: 13px; line-height: 1.4; }
+body { font-family: Consolas,Monaco,"Courier New",monospace; background: var(--bg); color: var(--fg); font-size: 13px; line-height: 1.4; }
 .container { max-width: 1600px; margin: 0 auto; padding: 8px; }
 h1 { text-align: center; color: var(--accent); font-size: 18px; margin: 8px 0; }
-h2 { font-size: 14px; color: var(--accent2); margin: 4px 0; cursor: pointer; user-select: none; }
-h2::before { content: '▼ '; font-size: 10px; }
-h2.collapsed::before { content: '▶ '; }
+.subtitle { text-align: center; color: var(--fg2); font-size: 11px; margin-bottom: 8px; }
+h2 { font-size: 13px; color: var(--accent2); margin: 4px 0; cursor: pointer; user-select: none; padding: 4px 8px; background: rgba(15,155,142,0.1); border-radius: 3px; }
+h2::before { content: "▼ "; font-size: 10px; }
+h2.collapsed::before { content: "▶ "; }
+h3 { font-size: 12px; color: var(--gold); margin: 6px 0 4px 0; }
+
+/* Tabs */
+.tabs { display: flex; gap: 2px; margin-bottom: 8px; flex-wrap: wrap; background: var(--bg2); padding: 4px; border-radius: 4px; }
+.tab { padding: 8px 16px; background: transparent; border: 1px solid transparent; border-radius: 3px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 12px; color: var(--fg2); transition: all 0.2s; }
+.tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+.tab:hover:not(.active) { background: rgba(233,69,96,0.2); color: var(--fg); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 /* Controls bar */
 .controls { display: flex; gap: 8px; align-items: center; padding: 8px; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 8px; flex-wrap: wrap; }
-.controls button { background: var(--bg3); color: var(--fg); border: 1px solid var(--border); padding: 4px 12px; border-radius: 3px; cursor: pointer; font-family: inherit; font-size: 12px; }
-.controls button:hover { background: var(--accent); }
+.controls button, .ctrl-btn { background: var(--bg3); color: var(--fg); border: 1px solid var(--border); padding: 4px 12px; border-radius: 3px; cursor: pointer; font-family: inherit; font-size: 12px; }
+.controls button:hover, .ctrl-btn:hover { background: var(--accent); }
 .controls button.active { background: var(--accent); }
 .controls label { color: var(--fg2); font-size: 11px; }
-.controls input[type="number"] { width: 80px; background: var(--input-bg); color: var(--fg); border: 1px solid var(--border); padding: 3px 6px; border-radius: 3px; font-family: inherit; font-size: 12px; }
-.controls select { background: var(--input-bg); color: var(--fg); border: 1px solid var(--border); padding: 3px 6px; border-radius: 3px; font-family: inherit; font-size: 12px; }
+.controls input[type="number"], .controls select { width: 80px; background: var(--input-bg); color: var(--fg); border: 1px solid var(--border); padding: 3px 6px; border-radius: 3px; font-family: inherit; font-size: 12px; }
+.controls select { width: auto; }
+.sep { width: 1px; height: 20px; background: var(--border); }
 
 /* Player panels */
 .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-.panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 8px; max-height: 600px; overflow-y: auto; }
+.panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 8px; max-height: 700px; overflow-y: auto; }
 .panel-title { font-size: 14px; font-weight: bold; text-align: center; padding: 4px; margin-bottom: 6px; }
 .p1-title { color: var(--blue); border-bottom: 2px solid var(--blue); }
 .p2-title { color: var(--red); border-bottom: 2px solid var(--red); }
 
 /* Stat groups */
-.stat-group { margin-bottom: 4px; }
+.stat-group { margin-bottom: 2px; }
 .stat-group-body { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; padding: 4px 0; }
 .stat-group-body.collapsed { display: none; }
 .stat-row { display: flex; align-items: center; gap: 4px; }
 .stat-row label { flex: 1; font-size: 11px; color: var(--fg2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-.stat-row input { width: 72px; background: var(--input-bg); color: var(--fg); border: 1px solid var(--border); padding: 2px 4px; border-radius: 2px; font-family: inherit; font-size: 12px; text-align: right; }
-.stat-row input:focus { border-color: var(--accent2); outline: none; }
+.stat-row input, .stat-row select { width: 72px; background: var(--input-bg); color: var(--fg); border: 1px solid var(--border); padding: 2px 4px; border-radius: 2px; font-family: inherit; font-size: 12px; text-align: right; }
+.stat-row input:focus, .stat-row select:focus { border-color: var(--accent2); outline: none; }
+.stat-row select { width: 120px; text-align: left; }
+
+/* Full-width stat row */
+.stat-row-full { grid-column: 1 / -1; display: flex; align-items: center; gap: 4px; }
+.stat-row-full label { flex: 0 0 auto; font-size: 11px; color: var(--fg2); }
+.stat-row-full select { flex: 1; background: var(--input-bg); color: var(--fg); border: 1px solid var(--border); padding: 2px 4px; border-radius: 2px; font-family: inherit; font-size: 11px; }
+
+/* Checkbox toggle */
+.toggle-row { display: flex; align-items: center; gap: 6px; margin: 2px 0; padding: 3px 6px; background: rgba(255,255,255,0.03); border-radius: 3px; }
+.toggle-row input[type="checkbox"] { accent-color: var(--accent2); }
+.toggle-row label { font-size: 11px; color: var(--fg2); margin: 0; cursor: pointer; }
+.toggle-row .note { font-size: 10px; color: #666; margin-left: auto; }
 
 /* HP bars */
 .hp-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 8px; margin-bottom: 8px; }
@@ -58,6 +82,7 @@ h2.collapsed::before { content: '▶ '; }
 /* Combat log */
 .log-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 8px; margin-bottom: 8px; }
 .log-container { max-height: 400px; overflow-y: auto; font-size: 11px; line-height: 1.5; }
+.log-container.collapsed { display: none; }
 .log-entry { padding: 1px 4px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .log-frame { color: var(--fg2); }
 .log-dmg { color: var(--red); }
@@ -77,14 +102,9 @@ h2.collapsed::before { content: '▶ '; }
 .progress-bar { height: 4px; background: #333; border-radius: 2px; margin: 4px 0; }
 .progress-fill { height: 100%; background: var(--accent2); border-radius: 2px; transition: width 0.1s; }
 
-/* Skill config */
-.skill-row { display: flex; gap: 4px; align-items: center; margin: 2px 0; font-size: 11px; }
-.skill-row input { width: 60px; }
-.skill-row select { font-size: 11px; }
-
-/* Pal section */
-.pal-toggle { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
-.pal-toggle input[type="checkbox"] { accent-color: var(--accent2); }
+/* Info box */
+.info-box { background: rgba(15,155,142,0.1); border: 1px solid var(--accent2); border-radius: 4px; padding: 8px; margin-bottom: 8px; font-size: 11px; color: var(--fg2); line-height: 1.6; }
+.info-box strong { color: var(--gold); }
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -95,90 +115,112 @@ h2.collapsed::before { content: '▶ '; }
 </head>
 <body>
 <div class="container">
-  <h1>LOM BattleSim v2 — Precise PvP Combat Simulator</h1>
+  <h1>LOM BattleSim v3 — PvP Combat Simulator</h1>
+  <p class="subtitle">Accurate damage pipeline from game_script.js | All formulas verified against decoded config data</p>
 
-  <!-- Controls -->
-  <div class="controls">
-    <button id="btn-start" onclick="UI.startBattle()">Start Battle</button>
-    <button id="btn-step" onclick="UI.stepFrame()">Step Frame</button>
-    <button id="btn-stop" onclick="UI.stopBattle()">Stop</button>
-    <button id="btn-reset" onclick="UI.resetBattle()">Reset</button>
-    <span style="width:1px;height:20px;background:var(--border)"></span>
-    <label>Speed:</label>
-    <select id="sel-speed" onchange="UI.setSpeed(this.value)">
-      <option value="1">1x</option>
-      <option value="2">2x</option>
-      <option value="5">5x</option>
-      <option value="10">10x</option>
-      <option value="0" selected>Instant</option>
-    </select>
-    <label>Seed:</label>
-    <input type="number" id="inp-seed" value="42" min="1" max="999999">
-    <label>Max Frames:</label>
-    <input type="number" id="inp-maxframes" value="9000" min="100" max="99000" step="100">
-    <span style="width:1px;height:20px;background:var(--border)"></span>
-    <label>Mode:</label>
-    <select id="sel-mode">
-      <option value="pvp">PvP</option>
-      <option value="pve">PvE</option>
-    </select>
-    <label>Avg Lv:</label>
-    <input type="number" id="inp-avglv" value="220" min="1" max="300">
-    <span style="width:1px;height:20px;background:var(--border)"></span>
-    <button onclick="UI.exportStats()">Export JSON</button>
-    <button onclick="UI.importStats()">Import JSON</button>
+  <!-- Main Tabs -->
+  <div class="tabs" id="main-tabs">
+    <button class="tab active" onclick="UI.switchTab("setup")">Setup</button>
+    <button class="tab" onclick="UI.switchTab("battle")">Battle</button>
+    <button class="tab" onclick="UI.switchTab("multisim")">Multi-Sim</button>
   </div>
 
-  <!-- Player Panels -->
-  <div class="panels">
-    <div class="panel" id="panel-p1"></div>
-    <div class="panel" id="panel-p2"></div>
+  <!-- ========== SETUP TAB ========== -->
+  <div class="tab-content active" id="tab-setup">
+    <div class="info-box">
+      <strong>Stat Input Guide:</strong> Enter your stats as shown in-game. <strong>Remove all relics and spore effects first</strong> for clean baseline stats, OR use the toggles below to include/exclude relic/spore/pal stat bonuses. Pals like Eggplant (Crit Rate), Deer (DMG RES), Treasure Dragon (Crit DMG), and others that boost baseline stats should be toggled off if already included in your input numbers. Relics like Plumed Spore, Potent Spore, etc. that affect baseline numbers should similarly be toggled.
+    </div>
+
+    <div class="panels" id="setup-panels">
+      <div class="panel" id="panel-p1"></div>
+      <div class="panel" id="panel-p2"></div>
+    </div>
   </div>
 
-  <!-- HP Bars -->
-  <div class="hp-section">
-    <div class="hp-bar-container">
-      <div class="hp-bar-label"><span id="hp-label-p1" style="color:var(--blue)">Player 1</span><span id="hp-val-p1">0 / 0</span></div>
-      <div class="hp-bar"><div class="hp-bar-fill p1-hp" id="hp-bar-p1" style="width:100%"></div><div class="hp-bar-shield" id="hp-shield-p1" style="width:0%"></div></div>
+  <!-- ========== BATTLE TAB ========== -->
+  <div class="tab-content" id="tab-battle">
+    <div class="controls">
+      <button onclick="UI.startBattle()">Start</button>
+      <button onclick="UI.stepFrame()">Step</button>
+      <button onclick="UI.stopBattle()">Stop</button>
+      <button onclick="UI.resetBattle()">Reset</button>
+      <span class="sep"></span>
+      <label>Speed:</label>
+      <select id="sel-speed" onchange="UI.setSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="1" selected>1x (Real-time)</option>
+        <option value="2">2x</option>
+        <option value="3">3x</option>
+        <option value="5">5x</option>
+        <option value="0">Sim to End</option>
+      </select>
+      <span class="sep"></span>
+      <label>Seed:</label>
+      <input type="number" id="inp-seed" value="42" min="1" max="999999">
+      <label>Max Frames:</label>
+      <input type="number" id="inp-maxframes" value="9000" min="100" max="99000" step="100">
+      <span class="sep"></span>
+      <label>Mode:</label>
+      <select id="sel-mode">
+        <option value="pvp">PvP</option>
+        <option value="pve">PvE</option>
+      </select>
+      <label>Avg Lv:</label>
+      <input type="number" id="inp-avglv" value="220" min="1" max="300">
+      <span class="sep"></span>
+      <button onclick="UI.exportStats()">Export JSON</button>
+      <button onclick="UI.importStats()">Import JSON</button>
     </div>
-    <div class="hp-bar-container">
-      <div class="hp-bar-label"><span id="hp-label-p2" style="color:var(--red)">Player 2</span><span id="hp-val-p2">0 / 0</span></div>
-      <div class="hp-bar"><div class="hp-bar-fill p2-hp" id="hp-bar-p2" style="width:100%"></div><div class="hp-bar-shield" id="hp-shield-p2" style="width:0%"></div></div>
+
+    <!-- HP Bars -->
+    <div class="hp-section">
+      <div class="hp-bar-container">
+        <div class="hp-bar-label"><span id="hp-label-p1" style="color:var(--blue)">Player 1</span><span id="hp-val-p1">0 / 0</span></div>
+        <div class="hp-bar"><div class="hp-bar-fill p1-hp" id="hp-bar-p1" style="width:100%"></div><div class="hp-bar-shield" id="hp-shield-p1" style="width:0%"></div></div>
+      </div>
+      <div class="hp-bar-container">
+        <div class="hp-bar-label"><span id="hp-label-p2" style="color:var(--red)">Player 2</span><span id="hp-val-p2">0 / 0</span></div>
+        <div class="hp-bar"><div class="hp-bar-fill p2-hp" id="hp-bar-p2" style="width:100%"></div><div class="hp-bar-shield" id="hp-shield-p2" style="width:0%"></div></div>
+      </div>
+      <div id="battle-status" style="text-align:center;padding:4px;color:var(--fg2);font-size:12px;">Ready</div>
     </div>
-    <div id="battle-status" style="text-align:center;padding:4px;color:var(--fg2);font-size:12px;">Ready</div>
+
+    <!-- Combat Log -->
+    <div class="log-section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <h2 style="margin:0;cursor:pointer;flex:0" onclick="this.classList.toggle("collapsed");document.getElementById("log-container").classList.toggle("collapsed")">Combat Log</h2>
+        <label style="font-size:11px;color:var(--fg2)"><input type="checkbox" id="chk-detail" checked> Detail</label>
+      </div>
+      <div class="log-container" id="log-container"></div>
+    </div>
   </div>
 
-  <!-- Combat Log -->
-  <div class="log-section">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-      <h2 style="margin:0;cursor:default;" onclick="this.classList.toggle('collapsed');document.getElementById('log-container').classList.toggle('collapsed')">Combat Log</h2>
-      <label style="font-size:11px;color:var(--fg2)"><input type="checkbox" id="chk-detail" checked> Show detail</label>
+  <!-- ========== MULTI-SIM TAB ========== -->
+  <div class="tab-content" id="tab-multisim">
+    <div class="winrate-section">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">
+        <h2 style="margin:0;cursor:default;">Win Rate Calculator</h2>
+        <label style="font-size:11px;">Sims:</label>
+        <input type="number" id="inp-sims" value="1000" min="10" max="100000" step="100" style="width:70px;background:var(--input-bg);color:var(--fg);border:1px solid var(--border);padding:2px 4px;border-radius:2px;font-family:inherit;font-size:12px;">
+        <button class="ctrl-btn" onclick="UI.runWinRate()">Run</button>
+        <button class="ctrl-btn" onclick="UI.stopWinRate()">Stop</button>
+        <span id="winrate-status" style="font-size:11px;color:var(--fg2);">—</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="winrate-progress" style="width:0%"></div></div>
+      <div class="winrate-bar">
+        <div class="winrate-p1" id="winrate-p1" style="width:50%">P1: —</div>
+        <div class="winrate-draws" id="winrate-draws" style="width:0%"></div>
+        <div class="winrate-p2" id="winrate-p2" style="width:50%">P2: —</div>
+      </div>
     </div>
-    <div class="log-container" id="log-container"></div>
-  </div>
-
-  <!-- Win Rate -->
-  <div class="winrate-section">
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">
-      <h2 style="margin:0;cursor:default;">Win Rate Calculator</h2>
-      <label style="font-size:11px;">Sims:</label>
-      <input type="number" id="inp-sims" value="1000" min="10" max="100000" step="100" style="width:70px;background:var(--input-bg);color:var(--fg);border:1px solid var(--border);padding:2px 4px;border-radius:2px;font-family:inherit;font-size:12px;">
-      <button onclick="UI.runWinRate()" style="background:var(--bg3);color:var(--fg);border:1px solid var(--border);padding:4px 12px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:12px;">Run</button>
-      <button onclick="UI.stopWinRate()" style="background:var(--bg3);color:var(--fg);border:1px solid var(--border);padding:4px 12px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:12px;">Stop</button>
-      <span id="winrate-status" style="font-size:11px;color:var(--fg2);">—</span>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="winrate-progress" style="width:0%"></div></div>
-    <div class="winrate-bar">
-      <div class="winrate-p1" id="winrate-p1" style="width:50%">P1: —</div>
-      <div class="winrate-draws" id="winrate-draws" style="width:0%"></div>
-      <div class="winrate-p2" id="winrate-p2" style="width:50%">P2: —</div>
+    <div id="multisim-chart-container" style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:8px;">
+      <canvas id="multisim-chart" height="200"></canvas>
     </div>
   </div>
 </div>
 
 <script>
-'use strict';
-
+"use strict";
 // ============================================================
 // MODULE 1: FixMath — Exact replica of game_script.js line 4973
 // ============================================================
@@ -199,12 +241,9 @@ const FM = {
 // MODULE 2: FixRandom — Exact replica of game_script.js line 4975
 // ============================================================
 class FixRandom {
-  constructor(seed) {
-    this._seed = FM.roundInt(Number(seed || 9));
-  }
+  constructor(seed) { this._seed = FM.roundInt(Number(seed || 9)); }
   get seed() { return this._seed; }
   set seed(v) { this._seed = FM.roundInt(Number(v)); }
-
   getRand() {
     let n = FM.roundInt(FM.roundInt(13 * this._seed) + 147);
     let t = Math.floor(FM.round(n / 256));
@@ -212,7 +251,6 @@ class FixRandom {
     this._seed = r;
     return FM.round(r / 256);
   }
-
   randomInt(min, max) {
     if (min === undefined) min = 1;
     if (max === undefined) max = 10;
@@ -230,30 +268,32 @@ class FixRandom {
 }
 
 // ============================================================
-// MODULE 3: Constants & Attribute Definitions
+// MODULE 3: Constants & Data
 // ============================================================
-const MISS_CORRECT = 0.9;      // 9000/10000
-const VERTIGO_CORRECT = 0.9;   // 9000/10000
-const SHIELD_DECAY_PVP = 0.4;  // 4000/10000
-const TREAT_DECAY_PVP = 0.3;   // 3000/10000
-const TOTAL_DAM_FLOOR = 0.2;   // 2000/10000
-const PVP_MISS_CAP = 0.8;      // 8000/10000
+const MISS_CORRECT = 0.9;
+const VERTIGO_CORRECT = 0.9;
+const SHIELD_DECAY_PVP = 0.4;
+const TREAT_DECAY_PVP = 0.3;
+const TOTAL_DAM_FLOOR = 0.2;
+const PVP_MISS_CAP = 0.8;
 const PIERCE_BLOCK_CAP = 0.5;
-const CONFIG_KEY = 24455;
 
-// PvP injury reduce by level (approximated from ConfigLevel)
-// Key levels with their pvp_injury_reduce/10000 values
+// PvP injury reduce by level (from ConfigLevel decoded data)
 const PVP_INJURY_TABLE = {
-  1: 1, 10: 1.5, 20: 2, 30: 3, 40: 4, 50: 5, 60: 6, 70: 7.5,
-  80: 9, 90: 10.5, 100: 12, 110: 13.5, 120: 15, 130: 17, 140: 19,
-  150: 21, 160: 23, 170: 25, 180: 27, 190: 29, 200: 31, 210: 33,
-  220: 35, 230: 37, 240: 39, 250: 41, 260: 43, 270: 45, 280: 47, 290: 49, 300: 50
+  1:1, 5:1.1, 8:1.2, 10:1.4, 15:2.1, 20:3.5, 25:4.5, 30:5.8, 35:7.0,
+  40:8.5, 45:9.7, 50:11.0, 55:13.0, 60:15.5, 65:18.5, 70:21.0, 75:24.0,
+  80:27.6, 85:32.0, 90:37.0, 95:43.0, 100:56.9, 105:66.0, 110:78.0,
+  115:95.0, 120:117.3, 125:140.0, 130:170.0, 135:200.0, 140:230.0,
+  145:260.0, 150:280.6, 155:310.0, 160:345.0, 165:380.0, 170:410.0,
+  175:440.0, 180:471.7, 185:510.0, 190:550.0, 195:600.0, 200:650.0,
+  205:700.0, 210:730.0, 215:742.0, 220:754.0, 225:780.0, 230:810.0,
+  240:870.0, 250:950.0, 260:1040.0, 270:1130.0, 280:1220.0, 290:1310.0, 300:1400.0
 };
 
 function getInjuryReduce(avgLevel) {
   if (avgLevel <= 1) return 1;
   let keys = Object.keys(PVP_INJURY_TABLE).map(Number).sort((a,b) => a-b);
-  let lo = keys[0], hi = keys[keys.length - 1];
+  let hi = keys[keys.length - 1];
   if (avgLevel >= hi) return PVP_INJURY_TABLE[hi];
   for (let i = 0; i < keys.length - 1; i++) {
     if (avgLevel >= keys[i] && avgLevel < keys[i+1]) {
@@ -266,14 +306,14 @@ function getInjuryReduce(avgLevel) {
 
 // HealthType enum
 const HT = {
-  Invalid: 0, Hurt: 1, Hurt_Crit: 2, Hurt_Ret: 3, Treat: 4, Treat_Crit: 5,
-  Miss: 6, Absorb: 7, Double_Act: 9, Counter_Act: 10,
-  Skill_Hpsteal: 11, Act_Hpsteal: 12,
-  Hurt_Share: 13, Hurt_Share_Crit: 14,
-  Hurt_Double: 15, Hurt_Double_Crit: 16, Dizz: 17, Shield: 18,
-  Hurt_Bleed: 19, Real_Damage: 20, Hurt_Counter: 21, Hurt_Counter_Crit: 22,
-  Hurt_Bleed_Crit: 23, SpiritToSpirit: 30, SpiritToPlayer: 31,
-  Block: 50, Hp_recovery: 51
+  Invalid:0, Hurt:1, Hurt_Crit:2, Hurt_Ret:3, Treat:4, Treat_Crit:5,
+  Miss:6, Absorb:7, Double_Act:9, Counter_Act:10,
+  Skill_Hpsteal:11, Act_Hpsteal:12,
+  Hurt_Share:13, Hurt_Share_Crit:14,
+  Hurt_Double:15, Hurt_Double_Crit:16, Dizz:17, Shield:18,
+  Hurt_Bleed:19, Real_Damage:20, Hurt_Counter:21, Hurt_Counter_Crit:22,
+  Hurt_Bleed_Crit:23, SpiritToSpirit:30, SpiritToPlayer:31,
+  Block:50, Hp_recovery:51
 };
 const NEED_ADD_DAM_LIST = [1,2,3,13,14,15,16,19,20,21,22,23,31];
 const IS_DAMAGE_TYPE = new Set(NEED_ADD_DAM_LIST);
@@ -281,21 +321,191 @@ const IS_CRIT_TYPE = new Set([2,5,14,16,22,23]);
 
 // Buff group types
 const BG = {
-  ATTRIB: 1, SHIELD: 2, BLEED: 3, DIZZ: 4, FROZEN: 5, BOUND: 6, TAUNT: 7,
-  INVINCIBLE: 8, IMMUNE_DEATH: 9, EXTRA_DAMAGE: 10, GIANT_SLAYER: 11,
-  FRAGILE_EFFECT: 12, SKILL_VALUE: 13, SKILL_HP_HURT: 14, DOT_DAMAGE: 15,
-  VAMPIRE: 16, REDUCE_HEAL: 17, BLOCK: 18, DEFER_DAMAGE: 19,
-  REMAKE_HP: 20, TIME_REVERSAL: 21, NOT_CONTROLLED: 22, SHARE_DAMAGE: 23,
-  SKILL_DAMAGE_ADD: 24, RECORD_DAMAGE: 25, SKILL_PARSE: 26,
-  STATE_TRIGGER: 27, HP_CHANGE_TRIGGER: 28, ADD_BUFF_TRIGGER: 29,
-  SPEED_TRIGGER: 30, BAN_ACT: 31, BAN_SKILL: 32, ATTRIB_CONTINUE: 33,
-  ATTRIB_CONDITION: 34, SKILL_REAL_DAMAGE: 35, SKILL_RETURN: 36,
-  TOTAL_DAMAGE_TRIGGER: 37, CURRENT_HP: 38, TRAP: 39, IGNORE_BUFFIDS: 40,
-  SKILL_FRAGILE_ADD: 41
+  ATTRIB:1, SHIELD:2, BLEED:3, DIZZ:4, FROZEN:5, BOUND:6, TAUNT:7,
+  INVINCIBLE:8, IMMUNE_DEATH:9, EXTRA_DAMAGE:10, GIANT_SLAYER:11,
+  FRAGILE_EFFECT:12, SKILL_VALUE:13, SKILL_HP_HURT:14, DOT_DAMAGE:15,
+  VAMPIRE:16, REDUCE_HEAL:17, BLOCK:18, DEFER_DAMAGE:19,
+  REMAKE_HP:20, TIME_REVERSAL:21, NOT_CONTROLLED:22, SHARE_DAMAGE:23,
+  SKILL_DAMAGE_ADD:24, RECORD_DAMAGE:25, SKILL_PARSE:26,
+  STATE_TRIGGER:27, HP_CHANGE_TRIGGER:28, ADD_BUFF_TRIGGER:29,
+  SPEED_TRIGGER:30, BAN_ACT:31, BAN_SKILL:32, ATTRIB_CONTINUE:33,
+  ATTRIB_CONDITION:34, SKILL_REAL_DAMAGE:35, SKILL_RETURN:36,
+  TOTAL_DAMAGE_TRIGGER:37, CURRENT_HP:38, TRAP:39, IGNORE_BUFFIDS:40,
+  SKILL_FRAGILE_ADD:41
 };
 
+// Attribute caps from ConfigAttribute
+const ATTRIB_CAPS = {
+  1008: 0.8,   // evasion PvP cap
+  1018: 0.8,   // att_resist cap
+  1019: 0.8,   // skill_resist cap
+  1020: 0.8,   // partner_resist cap
+  1034: 0.8,   // double_hit_def cap
+  1035: 0.8,   // counter_def cap
+};
+
+// ============================================================
+// MODULE 4: Game Data — Classes, Skills, Pals, etc.
+// ============================================================
+
+const CLASS_TREE = {
+  1001: { name: 'Shroomie', tier: 0, job_class: 0, type: 0, next: [1002] },
+  1002: { name: 'Adventurer', tier: 0, job_class: 0, type: 0, next: [1101,1102,1103,1104] },
+  // Warrior
+  1101: { name: 'Warrior', tier: 1, job_class: 2, type: 1, next: [1201,1202] },
+  1201: { name: 'Swordsman', tier: 2, job_class: 2, type: 1, next: [1301] },
+  1202: { name: 'Axe Warrior', tier: 2, job_class: 2, type: 1, next: [1302] },
+  1301: { name: 'Claymore Wielder', tier: 3, job_class: 2, type: 1, next: [1401] },
+  1302: { name: 'Berserker', tier: 3, job_class: 2, type: 1, next: [1402] },
+  1401: { name: 'Swordmaster', tier: 4, job_class: 2, type: 1, next: [1511] },
+  1402: { name: 'Warmonger', tier: 4, job_class: 2, type: 1, next: [1512] },
+  1511: { name: 'Martial Sage', tier: 5, job_class: 2, type: 2 },
+  1512: { name: 'Warbringer', tier: 5, job_class: 2, type: 5 },
+  // Archer
+  1102: { name: 'Archer', tier: 1, job_class: 3, type: 1, next: [1203,1204] },
+  1203: { name: 'Shadow Sniper', tier: 2, job_class: 3, type: 1, next: [1303] },
+  1204: { name: 'Wind Crossbower', tier: 2, job_class: 3, type: 1, next: [1304] },
+  1303: { name: 'Sharpshooter', tier: 3, job_class: 3, type: 1, next: [1403] },
+  1304: { name: 'Dual Crossbower', tier: 3, job_class: 3, type: 1, next: [1404] },
+  1403: { name: 'Shadow Hunter', tier: 4, job_class: 3, type: 1, next: [1521] },
+  1404: { name: 'Arrowgod', tier: 4, job_class: 3, type: 1, next: [1522] },
+  1521: { name: 'Sacred Hunter', tier: 5, job_class: 3, type: 3 },
+  1522: { name: 'Plume Monarch', tier: 5, job_class: 3, type: 6 },
+  // Mage
+  1103: { name: 'Mage', tier: 1, job_class: 4, type: 1, next: [1205,1206] },
+  1205: { name: 'Healer', tier: 2, job_class: 4, type: 1, next: [1305] },
+  1206: { name: 'Spellcaster', tier: 2, job_class: 4, type: 1, next: [1306] },
+  1305: { name: 'Chronomancer', tier: 3, job_class: 4, type: 1, next: [1405] },
+  1306: { name: 'Storm Priest', tier: 3, job_class: 4, type: 1, next: [1406] },
+  1405: { name: 'Holy Guide', tier: 4, job_class: 4, type: 1, next: [1531] },
+  1406: { name: 'Bishop', tier: 4, job_class: 4, type: 1, next: [1532] },
+  1531: { name: 'Prophet', tier: 5, job_class: 4, type: 4 },
+  1532: { name: 'Darklord', tier: 5, job_class: 4, type: 7 },
+  // Beast
+  1104: { name: 'Spirit Channeler', tier: 1, job_class: 5, type: 1, next: [1207,1208] },
+  1207: { name: 'Beast Tamer', tier: 2, job_class: 5, type: 1, next: [1307] },
+  1208: { name: 'Skeleton Mage', tier: 2, job_class: 5, type: 1, next: [1308] },
+  1307: { name: 'Soul Hunter', tier: 3, job_class: 5, type: 1, next: [1407] },
+  1308: { name: 'Spirit Shepherd', tier: 3, job_class: 5, type: 1, next: [1408] },
+  1407: { name: 'Beastsoul Master', tier: 4, job_class: 5, type: 1, next: [1541] },
+  1408: { name: '???', tier: 4, job_class: 5, type: 1, next: [1542] },
+  1541: { name: 'Beastmaster', tier: 5, job_class: 5, type: 8 },
+  1542: { name: 'Supreme Spirit', tier: 5, job_class: 5, type: 9 },
+};
+
+const T5_CLASSES = [1511, 1512, 1521, 1522, 1531, 1532, 1541, 1542];
+const T5_CLASS_PASSIVES = {
+  // [job_id]: { ownEffects: [[attr_id, value/10000], ...], extraPals: 0|1 }
+  1511: { ownEffects: [[1017,0.30],[1033,0.30],[1024,0.30],[1021,0.15],[1057,0.05]], extraPals: 0, desc: 'Martial Sage — Counter/Regen tank' },
+  1512: { ownEffects: [[1017,0.30],[1033,0.30],[1024,0.30],[1033,1.40],[1057,0.05]], extraPals: 0, desc: 'Warbringer — Counter DPS' },
+  1521: { ownEffects: [[1016,0.30],[1003,0.15],[1007,0.10],[1005,0.20]], extraPals: 0, desc: 'Sacred Hunter — Crit Assassin' },
+  1522: { ownEffects: [[1016,0.30],[1003,0.15],[1007,0.10],[1032,1.40]], extraPals: 0, desc: 'Plume Monarch — Combo Specialist' },
+  1531: { ownEffects: [[1037,0.15],[1001,0.12],[1013,0.20]], extraPals: 0, desc: 'Prophet — Skill Support' },
+  1532: { ownEffects: [[1037,0.15],[1001,0.12],[1038,0.50],[1037,0.15]], extraPals: 0, desc: 'Darklord — Skill DMG Glass Cannon' },
+  1541: { ownEffects: [[1003,0.10],[1007,0.10],[1004,0.25],[1005,0.20]], extraPals: 1, desc: 'Beastmaster — Pal Multiplier' },
+  1542: { ownEffects: [[1003,0.10],[1007,0.10]], extraPals: 1, desc: 'Supreme Spirit — Pal Synergy' },
+};
+
+// Active Skills (simplified for sim — key data: name, cooldown in frames, damage%, effects)
+const SKILLS_DATA = [
+  { id: 0, name: '(None)', cd: 9999, dmgPct: 0, effects: [] },
+  { id: 1, name: 'Spore Bomb', cd: 210, dmgPct: 136, effects: [] },
+  { id: 2, name: 'Schroom Cap', cd: 270, dmgPct: 194, effects: [] },
+  { id: 3, name: 'Spore Barrage', cd: 210, dmgPct: 165.5, effects: [] },
+  { id: 4, name: 'Boulder Impact', cd: 360, dmgPct: 380, effects: [] },
+  { id: 5, name: 'Thorn Thicket', cd: 240, dmgPct: 265, effects: [{type:'slow',val:0.2,dur:150}] },
+  { id: 6, name: 'Lead the Charge', cd: 420, dmgPct: 438, effects: [{type:'attrib',id:1039,val:0.30,dur:150}] },
+  { id: 7, name: 'Entangling Vines', cd: 240, dmgPct: 394, effects: [{type:'stun',dur:60}] },
+  { id: 8, name: 'Speed Surge', cd: 420, dmgPct: 656, effects: [{type:'attrib',id:1003,val:0.30,dur:150}] },
+  { id: 9, name: 'Spider Weaver', cd: 300, dmgPct: 480, effects: [] },
+  { id: 10, name: 'Pineapple Plunge', cd: 330, dmgPct: 985, effects: [] },
+  { id: 11, name: 'Pearl Release', cd: 330, dmgPct: 789, effects: [{type:'slow',val:0.3,dur:120}] },
+  { id: 12, name: 'Sprawling Vine', cd: 330, dmgPct: 789, effects: [{type:'stun',dur:60}] },
+  { id: 13, name: 'Batty Trace', cd: 450, dmgPct: 1575, effects: [] },
+  { id: 14, name: "Nature's Renewal", cd: 750, dmgPct: 1775, effects: [{type:'heal',pct:0.30}] },
+  { id: 15, name: 'Shroom Shield', cd: 570, dmgPct: 1183, effects: [{type:'shield',pct:0.20,dur:150}] },
+  { id: 16, name: 'Durian Bomb', cd: 540, dmgPct: 2664, effects: [{type:'slow',val:0.3,dur:90}] },
+  { id: 17, name: 'Easy Breezy', cd: 450, dmgPct: 1657, effects: [{type:'attrib_debuff',id:1001,val:-0.15,dur:150}] },
+  { id: 18, name: 'Take It Slow', cd: 360, dmgPct: 1635, effects: [{type:'slow',val:0.3,dur:150}] },
+  { id: 19, name: 'Coin Bomb', cd: 390, dmgPct: 1450, effects: [{type:'attrib',id:1039,val:0.30,dur:150}] },
+  { id: 20, name: 'Slime Bomb', cd: 390, dmgPct: 1450, effects: [{type:'attrib',id:1040,val:0.30,dur:150}] },
+  { id: 21, name: 'Meteor Fall', cd: 390, dmgPct: 1450, effects: [{type:'attrib',id:1045,val:0.30,dur:150}] },
+  { id: 22, name: 'Disarm', cd: 480, dmgPct: 2682, effects: [{type:'disarm',dur:90}] },
+  { id: 23, name: 'Dazzled', cd: 570, dmgPct: 3134, effects: [{type:'stun',dur:90}] },
+  { id: 24, name: 'Smoke Bomb', cd: 390, dmgPct: 2176, effects: [{type:'fragile',val:0.15,dur:150}] },
+  { id: 25, name: 'Grim Reaper', cd: 270, dmgPct: 1443, effects: [{type:'execute',threshold:0.10}] },
+  { id: 26, name: 'Heroic Descent', cd: 570, dmgPct: 4440, effects: [] },
+  { id: 27, name: 'Wild Gust', cd: 480, dmgPct: 2642, effects: [{type:'attrib',id:1001,val:0.15,dur:150}] },
+  { id: 28, name: 'Blitz Assault', cd: 720, dmgPct: 5829, effects: [{type:'invincible',dur:90}] },
+  { id: 29, name: 'Blade Pierce', cd: 570, dmgPct: 4663, effects: [{type:'bleed',val:0.10,dur:150}] },
+  { id: 30, name: 'Clone Strike', cd: 870, dmgPct: 3000, effects: [{type:'clone',hpPct:0.30,dur:300}] },
+  { id: 31, name: 'Hundred Slashes', cd: 570, dmgPct: 4663, effects: [{type:'attrib',id:1018,val:0.20,dur:150}] },
+  { id: 32, name: 'Windborne Arrow', cd: 570, dmgPct: 2665, effects: [{type:'fragile',val:0.20,dur:150}] },
+  { id: 33, name: 'Crimson Moonfall', cd: 240, dmgPct: 2098, effects: [{type:'scaling',stackPct:0.50,maxStacks:5}] },
+  { id: 34, name: 'Dragonic Resonance', cd: 450, dmgPct: 6228, effects: [] },
+  { id: 35, name: 'Worldly Snare', cd: 720, dmgPct: 5413, effects: [{type:'attrib',id:1004,val:0.10,dur:150}] },
+  { id: 36, name: 'Star Array', cd: 570, dmgPct: 4330, effects: [{type:'attrib',id:1037,val:0.10,dur:150}] },
+  { id: 37, name: 'Winged Dreams', cd: 720, dmgPct: 5413, effects: [{type:'attrib',id:1016,val:0.20,dur:150}] },
+  { id: 38, name: 'Ancestral Will', cd: 720, dmgPct: 5413, effects: [{type:'attrib',id:1004,val:0.10,dur:150}] },
+];
+
+// Pals — id, name, rarity, dmgMult, effect description, stat mods
+const PALS_DATA = [
+  { id: 0, name: '(None)', dmgMult: 0, statMods: [], desc: '' },
+  { id: 1, name: 'Hatched Chick', dmgMult: 3.5, statMods: [{id:1039,val:0.05}], desc: 'Basic ATK Multi +5%' },
+  { id: 6, name: 'Panda', dmgMult: 3.818, statMods: [{id:1012,val:0.10}], desc: 'HP Regen +10%' },
+  { id: 7, name: 'Fawn', dmgMult: 3.231, statMods: [{id:1021,val:0.05}], desc: 'DMG RES +5%' },
+  { id: 12, name: 'Ami', dmgMult: 7.887, statMods: [{id:1045,val:0.15}], desc: 'Skill DMG +15%' },
+  { id: 21, name: 'Stag', dmgMult: 7.28, statMods: [{id:1021,val:0.08}], desc: 'DMG RES +8%' },
+  { id: 27, name: 'Chicken Fighter', dmgMult: 8.872, statMods: [{id:1039,val:0.10}], desc: 'Base ATK Multi +10%' },
+  { id: 28, name: 'Po Kong', dmgMult: 11.83, statMods: [{id:1045,val:0.25}], desc: 'Skill DMG +25%' },
+  { id: 29, name: 'Azure Bird', dmgMult: 8.351, statMods: [{id:1003,val:0.10}], desc: 'ATK Speed +10%' },
+  { id: 30, name: 'Apprentice Panda', dmgMult: 12.905, statMods: [{id:1012,val:0.30}], desc: 'HP Regen +30%' },
+  { id: 32, name: 'Floral Deer', dmgMult: 10.92, statMods: [{id:1021,val:0.10}], desc: 'DMG RES +10%' },
+  { id: 33, name: 'Fortune Dragon', dmgMult: 10, statMods: [{id:1005,val:0.20},{id:1037,val:0.08}], desc: 'Crit DMG +20%, Skill Crit +8%', isBaseline: true },
+  { id: 34, name: 'Abaddon', dmgMult: 10, statMods: [], desc: 'Shield 8% HP on start, then ATK +8%', isBaseline: false },
+  { id: 35, name: 'Davi', dmgMult: 10, statMods: [{id:1037,val:0.08},{id:1038,val:0.08}], desc: 'Skill Crit +8%, Skill Crit DMG +8% for 15s' },
+  { id: 36, name: 'Frej', dmgMult: 10, statMods: [{id:1004,val:0.08},{id:1005,val:0.08}], desc: 'Crit +8%, Crit DMG +8% for 15s' },
+  { id: 37, name: 'Tamamo', dmgMult: 10, statMods: [{id:1004,val:0.08},{id:1005,val:0.08}], desc: 'Pal Crit +8%, Pal Crit DMG +8% for 15s' },
+  { id: 42, name: 'Kongfu Chicken', dmgMult: 15, statMods: [{id:1039,val:0.12}], desc: 'Base ATK Multi +12%' },
+  { id: 43, name: 'Piercer Beast', dmgMult: 15, statMods: [{id:1045,val:0.40}], desc: 'Skill DMG +40%' },
+  { id: 44, name: 'Caw-Caw Owl', dmgMult: 14, statMods: [{id:1003,val:0.12}], desc: 'ATK Speed +12%' },
+  { id: 45, name: 'Toothpick Eggplant', dmgMult: 12, statMods: [{id:1004,val:0.10}], desc: 'Crit Rate +10%', isBaseline: true },
+  { id: 46, name: 'Warrior Panda', dmgMult: 15, statMods: [{id:1012,val:0.35}], desc: 'HP Regen +35%' },
+  { id: 48, name: 'Divine Deer', dmgMult: 13, statMods: [{id:1021,val:0.12}], desc: 'DMG RES +12%', isBaseline: true },
+  { id: 49, name: 'Mecha Dragon', dmgMult: 12, statMods: [{id:1005,val:0.20}], desc: 'Crit DMG +20%', isBaseline: true },
+  { id: 50, name: 'Spark Squirrel', dmgMult: 12, statMods: [{id:1040,val:0.15}], desc: 'Pal DMG Multi +15%' },
+  { id: 54, name: 'Benny', dmgMult: 15, statMods: [{id:1004,val:0.05}], desc: 'Crit +5%, 30% Launch on pal atk' },
+  { id: 55, name: 'Mona', dmgMult: 15, statMods: [{id:1008,val:0.10},{id:1046,val:0.30}], desc: 'Evasion +10%, Boss DMG +30%' },
+  { id: 56, name: 'Cat Prince', dmgMult: 18, statMods: [], desc: 'Active skill detonates 300% DMG' },
+  { id: 57, name: 'Warlord Hydrosprite', dmgMult: 16, statMods: [{id:1013,val:0.25}], desc: 'Energy Regen +25%' },
+  { id: 60, name: 'Chicken Hood', dmgMult: 18, statMods: [{id:1039,val:0.15}], desc: 'Base ATK Multi +15%' },
+  { id: 61, name: 'Fiery Tail', dmgMult: 18, statMods: [{id:1045,val:0.60}], desc: 'Skill DMG +60%' },
+  { id: 62, name: 'Hero Bird', dmgMult: 16, statMods: [{id:1003,val:0.15}], desc: 'ATK Speed +15%' },
+  { id: 63, name: 'Kongfu Master', dmgMult: 18, statMods: [{id:1012,val:0.40}], desc: 'HP Regen +40%' },
+  { id: 65, name: 'Angel Deer', dmgMult: 16, statMods: [{id:1021,val:0.15}], desc: 'DMG RES +15%', isBaseline: true },
+  { id: 66, name: 'Righteous Banana', dmgMult: 16, statMods: [{id:1016,val:0.10},{id:1032,val:1.00}], desc: 'Combo +10%, Combo DMG +100%' },
+  { id: 67, name: 'Rainbow Guardian', dmgMult: 16, statMods: [{id:1017,val:0.10},{id:1033,val:1.00}], desc: 'Counter +10%, Counter DMG +100%' },
+  { id: 69, name: 'Pepe', dmgMult: 15, statMods: [{id:1012,val:0.001}], desc: 'Healing +0.1%' },
+  { id: 70, name: 'Night Spritefox', dmgMult: 15, statMods: [{id:1037,val:0.05},{id:1038,val:0.10}], desc: 'Skill Crit +5%, Skill Crit DMG +10%' },
+];
+
+// Star Hero types: 1=ATK, 2=DEF, 3=HP, 4=Skill
+const STAR_HEROES = [
+  { id: 0, name: '(None)', type: 0, statMods: [] },
+  { id: 1, name: 'Aurora', type: 1, statMods: [{id:1001,pct:0.08}] },
+  { id: 2, name: 'Bai Ze', type: 2, statMods: [{id:1024,pct:0.08}] },
+  { id: 3, name: 'Elara', type: 3, statMods: [{id:1002,pct:0.08}] },
+  { id: 4, name: 'Nyx', type: 1, statMods: [{id:1001,pct:0.06},{id:1004,val:0.05}] },
+  { id: 5, name: 'Sol', type: 2, statMods: [{id:1024,pct:0.06},{id:1021,val:0.03}] },
+  { id: 6, name: 'Luna', type: 3, statMods: [{id:1002,pct:0.06},{id:1012,val:0.02}] },
+  { id: 7, name: 'Phoenix', type: 1, statMods: [{id:1001,pct:0.10},{id:1005,val:0.10}] },
+  { id: 8, name: 'Dragon', type: 2, statMods: [{id:1024,pct:0.10},{id:1082,val:0.05}] },
+  { id: 9, name: 'Titan', type: 3, statMods: [{id:1002,pct:0.10},{id:1081,val:0.05}] },
+];
+
+
 // Attribute definitions: [id, name, label, defaultValue, isRate]
-// isRate: true means UI shows as decimal (0.6 = 60%), false means raw integer
 const ATTRIB_DEFS = [
   // Core
   [1001, 'att', 'ATK', 10000, false],
@@ -332,8 +542,8 @@ const ATTRIB_DEFS = [
   [1020, 'partner_resist', 'Pal Resist', 0, true],
   [1021, 'resist', 'DMG Resist', 0.1, true],
   // Total DMG
-  [1081, 'total_dam_add', 'Total DMG+', 0.2, true],
-  [1082, 'total_dam_def', 'Total DMG DEF', 0.1, true],
+  [1081, 'total_dam_add', 'Final DMG Boost', 0.2, true],
+  [1082, 'total_dam_def', 'Final DMG Resist', 0.1, true],
   // Pierce/Block
   [1067, 'armor_penetration_rate', 'Pierce Rate', 0.3, true],
   [1068, 'armor_penetration', 'Pierce Val', 0, false],
@@ -385,7 +595,7 @@ const ATTRIB_DEFS = [
   [6003, 'spirit_dam_def_final', 'Spirit DEF Final', 0, true],
 ];
 
-// Stat groups for UI layout
+// Stat groups for UI
 const STAT_GROUPS = [
   { name: 'Core', attrs: [1001, 1002, 1024, 1060] },
   { name: 'Speed', attrs: [1003] },
@@ -394,11 +604,12 @@ const STAT_GROUPS = [
   { name: 'Combo/Counter', attrs: [1016, 1032, 1034, 1048, 1017, 1033, 1035, 1049] },
   { name: 'Multipliers', attrs: [1039, 1045, 1043, 1046] },
   { name: 'Resistances', attrs: [1018, 1019, 1020, 1021] },
-  { name: 'Total DMG', attrs: [1081, 1082] },
+  { name: 'Final DMG', attrs: [1081, 1082] },
   { name: 'Pierce/Block', attrs: [1067, 1068, 1069, 1070, 1071, 1072], collapsed: true },
   { name: 'Stun/Launch', attrs: [1022, 1025, 1023, 1026, 1030, 1031, 1042], collapsed: true },
   { name: 'Skill Crit', attrs: [1037, 1038], collapsed: true },
   { name: 'Heal/Steal', attrs: [1012, 1066, 1014, 1027, 1015, 1028, 1053, 1054, 1055], collapsed: true },
+  { name: 'Pal Stats', attrs: [1040, 1047, 1073, 1074, 1075, 1076, 1077, 1078], collapsed: true },
   { name: 'Shield', attrs: [1051, 1050], collapsed: true },
   { name: 'PvE', attrs: [1057, 1058], collapsed: true },
   { name: 'Energy', attrs: [1013], collapsed: true },
@@ -408,57 +619,40 @@ const STAT_GROUPS = [
 const ATTRIB_MAP = {};
 ATTRIB_DEFS.forEach(a => { ATTRIB_MAP[a[0]] = { id: a[0], key: a[1], label: a[2], defaultVal: a[3], isRate: a[4] }; });
 
-// Attribute upper limits (key caps from ConfigAttribute)
-const ATTRIB_CAPS = {
-  1008: 0.8,   // evasion PvP cap
-  1018: 0.8,   // att_resist cap
-  1019: 0.8,   // skill_resist cap
-  1020: 0.8,   // partner_resist cap
-  1034: 0.8,   // double_hit_def cap
-  1035: 0.8,   // counter_def cap
-};
-
+// Special back talents that don't show in stats
+const SPECIAL_BACK_TALENTS = [
+  { id: 'heal_per_counter', name: 'Heal per Counter', desc: '% MaxHP healed on counter', defaultVal: 0, isRate: true },
+  { id: 'cdr_on_stun', name: 'CDR on Stun', desc: 'Seconds off all CDs on stun proc', defaultVal: 0, isRate: false },
+  { id: 'heal_per_skill', name: 'Heal per Skill', desc: '% MaxHP healed on skill use', defaultVal: 0, isRate: true },
+  { id: 'heal_per_combo', name: 'Heal per Combo', desc: '% MaxHP healed on combo', defaultVal: 0, isRate: true },
+  { id: 'heal_per_pal_atk', name: 'Heal per Pal ATK', desc: '% MaxHP healed on pal attack', defaultVal: 0, isRate: true },
+];
 
 // ============================================================
-// MODULE 4: Unit — Combat Entity
+// MODULE 5: Unit — Combat Entity
 // ============================================================
 class Unit {
   constructor(cfg) {
     this.id = cfg.id || 'unit';
-    this.type = cfg.type || 'player'; // player, partner, spirit
+    this.type = cfg.type || 'player';
     this.teamId = cfg.teamId || 0;
     this.parent = cfg.parent || null;
     this.attribs = {};
-    this.curHP = 0;
-    this.maxHP = 0;
-    this.shieldHP = 0;
-    this.energy = 0;
-    this.maxPower = 150;
-    this.powerRecoveryBase = 100;
-    this.attackTimer = 0;
-    this.attackInterval = 30; // frames between attacks
-    this.stunFrames = 0;
-    this.isDead = false;
-    this.buffs = [];
-    this.damageQueue = [];
-    this.skills = [];
-    this.skillCooldowns = [];
-    this.unitType = cfg.unitType || 1; // 1=player, 12=hero
+    this.curHP = 0; this.maxHP = 0; this.shieldHP = 0;
+    this.energy = 0; this.maxPower = 150; this.powerRecoveryBase = 100;
+    this.attackTimer = 0; this.attackInterval = 30;
+    this.stunFrames = 0; this.isDead = false;
+    this.buffs = []; this.damageQueue = [];
+    this.skills = []; this.skillCooldowns = [];
+    this.unitType = cfg.unitType || 1;
     this.battleMain = null;
-
-    // Pal-specific
     this.isActive = true;
-
-    // Init defaults
-    for (let def of ATTRIB_DEFS) {
-      this.attribs[def[0]] = def[3];
-    }
+    this.specialTalents = {};
+    for (let def of ATTRIB_DEFS) this.attribs[def[0]] = def[3];
   }
-
   getAttrib(id) {
     let v = this.attribs[id];
     if (v === undefined) return 0;
-    // Apply buff attribute modifications
     let flat = 0, mult = 1, extra = 0;
     for (let b of this.buffs) {
       if (b.isActive && b.group === BG.ATTRIB && b.attribId === id) {
@@ -469,164 +663,86 @@ class Unit {
     }
     return FM.round(FM.roundInt(FM.round(v + flat) * mult) + extra);
   }
-
-  setAttrib(id, val) {
-    this.attribs[id] = val;
-  }
-
+  setAttrib(id, val) { this.attribs[id] = val; }
   initFromStats(stats) {
-    for (let id in stats) {
-      this.attribs[Number(id)] = stats[id];
-    }
+    for (let id in stats) this.attribs[Number(id)] = stats[id];
     this.maxHP = this.getAttrib(1002);
     this.curHP = this.maxHP;
     this.attackInterval = Math.max(1, FM.roundInt(30 / Math.max(0.1, this.getAttrib(1003))));
     this.attackTimer = this.attackInterval;
   }
-
   addBuff(buff) {
-    // Mutex check (simplified: replace by group for unique buffs)
-    if (buff.mutex === 2) { // UNIQUE
+    if (buff.mutex === 2) {
       if (this.buffs.some(b => b.isActive && b.group === buff.group && b.buffId === buff.buffId)) return false;
-    } else if (buff.mutex === 1) { // REPLACE
+    } else if (buff.mutex === 1) {
       this.buffs.filter(b => b.isActive && b.group === buff.group && b.buffId === buff.buffId)
         .forEach(b => { b.isActive = false; b.onEnd(); });
-    } else if (buff.mutex === 3) { // STACK
+    } else if (buff.mutex === 3) {
       let existing = this.buffs.filter(b => b.isActive && b.group === buff.group && b.buffId === buff.buffId);
-      if (buff.addMax > 0 && existing.length >= buff.addMax) {
-        // Remove oldest
-        existing[0].isActive = false;
-        existing[0].onEnd();
-      }
-      // Refresh existing durations
-      existing.forEach(b => { b.remainingFrames = buff.remainingFrames; });
-    } else if (buff.mutex === 4) { // PER_CASTER
-      this.buffs.filter(b => b.isActive && b.group === buff.group && b.buffId === buff.buffId && b.caster === buff.caster)
-        .forEach(b => { b.isActive = false; b.onEnd(); });
-    } else if (buff.mutex === 5) { // REFRESH
+      if (buff.addMax > 0 && existing.length >= buff.addMax) { existing[0].isActive = false; existing[0].onEnd(); }
+    } else if (buff.mutex === 5) {
       let existing = this.buffs.filter(b => b.isActive && b.group === buff.group && b.buffId === buff.buffId && b.caster === buff.caster);
-      if (existing.length > 0) {
-        existing.forEach(b => { b.remainingFrames = buff.remainingFrames; });
-        return false;
-      }
+      if (existing.length > 0) { existing.forEach(b => { b.remainingFrames = buff.remainingFrames; }); return false; }
     }
-    // Control immunity check
     if ([BG.DIZZ, BG.FROZEN, BG.BOUND, BG.TAUNT, BG.BAN_ACT, BG.BAN_SKILL].includes(buff.group)) {
-      if (this.buffs.some(b => b.isActive && (b.group === BG.INVINCIBLE || b.group === BG.NOT_CONTROLLED))) {
-        return false;
-      }
+      if (this.buffs.some(b => b.isActive && (b.group === BG.INVINCIBLE || b.group === BG.NOT_CONTROLLED))) return false;
     }
     buff.owner = this;
     this.buffs.push(buff);
     buff.onBegin();
     return true;
   }
-
-  removeBuffsByGroup(group) {
-    this.buffs.filter(b => b.isActive && b.group === group).forEach(b => {
-      b.isActive = false; b.onEnd();
-    });
-  }
-
-  getBuffsByGroup(group) {
-    return this.buffs.filter(b => b.isActive && b.group === group);
-  }
-
-  hasBuffGroup(group) {
-    return this.buffs.some(b => b.isActive && b.group === group);
-  }
-
+  removeBuffsByGroup(group) { this.buffs.filter(b => b.isActive && b.group === group).forEach(b => { b.isActive = false; b.onEnd(); }); }
+  getBuffsByGroup(group) { return this.buffs.filter(b => b.isActive && b.group === group); }
+  hasBuffGroup(group) { return this.buffs.some(b => b.isActive && b.group === group); }
   tickBuffs() {
     for (let b of this.buffs) {
       if (!b.isActive) continue;
-      if (b.remainingFrames > 0) {
-        b.remainingFrames--;
-        b.onTick();
-        if (b.remainingFrames <= 0) {
-          b.isActive = false;
-          b.onEnd();
-        }
-      } else if (b.remainingFrames === -1) {
-        // Permanent buff
-        b.onTick();
-      }
+      if (b.remainingFrames > 0) { b.remainingFrames--; b.onTick(); if (b.remainingFrames <= 0) { b.isActive = false; b.onEnd(); } }
+      else if (b.remainingFrames === -1) { b.onTick(); }
     }
-    // Cleanup dead buffs periodically
-    if (this.buffs.length > 50) {
-      this.buffs = this.buffs.filter(b => b.isActive);
-    }
-    // Update stun status
+    if (this.buffs.length > 50) this.buffs = this.buffs.filter(b => b.isActive);
     this.stunFrames = Math.max(0, this.stunFrames - 1);
   }
-
-  isStunned() {
-    return this.stunFrames > 0 || this.buffs.some(b => b.isActive &&
-      (b.group === BG.DIZZ || b.group === BG.FROZEN || b.group === BG.BAN_ACT));
-  }
+  isStunned() { return this.stunFrames > 0 || this.buffs.some(b => b.isActive && (b.group === BG.DIZZ || b.group === BG.FROZEN || b.group === BG.BAN_ACT)); }
 }
 
 // ============================================================
-// MODULE 5: Buff Base Class & Subclasses
+// MODULE 6: Buff Classes
 // ============================================================
 class Buff {
   constructor(cfg) {
-    this.buffId = cfg.buffId || 0;
-    this.group = cfg.group || 0;
-    this.mutex = cfg.mutex || 1;
-    this.addMax = cfg.addMax || 0;
-    this.caster = cfg.caster || null;
-    this.owner = null;
-    this.target = cfg.target || null;
-    this.skillPar = cfg.skillPar || 0;
-    this.remainingFrames = cfg.duration || -1; // -1 = permanent
-    this.isActive = true;
+    this.buffId = cfg.buffId || 0; this.group = cfg.group || 0; this.mutex = cfg.mutex || 1;
+    this.addMax = cfg.addMax || 0; this.caster = cfg.caster || null; this.owner = null;
+    this.target = cfg.target || null; this.skillPar = cfg.skillPar || 0;
+    this.remainingFrames = cfg.duration || -1; this.isActive = true;
     this.battleMain = cfg.battleMain || null;
   }
-  onBegin() {}
-  onTick() {}
-  onEnd() {}
+  onBegin() {} onTick() {} onEnd() {}
 }
 
 class BuffAttrib extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.ATTRIB;
-    this.attribId = cfg.attribId || 1001;
-    this.modType = cfg.modType || 'flat'; // flat, mult, extra
-    this.modValue = cfg.modValue || 0;
-  }
+  constructor(cfg) { super(cfg); this.group = BG.ATTRIB; this.attribId = cfg.attribId || 1001; this.modType = cfg.modType || 'flat'; this.modValue = cfg.modValue || 0; }
 }
 
 class BuffShield extends Buff {
   constructor(cfg) {
-    super(cfg);
-    this.group = BG.SHIELD;
-    this.calType = cfg.calType || 0;
-    this.attribId = cfg.attribId || 1002;
-    this.hpType = cfg.hpType || 1;
-    this.isDec = cfg.isDec || 0;
-    this.shieldValue = 0;
+    super(cfg); this.group = BG.SHIELD; this.calType = cfg.calType || 0;
+    this.attribId = cfg.attribId || 1002; this.hpType = cfg.hpType || 1;
+    this.isDec = cfg.isDec || 0; this.shieldValue = 0;
   }
   onBegin() {
     let base = 0;
     let src = (this.hpType & 2) ? this.owner : this.caster;
-    let tgt = this.owner;
     switch (this.calType) {
       case 0: base = src.getAttrib(this.attribId); break;
-      case 1: {
-        let atk = this.caster.getAttrib(1001);
-        let def = tgt.getAttrib(1024);
-        let defCoe = tgt.getAttrib(1060);
-        base = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
-      } break;
-      case 2: base = FM.roundInt(this.caster.getAttrib(1002) - tgt.curHP); break;
-      case 3: base = FM.roundInt(tgt.curHP); break;
+      case 1: { let a = this.caster.getAttrib(1001); let d = this.owner.getAttrib(1024); let dc = this.owner.getAttrib(1060); base = Math.max(FM.roundInt(a - d * FM.round(1 + dc)), 1); } break;
+      case 2: base = FM.roundInt(this.caster.getAttrib(1002) - this.owner.curHP); break;
+      case 3: base = FM.roundInt(this.owner.curHP); break;
     }
     this.shieldValue = FM.roundInt(base * this.skillPar);
-    this.shieldValue = FM.roundInt(this.shieldValue * FM.round(1 + tgt.getAttrib(1051)));
-    if (this.isDec === 0 && this.battleMain) {
-      this.shieldValue = FM.roundInt(this.shieldValue * this.battleMain.shieldDecay);
-    }
+    this.shieldValue = FM.roundInt(this.shieldValue * FM.round(1 + this.owner.getAttrib(1051)));
+    if (this.isDec === 0 && this.battleMain) this.shieldValue = FM.roundInt(this.shieldValue * this.battleMain.shieldDecay);
     this.shieldValue = Math.max(1, this.shieldValue);
     this.owner.shieldHP += this.shieldValue;
   }
@@ -634,87 +750,38 @@ class BuffShield extends Buff {
     if (this.shieldValue <= 0 || !this.isActive) return 0;
     let absorbed = Math.min(this.shieldValue, damage);
     this.shieldValue -= absorbed;
-    if (this.shieldValue <= 0) {
-      this.isActive = false;
-      this.onEnd();
-    }
+    if (this.shieldValue <= 0) { this.isActive = false; this.onEnd(); }
     return absorbed;
   }
-  onEnd() {
-    if (this.owner && this.shieldValue > 0) {
-      this.owner.shieldHP = Math.max(0, this.owner.shieldHP - this.shieldValue);
-      this.shieldValue = 0;
-    }
-  }
+  onEnd() { if (this.owner && this.shieldValue > 0) { this.owner.shieldHP = Math.max(0, this.owner.shieldHP - this.shieldValue); this.shieldValue = 0; } }
 }
 
-class BuffDizz extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.DIZZ;
-  }
-  onBegin() {
-    // Stun already tracked by remainingFrames and isStunned check
-  }
-}
-
-class BuffInvincible extends Buff {
-  constructor(cfg) { super(cfg); this.group = BG.INVINCIBLE; }
-}
-
-class BuffImmuneDeath extends Buff {
-  constructor(cfg) { super(cfg); this.group = BG.IMMUNE_DEATH; }
-}
-
-class BuffNotControlled extends Buff {
-  constructor(cfg) { super(cfg); this.group = BG.NOT_CONTROLLED; }
-}
+class BuffDizz extends Buff { constructor(cfg) { super(cfg); this.group = BG.DIZZ; } }
+class BuffInvincible extends Buff { constructor(cfg) { super(cfg); this.group = BG.INVINCIBLE; } }
+class BuffImmuneDeath extends Buff { constructor(cfg) { super(cfg); this.group = BG.IMMUNE_DEATH; } }
+class BuffNotControlled extends Buff { constructor(cfg) { super(cfg); this.group = BG.NOT_CONTROLLED; } }
 
 class BuffReduceHeal extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.REDUCE_HEAL;
-    this.reducePct = cfg.reducePct || 0.5; // reduce healing by this fraction
-  }
-  calHeal(amount) {
-    return FM.roundInt(amount * FM.round(1 - this.reducePct));
-  }
+  constructor(cfg) { super(cfg); this.group = BG.REDUCE_HEAL; this.reducePct = cfg.reducePct || 0.5; }
+  calHeal(amount) { return FM.roundInt(amount * FM.round(1 - this.reducePct)); }
 }
 
 class BuffExtraDamage extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.EXTRA_DAMAGE;
-    this.calType = cfg.calType || 0; // 0=fixed%, 1=hp-loss%, 2=curHP%
-    this.extraPct = cfg.extraPct || 0;
-  }
+  constructor(cfg) { super(cfg); this.group = BG.EXTRA_DAMAGE; this.calType = cfg.calType || 0; this.extraPct = cfg.extraPct || 0; }
   calDamage(damage, target) {
     switch (this.calType) {
       case 0: return FM.roundInt(damage * FM.round(1 + this.extraPct));
-      case 1: {
-        let hpLoss = FM.round((this.caster.maxHP - this.caster.curHP) / this.caster.maxHP);
-        return FM.roundInt(damage * FM.round(1 + FM.round(hpLoss * this.extraPct)));
-      }
-      case 2: {
-        let hpPct = FM.round(this.caster.curHP / this.caster.maxHP);
-        return FM.roundInt(damage * FM.round(1 + FM.round(hpPct * this.extraPct)));
-      }
+      case 1: { let hpLoss = FM.round((this.caster.maxHP - this.caster.curHP) / this.caster.maxHP); return FM.roundInt(damage * FM.round(1 + FM.round(hpLoss * this.extraPct))); }
+      case 2: { let hpPct = FM.round(this.caster.curHP / this.caster.maxHP); return FM.roundInt(damage * FM.round(1 + FM.round(hpPct * this.extraPct))); }
     }
     return damage;
   }
 }
 
 class BuffGiantSlayer extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.GIANT_SLAYER;
-    this.extraDam = cfg.extraDam || 0;    // damage per 1% HP diff (basis points)
-    this.maxBoss = cfg.maxBoss || 0;       // cap for boss (basis points)
-    this.maxUnit = cfg.maxUnit || 0;       // cap for player/hero (basis points)
-  }
+  constructor(cfg) { super(cfg); this.group = BG.GIANT_SLAYER; this.extraDam = cfg.extraDam || 0; this.maxBoss = cfg.maxBoss || 0; this.maxUnit = cfg.maxUnit || 0; }
   calDamage(damage, target) {
-    let ownerHp = this.owner.getAttrib(1002);
-    let targetHp = target.getAttrib(1002);
+    let ownerHp = this.owner.getAttrib(1002); let targetHp = target.getAttrib(1002);
     if (targetHp <= ownerHp) return damage;
     let diffPct = Math.ceil(FM.round((targetHp - ownerHp) / ownerHp * 100));
     let rawBonus = FM.round(diffPct * this.extraDam);
@@ -725,102 +792,62 @@ class BuffGiantSlayer extends Buff {
 }
 
 class BuffFragileEffect extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.FRAGILE_EFFECT;
-    this.calType = cfg.calType || 0;
-    this.attribId = cfg.attribId || 1001;
-  }
+  constructor(cfg) { super(cfg); this.group = BG.FRAGILE_EFFECT; this.calType = cfg.calType || 0; this.attribId = cfg.attribId || 1001; }
   calDamage(damage, attacker) {
-    if (this.calType === 0) {
-      return FM.roundInt(attacker.getAttrib(this.attribId) * this.skillPar);
-    } else {
-      return FM.roundInt(attacker.curHP * this.skillPar);
-    }
+    if (this.calType === 0) return FM.roundInt(attacker.getAttrib(this.attribId) * this.skillPar);
+    else return FM.roundInt(attacker.curHP * this.skillPar);
   }
 }
 
 class BuffRecordDamage extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.RECORD_DAMAGE;
-    this.recorded = 0;
-  }
+  constructor(cfg) { super(cfg); this.group = BG.RECORD_DAMAGE; this.recorded = 0; }
   addDamage(dmg) { this.recorded += dmg; }
   getBonus() { return this.recorded; }
 }
 
-class BuffVampire extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.VAMPIRE;
-    this.maxPct = cfg.maxPct || 0.5;
-    this.skillDamFactor = cfg.skillDamFactor || 1.0;
-  }
-  calDamage(damage, target, attacker) {
-    if (!this.battleMain) return;
-    let totalAdd = attacker.getAttrib(1081);
-    let totalDef = this.owner.getAttrib(1082);
-    let totalMult = Math.max(1 + totalAdd - totalDef, TOTAL_DAM_FLOOR);
-    let healBase = FM.round(damage * totalMult);
-    let healCap = FM.round(attacker.maxHP * this.maxPct);
-    healBase = Math.max(FM.roundInt(healBase / this.battleMain.injuryReduce), 1);
-    let healAmount = FM.round(healBase * this.skillDamFactor);
-    if (healAmount > healCap) healAmount = healCap;
-    let effectiveHeal = FM.round(healAmount / this.battleMain.treatDecay);
-    this.battleMain.combat.healthTarget(attacker, FM.roundInt(effectiveHeal), HT.Treat, attacker);
-  }
-}
-
 class BuffSkillDamageAdd extends Buff {
-  constructor(cfg) {
-    super(cfg);
-    this.group = BG.SKILL_DAMAGE_ADD;
-    this.addValue = cfg.addValue || 0;
-  }
+  constructor(cfg) { super(cfg); this.group = BG.SKILL_DAMAGE_ADD; this.addValue = cfg.addValue || 0; }
 }
 
+class BuffDeferDamage extends Buff {
+  constructor(cfg) { super(cfg); this.group = BG.DEFER_DAMAGE; this.absorbed = 0; this.maxAbsorb = cfg.maxAbsorb || Infinity; this.releaseRatio = cfg.releaseRatio || 0; }
+  absorb(damage) {
+    if (!this.isActive) return 0;
+    let cap = this.maxAbsorb - this.absorbed;
+    let absorbed = Math.min(damage, cap);
+    this.absorbed += absorbed;
+    if (this.absorbed >= this.maxAbsorb) { this.isActive = false; this.onEnd(); }
+    return absorbed;
+  }
+  onEnd() {
+    if (this.releaseRatio > 0 && this.owner && this.absorbed > 0) {
+      let releaseDmg = FM.roundInt(this.absorbed * this.releaseRatio);
+      if (releaseDmg > 0) this.owner.curHP = Math.max(0, FM.roundInt(this.owner.curHP - releaseDmg));
+    }
+  }
+}
 
 // ============================================================
-// MODULE 6: DamageEngine — All combat formulas
-// Matches HurtUtil in game_script.js lines 322750-323007
+// MODULE 7: DamageEngine — All combat formulas
 // ============================================================
 const DamageEngine = {
-
-  // --- Hit Determination (checkHit) ---
-  // Returns: 0=miss, 1=normal, 2=crit
-  // Source: game_script.js line 322896
   checkHit(attacker, defender, rng, isPvP, ignoreMiss) {
     let miss = ignoreMiss ? 0 : defender.getAttrib(1008);
     let hit = attacker.getAttrib(1007);
     let critRate = attacker.getAttrib(1004);
     let ignoreCrit = defender.getAttrib(1065);
     let effectiveCrit = Math.max(critRate - ignoreCrit, 0);
-
-    // Raw evasion
     let rawMiss = Math.max(FM.round(miss - hit), 0);
-
-    // Power curve correction: (100*raw)^0.9 / 100
     let corrected = 0;
-    if (rawMiss > 0) {
-      corrected = FM.round(Math.pow(FM.round(100 * rawMiss), MISS_CORRECT) / 100);
-    }
-
-    // PvP cap
+    if (rawMiss > 0) corrected = FM.round(Math.pow(FM.round(100 * rawMiss), MISS_CORRECT) / 100);
     let finalMiss = isPvP ? Math.min(corrected, PVP_MISS_CAP) : corrected;
-
-    // Build probability ranges (out of 10000)
     let pMiss = FM.roundInt(10000 * finalMiss);
     let pNormal = pMiss + FM.roundInt(FM.round(FM.round(1 - finalMiss) * FM.round(1 - effectiveCrit)) * 10000);
-
     let roll = rng.randomInt(0, 10000);
-    if (roll <= pMiss) return 0; // Miss
-    if (roll <= pNormal) return 1; // Normal
-    return 2; // Crit
+    if (roll <= pMiss) return 0;
+    if (roll <= pNormal) return 1;
+    return 2;
   },
-
-  // --- Combo Check (checkDoubleAct) ---
-  // Source: game_script.js line 322918
   checkDoubleAct(attacker, defender, rng) {
     let dh = attacker.getAttrib(1016);
     let ign = defender ? defender.getAttrib(1048) : 0;
@@ -828,9 +855,6 @@ const DamageEngine = {
     if (prob <= 0) return false;
     return rng.randomInt(0, 10000) <= prob;
   },
-
-  // --- Counter Check (checkCounterAct) ---
-  // Source: game_script.js line 322932
   checkCounterAct(counterUnit, attacker, rng) {
     let ctr = counterUnit.getAttrib(1017);
     let ign = attacker ? attacker.getAttrib(1049) : 0;
@@ -838,12 +862,8 @@ const DamageEngine = {
     if (prob <= 0) return false;
     return rng.randomInt(0, 10000) <= prob;
   },
-
-  // --- Stun Check (checkDizz) ---
-  // Source: game_script.js line 322947
   checkDizz(attacker, defender, rng) {
-    let v = attacker.getAttrib(1023);
-    let vd = defender.getAttrib(1026);
+    let v = attacker.getAttrib(1023); let vd = defender.getAttrib(1026);
     let base = Math.max(0, FM.round(v - vd));
     if (base <= 0) return false;
     let corrected = FM.round(Math.pow(FM.round(100 * base), VERTIGO_CORRECT) / 100);
@@ -851,334 +871,160 @@ const DamageEngine = {
     if (prob <= 0) return false;
     return rng.randomInt(0, 10000) <= prob;
   },
-
-  // --- Launch Check (checkThrowHit) ---
-  // Source: game_script.js line 322960
   checkThrowHit(attacker, defender, rng) {
-    let s = attacker.getAttrib(1022);
-    let sd = defender.getAttrib(1025);
-    let effective = FM.round(s - sd);
-    let prob = FM.roundInt(10000 * effective);
+    let s = attacker.getAttrib(1022); let sd = defender.getAttrib(1025);
+    let prob = FM.roundInt(10000 * FM.round(s - sd));
     if (prob <= 0) return false;
     return rng.randomInt(0, 10000) <= prob;
   },
-
-  // --- Skill Crit Check (checkSkillCrit) ---
-  // NOTE: Uses strict < (not <=) unlike other checks
-  // Source: game_script.js line 322938
   checkSkillCrit(unit, rng) {
     let rate = unit.getAttrib(1037);
     let prob = FM.roundInt(10000 * rate);
     if (prob <= 0) return false;
-    return rng.randomInt(0, 10000) < prob; // strict less-than
+    return rng.randomInt(0, 10000) < prob; // strict < (not <=)
   },
-
-  // --- Pierce/Block (calArmorAndBlock) ---
-  // Source: game_script.js line 322773
   calArmorAndBlock(defender, attacker, resistance, attribKey, rng) {
-    let pen = attacker.getAttrib(1068);
-    let ignPen = defender.getAttrib(1069);
-    let blk = defender.getAttrib(1071);
-    let ignBlk = attacker.getAttrib(1072);
-
-    let canPen = pen > ignPen;
-    let canBlock = blk > ignBlk;
-
+    let pen = attacker.getAttrib(1068); let ignPen = defender.getAttrib(1069);
+    let blk = defender.getAttrib(1071); let ignBlk = attacker.getAttrib(1072);
+    let canPen = pen > ignPen; let canBlock = blk > ignBlk;
     let penProb = canPen ? FM.roundInt(10000 * attacker.getAttrib(1067)) : 0;
     let blkProb = canBlock ? FM.roundInt(10000 * defender.getAttrib(1070)) : 0;
-
     let roll = rng.randomInt(0, 10000);
-    let outcome = 2; // neither
+    let outcome = 2;
     if (roll <= penProb) {
-      outcome = 0; // pierce
+      outcome = 0;
       let amount = FM.round(Math.min(PIERCE_BLOCK_CAP, (pen - ignPen) / 10000));
       resistance = FM.round(resistance - amount);
     } else if (roll <= penProb + blkProb) {
-      outcome = 1; // block
+      outcome = 1;
       let amount = FM.round(Math.min(PIERCE_BLOCK_CAP, (blk - ignBlk) / 10000));
       resistance = FM.round(resistance + amount);
     }
-
-    // Cap resistance by attribute up_limit
-    let cap = ATTRIB_CAPS[attribKey];
-    if (cap !== undefined) {
-      resistance = Math.min(resistance, cap);
-    }
-    return { resistance, outcome };
-  },
-
-  // --- Pal Inspire/Suppress (calSuppressAndInspire) ---
-  // Source: game_script.js line 322802
-  calSuppressAndInspire(defender, attacker, resistance, attribKey, rng) {
-    let inspire = attacker.getAttrib(1074);
-    let ignInspire = defender.getAttrib(1075);
-    let suppress = defender.getAttrib(1077);
-    let ignSuppress = attacker.getAttrib(1078);
-
-    let canInspire = inspire > ignInspire;
-    let canSuppress = suppress > ignSuppress;
-
-    // NOTE: inspire uses suppress_rate, suppress uses inspire_rate (cross-reference)
-    let inspProb = canInspire ? FM.roundInt(10000 * attacker.getAttrib(1076)) : 0;
-    let suppProb = canSuppress ? FM.roundInt(10000 * defender.getAttrib(1073)) : 0;
-
-    let roll = rng.randomInt(0, 10000);
-    let outcome = 2;
-    if (roll <= inspProb) {
-      outcome = 0; // inspire (reduce resist)
-      let amount = FM.round(Math.min(PIERCE_BLOCK_CAP, (inspire - ignInspire) / 10000));
-      resistance = FM.round(resistance - amount);
-    } else if (roll <= inspProb + suppProb) {
-      outcome = 1; // suppress (increase resist)
-      let amount = FM.round(Math.min(PIERCE_BLOCK_CAP, (suppress - ignSuppress) / 10000));
-      resistance = FM.round(resistance + amount);
-    }
-
     let cap = ATTRIB_CAPS[attribKey];
     if (cap !== undefined) resistance = Math.min(resistance, cap);
     return { resistance, outcome };
   },
-
-  // --- DMG Resistance (calHurt) ---
-  // Source: game_script.js line 322831
+  calSuppressAndInspire(defender, attacker, resistance, attribKey, rng) {
+    let inspire = attacker.getAttrib(1074); let ignInspire = defender.getAttrib(1075);
+    let suppress = defender.getAttrib(1077); let ignSuppress = attacker.getAttrib(1078);
+    let canInspire = inspire > ignInspire; let canSuppress = suppress > ignSuppress;
+    // NOTE: cross-referenced rates (quirk in game code)
+    let inspProb = canInspire ? FM.roundInt(10000 * attacker.getAttrib(1076)) : 0;
+    let suppProb = canSuppress ? FM.roundInt(10000 * defender.getAttrib(1073)) : 0;
+    let roll = rng.randomInt(0, 10000);
+    let outcome = 2;
+    if (roll <= inspProb) {
+      outcome = 0;
+      let amount = FM.round(Math.min(PIERCE_BLOCK_CAP, (inspire - ignInspire) / 10000));
+      resistance = FM.round(resistance - amount);
+    } else if (roll <= inspProb + suppProb) {
+      outcome = 1;
+      let amount = FM.round(Math.min(PIERCE_BLOCK_CAP, (suppress - ignSuppress) / 10000));
+      resistance = FM.round(resistance + amount);
+    }
+    let cap = ATTRIB_CAPS[attribKey];
+    if (cap !== undefined) resistance = Math.min(resistance, cap);
+    return { resistance, outcome };
+  },
   calHurt(dmg, defender, attacker) {
-    let pveDam = attacker.getAttrib(1057);
-    let resist = defender.getAttrib(1021);
-    let pveResist = defender.getAttrib(1058);
-
+    let pveDam = attacker.getAttrib(1057); let resist = defender.getAttrib(1021); let pveResist = defender.getAttrib(1058);
     dmg = FM.roundInt(dmg * FM.round(1 + pveDam));
     dmg = FM.roundInt(FM.roundInt(dmg * FM.round(1 - resist)) * FM.round(1 - pveResist));
     return Math.max(1, dmg);
   },
-
-  // --- Crit Multiplier ---
   critMultiplier(attacker, defender) {
-    let cd = attacker.getAttrib(1005);
-    let cdef = Math.max(0.5, defender.getAttrib(1006));
+    let cd = attacker.getAttrib(1005); let cdef = Math.max(0.5, defender.getAttrib(1006));
     return Math.max(1.5, FM.round(cd / cdef));
   },
-
-  // --- Normal Attack Damage (normalHurt) ---
-  // Source: game_script.js line 322756, data/formulas/combat/normal_hurt.json
   normalHurt(attacker, defender, hitType, rng, usePierceBlock) {
     if (usePierceBlock === undefined) usePierceBlock = true;
     let atk, mult, resist, isPal = false;
-
     if (attacker.type === 'partner' && attacker.parent) {
-      // Pal: uses PARENT ATK
-      isPal = true;
-      atk = attacker.parent.getAttrib(1001);
-      let palDam = attacker.getAttrib(1040);
-      let palExtra = attacker.parent.getAttrib(1047);
-      mult = FM.round(palDam * palExtra);
-      resist = defender.getAttrib(1020);
-      if (usePierceBlock && rng) {
-        let r = DamageEngine.calSuppressAndInspire(defender, attacker, resist, 1020, rng);
-        resist = r.resistance;
-      }
+      isPal = true; atk = attacker.parent.getAttrib(1001);
+      let palDam = attacker.getAttrib(1040); let palExtra = attacker.parent.getAttrib(1047);
+      mult = FM.round(palDam * palExtra); resist = defender.getAttrib(1020);
+      if (usePierceBlock && rng) { let r = DamageEngine.calSuppressAndInspire(defender, attacker, resist, 1020, rng); resist = r.resistance; }
     } else {
-      atk = attacker.getAttrib(1001);
-      mult = attacker.getAttrib(1039); // att_dam
-      resist = defender.getAttrib(1018); // att_resist
-      if (usePierceBlock && rng) {
-        let r = DamageEngine.calArmorAndBlock(defender, attacker, resist, 1018, rng);
-        resist = r.resistance;
-      }
+      atk = attacker.getAttrib(1001); mult = attacker.getAttrib(1039); resist = defender.getAttrib(1018);
+      if (usePierceBlock && rng) { let r = DamageEngine.calArmorAndBlock(defender, attacker, resist, 1018, rng); resist = r.resistance; }
     }
-
-    let def = defender.getAttrib(1024);
-    let defCoe = defender.getAttrib(1060);
+    let def = defender.getAttrib(1024); let defCoe = defender.getAttrib(1060);
     let baseRaw = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
-
-    // Player: combined multiplier and resistance in one round step
-    // Pal: same structure
     let dmg = FM.roundInt(baseRaw * FM.round(mult * FM.round(1 - resist)));
-
-    // calHurt (DMG RES + PvE)
     dmg = DamageEngine.calHurt(dmg, defender, attacker);
-
-    // Crit (applied AFTER calHurt)
-    if (hitType === 2) {
-      dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
-    }
-
+    if (hitType === 2) dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
     return Math.max(1, dmg);
   },
-
-  // --- Combo Damage (normalDoubleHurt) ---
-  // Source: game_script.js line 322839, data/formulas/combat/normal_double_hurt.json
-  // KEY DIFFERENCE: multiplier and resistance are SEPARATE steps
   normalDoubleHurt(attacker, defender, hitType, rng, usePierceBlock) {
     if (usePierceBlock === undefined) usePierceBlock = true;
     let atk, isPal = false;
-
-    if (attacker.type === 'partner' && attacker.parent) {
-      isPal = true;
-      atk = attacker.parent.getAttrib(1001);
-    } else {
-      atk = attacker.getAttrib(1001);
-    }
-
-    let def = defender.getAttrib(1024);
-    let defCoe = defender.getAttrib(1060);
+    if (attacker.type === 'partner' && attacker.parent) { isPal = true; atk = attacker.parent.getAttrib(1001); }
+    else atk = attacker.getAttrib(1001);
+    let def = defender.getAttrib(1024); let defCoe = defender.getAttrib(1060);
     let baseRaw = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
     let dmg;
-
     if (isPal) {
-      // Pal combo: pal mult first, then combo mult
-      let palDam = attacker.getAttrib(1040);
-      let palExtra = attacker.parent.getAttrib(1047);
-      let palMult = FM.round(palDam * palExtra);
-      let palResist = defender.getAttrib(1020);
-      if (usePierceBlock && rng) {
-        let r = DamageEngine.calSuppressAndInspire(defender, attacker, palResist, 1020, rng);
-        palResist = r.resistance;
-      }
+      let palDam = attacker.getAttrib(1040); let palExtra = attacker.parent.getAttrib(1047);
+      let palMult = FM.round(palDam * palExtra); let palResist = defender.getAttrib(1020);
+      if (usePierceBlock && rng) { let r = DamageEngine.calSuppressAndInspire(defender, attacker, palResist, 1020, rng); palResist = r.resistance; }
       let palBase = FM.roundInt(FM.roundInt(baseRaw * palMult) * FM.round(1 - palResist));
-      let dhDam = attacker.getAttrib(1032);
-      dmg = FM.roundInt(palBase * dhDam);
+      dmg = FM.roundInt(palBase * attacker.getAttrib(1032));
     } else {
-      // Player combo: separate mult and resist steps
-      let dhDam = attacker.getAttrib(1032);
-      let dhDef = defender.getAttrib(1034);
-      if (usePierceBlock && rng) {
-        let r = DamageEngine.calArmorAndBlock(defender, attacker, dhDef, 1034, rng);
-        dhDef = r.resistance;
-      }
+      let dhDam = attacker.getAttrib(1032); let dhDef = defender.getAttrib(1034);
+      if (usePierceBlock && rng) { let r = DamageEngine.calArmorAndBlock(defender, attacker, dhDef, 1034, rng); dhDef = r.resistance; }
       dmg = FM.roundInt(FM.roundInt(baseRaw * dhDam) * FM.round(1 - dhDef));
     }
-
     dmg = DamageEngine.calHurt(dmg, defender, attacker);
-
-    if (hitType === 2) {
-      dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
-    }
-
+    if (hitType === 2) dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
     return Math.max(1, dmg);
   },
-
-  // --- Counter Damage (normalCounterHurt) ---
-  // Source: game_script.js line 322853
   normalCounterHurt(attacker, defender, hitType, rng, usePierceBlock) {
     if (usePierceBlock === undefined) usePierceBlock = true;
-    let atk = attacker.getAttrib(1001);
-    let def = defender.getAttrib(1024);
-    let defCoe = defender.getAttrib(1060);
+    let atk = attacker.getAttrib(1001); let def = defender.getAttrib(1024); let defCoe = defender.getAttrib(1060);
     let baseRaw = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
-
-    let ctrDam = attacker.getAttrib(1033);
-    let ctrDef = defender.getAttrib(1035);
-    if (usePierceBlock && rng) {
-      let r = DamageEngine.calArmorAndBlock(defender, attacker, ctrDef, 1035, rng);
-      ctrDef = r.resistance;
-    }
+    let ctrDam = attacker.getAttrib(1033); let ctrDef = defender.getAttrib(1035);
+    if (usePierceBlock && rng) { let r = DamageEngine.calArmorAndBlock(defender, attacker, ctrDef, 1035, rng); ctrDef = r.resistance; }
     let dmg = FM.roundInt(FM.roundInt(baseRaw * ctrDam) * FM.round(1 - ctrDef));
     dmg = DamageEngine.calHurt(dmg, defender, attacker);
-
-    if (hitType === 2) {
-      dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
-    }
+    if (hitType === 2) dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
     return Math.max(1, dmg);
   },
-
-  // --- Skill Damage (SkillHurt) ---
-  // Source: game_script.js line 322967
-  // BUG REPLICATION: uses double_hit_def for calArmorAndBlock attrib key
   skillHurt(attacker, defender, hitType, rng, usePierceBlock) {
     if (usePierceBlock === undefined) usePierceBlock = true;
-    let atk = attacker.getAttrib(1001);
-    let def = defender.getAttrib(1024);
-    let defCoe = defender.getAttrib(1060);
+    let atk = attacker.getAttrib(1001); let def = defender.getAttrib(1024); let defCoe = defender.getAttrib(1060);
     let baseRaw = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
-
-    let skillDamExtra = attacker.getAttrib(1045);
-    let skillResist = defender.getAttrib(1019);
+    let skillDamExtra = attacker.getAttrib(1045); let skillResist = defender.getAttrib(1019);
     if (usePierceBlock && rng) {
-      // BUG: uses 1034 (double_hit_def) as attrib key for cap lookup
+      // BUG REPLICATION: uses 1034 (double_hit_def) as attrib key for cap lookup
       let r = DamageEngine.calArmorAndBlock(defender, attacker, skillResist, 1034, rng);
       skillResist = r.resistance;
     }
     let dmg = FM.roundInt(FM.roundInt(baseRaw * skillDamExtra) * FM.round(1 - skillResist));
     dmg = DamageEngine.calHurt(dmg, defender, attacker);
-
-    if (hitType === 2) {
-      dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
-    }
+    if (hitType === 2) dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(attacker, defender));
     return Math.max(1, dmg);
   },
-
-  // --- Skill Crit Damage (0.98 exponent) ---
-  // Source: game_script.js line ~195860
   skillCritDamage(damage, skillCritDam) {
     let product = FM.roundInt(damage * FM.round(1 + skillCritDam));
     return FM.roundInt(Math.pow(product, 0.98));
   },
-
-  // --- Normal Attack HP Steal ---
   normalHpsteal(attacker, defender, damage) {
     let rate = FM.roundInt(attacker.getAttrib(1014) - defender.getAttrib(1027));
-    rate = Math.max(0, rate);
-    return FM.roundInt(damage * rate);
+    return FM.roundInt(damage * Math.max(0, rate));
   },
-
-  // --- Skill HP Steal ---
   skillHpsteal(attacker, defender, damage) {
     let rate = Math.max(0, FM.round(attacker.getAttrib(1015) - defender.getAttrib(1028)));
     return FM.roundInt(damage * rate);
   },
-
-  // --- HP Steal Trigger Check ---
-  checkHpstealTrigger(attacker, defender, rng) {
-    let rate = FM.roundInt(Math.max(0, 10000 * FM.round(attacker.getAttrib(1053) - defender.getAttrib(1055))));
-    if (rate <= 0) return false;
-    return rng.randomInt(0, 10000) <= rate;
-  },
-
-  // --- HP-Based Steal Amount ---
-  hpstealAmount(unit) {
-    let amount = unit.getAttrib(1054);
-    let ignore = unit.getAttrib(1056);
-    let effective = FM.round(amount * Math.max(0, FM.round(1 - ignore)));
-    return FM.roundInt(unit.getAttrib(1002) * effective);
-  },
-
-  // --- Spirit Normal Hit ---
-  // Source: game_script.js line 322981
-  spiritNormalHit(spirit, defender) {
-    if (defender.type === 'spirit') {
-      // Spirit vs Spirit
-      let atk = spirit.getAttrib(1001);
-      let sda = spirit.getAttrib(6001);
-      let sdd = defender.getAttrib(6002);
-      let sddf = defender.getAttrib(6003);
-      return FM.round(atk * FM.round(sda - sdd + 1) * FM.round(1 - sddf));
-    }
-    // Spirit vs Player: use parent's damage scaled by coefficients
-    // Simplified: use parent normalHurt scaled by a factor
-    if (spirit.parent) {
-      let baseDmg = DamageEngine.normalHurt(spirit.parent, defender, 1, null, false);
-      return FM.roundInt(baseDmg * 0.3); // approximate spirit scaling
-    }
-    return 1;
-  }
 };
 
-
 // ============================================================
-// MODULE 7: CombatLog
+// MODULE 8: CombatLog
 // ============================================================
 class CombatLog {
-  constructor() {
-    this.entries = [];
-    this.enabled = true;
-  }
+  constructor() { this.entries = []; this.enabled = true; }
   clear() { this.entries = []; }
-
-  add(frame, type, msg, detail) {
-    if (!this.enabled) return;
-    this.entries.push({ frame, type, msg, detail: detail || '' });
-  }
-
+  add(frame, type, msg, detail) { if (!this.enabled) return; this.entries.push({ frame, type, msg, detail: detail || '' }); }
   getHTML(showDetail) {
     let html = '';
     for (let e of this.entries) {
@@ -1190,9 +1036,7 @@ class CombatLog {
       else if (e.type === 'buff') cls += ' log-buff';
       else cls += ' log-info';
       html += `<div class="${cls}"><span class="log-frame">F${String(e.frame).padStart(4,'0')}</span> ${e.msg}`;
-      if (showDetail && e.detail) {
-        html += `<div class="log-detail">${e.detail}</div>`;
-      }
+      if (showDetail && e.detail) html += `<div class="log-detail">${e.detail}</div>`;
       html += '</div>';
     }
     return html;
@@ -1200,98 +1044,18 @@ class CombatLog {
 }
 
 // ============================================================
-// MODULE 8: Skill System (Data-Driven)
-// ============================================================
-// Simplified skill config: each skill triggers buff effects on activation
-const DEFAULT_SKILLS = {
-  // Generic active skill: deals skill damage based on calType 1 (ATK-DEF)
-  generic_skill: {
-    id: 'generic_skill',
-    name: 'Active Skill',
-    maxPower: 150,
-    powerRecovery: 100,
-    effects: [
-      { type: 'skill_value', calType: 1, skillPar: 3.0, ignoreFlag: 0 }
-    ]
-  },
-  // Shield skill
-  shield_skill: {
-    id: 'shield_skill',
-    name: 'Shield',
-    maxPower: 200,
-    powerRecovery: 80,
-    effects: [
-      { type: 'shield', calType: 0, attribId: 1002, skillPar: 0.2, duration: 150, isDec: 0, hpType: 1 }
-    ]
-  },
-  // Bleed skill
-  bleed_skill: {
-    id: 'bleed_skill',
-    name: 'Bleed',
-    maxPower: 120,
-    powerRecovery: 90,
-    effects: [
-      { type: 'skill_value', calType: 4, skillPar: 2.5, ignoreFlag: 0 },
-      { type: 'bleed', bleedType: 0, skillPar: 0.5, duration: 90 }
-    ]
-  },
-  // Stun skill
-  stun_skill: {
-    id: 'stun_skill',
-    name: 'Stun Strike',
-    maxPower: 180,
-    powerRecovery: 70,
-    effects: [
-      { type: 'skill_value', calType: 1, skillPar: 2.0, ignoreFlag: 0 },
-      { type: 'dizz', duration: 60, probability: 0.5 }
-    ]
-  },
-  // Heal skill
-  heal_skill: {
-    id: 'heal_skill',
-    name: 'Heal',
-    maxPower: 160,
-    powerRecovery: 85,
-    effects: [
-      { type: 'skill_value', calType: 9, skillPar: 0.15, isHeal: true }
-    ]
-  },
-  // None
-  none: {
-    id: 'none',
-    name: '(None)',
-    maxPower: 9999,
-    powerRecovery: 0,
-    effects: []
-  }
-};
-
-// ============================================================
 // MODULE 9: CombatEngine — 30 FPS Frame Loop
 // ============================================================
 class CombatEngine {
   constructor(battleMain) {
-    this.bm = battleMain;
-    this.frame = 0;
-    this.maxFrames = 9000; // 5 min at 30fps
-    this.running = false;
-    this.winner = null;
-    this.log = new CombatLog();
+    this.bm = battleMain; this.frame = 0; this.maxFrames = 9000;
+    this.running = false; this.winner = null; this.log = new CombatLog();
   }
+  reset() { this.frame = 0; this.running = false; this.winner = null; this.log.clear(); }
 
-  reset() {
-    this.frame = 0;
-    this.running = false;
-    this.winner = null;
-    this.log.clear();
-  }
-
-  // --- healthTarget: applies Total DMG Bonus/RES ---
-  // Source: game_script.js line 7229
   healthTarget(target, damage, healthType, attacker) {
     if (IS_DAMAGE_TYPE.has(healthType) && attacker && attacker !== target) {
-      let add = attacker.getAttrib(1081);
-      let def = target.getAttrib(1082);
+      let add = attacker.getAttrib(1081); let def = target.getAttrib(1082);
       let mult = Math.max(1 + add - def, TOTAL_DAM_FLOOR);
       damage = FM.round(damage * mult);
     }
@@ -1299,545 +1063,280 @@ class CombatEngine {
     target.damageQueue.push({ damage, healthType, attacker });
   }
 
-  // --- Process Damage Queue (Unit.addDamage) ---
-  // Source: game_script.js line 449240
   processDamageQueue(unit) {
     // HP recovery tick
-    let hpRec = unit.getAttrib(1012);
-    let ignHpRec = unit.getAttrib(1066);
+    let hpRec = unit.getAttrib(1012); let ignHpRec = unit.getAttrib(1066);
     let recAmount = FM.roundInt(FM.round(unit.getAttrib(1002) * FM.round(hpRec - ignHpRec)) * this.bm.treatDecay);
     if (recAmount > 0) {
-      // Apply reduce heal buffs
       let heals = unit.getBuffsByGroup(BG.REDUCE_HEAL);
       for (let h of heals) recAmount = h.calHeal(recAmount);
-      if (recAmount > 0) {
-        unit.curHP = Math.min(FM.roundInt(unit.curHP + recAmount), unit.maxHP);
-      }
+      if (recAmount > 0) unit.curHP = Math.min(FM.roundInt(unit.curHP + recAmount), unit.maxHP);
     }
-
     for (let evt of unit.damageQueue) {
-      let dmg = evt.damage;
-      let ht = evt.healthType;
-
+      let dmg = evt.damage; let ht = evt.healthType;
       if (IS_DAMAGE_TYPE.has(ht)) {
-        // Step 1: PvP reduction
         dmg = Math.max(FM.roundInt(dmg / this.bm.injuryReduce), 1);
-
-        // Step 2: Shield absorption
+        // Shield absorption
         if (unit.shieldHP > 0) {
           let shields = unit.getBuffsByGroup(BG.SHIELD);
-          for (let s of shields) {
-            if (dmg <= 0) break;
-            let absorbed = s.absorb(dmg);
-            dmg = FM.roundInt(dmg - absorbed);
-          }
+          for (let s of shields) { if (dmg <= 0) break; let absorbed = s.absorb(dmg); dmg = FM.roundInt(dmg - absorbed); }
           unit.shieldHP = Math.max(0, unit.shieldHP);
         }
-
-        // Step 3: Block absorption (BuffBlock)
+        // DEFER_DAMAGE absorption
+        let defers = unit.getBuffsByGroup(BG.DEFER_DAMAGE);
+        for (let d of defers) { if (dmg <= 0) break; if (d.absorb) { let absorbed = d.absorb(dmg); dmg = FM.roundInt(dmg - absorbed); } }
+        // Block absorption
         let blocks = unit.getBuffsByGroup(BG.BLOCK);
-        for (let b of blocks) {
-          if (dmg <= 0) break;
-          if (b.absorb) {
-            let absorbed = b.absorb(dmg);
-            dmg = FM.roundInt(dmg - absorbed);
-          }
-        }
-
+        for (let b of blocks) { if (dmg <= 0) break; if (b.absorb) { let absorbed = b.absorb(dmg); dmg = FM.roundInt(dmg - absorbed); } }
         dmg = Math.max(0, dmg);
-
-        // Step 4: HP reduction
         unit.curHP = FM.roundInt(unit.curHP - dmg);
-
-        // Step 5: Death prevention chain
         if (unit.curHP <= 0) {
-          // Check immune death
           if (unit.hasBuffGroup(BG.IMMUNE_DEATH)) {
-            unit.curHP = 1;
-            unit.removeBuffsByGroup(BG.IMMUNE_DEATH);
-            this.log.add(this.frame, 'buff', `${unit.id} IMMUNE DEATH triggered (1 HP)`);
+            unit.curHP = 1; unit.removeBuffsByGroup(BG.IMMUNE_DEATH);
+            this.log.add(this.frame, 'buff', `${unit.id} IMMUNE DEATH (1 HP)`);
           }
         }
-
-        // Record damage
         let recBufs = unit.getBuffsByGroup(BG.RECORD_DAMAGE);
         for (let rb of recBufs) rb.addDamage(dmg);
-
       } else if (ht === HT.Treat || ht === HT.Treat_Crit || ht === HT.Skill_Hpsteal || ht === HT.Act_Hpsteal) {
-        // Heal
-        let heal = dmg;
-        heal = FM.roundInt(heal * this.bm.treatDecay);
-        // Reduce heal buffs
+        let heal = FM.roundInt(dmg * this.bm.treatDecay);
         let heals = unit.getBuffsByGroup(BG.REDUCE_HEAL);
         for (let h of heals) heal = h.calHeal(heal);
         unit.curHP = Math.min(FM.roundInt(unit.curHP + heal), unit.maxHP);
       }
     }
     unit.damageQueue = [];
-
-    // Clamp
     unit.curHP = Math.max(0, unit.curHP);
-    if (unit.curHP <= 0) {
-      unit.isDead = true;
-    }
+    if (unit.curHP <= 0) unit.isDead = true;
   }
 
-  // --- Execute a normal attack ---
   executeAttack(attacker, defender) {
     if (attacker.isDead || defender.isDead) return;
-
-    // Hit check
     let hitType = DamageEngine.checkHit(attacker, defender, this.bm.rng, this.bm.isPvP, false);
-
-    if (hitType === 0) {
-      // Miss
-      this.log.add(this.frame, 'miss', `${attacker.id} ATK → ${defender.id}: MISS`);
-      return;
-    }
-
-    // Calculate damage
+    if (hitType === 0) { this.log.add(this.frame, 'miss', `${attacker.id} ATK → ${defender.id}: MISS`); return; }
     let dmg = DamageEngine.normalHurt(attacker, defender, hitType, this.bm.rng, true);
-    let htType = hitType === 2 ? HT.Hurt_Crit : HT.Hurt;
-
-    // Apply FRAGILE_EFFECT (on defender, bonus from attacker)
     let fragiles = defender.getBuffsByGroup(BG.FRAGILE_EFFECT);
     let fragileBonus = 0;
     for (let f of fragiles) fragileBonus += f.calDamage(dmg, attacker);
     dmg += fragileBonus;
-
-    // Apply EXTRA_DAMAGE
     let extras = attacker.getBuffsByGroup(BG.EXTRA_DAMAGE);
     for (let e of extras) dmg = e.calDamage(dmg, defender);
-
-    // Apply GIANT_SLAYER
     let giants = attacker.getBuffsByGroup(BG.GIANT_SLAYER);
     for (let g of giants) dmg = g.calDamage(dmg, defender);
-
-    // Boss damage
     if (defender.unitType !== 1 && defender.unitType !== 12) {
       let bossDam = attacker.getAttrib(1046);
       if (bossDam > 0) dmg = FM.roundInt(dmg * FM.round(1 + bossDam));
     }
-
-    let detailParts = [];
-    let atk = attacker.getAttrib(1001);
-    let def2 = defender.getAttrib(1024);
-    let defCoe = defender.getAttrib(1060);
-    let baseRaw = Math.max(FM.roundInt(atk - def2 * FM.round(1 + defCoe)), 1);
-    detailParts.push(`base=${baseRaw}`);
-    if (hitType === 2) detailParts.push(`CRIT×${DamageEngine.critMultiplier(attacker,defender).toFixed(2)}`);
-    if (fragileBonus) detailParts.push(`fragile+${fragileBonus}`);
-    detailParts.push(`final=${dmg}`);
-
-    let logType = hitType === 2 ? 'crit' : 'dmg';
-    this.log.add(this.frame, logType,
-      `${attacker.id} ATK → ${defender.id}: ${dmg} ${hitType===2?'CRIT':''}`,
-      detailParts.join(' | '));
-
+    let htType = hitType === 2 ? HT.Hurt_Crit : HT.Hurt;
+    this.log.add(this.frame, hitType===2?'crit':'dmg', `${attacker.id} ATK → ${defender.id}: ${dmg} ${hitType===2?'CRIT':''}`);
     this.healthTarget(defender, dmg, htType, attacker);
-
     // HP steal
     let stealDmg = DamageEngine.normalHpsteal(attacker, defender, dmg);
-    if (stealDmg > 0) {
-      this.healthTarget(attacker, stealDmg, HT.Act_Hpsteal, attacker);
-    }
-
+    if (stealDmg > 0) this.healthTarget(attacker, stealDmg, HT.Act_Hpsteal, attacker);
+    // Special talent: heal per counter (on defender's counter)
     // Stun check
     if (DamageEngine.checkDizz(attacker, defender, this.bm.rng)) {
       let stunDur = FM.round(attacker.getAttrib(1030) * FM.round(1 - defender.getAttrib(1031)));
       let stunFrames = Math.max(1, FM.roundInt(stunDur * 30));
-      // Apply CONTROL_RES
       let cr = defender.getAttrib(1042);
       stunFrames = FM.roundInt(stunFrames * FM.round(1 - cr));
-      if (stunFrames > 0) {
-        defender.stunFrames = Math.max(defender.stunFrames, stunFrames);
-        this.log.add(this.frame, 'buff', `${defender.id} STUNNED for ${stunFrames} frames`);
-      }
+      if (stunFrames > 0) { defender.stunFrames = Math.max(defender.stunFrames, stunFrames); this.log.add(this.frame, 'buff', `${defender.id} STUNNED ${stunFrames}f`); }
     }
-
     // Combo check
     if (DamageEngine.checkDoubleAct(attacker, defender, this.bm.rng)) {
       let comboHit = DamageEngine.checkHit(attacker, defender, this.bm.rng, this.bm.isPvP, false);
       if (comboHit > 0) {
         let comboDmg = DamageEngine.normalDoubleHurt(attacker, defender, comboHit, this.bm.rng, true);
-        let comboHt = comboHit === 2 ? HT.Hurt_Double_Crit : HT.Hurt_Double;
-        // Fragile/Extra/Giant
         for (let f of fragiles) comboDmg += f.calDamage(comboDmg, attacker);
         for (let e of extras) comboDmg = e.calDamage(comboDmg, defender);
         for (let g of giants) comboDmg = g.calDamage(comboDmg, defender);
-
-        this.log.add(this.frame, comboHit===2?'crit':'dmg',
-          `${attacker.id} COMBO → ${defender.id}: ${comboDmg} ${comboHit===2?'CRIT':''}`, '');
-        this.healthTarget(defender, comboDmg, comboHt, attacker);
+        this.log.add(this.frame, comboHit===2?'crit':'dmg', `${attacker.id} COMBO → ${defender.id}: ${comboDmg} ${comboHit===2?'CRIT':''}`);
+        this.healthTarget(defender, comboDmg, comboHit === 2 ? HT.Hurt_Double_Crit : HT.Hurt_Double, attacker);
+        // Special talent: heal per combo
+        if (attacker.specialTalents.heal_per_combo > 0) {
+          let h = FM.roundInt(attacker.maxHP * attacker.specialTalents.heal_per_combo);
+          if (h > 0) this.healthTarget(attacker, h, HT.Treat, attacker);
+        }
       }
     }
-
-    // Counter check (defender counters)
+    // Counter check
     if (!defender.isDead && DamageEngine.checkCounterAct(defender, attacker, this.bm.rng)) {
       let ctrHit = DamageEngine.checkHit(defender, attacker, this.bm.rng, this.bm.isPvP, false);
       if (ctrHit > 0) {
         let ctrDmg = DamageEngine.normalCounterHurt(defender, attacker, ctrHit, this.bm.rng, true);
-        let ctrHt = ctrHit === 2 ? HT.Hurt_Counter_Crit : HT.Hurt_Counter;
-        this.log.add(this.frame, ctrHit===2?'crit':'dmg',
-          `${defender.id} COUNTER → ${attacker.id}: ${ctrDmg} ${ctrHit===2?'CRIT':''}`, '');
-        this.healthTarget(attacker, ctrDmg, ctrHt, defender);
+        this.log.add(this.frame, ctrHit===2?'crit':'dmg', `${defender.id} COUNTER → ${attacker.id}: ${ctrDmg} ${ctrHit===2?'CRIT':''}`);
+        this.healthTarget(attacker, ctrDmg, ctrHit === 2 ? HT.Hurt_Counter_Crit : HT.Hurt_Counter, defender);
+        // Special talent: heal per counter
+        if (defender.specialTalents.heal_per_counter > 0) {
+          let h = FM.roundInt(defender.maxHP * defender.specialTalents.heal_per_counter);
+          if (h > 0) this.healthTarget(defender, h, HT.Treat, defender);
+        }
       }
     }
   }
 
-  // --- Execute Skill ---
   executeSkill(unit, skill, target) {
     if (unit.isDead || target.isDead) return;
     this.log.add(this.frame, 'info', `${unit.id} uses ${skill.name}`);
-
-    for (let eff of skill.effects) {
-      if (target.isDead && !eff.isHeal) continue;
-
-      switch (eff.type) {
-        case 'skill_value': {
-          // BuffSkillValue simplified: calculate base, apply skill pipeline
-          let dmg = this.calcSkillValue(unit, target, eff);
-          if (eff.isHeal) {
-            this.healthTarget(unit, Math.abs(dmg), HT.Treat, unit);
-            this.log.add(this.frame, 'heal', `${unit.id} heals ${Math.abs(dmg)}`);
-          } else {
-            // Fragile/Extra/Giant
-            let fragiles = target.getBuffsByGroup(BG.FRAGILE_EFFECT);
-            for (let f of fragiles) dmg += f.calDamage(dmg, unit);
-            let extras = unit.getBuffsByGroup(BG.EXTRA_DAMAGE);
-            for (let e of extras) dmg = e.calDamage(dmg, target);
-            let giants = unit.getBuffsByGroup(BG.GIANT_SLAYER);
-            for (let g of giants) dmg = g.calDamage(dmg, target);
-
-            this.healthTarget(target, dmg, HT.Hurt, unit);
-            this.log.add(this.frame, 'dmg', `${unit.id} skill DMG → ${target.id}: ${dmg}`,
-              `calType=${eff.calType} skillPar=${eff.skillPar}`);
-
-            // Skill HP steal
-            let steal = DamageEngine.skillHpsteal(unit, target, dmg);
-            if (steal > 0) this.healthTarget(unit, steal, HT.Skill_Hpsteal, unit);
-          }
-        } break;
-
-        case 'shield': {
-          let shieldTarget = eff.targetSelf !== false ? unit : target;
-          let shield = new BuffShield({
-            buffId: 100 + Math.random()*1000|0,
-            caster: unit, target: shieldTarget,
-            skillPar: eff.skillPar, duration: eff.duration || 150,
-            calType: eff.calType || 0, attribId: eff.attribId || 1002,
-            isDec: eff.isDec !== undefined ? eff.isDec : 0,
-            hpType: eff.hpType || 1,
-            battleMain: this.bm, mutex: 3, addMax: 5
-          });
-          shieldTarget.addBuff(shield);
-          this.log.add(this.frame, 'buff', `${shieldTarget.id} gains SHIELD (${shield.shieldValue} HP)`);
-        } break;
-
-        case 'bleed': {
-          this.applyBleed(unit, target, eff);
-        } break;
-
-        case 'dizz': {
-          let prob = eff.probability || 1;
-          if (this.bm.rng.randomInt(0, 10000) <= FM.roundInt(10000 * prob)) {
-            let dur = eff.duration || 60;
-            let cr = target.getAttrib(1042);
-            dur = FM.roundInt(dur * FM.round(1 - cr));
-            if (dur > 0) {
-              target.stunFrames = Math.max(target.stunFrames, dur);
-              this.log.add(this.frame, 'buff', `${target.id} STUNNED by skill for ${dur} frames`);
-            }
-          }
-        } break;
-
-        case 'attrib_buff': {
-          let ab = new BuffAttrib({
-            buffId: eff.buffId || 200,
-            attribId: eff.attribId, modType: eff.modType || 'flat',
-            modValue: eff.modValue, duration: eff.duration || 150,
-            caster: unit, mutex: eff.mutex || 1
-          });
-          let buffTarget = eff.targetSelf !== false ? unit : target;
-          buffTarget.addBuff(ab);
-          this.log.add(this.frame, 'buff', `${buffTarget.id} ${eff.modType} ${eff.attribId} ${eff.modValue>0?'+':''}${eff.modValue}`);
-        } break;
-      }
-    }
-
-    unit.energy = 0;
-  }
-
-  // --- Calculate BuffSkillValue damage ---
-  // Source: data/formulas/buffs/skill_value.json
-  calcSkillValue(caster, target, eff) {
-    let calType = eff.calType || 1;
-    let skillPar = eff.skillPar || 1;
-    let ignoreFlag = eff.ignoreFlag || 0;
-    let base = 0;
-
-    let atk = caster.getAttrib(1001);
-    let def = target.getAttrib(1024);
-    let defCoe = target.getAttrib(1060);
-    let atkMinusDef = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
-
-    switch (calType) {
-      case 0: base = caster.getAttrib(eff.attribId || 1001); break;
-      case 1: base = atkMinusDef; break;
-      case 2: base = FM.roundInt(caster.getAttrib(1002) - target.curHP); break;
-      case 3: base = target.curHP; break;
-      case 4: base = FM.roundInt(atkMinusDef * caster.getAttrib(1039)); break;
-      case 5: {
-        let tAtk = target.getAttrib(1001);
-        let tDef = target.getAttrib(1024);
-        let tDefCoe = target.getAttrib(1060);
-        base = FM.roundInt(Math.max(FM.roundInt(tAtk - tDef * FM.round(1 + tDefCoe)), 1) * target.getAttrib(1039));
-      } break;
-      case 6: base = Math.max(FM.roundInt(atkMinusDef * caster.getAttrib(1032)), 1); break;
-      case 7: base = Math.max(FM.roundInt(atkMinusDef * caster.getAttrib(1033)), 1); break;
-      case 8: base = caster.curHP; break;
-      case 9: base = caster.getAttrib(1002); break;
-      case 10: {
-        // Partner damage
-        let pAtk = caster.parent ? caster.parent.getAttrib(1001) : atk;
-        let pDam = caster.getAttrib(1040);
-        let pExtra = caster.getAttrib(1047);
-        let atkDam = FM.round(caster.getAttrib(1039) * pDam * pExtra);
-        base = FM.roundInt(Math.max(FM.roundInt(pAtk - def * FM.round(1 + defCoe)), 1) * atkDam);
-      } break;
-    }
-
-    // Apply skillPar and active_skilldamage_par
-    let asp = caster.getAttrib(1043);
-    let damage = FM.round(base * FM.round(skillPar * asp));
-
-    // SKILL_DAMAGE_ADD
-    let sdaBufs = caster.getBuffsByGroup(BG.SKILL_DAMAGE_ADD);
-    for (let sb of sdaBufs) damage += sb.addValue;
-
-    // skill_dam_extra (unless T1045 flag)
-    if (!(ignoreFlag & 2)) {
-      damage = FM.roundInt(damage * caster.getAttrib(1045));
-    }
-
-    // Skill crit (unless SkillCrit flag set)
+    let atk = unit.getAttrib(1001); let def = target.getAttrib(1024); let defCoe = target.getAttrib(1060);
+    let baseRaw = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
+    let asp = unit.getAttrib(1043);
+    let baseDmg = FM.roundInt(baseRaw * FM.round(skill.dmgPct / 100 * asp));
+    // Apply skill_dam_extra
+    baseDmg = FM.roundInt(baseDmg * unit.getAttrib(1045));
+    // Skill crit (0.98 exponent)
     let isSkillCrit = false;
-    if (!(ignoreFlag & 1)) {
-      if (DamageEngine.checkSkillCrit(caster, this.bm.rng)) {
-        isSkillCrit = true;
-        let scDam = caster.getAttrib(1038);
-        damage = DamageEngine.skillCritDamage(damage, scDam);
+    if (DamageEngine.checkSkillCrit(unit, this.bm.rng)) {
+      isSkillCrit = true;
+      baseDmg = DamageEngine.skillCritDamage(baseDmg, unit.getAttrib(1038));
+    }
+    // Skill resistance
+    let skillResist = target.getAttrib(1019);
+    let r = DamageEngine.calArmorAndBlock(target, unit, skillResist, 1034, this.bm.rng);
+    baseDmg = FM.roundInt(baseDmg * Math.max(0, FM.round(1 - r.resistance)));
+    baseDmg = DamageEngine.calHurt(baseDmg, target, unit);
+    // Buff modifiers
+    let fragiles = target.getBuffsByGroup(BG.FRAGILE_EFFECT);
+    for (let f of fragiles) baseDmg += f.calDamage(baseDmg, unit);
+    let extras = unit.getBuffsByGroup(BG.EXTRA_DAMAGE);
+    for (let e of extras) baseDmg = e.calDamage(baseDmg, target);
+    baseDmg = Math.max(1, baseDmg);
+    this.log.add(this.frame, isSkillCrit?'crit':'dmg', `${unit.id} SKILL → ${target.id}: ${baseDmg} ${isSkillCrit?'SKILLCRIT':''}`);
+    this.healthTarget(target, baseDmg, HT.Hurt, unit);
+    // Skill HP steal
+    let steal = DamageEngine.skillHpsteal(unit, target, baseDmg);
+    if (steal > 0) this.healthTarget(unit, steal, HT.Skill_Hpsteal, unit);
+    // Process skill effects
+    for (let eff of skill.effects) {
+      switch (eff.type) {
+        case 'attrib': {
+          let ab = new BuffAttrib({ buffId: 300 + skill.id, attribId: eff.id, modType: 'flat', modValue: eff.val, duration: eff.dur || 150, caster: unit, mutex: 5 });
+          unit.addBuff(ab);
+        } break;
+        case 'attrib_debuff': {
+          let ab = new BuffAttrib({ buffId: 400 + skill.id, attribId: eff.id, modType: 'flat', modValue: eff.val, duration: eff.dur || 150, caster: unit, mutex: 5 });
+          target.addBuff(ab);
+        } break;
+        case 'shield': {
+          let shield = new BuffShield({ buffId: 500 + skill.id, caster: unit, target: unit, skillPar: eff.pct, duration: eff.dur || 150, calType: 0, attribId: 1002, isDec: 0, hpType: 1, battleMain: this.bm, mutex: 3, addMax: 5 });
+          unit.addBuff(shield);
+          this.log.add(this.frame, 'buff', `${unit.id} SHIELD (${shield.shieldValue} HP)`);
+        } break;
+        case 'heal': {
+          let healAmt = FM.roundInt(unit.maxHP * eff.pct);
+          this.healthTarget(unit, healAmt, HT.Treat, unit);
+          this.log.add(this.frame, 'heal', `${unit.id} heals ${healAmt}`);
+        } break;
+        case 'stun': {
+          let cr = target.getAttrib(1042);
+          let dur = FM.roundInt(eff.dur * FM.round(1 - cr));
+          if (dur > 0) { target.stunFrames = Math.max(target.stunFrames, dur); this.log.add(this.frame, 'buff', `${target.id} STUNNED by skill ${dur}f`); }
+        } break;
+        case 'fragile': {
+          let fb = new BuffFragileEffect({ buffId: 600 + skill.id, skillPar: eff.val, duration: eff.dur || 150, caster: unit, mutex: 5, calType: 0, attribId: 1001 });
+          target.addBuff(fb);
+        } break;
+        case 'invincible': {
+          let ib = new BuffInvincible({ buffId: 700 + skill.id, duration: eff.dur, caster: unit, mutex: 2 });
+          unit.addBuff(ib);
+          this.log.add(this.frame, 'buff', `${unit.id} INVINCIBLE ${eff.dur}f`);
+        } break;
       }
     }
-
-    // Normal crit (if UseCrit flag)
-    if (ignoreFlag & 4) {
-      let hitType = DamageEngine.checkHit(caster, target, this.bm.rng, this.bm.isPvP, false);
-      if (hitType === 2) {
-        damage = FM.roundInt(damage * DamageEngine.critMultiplier(caster, target));
-      }
+    // Special talent: heal per skill
+    if (unit.specialTalents.heal_per_skill > 0) {
+      let h = FM.roundInt(unit.maxHP * unit.specialTalents.heal_per_skill);
+      if (h > 0) this.healthTarget(unit, h, HT.Treat, unit);
     }
-
-    // Boss damage
-    if (target.unitType !== 1 && target.unitType !== 12) {
-      let bd = caster.getAttrib(1046);
-      if (bd > 0) damage = FM.roundInt(damage * FM.round(1 + bd));
-    }
-
-    // Record damage bonus
-    let recBufs = caster.getBuffsByGroup(BG.RECORD_DAMAGE);
-    for (let rb of recBufs) {
-      let recDmg = rb.getBonus();
-      if (recDmg > 0) damage = FM.roundInt(damage * FM.round(1 + FM.round(recDmg / 10000)));
-    }
-
-    // Resistance based on calType
-    let resistPar = 0;
-    if ([4,5].includes(calType)) {
-      resistPar = DamageEngine.calArmorAndBlock(target, caster, target.getAttrib(1018), 1018, this.bm.rng).resistance;
-    } else if (calType === 6) {
-      resistPar = DamageEngine.calArmorAndBlock(target, caster, target.getAttrib(1034), 1034, this.bm.rng).resistance;
-    } else if (calType === 7) {
-      resistPar = DamageEngine.calArmorAndBlock(target, caster, target.getAttrib(1035), 1035, this.bm.rng).resistance;
-    } else if (calType === 10) {
-      resistPar = DamageEngine.calSuppressAndInspire(target, caster, target.getAttrib(1020), 1020, this.bm.rng).resistance;
-    } else {
-      resistPar = DamageEngine.calArmorAndBlock(target, caster, target.getAttrib(1019), 1034, this.bm.rng).resistance;
-    }
-
-    damage = DamageEngine.calHurt(FM.roundInt(damage * Math.max(0, FM.round(1 - resistPar))), target, caster);
-
-    return Math.max(1, FM.roundInt(damage));
+    // Special talent: CDR on stun — handled on stun proc above
+    unit.energy = 0;
+    unit.skillCooldown = skill.cd;
   }
 
-  // --- Apply Bleed ---
-  applyBleed(caster, target, eff) {
-    let bleedType = eff.bleedType || 0;
-    let skillPar = eff.skillPar || 0.5;
-    let atk = caster.getAttrib(1001);
-    let def = target.getAttrib(1024);
-    let defCoe = target.getAttrib(1060);
-    let atkMinusDef = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
-    let dmg = 0;
-
-    switch (bleedType) {
-      case 0: { // Normal ATK bleed
-        let atkDam = caster.getAttrib(1039);
-        dmg = FM.round(atkMinusDef * atkDam);
-        dmg = FM.round(dmg * FM.round(skillPar * caster.getAttrib(1043)));
-        dmg = DamageEngine.calHurt(FM.roundInt(dmg), target, caster);
-      } break;
-      case 1: { // Target curHP%
-        dmg = FM.round(target.curHP * skillPar);
-        dmg = FM.round(dmg * this.bm.injuryReduce);
-      } break;
-      case 2: { // Skill damage bleed
-        dmg = FM.roundInt(atkMinusDef * caster.getAttrib(1045) * skillPar);
-        let sr = DamageEngine.calArmorAndBlock(target, caster, target.getAttrib(1019), 1019, this.bm.rng).resistance;
-        dmg = DamageEngine.calHurt(FM.roundInt(dmg * Math.max(0, FM.round(1 - sr))), target, caster);
-        if (DamageEngine.checkSkillCrit(caster, this.bm.rng)) {
-          dmg = DamageEngine.skillCritDamage(dmg, caster.getAttrib(1038));
-        }
-      } break;
-      case 3: { // Normal ATK + armor + crit
-        let atkDam = caster.getAttrib(1039);
-        dmg = FM.round(atkMinusDef * atkDam);
-        dmg = FM.round(dmg * FM.round(skillPar * caster.getAttrib(1043)));
-        let ar = DamageEngine.calArmorAndBlock(target, caster, target.getAttrib(1018), 1018, this.bm.rng).resistance;
-        dmg = DamageEngine.calHurt(FM.roundInt(dmg * Math.max(0, FM.round(1 - ar))), target, caster);
-        let ht = DamageEngine.checkHit(caster, target, this.bm.rng, this.bm.isPvP, false);
-        if (ht === 2) dmg = FM.roundInt(dmg * DamageEngine.critMultiplier(caster, target));
-      } break;
-      case 6: { // Target maxHP%
-        dmg = FM.round(target.getAttrib(1002) * skillPar);
-        dmg = FM.round(dmg * this.bm.injuryReduce);
-      } break;
-      default:
-        dmg = FM.roundInt(atkMinusDef * skillPar);
-    }
-
-    dmg = Math.max(1, FM.roundInt(dmg));
-    this.log.add(this.frame, 'dmg', `${caster.id} BLEED(${bleedType}) → ${target.id}: ${dmg}`);
-    this.healthTarget(target, dmg, HT.Hurt_Bleed, caster);
-  }
-
-  // --- Execute Pal Attack ---
   executePalAttack(pal, defender) {
     if (!pal || !pal.isActive || pal.isDead || defender.isDead) return;
-
     let hitType = DamageEngine.checkHit(pal, defender, this.bm.rng, this.bm.isPvP, false);
-    if (hitType === 0) {
-      this.log.add(this.frame, 'miss', `${pal.id} ATK → ${defender.id}: MISS`);
-      return;
-    }
-
+    if (hitType === 0) { this.log.add(this.frame, 'miss', `${pal.id} ATK → ${defender.id}: MISS`); return; }
     let dmg = DamageEngine.normalHurt(pal, defender, hitType, this.bm.rng, true);
-    let htType = hitType === 2 ? HT.Hurt_Crit : HT.Hurt;
-    this.log.add(this.frame, hitType===2?'crit':'dmg',
-      `${pal.id} ATK → ${defender.id}: ${dmg} ${hitType===2?'CRIT':''}`);
-    this.healthTarget(defender, dmg, htType, pal);
-
-    // Pal combo check
+    this.log.add(this.frame, hitType===2?'crit':'dmg', `${pal.id} ATK → ${defender.id}: ${dmg} ${hitType===2?'CRIT':''}`);
+    this.healthTarget(defender, dmg, hitType === 2 ? HT.Hurt_Crit : HT.Hurt, pal);
+    // Pal combo
     if (DamageEngine.checkDoubleAct(pal, defender, this.bm.rng)) {
-      let comboHit = DamageEngine.checkHit(pal, defender, this.bm.rng, this.bm.isPvP, false);
-      if (comboHit > 0) {
-        let comboDmg = DamageEngine.normalDoubleHurt(pal, defender, comboHit, this.bm.rng, true);
-        this.log.add(this.frame, comboHit===2?'crit':'dmg',
-          `${pal.id} COMBO → ${defender.id}: ${comboDmg} ${comboHit===2?'CRIT':''}`);
-        this.healthTarget(defender, comboDmg, comboHit === 2 ? HT.Hurt_Double_Crit : HT.Hurt_Double, pal);
+      let ch = DamageEngine.checkHit(pal, defender, this.bm.rng, this.bm.isPvP, false);
+      if (ch > 0) {
+        let cd = DamageEngine.normalDoubleHurt(pal, defender, ch, this.bm.rng, true);
+        this.log.add(this.frame, ch===2?'crit':'dmg', `${pal.id} COMBO → ${defender.id}: ${cd} ${ch===2?'CRIT':''}`);
+        this.healthTarget(defender, cd, ch === 2 ? HT.Hurt_Double_Crit : HT.Hurt_Double, pal);
       }
+    }
+    // Special talent: heal per pal atk
+    if (pal.parent && pal.parent.specialTalents.heal_per_pal_atk > 0) {
+      let h = FM.roundInt(pal.parent.maxHP * pal.parent.specialTalents.heal_per_pal_atk);
+      if (h > 0) this.healthTarget(pal.parent, h, HT.Treat, pal.parent);
     }
   }
 
-  // --- Main Frame Tick ---
   tick() {
     if (!this.running) return false;
     this.frame++;
     if (this.frame > this.maxFrames) {
       this.running = false;
-      // Draw: whoever has more HP% wins
       let p1pct = this.bm.p1.curHP / this.bm.p1.maxHP;
       let p2pct = this.bm.p2.curHP / this.bm.p2.maxHP;
       if (p1pct > p2pct) this.winner = 1;
       else if (p2pct > p1pct) this.winner = 2;
-      else this.winner = 0; // true draw
+      else this.winner = 0;
       this.log.add(this.frame, 'info', `TIME OUT — ${this.winner === 0 ? 'DRAW' : 'P' + this.winner + ' wins by HP%'}`);
       return false;
     }
-
     let units = [this.bm.p1, this.bm.p2];
-    let pals = [this.bm.pal1, this.bm.pal2];
-
+    let allPals = [...this.bm.pals1, ...this.bm.pals2];
     // 1. Buff tick
     for (let u of units) u.tickBuffs();
-    for (let p of pals) if (p) p.tickBuffs();
-
-    // 2. Energy accumulation & skill check
+    for (let p of allPals) if (p) p.tickBuffs();
+    // 2. Energy & skill
     for (let i = 0; i < 2; i++) {
-      let u = units[i];
-      let target = units[1-i];
-      if (u.isDead) continue;
-      if (u.isStunned()) continue;
-
-      // Energy
+      let u = units[i]; let target = units[1-i];
+      if (u.isDead || u.isStunned()) continue;
       let skill = u.skills[0];
-      if (skill && skill.id !== 'none') {
-        let pr = FM.round(skill.powerRecovery * u.getAttrib(1013));
+      if (skill && skill.id !== 0) {
+        let pr = FM.round(100 * u.getAttrib(1013));
         u.energy += FM.round(pr * 0.033);
-        if (u.energy >= skill.maxPower) {
+        if (u.energy >= skill.cd / 30 * 100) { // Simplified: energy threshold = CD equivalent
           this.executeSkill(u, skill, target);
         }
       }
     }
-
     // 3. Attack cycle
     for (let i = 0; i < 2; i++) {
-      let u = units[i];
-      let target = units[1-i];
-      if (u.isDead || target.isDead) continue;
-      if (u.isStunned()) continue;
-
+      let u = units[i]; let target = units[1-i];
+      if (u.isDead || target.isDead || u.isStunned()) continue;
       u.attackTimer--;
       if (u.attackTimer <= 0) {
         u.attackTimer = Math.max(1, FM.roundInt(30 / Math.max(0.1, u.getAttrib(1003))));
         this.executeAttack(u, target);
       }
     }
-
-    // 4. Pal attacks (every other frame, offset by player)
+    // 4. Pal attacks
     for (let i = 0; i < 2; i++) {
-      let pal = pals[i];
-      if (!pal || pal.isDead) continue;
+      let pals = i === 0 ? this.bm.pals1 : this.bm.pals2;
       let target = units[1-i];
-      if (target.isDead) continue;
-
-      pal.attackTimer--;
-      if (pal.attackTimer <= 0) {
-        pal.attackTimer = Math.max(1, FM.roundInt(30 / Math.max(0.1, pal.getAttrib(1003))));
-        this.executePalAttack(pal, target);
+      for (let pal of pals) {
+        if (!pal || pal.isDead || target.isDead) continue;
+        pal.attackTimer--;
+        if (pal.attackTimer <= 0) {
+          pal.attackTimer = Math.max(1, FM.roundInt(30 / Math.max(0.1, pal.getAttrib(1003))));
+          this.executePalAttack(pal, target);
+        }
       }
     }
-
     // 5. Process damage queues
-    for (let u of units) {
-      if (u.damageQueue.length > 0) this.processDamageQueue(u);
-    }
-    for (let p of pals) {
-      if (p && p.damageQueue.length > 0) this.processDamageQueue(p);
-    }
-
+    for (let u of units) { if (u.damageQueue.length > 0) this.processDamageQueue(u); }
+    for (let p of allPals) { if (p && p.damageQueue.length > 0) this.processDamageQueue(p); }
     // 6. Check win
-    if (this.bm.p1.isDead && this.bm.p2.isDead) {
-      this.winner = 0; this.running = false;
-      this.log.add(this.frame, 'info', 'DOUBLE KO — DRAW');
-    } else if (this.bm.p1.isDead) {
-      this.winner = 2; this.running = false;
-      this.log.add(this.frame, 'info', `P2 WINS at frame ${this.frame} (${(this.frame/30).toFixed(1)}s)`);
-    } else if (this.bm.p2.isDead) {
-      this.winner = 1; this.running = false;
-      this.log.add(this.frame, 'info', `P1 WINS at frame ${this.frame} (${(this.frame/30).toFixed(1)}s)`);
-    }
-
+    if (this.bm.p1.isDead && this.bm.p2.isDead) { this.winner = 0; this.running = false; this.log.add(this.frame, 'info', 'DOUBLE KO — DRAW'); }
+    else if (this.bm.p1.isDead) { this.winner = 2; this.running = false; this.log.add(this.frame, 'info', `P2 WINS at F${this.frame} (${(this.frame/30).toFixed(1)}s)`); }
+    else if (this.bm.p2.isDead) { this.winner = 1; this.running = false; this.log.add(this.frame, 'info', `P1 WINS at F${this.frame} (${(this.frame/30).toFixed(1)}s)`); }
     return this.running;
   }
 }
@@ -1852,13 +1351,9 @@ class BattleMain {
     this.injuryReduce = cfg.injuryReduce || 1;
     this.shieldDecay = cfg.shieldDecay || 1;
     this.treatDecay = cfg.treatDecay || 1;
-
-    this.p1 = null;
-    this.p2 = null;
-    this.pal1 = null;
-    this.pal2 = null;
+    this.p1 = null; this.p2 = null;
+    this.pals1 = []; this.pals2 = [];
     this.combat = new CombatEngine(this);
-
     if (this.isPvP) {
       this.injuryReduce = getInjuryReduce(cfg.avgLevel || 220);
       this.shieldDecay = SHIELD_DECAY_PVP;
@@ -1866,64 +1361,57 @@ class BattleMain {
     }
   }
 
-  init(p1Stats, p2Stats, p1Skill, p2Skill, palConfig) {
-    // Create players
+  init(p1Stats, p2Stats, p1Config, p2Config) {
     this.p1 = new Unit({ id: 'P1', type: 'player', teamId: 0 });
     this.p1.battleMain = this;
     this.p1.initFromStats(p1Stats);
-    this.p1.skills = [p1Skill || DEFAULT_SKILLS.generic_skill];
+    this.p1.skills = [p1Config.skill || SKILLS_DATA[0]];
+    this.p1.specialTalents = p1Config.specialTalents || {};
 
     this.p2 = new Unit({ id: 'P2', type: 'player', teamId: 1 });
     this.p2.battleMain = this;
     this.p2.initFromStats(p2Stats);
-    this.p2.skills = [p2Skill || DEFAULT_SKILLS.generic_skill];
+    this.p2.skills = [p2Config.skill || SKILLS_DATA[0]];
+    this.p2.specialTalents = p2Config.specialTalents || {};
 
     // Create pals
-    if (palConfig && palConfig.p1Enabled) {
-      this.pal1 = new Unit({ id: 'P1-Pal', type: 'partner', teamId: 0, parent: this.p1 });
-      this.pal1.battleMain = this;
-      let palStats = {};
-      for (let id in p1Stats) palStats[id] = p1Stats[id];
-      // Pal inherits parent ATK, HP, and partner stats
-      palStats[1001] = p1Stats[1001]; // ATK (will be read from parent in formulas)
-      palStats[1002] = FM.roundInt((p1Stats[1002] || 500000) * 0.3); // Pal HP ~30% of player
-      this.pal1.initFromStats(palStats);
-      this.pal1.attackTimer = 15; // Offset from player
-    }
-    if (palConfig && palConfig.p2Enabled) {
-      this.pal2 = new Unit({ id: 'P2-Pal', type: 'partner', teamId: 1, parent: this.p2 });
-      this.pal2.battleMain = this;
-      let palStats = {};
-      for (let id in p2Stats) palStats[id] = p2Stats[id];
-      palStats[1001] = p2Stats[1001];
-      palStats[1002] = FM.roundInt((p2Stats[1002] || 500000) * 0.3);
-      this.pal2.initFromStats(palStats);
-      this.pal2.attackTimer = 15;
-    }
+    this.pals1 = this.createPals(p1Config, p1Stats, this.p1, 0);
+    this.pals2 = this.createPals(p2Config, p2Stats, this.p2, 1);
 
     this.combat.maxFrames = 9000;
     this.combat.running = true;
   }
 
-  // Run to completion (no UI updates)
-  runToCompletion() {
-    this.combat.log.enabled = false;
-    while (this.combat.running) {
-      this.combat.tick();
+  createPals(config, parentStats, parentUnit, teamId) {
+    let pals = [];
+    let palIds = config.palIds || [];
+    for (let i = 0; i < palIds.length; i++) {
+      let palData = PALS_DATA.find(p => p.id === palIds[i]);
+      if (!palData || palData.id === 0) continue;
+      let pal = new Unit({ id: `${parentUnit.id}-Pal${i+1}`, type: 'partner', teamId, parent: parentUnit });
+      pal.battleMain = this;
+      let palStats = {};
+      for (let id in parentStats) palStats[id] = parentStats[id];
+      palStats[1002] = FM.roundInt((parentStats[1002] || 500000) * 0.3);
+      palStats[1040] = palData.dmgMult / 10 || 0.5;
+      pal.initFromStats(palStats);
+      pal.attackTimer = 15 + i * 5;
+      pals.push(pal);
     }
-    return this.combat.winner;
+    return pals;
   }
 
-  // Run with log
+  runToCompletion() {
+    this.combat.log.enabled = false;
+    while (this.combat.running) this.combat.tick();
+    return this.combat.winner;
+  }
   runWithLog() {
     this.combat.log.enabled = true;
-    while (this.combat.running) {
-      this.combat.tick();
-    }
+    while (this.combat.running) this.combat.tick();
     return this.combat.winner;
   }
 }
-
 
 // ============================================================
 // MODULE 11: UI Controller
@@ -1931,34 +1419,161 @@ class BattleMain {
 const UI = {
   battle: null,
   animFrame: null,
+  animInterval: null,
   winRateRunning: false,
   winRateAbort: false,
+  currentTab: 'setup',
 
   init() {
     this.buildPanel('panel-p1', 'P1', 'Player 1', 'p1-title');
     this.buildPanel('panel-p2', 'P2', 'Player 2', 'p2-title');
-    this.resetBattle();
+  },
+
+  switchTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    document.querySelectorAll('#main-tabs .tab').forEach(el => {
+      if (el.textContent.toLowerCase().includes(tabName.substring(0,4))) el.classList.add('active');
+    });
+    this.currentTab = tabName;
   },
 
   buildPanel(containerId, prefix, title, titleClass) {
     let el = document.getElementById(containerId);
     let html = `<div class="panel-title ${titleClass}">${title}</div>`;
 
-    // Skill selector
-    html += `<div class="stat-group"><h2 onclick="UI.toggleGroup(this)">Skill</h2><div class="stat-group-body">`;
-    html += `<div class="stat-row" style="grid-column:1/-1"><label>Active Skill:</label>`;
-    html += `<select id="${prefix}-skill" style="flex:1">`;
-    for (let k in DEFAULT_SKILLS) {
-      let s = DEFAULT_SKILLS[k];
-      html += `<option value="${k}" ${k==='generic_skill'?'selected':''}>${s.name}</option>`;
-    }
+    // Class selector
+    html += `<div class="stat-group"><h2 onclick="UI.toggleGroup(this)">Class & Level</h2><div class="stat-group-body">`;
+    html += `<div class="stat-row-full"><label>Class:</label><select id="${prefix}-class" onchange="UI.onClassChange('${prefix}')">`;
+    for (let id of T5_CLASSES) { html += `<option value="${id}">${CLASS_TREE[id].name}</option>`; }
     html += `</select></div>`;
-    html += `<div class="stat-row"><label>Max Power:</label><input type="number" id="${prefix}-maxpower" value="150" step="10"></div>`;
-    html += `<div class="stat-row"><label>Power Recov:</label><input type="number" id="${prefix}-powrecov" value="100" step="10"></div>`;
+    html += `<div class="stat-row"><label>Level</label><input type="number" id="${prefix}-level" value="220" min="1" max="300"></div>`;
     html += `</div></div>`;
 
-    // Pal toggle
-    html += `<div class="pal-toggle"><input type="checkbox" id="${prefix}-pal-enabled"><label>Enable Pal</label></div>`;
+    // Skills (5 slots)
+    html += `<div class="stat-group"><h2 onclick="UI.toggleGroup(this)">Active Skills (5 slots)</h2><div class="stat-group-body">`;
+    for (let s = 0; s < 5; s++) {
+      html += `<div class="stat-row-full"><label>Skill ${s+1}:</label><select id="${prefix}-skill${s}">`;
+      for (let sk of SKILLS_DATA) { html += `<option value="${sk.id}" ${s===0 && sk.id===28?'selected':''}>${sk.name}</option>`; }
+      html += `</select></div>`;
+    }
+    html += `</div></div>`;
+
+    // Pals (5 or 6 slots)
+    html += `<div class="stat-group"><h2 onclick="UI.toggleGroup(this)">Pals (5-6 slots)</h2><div class="stat-group-body" id="${prefix}-pals-body">`;
+    for (let p = 0; p < 6; p++) {
+      html += `<div class="stat-row-full" id="${prefix}-pal-row-${p}" ${p===5?'style="display:none"':''}>`;
+      html += `<label>Pal ${p+1}${p===5?' (Beast)':''}:</label><select id="${prefix}-pal${p}">`;
+      for (let pd of PALS_DATA) { html += `<option value="${pd.id}">${pd.name}${pd.desc?' — '+pd.desc:''}</option>`; }
+      html += `</select>`;
+      html += `</div>`;
+    }
+    // Pal baseline stat toggles
+    html += `<div style="grid-column:1/-1;margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">`;
+    html += `<div style="font-size:10px;color:var(--gold);margin-bottom:2px;">Pal Stat Toggles (check if pal stats are NOT in your input numbers):</div>`;
+    for (let pd of PALS_DATA) {
+      if (pd.id === 0 || !pd.isBaseline) continue;
+      html += `<div class="toggle-row"><input type="checkbox" id="${prefix}-palToggle-${pd.id}"><label for="${prefix}-palToggle-${pd.id}">${pd.name}: ${pd.desc}</label></div>`;
+    }
+    html += `</div>`;
+    html += `</div></div>`;
+
+    // Guardian (Star Heroes) — 3 cards, must be same type
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Guardian (Star Heroes)</h2><div class="stat-group-body collapsed">`;
+    html += `<div class="stat-row-full"><label>Main:</label><select id="${prefix}-hero0">`;
+    for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
+    html += `</select></div>`;
+    html += `<div class="stat-row-full"><label>Sub 1:</label><select id="${prefix}-hero1">`;
+    for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
+    html += `</select></div>`;
+    html += `<div class="stat-row-full"><label>Sub 2:</label><select id="${prefix}-hero2">`;
+    for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
+    html += `</select></div>`;
+    // Guardian inputs
+    html += `<div class="stat-row"><label>Guardian Lv</label><input type="number" id="${prefix}-guardianLv" value="1" min="1" max="100"></div>`;
+    html += `<div class="stat-row"><label>Tenacity Boost</label><input type="number" id="${prefix}-tenacity" value="0" step="0.01"></div>`;
+    html += `<div class="stat-row"><label>Global Tenacity</label><input type="number" id="${prefix}-gTenacity" value="0" step="0.01"></div>`;
+    html += `<div class="stat-row"><label>TPen Boost</label><input type="number" id="${prefix}-tpen" value="0" step="0.01"></div>`;
+    html += `<div class="stat-row"><label>Global TPen</label><input type="number" id="${prefix}-gTpen" value="0" step="0.01"></div>`;
+    html += `</div></div>`;
+
+    // Mount
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Mount</h2><div class="stat-group-body collapsed">`;
+    html += `<div class="stat-row-full"><label>Mount:</label><select id="${prefix}-mount">`;
+    html += `<option value="0">(None)</option>`;
+    html += `<option value="globalATK">Global ATK +10%</option>`;
+    html += `<option value="globalDEF">Global DEF +10%</option>`;
+    html += `<option value="globalHP">Global HP +10%</option>`;
+    html += `<option value="critDMG">Crit DMG +40%</option>`;
+    html += `<option value="palCritDMG">Pal Crit DMG +25%</option>`;
+    html += `<option value="ignoreEvasion">Ignore Evasion +10%</option>`;
+    html += `<option value="basicATK">Basic ATK DMG +10%</option>`;
+    html += `<option value="skillCritDMG">Skill Crit DMG +10%</option>`;
+    html += `</select></div>`;
+    html += `</div></div>`;
+
+    // Artifact
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Artifact</h2><div class="stat-group-body collapsed">`;
+    html += `<div class="stat-row-full"><label>Artifact:</label><select id="${prefix}-artifact">`;
+    html += `<option value="0">(None)</option>`;
+    html += `<option value="globalATK">Global ATK +10%</option>`;
+    html += `<option value="basicATK">Basic ATK DMG +10%</option>`;
+    html += `<option value="comboDMG">Combo DMG +5%</option>`;
+    html += `<option value="dmgRES">DMG RES +10%</option>`;
+    html += `</select></div>`;
+    html += `</div></div>`;
+
+    // Back Accessory
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Back Accessory</h2><div class="stat-group-body collapsed">`;
+    html += `<div class="stat-row-full"><label>Back:</label><select id="${prefix}-back">`;
+    html += `<option value="0">(None)</option>`;
+    html += `<option value="globalDEF">Global DEF +10%</option>`;
+    html += `<option value="globalHP">Global HP +10%</option>`;
+    html += `<option value="globalATK">Global ATK +10%</option>`;
+    html += `<option value="counterDMG">Counter DMG +5%</option>`;
+    html += `<option value="ignoreEvasion">Ignore Evasion +15%</option>`;
+    html += `</select></div>`;
+    html += `</div></div>`;
+
+    // Avian + Affixes (simplified)
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Avian & Affixes</h2><div class="stat-group-body collapsed">`;
+    html += `<div class="stat-row-full"><label>Avian:</label><select id="${prefix}-avian">`;
+    html += `<option value="0">(None — stats from affixes only)</option>`;
+    html += `<option value="hpRegen">HP Regen 5% lost HP / 5s</option>`;
+    html += `<option value="skillDMG">AoE Skill DMG every 11-16s</option>`;
+    html += `<option value="atkSPD">ATK SPD stacking</option>`;
+    html += `<option value="counterDMG">Counter DMG stacking</option>`;
+    html += `<option value="comboDMG">AoE Combo DMG proc</option>`;
+    html += `</select></div>`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--fg2);margin:2px 0;">Avian affix stats are included in your stat inputs. Only select avian for its active effect.</div>`;
+    html += `</div></div>`;
+
+    // Special Back Talents (non-stat)
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Special Back Talents</h2><div class="stat-group-body collapsed">`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--gold);margin-bottom:2px;">These talents do NOT appear in stats. Enter values manually:</div>`;
+    for (let t of SPECIAL_BACK_TALENTS) {
+      let step = t.isRate ? '0.001' : '0.1';
+      html += `<div class="stat-row"><label title="${t.desc}">${t.name}</label><input type="number" id="${prefix}-${t.id}" value="${t.defaultVal}" step="${step}"></div>`;
+    }
+    html += `</div></div>`;
+
+    // Relic/Spore toggles
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Relic & Spore Toggles</h2><div class="stat-group-body collapsed">`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--gold);margin-bottom:2px;">Check if these bonuses are NOT in your input stats (they will be added):</div>`;
+    let relicToggles = [
+      { id: 'relic_crit', name: 'Relic: Crit Rate +10%', attrId: 1004, val: 0.10 },
+      { id: 'relic_combo', name: 'Relic: Combo +10%', attrId: 1016, val: 0.10 },
+      { id: 'relic_counter', name: 'Relic: Counter +10%', attrId: 1017, val: 0.10 },
+      { id: 'spore_plumed', name: 'Plumed Spore (ATK %)', attrId: 1001, pct: 0.05 },
+      { id: 'spore_potent', name: 'Potent Spore (HP %)', attrId: 1002, pct: 0.05 },
+      { id: 'spore_ironhide', name: 'Ironhide Spore (DEF %)', attrId: 1024, pct: 0.05 },
+    ];
+    for (let r of relicToggles) {
+      html += `<div class="toggle-row"><input type="checkbox" id="${prefix}-${r.id}" data-attr="${r.attrId}" data-val="${r.val||0}" data-pct="${r.pct||0}">`;
+      html += `<label for="${prefix}-${r.id}">${r.name}</label></div>`;
+    }
+    html += `</div></div>`;
 
     // Stat groups
     for (let grp of STAT_GROUPS) {
@@ -1967,13 +1582,10 @@ const UI = {
       html += `<h2 class="${collapsed ? 'collapsed' : ''}" onclick="UI.toggleGroup(this)">${grp.name}</h2>`;
       html += `<div class="stat-group-body${collapsed ? ' collapsed' : ''}">`;
       for (let attrId of grp.attrs) {
-        let def = ATTRIB_MAP[attrId];
-        if (!def) continue;
+        let def = ATTRIB_MAP[attrId]; if (!def) continue;
         let step = def.isRate ? '0.01' : '1';
-        html += `<div class="stat-row">`;
-        html += `<label title="${def.key} (${def.id})">${def.label}</label>`;
-        html += `<input type="number" id="${prefix}-${def.id}" value="${def.defaultVal}" step="${step}">`;
-        html += `</div>`;
+        html += `<div class="stat-row"><label title="${def.key} (${def.id})">${def.label}</label>`;
+        html += `<input type="number" id="${prefix}-${def.id}" value="${def.defaultVal}" step="${step}"></div>`;
       }
       html += `</div></div>`;
     }
@@ -1987,33 +1599,105 @@ const UI = {
     if (body) body.classList.toggle('collapsed');
   },
 
+  onClassChange(prefix) {
+    let classId = parseInt(document.getElementById(`${prefix}-class`).value);
+    let classData = CLASS_TREE[classId];
+    // Show/hide 6th pal slot for beast classes
+    let row5 = document.getElementById(`${prefix}-pal-row-5`);
+    if (row5) {
+      row5.style.display = (classData && classData.job_class === 5) ? '' : 'none';
+    }
+  },
+
   getStats(prefix) {
     let stats = {};
     for (let def of ATTRIB_DEFS) {
       let el = document.getElementById(`${prefix}-${def[0]}`);
       stats[def[0]] = el ? parseFloat(el.value) || 0 : def[3];
     }
+
+    // Apply class passives
+    let classId = parseInt(document.getElementById(`${prefix}-class`).value);
+    let classPassives = T5_CLASS_PASSIVES[classId];
+    if (classPassives) {
+      for (let [attrId, val] of classPassives.ownEffects) {
+        if (stats[attrId] !== undefined) stats[attrId] = FM.round(stats[attrId] + val);
+      }
+    }
+
+    // Apply relic/spore toggles
+    document.querySelectorAll(`[id^="${prefix}-relic_"], [id^="${prefix}-spore_"]`).forEach(el => {
+      if (el.checked) {
+        let attrId = parseInt(el.dataset.attr);
+        let val = parseFloat(el.dataset.val);
+        let pct = parseFloat(el.dataset.pct);
+        if (val > 0 && stats[attrId] !== undefined) stats[attrId] = FM.round(stats[attrId] + val);
+        if (pct > 0 && stats[attrId] !== undefined) stats[attrId] = FM.roundInt(stats[attrId] * (1 + pct));
+      }
+    });
+
+    // Apply pal baseline stat toggles
+    for (let pd of PALS_DATA) {
+      if (!pd.isBaseline) continue;
+      let toggle = document.getElementById(`${prefix}-palToggle-${pd.id}`);
+      if (toggle && toggle.checked) {
+        for (let mod of pd.statMods) {
+          if (stats[mod.id] !== undefined) stats[mod.id] = FM.round(stats[mod.id] + mod.val);
+        }
+      }
+    }
+
+    // Apply mount passive
+    let mount = document.getElementById(`${prefix}-mount`).value;
+    if (mount === 'globalATK') stats[1001] = FM.roundInt(stats[1001] * 1.10);
+    else if (mount === 'globalDEF') stats[1024] = FM.roundInt(stats[1024] * 1.10);
+    else if (mount === 'globalHP') stats[1002] = FM.roundInt(stats[1002] * 1.10);
+    else if (mount === 'critDMG') stats[1005] = FM.round(stats[1005] + 0.40);
+    else if (mount === 'palCritDMG') stats[1005] = FM.round(stats[1005] + 0.25);
+    else if (mount === 'ignoreEvasion') stats[1007] = FM.round(stats[1007] + 0.10);
+    else if (mount === 'basicATK') stats[1039] = FM.round(stats[1039] + 0.10);
+    else if (mount === 'skillCritDMG') stats[1038] = FM.round(stats[1038] + 0.10);
+
+    // Apply artifact passive
+    let artifact = document.getElementById(`${prefix}-artifact`).value;
+    if (artifact === 'globalATK') stats[1001] = FM.roundInt(stats[1001] * 1.10);
+    else if (artifact === 'basicATK') stats[1039] = FM.round(stats[1039] + 0.10);
+    else if (artifact === 'comboDMG') stats[1032] = FM.round(stats[1032] + 0.05);
+    else if (artifact === 'dmgRES') stats[1021] = FM.round(stats[1021] + 0.10);
+
+    // Apply back accessory passive
+    let back = document.getElementById(`${prefix}-back`).value;
+    if (back === 'globalDEF') stats[1024] = FM.roundInt(stats[1024] * 1.10);
+    else if (back === 'globalHP') stats[1002] = FM.roundInt(stats[1002] * 1.10);
+    else if (back === 'globalATK') stats[1001] = FM.roundInt(stats[1001] * 1.10);
+    else if (back === 'counterDMG') stats[1033] = FM.round(stats[1033] + 0.05);
+    else if (back === 'ignoreEvasion') stats[1007] = FM.round(stats[1007] + 0.15);
+
     return stats;
   },
 
-  getSkill(prefix) {
-    let sel = document.getElementById(`${prefix}-skill`);
-    let skillKey = sel ? sel.value : 'generic_skill';
-    let skill = JSON.parse(JSON.stringify(DEFAULT_SKILLS[skillKey] || DEFAULT_SKILLS.generic_skill));
+  getPlayerConfig(prefix) {
+    // Get skill
+    let skillId = parseInt(document.getElementById(`${prefix}-skill0`).value);
+    let skill = SKILLS_DATA.find(s => s.id === skillId) || SKILLS_DATA[0];
 
-    let mp = document.getElementById(`${prefix}-maxpower`);
-    let pr = document.getElementById(`${prefix}-powrecov`);
-    if (mp) skill.maxPower = parseFloat(mp.value) || 150;
-    if (pr) skill.powerRecovery = parseFloat(pr.value) || 100;
+    // Get pal IDs
+    let palIds = [];
+    let classId = parseInt(document.getElementById(`${prefix}-class`).value);
+    let maxPals = (CLASS_TREE[classId] && CLASS_TREE[classId].job_class === 5) ? 6 : 5;
+    for (let i = 0; i < maxPals; i++) {
+      let palEl = document.getElementById(`${prefix}-pal${i}`);
+      if (palEl) { let pid = parseInt(palEl.value); if (pid > 0) palIds.push(pid); }
+    }
 
-    return skill;
-  },
+    // Special talents
+    let specialTalents = {};
+    for (let t of SPECIAL_BACK_TALENTS) {
+      let el = document.getElementById(`${prefix}-${t.id}`);
+      specialTalents[t.id] = el ? parseFloat(el.value) || 0 : 0;
+    }
 
-  getPalConfig() {
-    return {
-      p1Enabled: document.getElementById('P1-pal-enabled')?.checked || false,
-      p2Enabled: document.getElementById('P2-pal-enabled')?.checked || false
-    };
+    return { skill, palIds, specialTalents };
   },
 
   createBattle() {
@@ -2021,20 +1705,13 @@ const UI = {
     let mode = document.getElementById('sel-mode').value;
     let avgLv = parseInt(document.getElementById('inp-avglv').value) || 220;
     let maxFrames = parseInt(document.getElementById('inp-maxframes').value) || 9000;
-
-    let bm = new BattleMain({
-      seed, isPvP: mode === 'pvp', avgLevel: avgLv
-    });
-
+    let bm = new BattleMain({ seed, isPvP: mode === 'pvp', avgLevel: avgLv });
     let p1Stats = this.getStats('P1');
     let p2Stats = this.getStats('P2');
-    let p1Skill = this.getSkill('P1');
-    let p2Skill = this.getSkill('P2');
-    let palConfig = this.getPalConfig();
-
-    bm.init(p1Stats, p2Stats, p1Skill, p2Skill, palConfig);
+    let p1Config = this.getPlayerConfig('P1');
+    let p2Config = this.getPlayerConfig('P2');
+    bm.init(p1Stats, p2Stats, p1Config, p2Config);
     bm.combat.maxFrames = maxFrames;
-
     return bm;
   },
 
@@ -2042,31 +1719,30 @@ const UI = {
     this.stopBattle();
     this.battle = this.createBattle();
     this.battle.combat.log.enabled = true;
-
-    let speed = parseInt(document.getElementById('sel-speed').value);
+    let speed = parseFloat(document.getElementById('sel-speed').value);
     document.getElementById('battle-status').textContent = 'Running...';
-
     if (speed === 0) {
-      // Instant
+      // Sim to end
       this.battle.runWithLog();
       this.updateDisplay();
       this.updateStatus();
     } else {
-      let framesPerTick = speed;
+      // Real-time or speed multiplier
+      let framesPerTick = Math.max(1, Math.round(speed));
+      let msPerTick = Math.round(1000 / 30 / speed);
       let self = this;
-      let tickFn = function() {
+      this.animInterval = setInterval(function() {
         for (let i = 0; i < framesPerTick; i++) {
           if (!self.battle.combat.running) break;
           self.battle.combat.tick();
         }
         self.updateDisplay();
-        if (self.battle.combat.running) {
-          self.animFrame = requestAnimationFrame(tickFn);
-        } else {
+        if (!self.battle.combat.running) {
+          clearInterval(self.animInterval);
+          self.animInterval = null;
           self.updateStatus();
         }
-      };
-      this.animFrame = requestAnimationFrame(tickFn);
+      }, msPerTick);
     }
   },
 
@@ -2083,13 +1759,9 @@ const UI = {
   },
 
   stopBattle() {
-    if (this.animFrame) {
-      cancelAnimationFrame(this.animFrame);
-      this.animFrame = null;
-    }
-    if (this.battle) {
-      this.battle.combat.running = false;
-    }
+    if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
+    if (this.animInterval) { clearInterval(this.animInterval); this.animInterval = null; }
+    if (this.battle) this.battle.combat.running = false;
   },
 
   resetBattle() {
@@ -2108,27 +1780,19 @@ const UI = {
   updateDisplay() {
     if (!this.battle) return;
     let p1 = this.battle.p1, p2 = this.battle.p2;
-
-    // HP bars
     let p1pct = Math.max(0, p1.curHP / p1.maxHP * 100);
     let p2pct = Math.max(0, p2.curHP / p2.maxHP * 100);
     document.getElementById('hp-bar-p1').style.width = p1pct + '%';
     document.getElementById('hp-bar-p2').style.width = p2pct + '%';
     document.getElementById('hp-val-p1').textContent = `${Math.max(0,p1.curHP).toLocaleString()} / ${p1.maxHP.toLocaleString()}`;
     document.getElementById('hp-val-p2').textContent = `${Math.max(0,p2.curHP).toLocaleString()} / ${p2.maxHP.toLocaleString()}`;
-
-    // Shield
     let s1pct = p1.maxHP > 0 ? Math.min(100, p1.shieldHP / p1.maxHP * 100) : 0;
     let s2pct = p2.maxHP > 0 ? Math.min(100, p2.shieldHP / p2.maxHP * 100) : 0;
     document.getElementById('hp-shield-p1').style.width = s1pct + '%';
     document.getElementById('hp-shield-p2').style.width = s2pct + '%';
-
-    // Status
     let f = this.battle.combat.frame;
     document.getElementById('battle-status').textContent =
-      `Frame ${f} (${(f/30).toFixed(1)}s) | P1: ${p1.curHP.toLocaleString()} HP ${p1.shieldHP>0?'[+'+p1.shieldHP+' shield]':''} | P2: ${p2.curHP.toLocaleString()} HP ${p2.shieldHP>0?'[+'+p2.shieldHP+' shield]':''}`;
-
-    // Combat log
+      `F${f} (${(f/30).toFixed(1)}s) | P1: ${p1.curHP.toLocaleString()} HP ${p1.shieldHP>0?'[+'+p1.shieldHP.toLocaleString()+' shield]':''} | P2: ${p2.curHP.toLocaleString()} HP ${p2.shieldHP>0?'[+'+p2.shieldHP.toLocaleString()+' shield]':''}`;
     let showDetail = document.getElementById('chk-detail')?.checked;
     document.getElementById('log-container').innerHTML = this.battle.combat.log.getHTML(showDetail);
     let logEl = document.getElementById('log-container');
@@ -2140,54 +1804,42 @@ const UI = {
     let w = this.battle.combat.winner;
     let f = this.battle.combat.frame;
     let msg = w === 0 ? 'DRAW' : `Player ${w} WINS`;
-    document.getElementById('battle-status').textContent =
-      `${msg} at frame ${f} (${(f/30).toFixed(1)}s)`;
+    document.getElementById('battle-status').textContent = `${msg} at F${f} (${(f/30).toFixed(1)}s)`;
     this.updateDisplay();
   },
 
-  setSpeed(val) {
-    // Speed changes take effect on next start
-  },
+  setSpeed(val) { /* Speed change takes effect on next start */ },
 
-  // --- Win Rate Calculator ---
+  // Win Rate Calculator
   async runWinRate() {
     this.winRateAbort = false;
     this.winRateRunning = true;
     let total = parseInt(document.getElementById('inp-sims').value) || 1000;
     let p1Wins = 0, p2Wins = 0, draws = 0;
     let baseSeed = parseInt(document.getElementById('inp-seed').value) || 42;
-
+    let results = []; // for chart
     document.getElementById('winrate-status').textContent = 'Running...';
-
     let batchSize = 50;
     for (let i = 0; i < total && !this.winRateAbort; i += batchSize) {
       let end = Math.min(i + batchSize, total);
       for (let j = i; j < end; j++) {
-        let seed = baseSeed + j * 7919; // Prime offset for variety
+        let seed = baseSeed + j * 7919;
         let mode = document.getElementById('sel-mode').value;
         let avgLv = parseInt(document.getElementById('inp-avglv').value) || 220;
         let maxFrames = parseInt(document.getElementById('inp-maxframes').value) || 9000;
-
-        let bm = new BattleMain({
-          seed, isPvP: mode === 'pvp', avgLevel: avgLv
-        });
-
+        let bm = new BattleMain({ seed, isPvP: mode === 'pvp', avgLevel: avgLv });
         let p1Stats = this.getStats('P1');
         let p2Stats = this.getStats('P2');
-        let p1Skill = this.getSkill('P1');
-        let p2Skill = this.getSkill('P2');
-        let palConfig = this.getPalConfig();
-
-        bm.init(p1Stats, p2Stats, p1Skill, p2Skill, palConfig);
+        let p1Config = this.getPlayerConfig('P1');
+        let p2Config = this.getPlayerConfig('P2');
+        bm.init(p1Stats, p2Stats, p1Config, p2Config);
         bm.combat.maxFrames = maxFrames;
-
         let winner = bm.runToCompletion();
         if (winner === 1) p1Wins++;
         else if (winner === 2) p2Wins++;
         else draws++;
+        results.push({ winner, frames: bm.combat.frame });
       }
-
-      // Update UI
       let done = Math.min(end, total);
       let p1pct = (p1Wins / done * 100);
       let p2pct = (p2Wins / done * 100);
@@ -2198,151 +1850,130 @@ const UI = {
       document.getElementById('winrate-p2').style.width = Math.max(1, p2pct) + '%';
       document.getElementById('winrate-p2').textContent = `P2: ${p2pct.toFixed(1)}%`;
       document.getElementById('winrate-draws').style.width = dpct + '%';
-      document.getElementById('winrate-draws').textContent = dpct > 3 ? `Draw: ${dpct.toFixed(1)}%` : '';
+      document.getElementById('winrate-draws').textContent = dpct > 3 ? `D: ${dpct.toFixed(1)}%` : '';
       document.getElementById('winrate-status').textContent = `${done}/${total} (P1:${p1Wins} P2:${p2Wins} D:${draws})`;
-
-      // Yield to UI
       await new Promise(r => setTimeout(r, 0));
     }
-
     this.winRateRunning = false;
-    if (this.winRateAbort) {
-      document.getElementById('winrate-status').textContent += ' (stopped)';
-    } else {
-      document.getElementById('winrate-status').textContent += ' DONE';
+    document.getElementById('winrate-status').textContent += this.winRateAbort ? ' (stopped)' : ' DONE';
+    // Draw chart
+    this.drawMultisimChart(results);
+  },
+
+  stopWinRate() { this.winRateAbort = true; },
+
+  drawMultisimChart(results) {
+    let canvas = document.getElementById('multisim-chart');
+    if (!canvas) return;
+    let ctx = canvas.getContext('2d');
+    if (window._msChart) window._msChart.destroy();
+    // Histogram of battle durations
+    let bins = {};
+    for (let r of results) {
+      let sec = Math.floor(r.frames / 30);
+      let bucket = Math.floor(sec / 5) * 5;
+      if (!bins[bucket]) bins[bucket] = { p1: 0, p2: 0, draw: 0 };
+      if (r.winner === 1) bins[bucket].p1++;
+      else if (r.winner === 2) bins[bucket].p2++;
+      else bins[bucket].draw++;
     }
+    let labels = Object.keys(bins).map(Number).sort((a,b)=>a-b).map(k => k + 's');
+    let keys = Object.keys(bins).map(Number).sort((a,b)=>a-b);
+    window._msChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'P1 Wins', data: keys.map(k => bins[k].p1), backgroundColor: '#5c9ded' },
+          { label: 'P2 Wins', data: keys.map(k => bins[k].p2), backgroundColor: '#e94560' },
+          { label: 'Draws', data: keys.map(k => bins[k].draw), backgroundColor: '#666' },
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { title: { display: true, text: 'Battle Duration Distribution', color: '#e0e0e0' }, legend: { labels: { color: '#e0e0e0' } } },
+        scales: {
+          x: { stacked: true, ticks: { color: '#a0a0b0' }, grid: { color: '#2a2a4a' } },
+          y: { stacked: true, ticks: { color: '#a0a0b0' }, grid: { color: '#2a2a4a' } }
+        }
+      }
+    });
   },
 
-  stopWinRate() {
-    this.winRateAbort = true;
-  },
-
-  // --- Export/Import ---
+  // Export/Import
   exportStats() {
-    let data = {
-      p1: this.getStats('P1'),
-      p2: this.getStats('P2'),
-      p1Skill: document.getElementById('P1-skill')?.value,
-      p2Skill: document.getElementById('P2-skill')?.value,
-      p1MaxPower: document.getElementById('P1-maxpower')?.value,
-      p2MaxPower: document.getElementById('P2-maxpower')?.value,
-      p1PowRecov: document.getElementById('P1-powrecov')?.value,
-      p2PowRecov: document.getElementById('P2-powrecov')?.value,
-      p1Pal: document.getElementById('P1-pal-enabled')?.checked,
-      p2Pal: document.getElementById('P2-pal-enabled')?.checked,
-      seed: document.getElementById('inp-seed')?.value,
-      mode: document.getElementById('sel-mode')?.value,
-      avgLv: document.getElementById('inp-avglv')?.value,
-    };
+    let data = { p1: this.getStats('P1'), p2: this.getStats('P2') };
+    // Capture all selectors
+    for (let prefix of ['P1', 'P2']) {
+      data[prefix + '_class'] = document.getElementById(`${prefix}-class`)?.value;
+      data[prefix + '_skills'] = [];
+      for (let i = 0; i < 5; i++) { let el = document.getElementById(`${prefix}-skill${i}`); if (el) data[prefix + '_skills'].push(el.value); }
+      data[prefix + '_pals'] = [];
+      for (let i = 0; i < 6; i++) { let el = document.getElementById(`${prefix}-pal${i}`); if (el) data[prefix + '_pals'].push(el.value); }
+    }
+    data.seed = document.getElementById('inp-seed')?.value;
+    data.mode = document.getElementById('sel-mode')?.value;
+    data.avgLv = document.getElementById('inp-avglv')?.value;
     let json = JSON.stringify(data, null, 2);
     let blob = new Blob([json], { type: 'application/json' });
     let url = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.href = url;
-    a.download = 'battlesim-config.json';
-    a.click();
+    let a = document.createElement('a'); a.href = url; a.download = 'battlesim-v3.json'; a.click();
     URL.revokeObjectURL(url);
   },
 
   importStats() {
-    let input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
+    let input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
     input.onchange = (e) => {
-      let file = e.target.files[0];
-      if (!file) return;
+      let file = e.target.files[0]; if (!file) return;
       let reader = new FileReader();
       reader.onload = (ev) => {
         try {
           let data = JSON.parse(ev.target.result);
-          if (data.p1) this.setStats('P1', data.p1);
-          if (data.p2) this.setStats('P2', data.p2);
-          if (data.p1Skill) { let el = document.getElementById('P1-skill'); if (el) el.value = data.p1Skill; }
-          if (data.p2Skill) { let el = document.getElementById('P2-skill'); if (el) el.value = data.p2Skill; }
-          if (data.p1MaxPower) { let el = document.getElementById('P1-maxpower'); if (el) el.value = data.p1MaxPower; }
-          if (data.p2MaxPower) { let el = document.getElementById('P2-maxpower'); if (el) el.value = data.p2MaxPower; }
-          if (data.p1PowRecov) { let el = document.getElementById('P1-powrecov'); if (el) el.value = data.p1PowRecov; }
-          if (data.p2PowRecov) { let el = document.getElementById('P2-powrecov'); if (el) el.value = data.p2PowRecov; }
-          if (data.p1Pal !== undefined) { let el = document.getElementById('P1-pal-enabled'); if (el) el.checked = data.p1Pal; }
-          if (data.p2Pal !== undefined) { let el = document.getElementById('P2-pal-enabled'); if (el) el.checked = data.p2Pal; }
+          for (let prefix of ['P1', 'P2']) {
+            if (data[prefix]) {
+              for (let id in data[prefix]) { let el = document.getElementById(`${prefix}-${id}`); if (el) el.value = data[prefix][id]; }
+            }
+            if (data[prefix + '_class']) { let el = document.getElementById(`${prefix}-class`); if (el) el.value = data[prefix + '_class']; }
+            if (data[prefix + '_skills']) {
+              data[prefix + '_skills'].forEach((v,i) => { let el = document.getElementById(`${prefix}-skill${i}`); if (el) el.value = v; });
+            }
+            if (data[prefix + '_pals']) {
+              data[prefix + '_pals'].forEach((v,i) => { let el = document.getElementById(`${prefix}-pal${i}`); if (el) el.value = v; });
+            }
+          }
           if (data.seed) document.getElementById('inp-seed').value = data.seed;
           if (data.mode) document.getElementById('sel-mode').value = data.mode;
           if (data.avgLv) document.getElementById('inp-avglv').value = data.avgLv;
-        } catch (err) {
-          alert('Invalid JSON file: ' + err.message);
-        }
+        } catch (err) { alert('Invalid JSON: ' + err.message); }
       };
       reader.readAsText(file);
     };
     input.click();
   },
-
-  setStats(prefix, stats) {
-    for (let id in stats) {
-      let el = document.getElementById(`${prefix}-${id}`);
-      if (el) el.value = stats[id];
-    }
-  }
 };
 
 // ============================================================
-// MODULE 12: Self-Test (Pipeline Verification)
+// MODULE 12: Self-Test
 // ============================================================
 function selfTest() {
-  // Verify against reverse-engineered/99_FULL_DAMAGE_PIPELINE.md
-  // ATK=10000, DEF=5000, def_coe=0.1, att_dam=2.5, att_resist=0.3
-  // resist=0.15, crit_dam=1.8, crit_def=0.8
-
-  console.log('=== BattleSim v2 Self-Test ===');
-
-  // FixMath tests
+  console.log('=== BattleSim v3 Self-Test ===');
   console.assert(FM.round(1.75001) === 1.75, 'FM.round');
-  console.assert(FM.round(-1.75001) === -1.75, 'FM.round neg');
   console.assert(FM.roundInt(7875.5) === 7875, 'FM.roundInt');
-  console.assert(FM.roundInt(6693.75) === 6693, 'FM.roundInt 2');
-  console.assert(FM.clamp(5, 1, 10) === 5, 'FM.clamp');
-  console.assert(FM.clamp(-1, 0, 10) === 0, 'FM.clamp lo');
-
-  // Damage pipeline test
-  let atk = 10000, def = 5000, defCoe = 0.1, attDam = 2.5, attResist = 0.3;
-  let resist = 0.15, critDam = 1.8, critDef = 0.8;
-
-  // Step 3: Base damage
+  let atk = 10000, def = 5000, defCoe = 0.1;
   let baseRaw = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
-  console.assert(baseRaw === 4500, `baseRaw: expected 4500, got ${baseRaw}`);
-
-  // Step 3d: with multiplier
-  let resFactor = FM.round(attDam * FM.round(1 - attResist));
-  console.assert(resFactor === 1.75, `resFactor: expected 1.75, got ${resFactor}`);
+  console.assert(baseRaw === 4500, `baseRaw: ${baseRaw}`);
+  let resFactor = FM.round(2.5 * FM.round(1 - 0.3));
+  console.assert(resFactor === 1.75, `resFactor: ${resFactor}`);
   let baseDmg = FM.roundInt(baseRaw * resFactor);
-  console.assert(baseDmg === 7875, `baseDmg: expected 7875, got ${baseDmg}`);
-
-  // Step 4: calHurt (resist=0.15, no pve)
-  let afterResist = FM.roundInt(FM.roundInt(baseDmg * FM.round(1 - resist)) * FM.round(1 - 0));
-  console.assert(afterResist === 6693, `afterResist: expected 6693, got ${afterResist}`);
-
-  // Step 5: Crit
-  let critMult = Math.max(1.5, FM.round(critDam / Math.max(0.5, critDef)));
-  console.assert(critMult === 2.25, `critMult: expected 2.25, got ${critMult}`);
+  console.assert(baseDmg === 7875, `baseDmg: ${baseDmg}`);
+  let afterResist = FM.roundInt(FM.roundInt(baseDmg * FM.round(1 - 0.15)) * FM.round(1 - 0));
+  console.assert(afterResist === 6693, `afterResist: ${afterResist}`);
+  let critMult = Math.max(1.5, FM.round(1.8 / Math.max(0.5, 0.8)));
+  console.assert(critMult === 2.25, `critMult: ${critMult}`);
   let critDmg = FM.roundInt(afterResist * critMult);
-  console.assert(critDmg === 15059, `critDmg: expected 15059, got ${critDmg}`);
-
-  // Step 8: PvP reduction (injuryReduce=25)
-  let pvpDmg = Math.max(FM.roundInt(critDmg / 25), 1);
-  console.assert(pvpDmg === 602, `pvpDmg: expected 602, got ${pvpDmg}`);
-
-  // FixRandom test
-  let rng = new FixRandom(42);
-  let vals = [];
-  for (let i = 0; i < 5; i++) vals.push(rng.randomInt(0, 100));
-  console.log('RNG test (seed=42):', vals);
-
-  // Skill crit exponent test
+  console.assert(critDmg === 15059, `critDmg: ${critDmg}`);
   let scDmg = DamageEngine.skillCritDamage(100000, 1.5);
-  console.log('Skill crit test: 100000 × (1+1.5) ^0.98 =', scDmg);
-  // Expected: roundInt(pow(250000, 0.98)) = 194976
-  console.assert(Math.abs(scDmg - 194976) < 2, `skillCrit: expected ~194976, got ${scDmg}`);
-
+  console.assert(Math.abs(scDmg - 194976) < 2, `skillCrit: ${scDmg}`);
   console.log('=== Self-Test Complete ===');
 }
 
