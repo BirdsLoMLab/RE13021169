@@ -120,9 +120,9 @@ h3 { font-size: 12px; color: var(--gold); margin: 6px 0 4px 0; }
 
   <!-- Main Tabs -->
   <div class="tabs" id="main-tabs">
-    <button class="tab active" onclick="UI.switchTab("setup")">Setup</button>
-    <button class="tab" onclick="UI.switchTab("battle")">Battle</button>
-    <button class="tab" onclick="UI.switchTab("multisim")">Multi-Sim</button>
+    <button class="tab active" onclick="UI.switchTab('setup')">Setup</button>
+    <button class="tab" onclick="UI.switchTab('battle')">Battle</button>
+    <button class="tab" onclick="UI.switchTab('multisim')">Multi-Sim</button>
   </div>
 
   <!-- ========== SETUP TAB ========== -->
@@ -188,7 +188,7 @@ h3 { font-size: 12px; color: var(--gold); margin: 6px 0 4px 0; }
     <!-- Combat Log -->
     <div class="log-section">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-        <h2 style="margin:0;cursor:pointer;flex:0" onclick="this.classList.toggle("collapsed");document.getElementById("log-container").classList.toggle("collapsed")">Combat Log</h2>
+        <h2 style="margin:0;cursor:pointer;flex:0" onclick="this.classList.toggle('collapsed');document.getElementById('log-container').classList.toggle('collapsed')">Combat Log</h2>
         <label style="font-size:11px;color:var(--fg2)"><input type="checkbox" id="chk-detail" checked> Detail</label>
       </div>
       <div class="log-container" id="log-container"></div>
@@ -229,7 +229,7 @@ const FM = {
     return (x > 0 ? Math.floor(1e4 * x + 0.5) : Math.ceil(1e4 * x - 0.5)) / 1e4;
   },
   roundInt(x) {
-    return Math.floor(FM.round(x));
+    return Math.round(x);
   },
   clamp(x, mn, mx) {
     if (mn > mx) { let t = mn; mn = mx; mx = t; }
@@ -643,7 +643,7 @@ class Unit {
     this.attackTimer = 0; this.attackInterval = 30;
     this.stunFrames = 0; this.isDead = false;
     this.buffs = []; this.damageQueue = [];
-    this.skills = []; this.skillCooldowns = [];
+    this.skills = []; this.skillCDs = []; // per-skill cooldown timers (in frames)
     this.unitType = cfg.unitType || 1;
     this.battleMain = null;
     this.isActive = true;
@@ -1009,8 +1009,8 @@ const DamageEngine = {
     return FM.roundInt(Math.pow(product, 0.98));
   },
   normalHpsteal(attacker, defender, damage) {
-    let rate = FM.roundInt(attacker.getAttrib(1014) - defender.getAttrib(1027));
-    return FM.roundInt(damage * Math.max(0, rate));
+    let rate = Math.max(0, FM.round(attacker.getAttrib(1014) - defender.getAttrib(1027)));
+    return FM.roundInt(damage * rate);
   },
   skillHpsteal(attacker, defender, damage) {
     let rate = Math.max(0, FM.round(attacker.getAttrib(1015) - defender.getAttrib(1028)));
@@ -1140,7 +1140,19 @@ class CombatEngine {
       let stunFrames = Math.max(1, FM.roundInt(stunDur * 30));
       let cr = defender.getAttrib(1042);
       stunFrames = FM.roundInt(stunFrames * FM.round(1 - cr));
-      if (stunFrames > 0) { defender.stunFrames = Math.max(defender.stunFrames, stunFrames); this.log.add(this.frame, 'buff', `${defender.id} STUNNED ${stunFrames}f`); }
+      if (stunFrames > 0) {
+        defender.stunFrames = Math.max(defender.stunFrames, stunFrames);
+        this.log.add(this.frame, 'buff', `${defender.id} STUNNED ${stunFrames}f`);
+        // CDR on stun special talent
+        let cdr = attacker.specialTalents.cdr_on_stun;
+        if (cdr > 0) {
+          let cdrFrames = FM.roundInt(cdr * 30);
+          for (let s = 0; s < attacker.skillCDs.length; s++) {
+            attacker.skillCDs[s] = Math.max(0, attacker.skillCDs[s] - cdrFrames);
+          }
+          this.log.add(this.frame, 'info', `${attacker.id} CDR -${cdr}s on stun`);
+        }
+      }
     }
     // Combo check
     if (DamageEngine.checkDoubleAct(attacker, defender, this.bm.rng)) {
@@ -1175,7 +1187,7 @@ class CombatEngine {
     }
   }
 
-  executeSkill(unit, skill, target) {
+  executeSkill(unit, skill, target, slotIdx) {
     if (unit.isDead || target.isDead) return;
     this.log.add(this.frame, 'info', `${unit.id} uses ${skill.name}`);
     let atk = unit.getAttrib(1001); let def = target.getAttrib(1024); let defCoe = target.getAttrib(1060);
@@ -1248,9 +1260,11 @@ class CombatEngine {
       let h = FM.roundInt(unit.maxHP * unit.specialTalents.heal_per_skill);
       if (h > 0) this.healthTarget(unit, h, HT.Treat, unit);
     }
-    // Special talent: CDR on stun — handled on stun proc above
-    unit.energy = 0;
-    unit.skillCooldown = skill.cd;
+    // Set this skill's cooldown (in frames)
+    if (slotIdx !== undefined && unit.skillCDs[slotIdx] !== undefined) {
+      unit.skillCDs[slotIdx] = skill.cd;
+    }
+    // Special talent: CDR on stun — applied in stun proc
   }
 
   executePalAttack(pal, defender) {
@@ -1294,16 +1308,21 @@ class CombatEngine {
     // 1. Buff tick
     for (let u of units) u.tickBuffs();
     for (let p of allPals) if (p) p.tickBuffs();
-    // 2. Energy & skill
+    // 2. Skill cooldowns & execution (5-skill rotation)
     for (let i = 0; i < 2; i++) {
       let u = units[i]; let target = units[1-i];
       if (u.isDead || u.isStunned()) continue;
-      let skill = u.skills[0];
-      if (skill && skill.id !== 0) {
-        let pr = FM.round(100 * u.getAttrib(1013));
-        u.energy += FM.round(pr * 0.033);
-        if (u.energy >= skill.cd / 30 * 100) { // Simplified: energy threshold = CD equivalent
-          this.executeSkill(u, skill, target);
+      // Tick all cooldowns down by 1 frame
+      for (let s = 0; s < u.skillCDs.length; s++) {
+        if (u.skillCDs[s] > 0) u.skillCDs[s]--;
+      }
+      // Find first ready skill (priority order: slot 0 → 4)
+      for (let s = 0; s < u.skills.length; s++) {
+        let skill = u.skills[s];
+        if (!skill || skill.id === 0) continue;
+        if (u.skillCDs[s] <= 0) {
+          this.executeSkill(u, skill, target, s);
+          break; // Only one skill per frame
         }
       }
     }
@@ -1365,13 +1384,15 @@ class BattleMain {
     this.p1 = new Unit({ id: 'P1', type: 'player', teamId: 0 });
     this.p1.battleMain = this;
     this.p1.initFromStats(p1Stats);
-    this.p1.skills = [p1Config.skill || SKILLS_DATA[0]];
+    this.p1.skills = (p1Config.skills || [SKILLS_DATA[0]]).filter(s => s && s.id !== 0);
+    this.p1.skillCDs = this.p1.skills.map(() => 0);
     this.p1.specialTalents = p1Config.specialTalents || {};
 
     this.p2 = new Unit({ id: 'P2', type: 'player', teamId: 1 });
     this.p2.battleMain = this;
     this.p2.initFromStats(p2Stats);
-    this.p2.skills = [p2Config.skill || SKILLS_DATA[0]];
+    this.p2.skills = (p2Config.skills || [SKILLS_DATA[0]]).filter(s => s && s.id !== 0);
+    this.p2.skillCDs = this.p2.skills.map(() => 0);
     this.p2.specialTalents = p2Config.specialTalents || {};
 
     // Create pals
@@ -1431,11 +1452,10 @@ const UI = {
 
   switchTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
     document.getElementById('tab-' + tabName).classList.add('active');
-    document.querySelectorAll('#main-tabs .tab').forEach(el => {
-      if (el.textContent.toLowerCase().includes(tabName.substring(0,4))) el.classList.add('active');
-    });
+    let tabs = document.querySelectorAll('#main-tabs .tab');
+    let tabMap = { setup: 0, battle: 1, multisim: 2 };
+    tabs.forEach((el, i) => { el.classList.toggle('active', i === tabMap[tabName]); });
     this.currentTab = tabName;
   },
 
@@ -1677,9 +1697,16 @@ const UI = {
   },
 
   getPlayerConfig(prefix) {
-    // Get skill
-    let skillId = parseInt(document.getElementById(`${prefix}-skill0`).value);
-    let skill = SKILLS_DATA.find(s => s.id === skillId) || SKILLS_DATA[0];
+    // Get all 5 skills
+    let skills = [];
+    for (let i = 0; i < 5; i++) {
+      let el = document.getElementById(`${prefix}-skill${i}`);
+      if (el) {
+        let sid = parseInt(el.value);
+        let skill = SKILLS_DATA.find(s => s.id === sid);
+        if (skill) skills.push(skill);
+      }
+    }
 
     // Get pal IDs
     let palIds = [];
@@ -1697,7 +1724,7 @@ const UI = {
       specialTalents[t.id] = el ? parseFloat(el.value) || 0 : 0;
     }
 
-    return { skill, palIds, specialTalents };
+    return { skills, palIds, specialTalents };
   },
 
   createBattle() {
@@ -1958,7 +1985,7 @@ const UI = {
 function selfTest() {
   console.log('=== BattleSim v3 Self-Test ===');
   console.assert(FM.round(1.75001) === 1.75, 'FM.round');
-  console.assert(FM.roundInt(7875.5) === 7875, 'FM.roundInt');
+  console.assert(FM.roundInt(7875.5) === 7876, 'FM.roundInt');
   let atk = 10000, def = 5000, defCoe = 0.1;
   let baseRaw = Math.max(FM.roundInt(atk - def * FM.round(1 + defCoe)), 1);
   console.assert(baseRaw === 4500, `baseRaw: ${baseRaw}`);
@@ -1967,11 +1994,11 @@ function selfTest() {
   let baseDmg = FM.roundInt(baseRaw * resFactor);
   console.assert(baseDmg === 7875, `baseDmg: ${baseDmg}`);
   let afterResist = FM.roundInt(FM.roundInt(baseDmg * FM.round(1 - 0.15)) * FM.round(1 - 0));
-  console.assert(afterResist === 6693, `afterResist: ${afterResist}`);
+  console.assert(afterResist === 6694, `afterResist: ${afterResist}`);
   let critMult = Math.max(1.5, FM.round(1.8 / Math.max(0.5, 0.8)));
   console.assert(critMult === 2.25, `critMult: ${critMult}`);
   let critDmg = FM.roundInt(afterResist * critMult);
-  console.assert(critDmg === 15059, `critDmg: ${critDmg}`);
+  console.assert(critDmg === 15062, `critDmg: ${critDmg}`);
   let scDmg = DamageEngine.skillCritDamage(100000, 1.5);
   console.assert(Math.abs(scDmg - 194976) < 2, `skillCrit: ${scDmg}`);
   console.log('=== Self-Test Complete ===');
