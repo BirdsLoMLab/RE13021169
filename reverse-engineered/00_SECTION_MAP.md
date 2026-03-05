@@ -295,7 +295,7 @@
 | 18 | Avian/Bird System | ConfigFly, hatching, breeding |
 | 19 | Spirit System | spiritNormalHit, affix system |
 | 20 | Mount System | Cosmetic + stat baking, abilities |
-| 21 | Hero/Angel System | ConfigAngel, angel_skill enhancements |
+| 21 | Hero/Angel System | *(merged into battlesim/reference/15_ANGELS.md)* |
 | 22 | Skill Effect System | SkillType, skill handlers, effect triggers |
 | 23 | Item/Goods System | ConfigGoods, item types |
 | 24 | Relic System | ConfigRelic, relic effects |
