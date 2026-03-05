@@ -1,6 +1,10 @@
 # 21 -- Hero / Angel (Guardian Spirit) System
 
-## Overview
+> **MERGED**: This content has been consolidated into `battlesim/reference/15_ANGELS.md` which now contains the complete Angel/Star Heroes system reference including formation mechanics, config table schemas (with field indices and types), skill system, gacha, code locations, and all 33 Star Hero details.
+
+See `battlesim/reference/15_ANGELS.md` for the unified reference.
+
+## Overview (archived)
 
 Angels (internally "Guardian Spirits") are companion units that boost player stats, contribute battle skills, and provide passive development effects. They are organized into a typed formation, star-upgraded for power growth, and acquired through a gacha draw system.
 

@@ -31,13 +31,13 @@
 | 12 | `12_ARTIFACT_SKINS_AND_GEMS.md` | All 43 artifacts with full effect text, skill IDs (xlsx + config) |
 | 13 | `13_EQUIPMENT.md` | Advancement, resonance, refinement, suits |
 | 14 | `14_SPIRITS.md` | 20 spirits + spirit damage formula + affixes |
-| 15 | `15_ANGELS.md` | Formation, battle skills, star progression, energy pool |
+| 15 | `15_ANGELS.md` | Angels/Star Heroes: formation, skills, star progression, energy pool, all 33 heroes |
 | 16 | `16_FATE_CARDS.md` | Attribute bonuses + fusion passive skills |
 | 17 | `17_PATH_TO_DIVINITY.md` | Affix/talent tree with per-attribute caps |
 | 18 | `18_RINGS_AND_BADGES.md` | Ring skills, Path trunk links, badge levels |
 | 19 | `19_BACK_DECORATIONS.md` | All 45 back accessories with full effect text, skill IDs, skin progression (xlsx + config) |
 | 20 | `20_SPECIAL_MECHANICS.md` | 0.98 exponent, clones, speed cascade, animation exploit |
-| 21 | `21_STAR_HEROES.md` | All 33 star heroes: main/support skills, costs, limits, config IDs (xlsx + config) |
+| 21 | *(merged into 15_ANGELS.md)* | — |
 
 ## Key Constants Quick Reference
 
