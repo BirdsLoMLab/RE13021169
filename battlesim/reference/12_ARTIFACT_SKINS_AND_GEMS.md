@@ -1,10 +1,10 @@
 # 12 — Artifact Skins and Gems
 
-> Complete artifact reference: all 40 artifacts from LOM_Database-5.xlsx. See also `artifacts_master.json` for structured JSON.
+> Complete artifact reference: all 43 artifacts with skin skill IDs decoded from config binaries. See also `artifacts_master.json` for structured JSON.
 
 ---
 
-## Quick Reference — All 40 Artifacts
+## Quick Reference — All 43 Artifacts
 
 | # | Name | Rarity | Passive | Key Effect |
 |---|------|--------|---------|------------|
@@ -48,6 +48,58 @@
 | 38 | **Thundering Hammer** | Immortal | Global ATK +10% | Every 10s, deal 5000% Skill DMG, 1000% current Basic ATK DMG (can be Crit), 1000... |
 | 39 | **Fearless Stride** | Immortal | Global ATK +10% | Gains 10% Final DMG RES after the battle starts. Every 12s, deals 2000% Skill DM... |
 | 40 | **Scale of Justice** | Immortal | Global ATK +10% | Judges once every 10s after battle starts. If the current HP is over 50 times th... |
+
+---
+
+## Artifact Skin Skill ID Reference
+
+Decoded from `Artifact_skin.json` and `Skill.json` config binaries. Maps each artifact to its skin skill IDs used in battle simulation.
+
+| artifact_id | Artifact Name | Base Skill ID | Skill Name | All Skin Skill IDs |
+|-------------|---------------|---------------|------------|--------------------|
+| 2 | Chaotic Warlord's Hammer | 5102 | Thunder Wrath | 5102 |
+| 3 | Sovereign Dragon | 5103 | Sovereign Dragon | 5103 |
+| 4 | Eye of Raven | 5104 | Eye of Raven | 5104, 51041, 51042 |
+| 5 | Luminary Lantern | 5105 | Luminary Lantern | 5105, 51051, 51052 |
+| 6 | Candy Gatling | 5106 | Candy Gatling | 5106 |
+| 7 | Skyward Blade | 5107 | Skyward Blade | 5107, 51071, 51072 |
+| 9 | Thousandfold Pagoda | 5110 | Snow Sprite Arrives | 5110 |
+| 15 | Tear Attack | 5112 | Tear Attack | 5112, 51122, 51123 |
+| 16 | Double-edged String | 5114 | Acoustic Rupture | 5114 |
+| 17 | Extreme Caution | 5115 | Safe Distance | 5115 |
+| 18 | Spring Chord | 5113 | Spring Chord | 5113 |
+| 20 | Siren's Whisper | 5117 | Abyssal Beast | 5117, 51171, 51172 |
+| 21 | Webbed Chainsaw | 5118 | Duck Swirl Strike | 5118, 51181, 51182 |
+| 22 | Unchained Staff | 5124 | Time Pause | 5124, 5125, 5126, 51242, 51244, 51252, 51254, 51262, 51264 |
+| 24 | Castle Candelabrum | 5129 | Spectral Chant | 5129, 51291, 51292, 51293, 51294, 51295 |
+| 27 | Countdown Blast | 5132 | Chrono Reversal | 5132, 51321, 51322 |
+| 28 | Lantern's Scroll | 5134 | Judgement of Flame | 5134 |
+| 29 | Sanguine Love | 5135 | Binding Love | 5135 |
+| 31 | Flaming Carnage | 5801 | Skyfire Wrath | 5801 |
+| 32 | Fate | 5153 | Fate's Glare | 5153 |
+| 108 | Pixel Universe | 5140 | Storm Slash | 5140 |
+| 110 | Moment of Brilliance | 5145 | Splendid Bloom | 5145 |
+| 111 | Moonhunt Bow | 5148 | Moonlight Hunt | 5148 |
+| 112 | Thousand Swords | 5150 | Warblade Raid | 5150 |
+| 201 | Beastroar Bow | 5120 | Piercing Squail | 5120 |
+| 204 | Cryoshield Flame | 5131 | Frostflame Shield | 5131, 51311, 51312, 51313, 51314, 51315 |
+| 401 | Storm Destroyer | 5147 | Shattering Slam | 5147 |
+| 701 | Eternal Flame | 5121 | Invincible Torch Bearer | 5121, 5122, 5123, 51211, 51212, 51213, 51221, 51222, 51223, 51231, 51232, 51233 |
+| 702 | Under the Dome | 5128 | Copy Gene | 5128, 51281, 51282 |
+| 703 | Demeter's Sickle | 5130 | Demeter's Sigh | 5130, 51302, 51303, 51305, 51306, 51308 |
+| 704 | Divine Champion | 5137 | Divine Champion | 5137, 51371, 51372 |
+| 705 | Staff of Hermes | 5138 | Serpent Frenzy | 5138 |
+| 706 | Dance of Tides | 5141 | Dancing Flows | 5141 |
+| 707 | Chrono Loop | 5143 | Chrono Speed | 5143, 51431, 51432 |
+| 708 | Thunder Verdict | 5144 | Lightning Storm | 5144 |
+| 709 | Universe Encyclopedia | 5146 | World Flipper | 5146 |
+| 710 | Spear of Creation | 5151 | Elemental Genesis | 5151 |
+| 711 | Skeletal Bloom | 5152 | Sound of Reunion | 5152 |
+| 712 | Punch of Triumph | 5154 | One-Punch Victory | 5154 |
+| 713 | Thundering Hammer | 5155 | Hammer Smash! | 5155 |
+| 714 | Fearless Stride | 5156 | Fearless Stride | 5156 |
+| 715 | Scale of Justice | 5157 | Call of Justice | 5157 |
+| 716 | Bear Bump | 5158 | Bullet Shock | 5158 |
 
 ---
 
@@ -457,3 +509,4 @@
 
 - **Source spreadsheet**: `battlesim/reference/LOM_Database-5.xlsx`
 - **Structured data**: `battlesim/reference/artifacts_master.json`
+- **Config binaries**: `data/tables/Artifact_skin.json`, `data/tables/Artifact.json`, `data/tables/Skill.json`, `data/tables/Language_en.json`

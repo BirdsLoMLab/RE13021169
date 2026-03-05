@@ -13,7 +13,14 @@
       "main_skill": "Every 15s after the battle starts, deals AoE DMG equal to 5% of Max HP.",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill increases DMG RES by 4% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 30001,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27021
+      ],
+      "skills": []
     },
     {
       "index": 2,
@@ -24,7 +31,14 @@
       "main_skill": "Every 16s after the battle starts, deals 500% of current AoE Basic ATK DMG (can be Crit), and every Crit hit within 5s deals extra DMG equal to 0.4% of targets' current HP.",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill reduces Basic ATK DMG RES by 6% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 30002,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27022
+      ],
+      "skills": []
     },
     {
       "index": 3,
@@ -35,7 +49,14 @@
       "main_skill": "Every 16s after the battle starts, 3 random Pals gain 8% of Combo Multiplier and 8% of Final Crit DMG for 5s.",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill reduces targets' ATK by 8% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 30003,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27024
+      ],
+      "skills": []
     },
     {
       "index": 4,
@@ -46,7 +67,14 @@
       "main_skill": "Every 14s after the battle starts, deals 1500% of AoE Skill DMG, and targets take 400% of Bleed Skill DMG per second for 5s, ignoring immunity.",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill reduces targets' DMG RES by 5% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 30004,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27023
+      ],
+      "skills": []
     },
     {
       "index": 5,
@@ -57,7 +85,14 @@
       "main_skill": "After the battle starts, gains 4% of ATK and 12% of DEF until the battle ends.",
       "support_type": "None",
       "support_skill": "No Support Effect",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 30005,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27025
+      ],
+      "skills": []
     },
     {
       "index": 6,
@@ -69,7 +104,14 @@
       "support_type": "Active",
       "support_skill": "Releasing the main active skill shortens the CD of Active Skills on cooldown by 1s and increases Final Skill DMG by 12% for 5s.",
       "limited": true,
-      "implemented": true
+      "implemented": true,
+      "angel_id": 30007,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27030
+      ],
+      "skills": []
     },
     {
       "index": 7,
@@ -80,7 +122,14 @@
       "main_skill": "Every 16s after the battle starts, all Pals gain 4% of Crit Rate and 200% of Base Crit DMG for 8s.",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill grants all Pals 4% of Combo Rate for 7s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20001,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27012
+      ],
+      "skills": []
     },
     {
       "index": 8,
@@ -91,7 +140,14 @@
       "main_skill": "After the battle starts, releasing 10 active skills deals 3200% of AoE Skill DMG and increases Final Skill Crit DMG by 7.5% for 12s (triggered only once).",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill increases Skill Crit Rate by 2.5% and Base Skill Crit DMG by 15% until the battle ends.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20002,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27013
+      ],
+      "skills": []
     },
     {
       "index": 9,
@@ -102,7 +158,12 @@
       "main_skill": "No Main Effect",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill stuns targets for 0.5.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20003,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [],
+      "skills": []
     },
     {
       "index": 10,
@@ -113,7 +174,14 @@
       "main_skill": "Every 16s after the battle starts, gains a shield that absorbs 8% of Max HP for 5s. When taking Basic ATK DMG, the shield reduces ATK by 5% for 2s for targets within the range.",
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill regenerates 7.5% of lost HP.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20004,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27015
+      ],
+      "skills": []
     },
     {
       "index": 11,
@@ -124,7 +192,14 @@
       "main_skill": "After the battle starts, all Pals gain 20% of ATK SPD, which reduces by 1/5 every 4s.",
       "support_type": "Passive",
       "support_skill": "When HP drops below 50% for the first time, releasing the main passive skill grants all Pals 8% of ATK SPD for 12s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20005,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27016
+      ],
+      "skills": []
     },
     {
       "index": 12,
@@ -135,7 +210,16 @@
       "main_skill": "Every 16s after the battle starts, deals 1800% of AoE Skill DMG and stuns targets for 0.5s.",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill reduces targets' Base Energy Regen SPD by 8% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20006,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27017,
+        270171,
+        270172
+      ],
+      "skills": []
     },
     {
       "index": 13,
@@ -146,7 +230,14 @@
       "main_skill": "Every 14s after the battle starts, gains a shield that absorbs 8% of Max HP for 5s, during which every Basic ATK deals an additional 8% of current AoE Counter DMG (can be Crit).",
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill increases ATK by 6% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20007,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27018
+      ],
+      "skills": []
     },
     {
       "index": 14,
@@ -157,7 +248,14 @@
       "main_skill": "After the battle starts, gains 20% of ATK SPD, which reduces by 1/5 every 4s.",
       "support_type": "Passive",
       "support_skill": "When HP drops below 50% for the first time, releasing the main passive skill grants 8% of ATK SPD for 12s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20008,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27019
+      ],
+      "skills": []
     },
     {
       "index": 15,
@@ -168,7 +266,14 @@
       "main_skill": "After the battle starts, every Crit hit has a 5% chance to reduce ATK by 5% for 3s targets within the range.",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill increases Crit Rate by 5%.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20009,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27020
+      ],
+      "skills": []
     },
     {
       "index": 16,
@@ -180,7 +285,12 @@
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill increases ATK SPD by 10% and adds 50% of Counter DMG to Basic ATK for 5s.",
       "limited": true,
-      "implemented": true
+      "implemented": true,
+      "angel_id": 20011,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [],
+      "skills": []
     },
     {
       "index": 17,
@@ -191,7 +301,14 @@
       "main_skill": "Every 14s after the battle starts, targets within the range take 250% of Skill DMG per second for 5s.",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill increases Stun Rate by 3% until the battle ends.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10001,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27001
+      ],
+      "skills": []
     },
     {
       "index": 18,
@@ -202,7 +319,14 @@
       "main_skill": "Every 15s after the battle starts, deals 500% of current AoE Basic ATK DMG (can be Crit).",
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill increases Crit Rate by 4% and Base Crit DMG by 50% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10002,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27002
+      ],
+      "skills": []
     },
     {
       "index": 19,
@@ -213,7 +337,14 @@
       "main_skill": "Every 15s after the battle starts, deals 500% of current AoE Combo DMG (can be Crit).",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill increases ATK SPD by 5% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10003,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27003
+      ],
+      "skills": []
     },
     {
       "index": 20,
@@ -224,7 +355,14 @@
       "main_skill": "After the battle starts, every Basic ATK deals an additional 15% of current Single-target Counter DMG.",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill increases Base Counter DMG by 100% until the battle ends.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10004,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27004
+      ],
+      "skills": []
     },
     {
       "index": 21,
@@ -235,7 +373,12 @@
       "main_skill": "No Main Effect",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill increases DMG to bosses by 8% until the battle ends.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10005,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [],
+      "skills": []
     },
     {
       "index": 22,
@@ -246,7 +389,12 @@
       "main_skill": "No Main Effect",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill increases Final DEF by 8% until the battle ends.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10006,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [],
+      "skills": []
     },
     {
       "index": 23,
@@ -257,7 +405,12 @@
       "main_skill": "No Main Effect",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill increases Boss DMG RES by 4% until the battle ends.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10007,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [],
+      "skills": []
     },
     {
       "index": 24,
@@ -268,7 +421,14 @@
       "main_skill": "After the battle starts, all Pals gain 12% of Ignore Evasion.",
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill increases Base Pal DMG by 30% for 3s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10008,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27008
+      ],
+      "skills": []
     },
     {
       "index": 25,
@@ -279,7 +439,14 @@
       "main_skill": "After the battle starts, all Pals gain 50% of Base Crit DMG.",
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill grants all Pals 2.5% of Crit Rate until the battle ends.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10009,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27009
+      ],
+      "skills": []
     },
     {
       "index": 26,
@@ -290,7 +457,14 @@
       "main_skill": "Every 14s after the battle starts, gains a shield that absorbs 8% of Max HP for 5s.",
       "support_type": "Active",
       "support_skill": "Releasing the main active skill grants an extra shield that absorbs 5% of Max HP for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10010,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27010
+      ],
+      "skills": []
     },
     {
       "index": 27,
@@ -301,7 +475,14 @@
       "main_skill": "Every 14s after the battle starts, deals 1400% of AoE Skill DMG.",
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill increases Base Skill DMG by 30% for 5s.",
-      "implemented": true
+      "implemented": true,
+      "angel_id": 10011,
+      "angel_type": 1,
+      "max_stars": 10,
+      "skill_ids": [
+        27011
+      ],
+      "skills": []
     },
     {
       "index": 28,
@@ -313,7 +494,23 @@
       "support_type": "Active",
       "support_skill": "Releasing the main active skill reduces target's Pal DMG RES by 6% for 5s.",
       "limited": true,
-      "implemented": false
+      "implemented": false,
+      "angel_id": 30006,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        270271,
+        270272,
+        270273,
+        270274,
+        270275,
+        270276,
+        270277,
+        270278,
+        270279,
+        270280
+      ],
+      "skills": []
     },
     {
       "index": 29,
@@ -325,7 +522,14 @@
       "support_type": "None",
       "support_skill": "No Support Effect",
       "limited": true,
-      "implemented": false
+      "implemented": false,
+      "angel_id": 20010,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27026
+      ],
+      "skills": []
     },
     {
       "index": 30,
@@ -337,7 +541,14 @@
       "support_type": "Passive",
       "support_skill": "Releasing the main passive skill reduces all enemies' ATK by 3.6% until the battle ends.",
       "limited": true,
-      "implemented": false
+      "implemented": false,
+      "angel_id": 30013,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27041
+      ],
+      "skills": []
     },
     {
       "index": 31,
@@ -349,7 +560,14 @@
       "support_type": "Active",
       "support_skill": "After casting the main active skill, deals 900% Skill DMG to all enemies and reduces their Ignore Evasion. Crit Rate, Pal Ignore Evasion, and Pal Crit Rate by 3% for 5s (cannot be cleansed).",
       "limited": true,
-      "implemented": false
+      "implemented": false,
+      "angel_id": 20020,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27040
+      ],
+      "skills": []
     },
     {
       "index": 32,
@@ -361,7 +579,14 @@
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill increases Final Basic ATK DMG, Final Combo DMG, and Final Counter DMG by an additional 3% until the battle ends, stacking up to 4 times.",
       "limited": true,
-      "implemented": false
+      "implemented": false,
+      "angel_id": 30014,
+      "angel_type": 3,
+      "max_stars": 10,
+      "skill_ids": [
+        27042
+      ],
+      "skills": []
     },
     {
       "index": 33,
@@ -373,7 +598,65 @@
       "support_type": "Shield",
       "support_skill": "Releasing the main shield skill increases Evasion by an additional 18% for 5s.",
       "limited": true,
-      "implemented": false
+      "implemented": false,
+      "angel_id": 20021,
+      "angel_type": 2,
+      "max_stars": 10,
+      "skill_ids": [
+        27043
+      ],
+      "skills": []
+    }
+  ],
+  "_config_enriched": true,
+  "config_only_angels": [
+    {
+      "angel_id": 20022,
+      "name": "Anubis",
+      "type": 2,
+      "max_stars": 10,
+      "time_limit": [
+        1,
+        [
+          [
+            2026,
+            3,
+            7
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "skill_ids": [
+        27043
+      ]
+    },
+    {
+      "angel_id": 30015,
+      "name": "Zoe & Grizzbolt",
+      "type": 3,
+      "max_stars": 10,
+      "time_limit": [
+        1,
+        [
+          [
+            2026,
+            3,
+            7
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "skill_ids": [
+        27042
+      ]
     }
   ]
 }

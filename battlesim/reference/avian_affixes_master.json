@@ -6,613 +6,920 @@
       "id": "affix_001",
       "name": "Slow & Clumsy",
       "description": "Combo DMG -300%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4001,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_002",
       "name": "Slow Reaction",
       "description": "Counter DMG -300%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4002,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_003",
       "name": "Tickler",
       "description": "Basic ATK DMG -240%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4003,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_004",
       "name": "Double Effort",
       "description": "Skill DMG -80%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4004,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_005",
       "name": "Holdback",
       "description": "Pal DMG -80%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4005,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_006",
       "name": "Squib",
       "description": "Crit DMG Bonus -150%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4006,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_007",
       "name": "Fragile",
       "description": "Crit RES Bonus -150%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4007,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_008",
       "name": "Bottomless Abyss",
       "description": "HP Regen Bonus -20%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4008,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_009",
       "name": "Overtime",
       "description": "Avian HP -20%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4009,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_010",
       "name": "Cowardly",
       "description": "Avian ATK -20%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4010,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_011",
       "name": "Powerless",
       "description": "Avian DEF -20%",
-      "rarity": "gray"
+      "rarity": "gray",
+      "entry_id": 4011,
+      "entry_rarity_code": 4,
+      "max_level": 17
     },
     {
       "id": "affix_012",
       "name": "Shroom Combo",
       "description": "Combo DMG +150%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1001,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_013",
       "name": "Reflect Counter",
       "description": "Counter DMG -150%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1002,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_014",
       "name": "Enhanced Attack",
       "description": "Basic Attack DMG +120%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1003,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_015",
       "name": "Talent Skill",
       "description": "Skill DMG +40%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1004,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_016",
       "name": "Enhanced. Go!",
       "description": "Pal DMG +40%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1005,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_017",
       "name": "Rage Bonus",
       "description": "Crit DMG Bonus +75%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1006,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_018",
       "name": "Barrel Dodge",
       "description": "Crit RES Bonus +75%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1007,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_019",
       "name": "Regen Ability",
       "description": "HP Regen Bonus +10%",
-      "rarity": "blue"
+      "rarity": "blue",
+      "entry_id": 1008,
+      "entry_rarity_code": 1,
+      "max_level": 17
     },
     {
       "id": "affix_020",
       "name": "Quick But Dull",
       "description": "Global Combo +7.5%, Skill Crit DMG -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5001,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_021",
       "name": "Dull Blade Strike",
       "description": "Global Counter +7.5%, Skill Crit DMG -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5002,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_022",
       "name": "Multi-Talented",
       "description": "Skill Crit DMG +15%, Global Combo -2.5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5003,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_023",
       "name": "Inert Gas",
       "description": "Skill Crit DMG +15%, Global Counter -2.5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5004,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_024",
       "name": "Self-Centered",
       "description": "Skill Crit DMG +15%, Pal Crit DMG -25%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5019,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_025",
       "name": "Altruism",
       "description": "Pal Crit DMG +75%, Skill Crit DMG -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5020,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_026",
       "name": "Backstabbing",
       "description": "Global Counter +7.5%, Global Combo -2.5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5005,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_027",
       "name": "One-Sided Attack",
       "description": "Global Combo +7.5%, Global Counter -2.5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5006,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_028",
       "name": "Random Match",
       "description": "Global Combo +7.5%, Pal Crit DMG -25%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5017,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_029",
       "name": "On Standby",
       "description": "Global Counter +7.5%, Pal Crit DMG -25%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5018,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_030",
       "name": "Same Boat",
       "description": "Pal Crit DMG +75%, Global Counter -2.5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5021,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_031",
       "name": "Self Sacrifice",
       "description": "Pal Crit DMG +75%, Global Combo -2.5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5022,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_032",
       "name": "Lifespan Match",
       "description": "Avian HP +15%, ATK -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5007,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_033",
       "name": "Paper Defense",
       "description": "Avian HP +15%, DEF -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5008,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_034",
       "name": "Squishy Master",
       "description": "Avian ATK +15%, DEF -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5009,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_035",
       "name": "Low Endurance",
       "description": "Avian ATK +15%, HP -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5010,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_036",
       "name": "Heavy Armor",
       "description": "Avian DEF +15%, HP -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5011,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_037",
       "name": "Stability Focused",
       "description": "Avian DEF +15%, ATK -5%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5012,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_038",
       "name": "Rise and Fall",
       "description": "Pal basic attacks have a 75% chance to boost its DMG Multiplier by 0.2% and a 25% chance to reduce its DMG Multiplier by 0.1%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5016,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_039",
       "name": "The Middle Way",
       "description": "Counterstrikes have a 60% chance to boost Counter DMG by 0.2% and a 40% chance to reduce it by 0.1%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5014,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_040",
       "name": "Dilemma",
       "description": "Active skills have a 75% chance to boost Skill DMG by 0.2% and a 25% chance to reduce it by 0.1%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5015,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_041",
       "name": "Poisoned Arrow",
       "description": "Combos have a 60% chance to boost Combo DMG by 0.2% and a 40% chance to reduce it by 0.1%",
-      "rarity": "purple"
+      "rarity": "purple",
+      "entry_id": 5013,
+      "entry_rarity_code": 5,
+      "max_level": 17
     },
     {
       "id": "affix_042",
       "name": "Super Crowd Combo",
       "description": "Global Combo +5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2001,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_043",
       "name": "Super Reflect Counter",
       "description": "Global Counter +5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2002,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_044",
       "name": "Super Attack",
       "description": "Global Basic ATK +4%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2003,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_045",
       "name": "Super Boost",
       "description": "Skill Crit DMG +10%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2004,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_046",
       "name": "Loss of Control",
       "description": "Pal Crit DMG +50%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2005,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_047",
       "name": "Self-Defense",
       "description": "Basic ATK DMG RES +2.5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2006,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_048",
       "name": "Accurate Defense",
       "description": "Skill DMG RES +2.5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2007,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_049",
       "name": "Invalid Reflect",
       "description": "Counter DMG RES +2.5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2008,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_050",
       "name": "Grudge Holder",
       "description": "Combo DMG RES +2.5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2009,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_051",
       "name": "Shared Hatred",
       "description": "Pal DMG RES +2.5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2010,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_052",
       "name": "Indirect Aid",
       "description": "Boss DMG RES +2.5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2011,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_053",
       "name": "Against the Strong",
       "description": "Boss DMG +15%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2012,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_054",
       "name": "Quick Healing",
       "description": "Healing +0.05%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2013,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_055",
       "name": "Debuff Immunity",
       "description": "Duration of Control Effects -2.5%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2014,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_056",
       "name": "Longevity",
       "description": "Avian HP +10%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2015,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_057",
       "name": "Easy Rage",
       "description": "Avian ATK +10%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2016,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_058",
       "name": "Iron Shield",
       "description": "Avian DEF +10%",
-      "rarity": "gold"
+      "rarity": "gold",
+      "entry_id": 2017,
+      "entry_rarity_code": 2,
+      "max_level": 17
     },
     {
       "id": "affix_059",
       "name": "Super League",
       "description": "Global Combo +5%, Pal Crit DMG +50%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3001,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_060",
       "name": "All-round Hit",
       "description": "Global Combo +5%, Global Basic ATK +4%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3002,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_061",
       "name": "All-round Control",
       "description": "Global Counter +5%, Pal Crit DMG +50%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3003,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_062",
       "name": "Reverse Control",
       "description": "Global Counter +5%, Global Basic ATK +4%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3004,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_063",
       "name": "Burst Impact",
       "description": "Skill Crit DMG +10%, Pal Crit DMG +50%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3005,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_064",
       "name": "Infinite Burst Hit",
       "description": "Skill Crit DMG +10%, Global Basic ATK +4%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3006,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_065",
       "name": "Natural Burst",
       "description": "Avian HP, ATK and DEF +10%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3007,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_066",
       "name": "Punch Counter",
       "description": "Counterstrikes have a 50% chance to deal extra DMG equal to 0.5% of current HP",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3012,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_067",
       "name": "Wind Tear",
       "description": "Active skills deal extra DMG equal to 1% of the target's current HP",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3010,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_068",
       "name": "Multiple Shots",
       "description": "Combos have a 50% chance to deal extra DMG equal to 0.5% of the target's current HP",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3008,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_069",
       "name": "Divine Touch",
       "description": "Pal Crits have a 25% chance to deal extra DMG equal to 0.5% of the target's current HP",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3014,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_070",
       "name": "Meteor Feather",
       "description": "Combos have a 50% chance to restore 0.1% of Max HP",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3009,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_071",
       "name": "Infinite Dream",
       "description": "After a skill critical, the active skill deals 6% more DMG for 8s",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3011,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_072",
       "name": "Rage Slash",
       "description": "Boosts ATK by 0.4% per second when above 50% HP, stacking up to 30 times",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3013,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_073",
       "name": "Arcane Light",
       "description": "Pal Crits have a 25% chance to restore 0.1% of Character's Max HP",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3015,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_074",
       "name": "Terminal Strike",
       "description": "Each basic attack has a 8% chance to wound all targets within the range, reducing their Regen and Healing Amount by 50% for 1s",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3101,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_075",
       "name": "No Speeding",
       "description": "Reduces all enemies' active skill durations by 8%",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3102,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_076",
       "name": "Lightning Conductor",
       "description": "All enemy crit hits have a 10% chance to rebound, dealing 80% Basic ATK AoE DMG to all enemies in the area and reducing their Crit DMG by 15% for 1s",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3103,
+      "entry_rarity_code": 3,
+      "max_level": 17
     },
     {
       "id": "affix_077",
       "name": "Mutated: Time Saving",
       "description": "Avian Leveling EXP -20%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6006,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_078",
       "name": "Mutated: Time Wasting",
       "description": "Avian Advancement Cost +10%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6009,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_079",
       "name": "Mutated: Super Boost",
       "description": "Avian Breeding Time -20%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6001,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_080",
       "name": "Mutated: Speed Update",
       "description": "Avian Breeding Cooldown -20%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6003,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_081",
       "name": "Mutated: Efficient Evolution",
       "description": "Avian Advancement Cost -20%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6008,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_082",
       "name": "Mutated: Roundabout",
       "description": "Avian Leveling EXP +10%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6007,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_083",
       "name": "Mutated: Long Wait",
       "description": "Avian Breeding Cooldown +10%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6004,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_084",
       "name": "Mutated: Delayed Gratification",
       "description": "Avian Breeding Time +10%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6002,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_085",
       "name": "Mutated: Double-Yolk Egg",
       "description": "Breeding this Avian has a 10% chance to get 2 magic eggs",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6005,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_086",
       "name": "Mutated: Power of the Giant",
       "description": "Avian HP, ATK and DEF +20%, but Leveling EXP and Advancement Cost +20%",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6011,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_087",
       "name": "Mutated: Affix Refreshing",
       "description": "Avian Non-Mutated Affix Level +1",
-      "rarity": "mutated"
+      "rarity": "mutated",
+      "entry_id": 6010,
+      "entry_rarity_code": 6,
+      "max_level": 17
     },
     {
       "id": "affix_088",
       "name": "Work Light",
       "description": "Reduces the team's work Stamina cost by 20%. (Tiering up Avians doesn't boost the effect)",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7001,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_089",
       "name": "Instant Harvest",
       "description": "Harvest have a 5% chance to skip the process",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7003,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_090",
       "name": "United Effort",
       "description": "Reduces harvest time by 5%",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7004,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_091",
       "name": "Assited Irrigation",
       "description": "The team leader speeds up crop growth by 20% more after watering. (Tiering up Avians doesn't boost the effect)",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7005,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_092",
       "name": "Osmotic Fertilizer",
       "description": "0.1% chance to use 1 Basic Fertilizer for free when watering",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7006,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_093",
       "name": "Dual Flows",
       "description": "5% chance to water twice",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7007,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_094",
       "name": "Hawkeye Vigilance",
       "description": "Increases the chance of catching thieves by 5%",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7008,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_095",
       "name": "Quantum Baking",
       "description": "Pals have a 5% chance to reduce processing time by twice the amount",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7010,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_096",
       "name": "Production Shortcut",
       "description": "1% chance to reduce processing time to 1s",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7011,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_097",
       "name": "Unrestricted Mining",
       "description": "Boosts pals' talent effect for mining Ores by 5%",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7012,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_098",
       "name": "Chrono Upgrade",
       "description": "The team leader's talent reduces 20% more research time. (Tiering up Avians doesn't boost the effect)",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7013,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_099",
       "name": "Free Speedup",
       "description": "The team leader has a 1% chance to use 1 Speedup Coupon for free when reducing research time",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7014,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_100",
       "name": "Research Overtime",
       "description": "The team leader has a 5% chance to trigger research time reduction twice",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7015,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_101",
       "name": "Mine Blast",
       "description": "5% chance to mine twice",
-      "rarity": "work"
+      "rarity": "work",
+      "entry_id": 7016,
+      "entry_rarity_code": 7,
+      "max_level": 17
     },
     {
       "id": "affix_102",
       "name": "Speed Disruption",
       "description": "Reduce all enemies' active skill durations by 7% after the battle starts (cannot stack with 'No Speeding')",
-      "rarity": "colorful"
+      "rarity": "colorful",
+      "entry_id": 3104,
+      "entry_rarity_code": 3,
+      "max_level": 17
     }
-  ]
+  ],
+  "_config_source": "data/tables/Fly_entry.json"
 }

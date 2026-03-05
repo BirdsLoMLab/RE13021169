@@ -1,47 +1,49 @@
 # 07 — Avians (Spirit Birds / FlyPet)
 
-> Complete avian reference: all 34 avians from LOM_Database-5.xlsx + 102 avian affixes. See also `avians_master.json` and `avian_affixes_master.json` for structured JSON.
+> Complete avian reference: all 35 avians (34 from LOM_Database-5.xlsx + 1 new from ConfigFly) + 102 avian affixes. See also `avians_master.json` and `avian_affixes_master.json` for structured JSON.
 
 ---
 
-## Quick Reference — All 34 Avians
+## Quick Reference — All 35 Avians
 
-| # | Name | Rarity | Flags | Effect |
-|---|------|--------|-------|--------|
-| 1 | **Aggressive Lemon** | Normal | — | Regenerates 5% of lost HP every 5s |
-| 2 | **Gleam Candle** | Normal | — | Deals 240% AoE Skill DMG 5 times every 11s. (Triggers at the start of the battle... |
-| 3 | **Coconut Ball** | Normal | — | Increases ATK SPD by 5% immediately after battle starts and by 2% more for every... |
-| 4 | **Sheep Balloon** | Normal | — | Deals 500% of current Basic ATK AoE DMG and imprisons the target for 1s every 13... |
-| 5 | **Tomato Egg** | Normal | — | Deals 325% of current Basic ATK AoE DMG every 12s and increases Basic ATK DMG by... |
-| 6 | **Smart Assistant** | Normal | — | Increases Pal ATK SPD by 5% every 5s after battle starts, stacking up to 5 times... |
-| 7 | **Yoghurt Cocoa** | Normal | — | Each Pal Crit Increases its Final Crit DMG by 2%, stacking up to 5 times. |
-| 8 | **Astronaut Teal** | Normal | Event, B.Duck Collab | Deals 450% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of curren... |
-| 9 | **Impulse Penguin** | Advanced | — | Increases Counter DMG by 4% every 10s after battle starts, stacking up to 5 time... |
-| 10 | **Dense Cloud** | Advanced | — | Deals 1400% AoE Skill DMG every 13s after battle starts and increases Energy Reg... |
-| 11 | **3-Round Shooter** | Advanced | — | Deals 75% extra AoE Combo DMG every 4 combos. |
-| 12 | **Honeypot Warrior** | Advanced | — | Deals DMG equal to 2.5% Max HP every 5s after battle starts. (Triggers at the st... |
-| 13 | **Pumpkin Witch** | Advanced | — | Every Skill Crit deals 600% extra AoE Skill DMG. |
-| 14 | **Bell Ring** | Advanced | — | Every Crit has a 20% chance to deal 60% extra Basic ATK DMG Bleed DMG (Ignores D... |
-| 15 | **Sunshine Bringer** | Advanced | — | Deals 560% of current Basic ATK AoE DMG every 16s after battle starts and reduce... |
-| 16 | **Travelling Jellyfish** | Advanced | — | Deals 612.5% of current Basic ATK AoE DMG every 15s after battle starts and redu... |
-| 17 | **Whirlwind Leaf** | Advanced | — | Deals 220% extra AoE Skill DMG every 4 Basic Attacks. |
-| 18 | **Crispy Moth** | Advanced | — | Deals 630% of current Basic ATK AoE DMG every 17s after battle starts and stuns ... |
-| 19 | **Yoghurt Champ** | Advanced | — | Each Pal Crit increases its Final Crit DMG by 2%, stacking up to 5 times. Each P... |
-| 20 | **Astronaut Pinky** | Advanced | Event, B.Duck Collab | Deals 675% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of Max HP... |
-| 21 | **Maniac Love** | Advanced | Event, Rabbid Collab, LimitedBreed | Fire Cupid's Arrows at random targets every 5s (triggers at the start of the bat... |
-| 22 | **Dream Moment** | Advanced | Event, Rabbid Collab, LimitedBreed | Gain a shield that absorbs 6% of Max HP every 12s, lasting for 6s. After a shiel... |
-| 23 | **Pet - Genos** | Advanced | Event, One-Punch Man Collab, LimitedBreed | Every 15s after the battle starts, all enemies take 360% Skill DMG, 120% current... |
-| 24 | **Anubis** | Rare | — | Deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG... |
-| 25 | **Midnight Firefly** | Rare | — | Deal 240% of current Basic ATK DMG every 16s after battle starts and reduce the ... |
-| 26 | **Moonbound Spirit** | Rare | — | Deals 300% Skill DMG, 120% current Combo DMG, and 120% current Counter DMG every... |
-| 27 | **Horus, Sky God** | Rare | — | Every 6s, deals 240% Skill DMG, 100% of current Combo DMG, 100% of current Count... |
-| 28 | **Magic Cat** | Rare | — | Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current ... |
-| 29 | **Puppy Gaze** | Rare | — | Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current ... |
-| 30 | **Deity of Purrs** | Rare | — | For every 16 times healed (including HP regen, healing, active skill and healing... |
-| 31 | **Michelle** | Rare | — | For every 50 instances of damage taken, enemies take an additional 200% AoE DMG,... |
-| 32 | **Astronaut B.Duck** | Rare | Event, B.Duck Collab | Every 16s, deals 800% Skill DMG, 320% of current Combo DMG and 320% of current C... |
-| 33 | **Lunar Sprite** | Rare | — | After the battle starts, the Character's DEF increases by 60% and ATK increases ... |
-| 34 | **Dharma** | Advanced | — | Every 20s after the battle starts, gains 3 stacks of Toughness (capped at 3), ea... |
+| # | Name | Rarity | fly_id | skill_id | Flags | Effect |
+|---|------|--------|--------|----------|-------|--------|
+| 1 | **Aggressive Lemon** | Normal | 1001 | 5101 | — | Regenerates 5% of lost HP every 5s |
+| 2 | **Gleam Candle** | Normal | 1002 | 5102 | — | Deals 240% AoE Skill DMG 5 times every 11s. (Triggers at the start of the battle... |
+| 3 | **Coconut Ball** | Normal | 1003 | 5103 | — | Increases ATK SPD by 5% immediately after battle starts and by 2% more for every... |
+| 4 | **Sheep Balloon** | Normal | 1004 | 5104 | — | Deals 500% of current Basic ATK AoE DMG and imprisons the target for 1s every 13... |
+| 5 | **Tomato Egg** | Normal | 1005 | 5105 | — | Deals 325% of current Basic ATK AoE DMG every 12s and increases Basic ATK DMG by... |
+| 6 | **Smart Assistant** | Normal | 1006 | 5106 | — | Increases Pal ATK SPD by 5% every 5s after battle starts, stacking up to 5 times... |
+| 7 | **Yoghurt Cocoa** | Normal | 1007 | 5107 | — | Each Pal Crit Increases its Final Crit DMG by 2%, stacking up to 5 times. |
+| 8 | **Astronaut Teal** | Normal | 9001 | 5901 | Event, B.Duck Collab | Deals 450% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of curren... |
+| 9 | **Impulse Penguin** | Advanced | 2001 | 5201 | — | Increases Counter DMG by 4% every 10s after battle starts, stacking up to 5 time... |
+| 10 | **Dense Cloud** | Advanced | 2002 | 5202 | — | Deals 1400% AoE Skill DMG every 13s after battle starts and increases Energy Reg... |
+| 11 | **3-Round Shooter** | Advanced | 2003 | 5203 | — | Deals 75% extra AoE Combo DMG every 4 combos. |
+| 12 | **Honeypot Warrior** | Advanced | 2004 | 5204 | — | Deals DMG equal to 2.5% Max HP every 5s after battle starts. (Triggers at the st... |
+| 13 | **Pumpkin Witch** | Advanced | 2005 | 5205 | — | Every Skill Crit deals 600% extra AoE Skill DMG. |
+| 14 | **Bell Ring** | Advanced | 2006 | 5206 | — | Every Crit has a 20% chance to deal 60% extra Basic ATK DMG Bleed DMG (Ignores D... |
+| 15 | **Sunshine Bringer** | Advanced | 2007 | 5207 | — | Deals 560% of current Basic ATK AoE DMG every 16s after battle starts and reduce... |
+| 16 | **Travelling Jellyfish** | Advanced | 2008 | 5208 | — | Deals 612.5% of current Basic ATK AoE DMG every 15s after battle starts and redu... |
+| 17 | **Whirlwind Leaf** | Advanced | 2009 | 5209 | — | Deals 220% extra AoE Skill DMG every 4 Basic Attacks. |
+| 18 | **Crispy Moth** | Advanced | 2010 | 5210 | — | Deals 630% of current Basic ATK AoE DMG every 17s after battle starts and stuns ... |
+| 19 | **Yoghurt Champ** | Advanced | 2011 | 5211 | — | Each Pal Crit increases its Final Crit DMG by 2%, stacking up to 5 times. Each P... |
+| 20 | **Astronaut Pinky** | Advanced | 9002 | 5902 | Event, B.Duck Collab | Deals 675% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of Max HP... |
+| 21 | **Maniac Love** | Advanced | 8001 | 5801 | Event, Rabbid Collab, LimitedBreed | Fire Cupid's Arrows at random targets every 5s (triggers at the start of the bat... |
+| 22 | **Dream Moment** | Advanced | 8002 | 5802 | Event, Rabbid Collab, LimitedBreed | Gain a shield that absorbs 6% of Max HP every 12s, lasting for 6s. After a shiel... |
+| 23 | **Pet - Genos** | Advanced | 8101 | 5803 | Event, One-Punch Man Collab, LimitedBreed | Every 15s after the battle starts, all enemies take 360% Skill DMG, 120% current... |
+| 24 | **Anubis** | Rare | 3001 | 5301 | — | Deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG... |
+| 25 | **Midnight Firefly** | Rare | 3002 | 5302 | — | Deal 240% of current Basic ATK DMG every 16s after battle starts and reduce the ... |
+| 26 | **Moonbound Spirit** | Rare | 3003 | 5303 | — | Deals 300% Skill DMG, 120% current Combo DMG, and 120% current Counter DMG every... |
+| 27 | **Horus, Sky God** | Rare | 3004 | 5304 | — | Every 6s, deals 240% Skill DMG, 100% of current Combo DMG, 100% of current Count... |
+| 28 | **Magic Cat** | Rare | 3005 | 5305 | — | Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current ... |
+| 29 | **Puppy Gaze** | Rare | 3006 | 5306 | — | Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current ... |
+| 30 | **Deity of Purrs** | Rare | 3007 | 5307 | — | For every 16 times healed (including HP regen, healing, active skill and healing... |
+| 31 | **Michelle** | Rare | 3008 | 5308 | — | For every 50 instances of damage taken, enemies take an additional 200% AoE DMG,... |
+| 32 | **Astronaut B.Duck** | Rare | 9003 | 5903 | Event, B.Duck Collab | Every 16s, deals 800% Skill DMG, 320% of current Combo DMG and 320% of current C... |
+| 33 | **Lunar Sprite** | Rare | 3012 | 5312 | — | After the battle starts, the Character's DEF increases by 60% and ATK increases ... |
+| 34 | **Dharma** | Advanced | 2016 | 5216 | — | Every 20s after the battle starts, gains 3 stacks of Toughness (capped at 3), ea... |
+
+| 35 | **Daedream** | Advanced | 8201 | 82011 | Event, PLLD Collab | (ConfigFly data only - effect text pending) |
 
 ---
 
@@ -323,6 +325,16 @@
 
 **Effect:** Every 20s after the battle starts, gains 3 stacks of Toughness (capped at 3), each of which increases DMG RES by 3.5%. For every 12% Max HP taken as DMG loses 1 stack of Toughness. (Triggers at the start of the battle.)
 
+
+### 35. Daedream
+
+**Rarity:** Advanced
+**Flags:** Event Exclusive | Collab: PLLD Collab
+
+**Effect:** (ConfigFly data only - effect text pending)
+
+---
+
 ---
 
 ## Avian Affixes (102 total)
@@ -492,7 +504,179 @@
 
 ---
 
+
+## ConfigFly ID Reference
+
+> Decoded from `data/tables/Fly.json` (35 records). Maps fly_id to skill_id and resolved Language_en name.
+
+| fly_id | skill_id | Name | Quality | Type | Collab | unit_id |
+|--------|----------|------|---------|------|--------|---------|
+| 1001 | 5101 | Aggressive Lemon | Normal | Standard | — | fly_1001 |
+| 1002 | 5102 | Gleam Candle | Normal | Standard | — | fly_1002 |
+| 1003 | 5103 | Coconut Ball | Normal | Standard | — | fly_1003 |
+| 1004 | 5104 | Sheep Balloon | Normal | Standard | — | fly_1004 |
+| 1005 | 5105 | Tomato Egg | Normal | Standard | — | fly_1005 |
+| 1006 | 5106 | Smart Assistant | Normal | Standard | — | fly_1006 |
+| 1007 | 5107 | Yoghurt Cocoa | Normal | Standard | — | fly_1007 |
+| 2001 | 5201 | Impulse Penguin | Advanced | Standard | — | fly_2001 |
+| 2002 | 5202 | Dense Cloud | Advanced | Standard | — | fly_2002 |
+| 2003 | 5203 | 3-Round Shooter | Advanced | Standard | — | fly_2003 |
+| 2004 | 5204 | Honeypot Warrior | Advanced | Standard | — | fly_2004 |
+| 2005 | 5205 | Pumpkin Witch | Advanced | Standard | — | fly_2005 |
+| 2006 | 5206 | Bell Ring | Advanced | Standard | — | fly_2006 |
+| 2007 | 5207 | Sunshine Bringer | Advanced | Standard | — | fly_2007 |
+| 2008 | 5208 | Traveling Jellyfish | Advanced | Standard | — | fly_2008 |
+| 2009 | 5209 | Whirlwind Leaf | Advanced | Standard | — | fly_2009 |
+| 2010 | 5210 | Crispy Moth | Advanced | Standard | — | fly_2010 |
+| 2011 | 5211 | Yoghurt Champ | Advanced | Standard | — | fly_2011 |
+| 2016 | 5216 | Dharma | Advanced | Standard | — | fly_2016 |
+| 3001 | 5301 | Anubis | Rare | Standard | — | fly_3001 |
+| 3002 | 5302 | Midnight Firefly | Rare | Standard | — | fly_3002 |
+| 3003 | 5303 | Moonbound Spirit | Rare | Standard | — | fly_3003 |
+| 3004 | 5304 | Horus, Sky God | Rare | Standard | — | fly_3004 |
+| 3005 | 5305 | Magic Cat | Rare | Standard | — | fly_3005 |
+| 3006 | 5306 | Puppy Gaze | Rare | Standard | — | fly_3006 |
+| 3007 | 5307 | Deity of Purrs | Rare | Standard | — | fly_3007 |
+| 3008 | 5308 | Michelle | Rare | Standard | — | fly_3008 |
+| 3012 | 5312 | Lunar Sprite | Rare | Standard | — | fly_3012 |
+| 8001 | 5801 | Maniac Love | Advanced | Rabbid | 1 | fly_8001 |
+| 8002 | 5802 | Dream Moment | Advanced | Rabbid | 1 | fly_8002 |
+| 8101 | 5803 | Pet - Genos | Advanced | OPM | 2 | fly_8101 |
+| 8201 | 82011 | Daedream | Advanced | PLLD | 3 | fly_8201 |
+| 9001 | 5901 | Astronaut Teal | Normal | B.Duck | — | fly_9001 |
+| 9002 | 5902 | Astronaut Pinky | Advanced | B.Duck | — | fly_9002 |
+| 9003 | 5903 | Astronaut B.Duck | Rare | B.Duck | — | fly_9003 |
+
+### Quality/Type Key
+
+- **Quality**: 1=Normal, 2=Advanced, 3=Rare
+- **Type**: 1-3=Standard tiers, 9=B.Duck collab series, 81=Rabbid collab, 82=One-Punch Man collab, 83=PLLD collab
+- **Collab flag**: 0=standard, 1=Rabbid, 2=OPM, 3=PLLD
+
+## Affix Entry ID Reference
+
+> Decoded from `data/tables/Fly_entry.json` (102 affixes x 17 levels each). Maps entry_id to affix name.
+
+| entry_id | Name | Rarity Code | xlsx Rarity | Max Lvl |
+|----------|------|-------------|-------------|---------|
+| 1001 | Shroom Combo | 1 | blue | 17 |
+| 1002 | Reflect Counter | 1 | blue | 17 |
+| 1003 | Enhanced Attack | 1 | blue | 17 |
+| 1004 | Talent Skill | 1 | blue | 17 |
+| 1005 | Enhanced. Go! | 1 | blue | 17 |
+| 1006 | Rage Bonus | 1 | blue | 17 |
+| 1007 | Barrel Dodge | 1 | blue | 17 |
+| 1008 | Regen Ability | 1 | blue | 17 |
+| 2001 | Super Crowd Combo | 2 | gold | 17 |
+| 2002 | Super Reflect Counter | 2 | gold | 17 |
+| 2003 | Super Attack | 2 | gold | 17 |
+| 2004 | Super Boost | 2 | gold | 17 |
+| 2005 | Loss of Control | 2 | gold | 17 |
+| 2006 | Self-Defense | 2 | gold | 17 |
+| 2007 | Accurate Defense | 2 | gold | 17 |
+| 2008 | Invalid Reflect | 2 | gold | 17 |
+| 2009 | Grudge Holder | 2 | gold | 17 |
+| 2010 | Shared Hatred | 2 | gold | 17 |
+| 2011 | Indirect Aid | 2 | gold | 17 |
+| 2012 | Against the Strong | 2 | gold | 17 |
+| 2013 | Quick Healing | 2 | gold | 17 |
+| 2014 | Debuff Immunity | 2 | gold | 17 |
+| 2015 | Longevity | 2 | gold | 17 |
+| 2016 | Easy Rage | 2 | gold | 17 |
+| 2017 | Iron Shield | 2 | gold | 17 |
+| 3001 | Super League | 3 | colorful | 17 |
+| 3002 | All-round Hit | 3 | colorful | 17 |
+| 3003 | All-round Control | 3 | colorful | 17 |
+| 3004 | Reverse Control | 3 | colorful | 17 |
+| 3005 | Burst Impact | 3 | colorful | 17 |
+| 3006 | Infinite Burst Hit | 3 | colorful | 17 |
+| 3007 | Natural Burst | 3 | colorful | 17 |
+| 3008 | Multiple Shots | 3 | colorful | 17 |
+| 3009 | Meteor Feather | 3 | colorful | 17 |
+| 3010 | Wind Tear | 3 | colorful | 17 |
+| 3011 | Infinite Dream | 3 | colorful | 17 |
+| 3012 | Punch Counter | 3 | colorful | 17 |
+| 3013 | Rage Slash | 3 | colorful | 17 |
+| 3014 | Divine Touch | 3 | colorful | 17 |
+| 3015 | Arcane Light | 3 | colorful | 17 |
+| 3101 | Terminal Strike | 3 | colorful | 17 |
+| 3102 | No Speeding | 3 | colorful | 17 |
+| 3103 | Lightning Conductor | 3 | colorful | 17 |
+| 3104 | Speed Disruption | 3 | colorful | 17 |
+| 4001 | Slow & Clumsy | 4 | gray | 17 |
+| 4002 | Slow Reaction | 4 | gray | 17 |
+| 4003 | Tickler | 4 | gray | 17 |
+| 4004 | Double Effort | 4 | gray | 17 |
+| 4005 | Holdback | 4 | gray | 17 |
+| 4006 | Squib | 4 | gray | 17 |
+| 4007 | Fragile | 4 | gray | 17 |
+| 4008 | Bottomless Abyss | 4 | gray | 17 |
+| 4009 | Overtime | 4 | gray | 17 |
+| 4010 | Cowardly | 4 | gray | 17 |
+| 4011 | Powerless | 4 | gray | 17 |
+| 5001 | Quick But Dull | 5 | purple | 17 |
+| 5002 | Dull Blade Strike | 5 | purple | 17 |
+| 5003 | Multi-Talented | 5 | purple | 17 |
+| 5004 | Inert Gas | 5 | purple | 17 |
+| 5005 | Backstabbing | 5 | purple | 17 |
+| 5006 | One-Sided Attack | 5 | purple | 17 |
+| 5007 | Lifespan Match | 5 | purple | 17 |
+| 5008 | Paper Defense | 5 | purple | 17 |
+| 5009 | Squishy Master | 5 | purple | 17 |
+| 5010 | Low Endurance | 5 | purple | 17 |
+| 5011 | Heavy Armor | 5 | purple | 17 |
+| 5012 | Stability Focused | 5 | purple | 17 |
+| 5013 | Poisoned Arrow | 5 | purple | 17 |
+| 5014 | The Middle Way | 5 | purple | 17 |
+| 5015 | Dilemma | 5 | purple | 17 |
+| 5016 | Rise and Fall | 5 | purple | 17 |
+| 5017 | Random Match | 5 | purple | 17 |
+| 5018 | On Standby | 5 | purple | 17 |
+| 5019 | Self-Centered | 5 | purple | 17 |
+| 5020 | Altruism | 5 | purple | 17 |
+| 5021 | Same Boat | 5 | purple | 17 |
+| 5022 | Self Sacrifice | 5 | purple | 17 |
+| 6001 | Mutated: Super Boost | 6 | mutated | 17 |
+| 6002 | Mutated: Delayed Gratification | 6 | mutated | 17 |
+| 6003 | Mutated: Speed Update | 6 | mutated | 17 |
+| 6004 | Mutated: Long Wait | 6 | mutated | 17 |
+| 6005 | Mutated: Double-Yolk Egg | 6 | mutated | 17 |
+| 6006 | Mutated: Time Saving | 6 | mutated | 17 |
+| 6007 | Mutated: Roundabout | 6 | mutated | 17 |
+| 6008 | Mutated: Efficient Evolution | 6 | mutated | 17 |
+| 6009 | Mutated: Time Wasting | 6 | mutated | 17 |
+| 6010 | Mutated: Affix Refreshing | 6 | mutated | 17 |
+| 6011 | Mutated: Power of the Giant | 6 | mutated | 17 |
+| 7001 | Work Light | 7 | work | 17 |
+| 7003 | Instant Harvest | 7 | work | 17 |
+| 7004 | United Effort | 7 | work | 17 |
+| 7005 | Assited Irrigation | 7 | work | 17 |
+| 7006 | Osmotic Fertilizer | 7 | work | 17 |
+| 7007 | Dual Flows | 7 | work | 17 |
+| 7008 | Hawkeye Vigilance | 7 | work | 17 |
+| 7010 | Quantum Baking | 7 | work | 17 |
+| 7011 | Production Shortcut | 7 | work | 17 |
+| 7012 | Unrestricted Mining | 7 | work | 17 |
+| 7013 | Chrono Upgrade | 7 | work | 17 |
+| 7014 | Free Speedup | 7 | work | 17 |
+| 7015 | Research Overtime | 7 | work | 17 |
+| 7016 | Mine Blast | 7 | work | 17 |
+
+### Entry Rarity Codes
+
+- **1** = blue (positive buffs)
+- **2** = gold (stronger positive)
+- **3** = colorful (best-in-slot / proc effects)
+- **4** = gray (negative debuffs)
+- **5** = purple (trade-off)
+- **6** = mutated (breeding/progression)
+- **7** = work (farm/crafting)
+
+---
+
 ## Data Files
 
 - **Source spreadsheet**: `battlesim/reference/LOM_Database-5.xlsx`
+- **ConfigFly binary decode**: `data/tables/Fly.json` (35 avians), `data/tables/Fly_entry.json` (102 affixes x 17 levels), `data/tables/Fly_advance.json` (advancement tiers)
+- **Name resolution**: `data/tables/Language_en.json` (string ref -> English name)
 - **Structured data**: `battlesim/reference/avians_master.json`, `battlesim/reference/avian_affixes_master.json`

@@ -8,7 +8,18 @@
       "rarity": "Normal",
       "family_type": "Chicken",
       "effect": "Increase 5% Base Basic ATK Multiplier",
-      "dmg_multiplier": "3.5"
+      "dmg_multiplier": "3.5",
+      "pet_id": 2501,
+      "quality": 1,
+      "race_id": 5,
+      "race_name": "Chicken",
+      "skill_pairs": [
+        [
+          1,
+          1
+        ]
+      ],
+      "dmg_multiplier_raw": 5000
     },
     {
       "index": 2,
@@ -16,7 +27,18 @@
       "rarity": "Normal",
       "family_type": "Sprite",
       "effect": "Skill DMG +8%",
-      "dmg_multiplier": "3.5"
+      "dmg_multiplier": "3.5",
+      "pet_id": 2601,
+      "quality": 1,
+      "race_id": 6,
+      "race_name": "Sprite",
+      "skill_pairs": [
+        [
+          6,
+          1
+        ]
+      ],
+      "dmg_multiplier_raw": 5000
     },
     {
       "index": 3,
@@ -24,7 +46,18 @@
       "rarity": "Normal",
       "family_type": "Bird",
       "effect": "Attack Speed +5%",
-      "dmg_multiplier": "1.647"
+      "dmg_multiplier": "1.647",
+      "pet_id": 2606,
+      "quality": 1,
+      "race_id": 22,
+      "race_name": "Bird",
+      "skill_pairs": [
+        [
+          2,
+          1
+        ]
+      ],
+      "dmg_multiplier_raw": 5000
     },
     {
       "index": 4,
@@ -32,7 +65,22 @@
       "rarity": "Normal",
       "family_type": "Snail",
       "effect": "Reduces enemy movement speed by +15%",
-      "dmg_multiplier": "3.111"
+      "dmg_multiplier": "3.111",
+      "pet_id": 2801,
+      "quality": 1,
+      "race_id": 8,
+      "race_name": "Snail",
+      "skill_pairs": [
+        [
+          3,
+          1
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "dmg_multiplier_raw": 5000
     },
     {
       "index": 5,
@@ -40,7 +88,22 @@
       "rarity": "Unique",
       "family_type": "Specter",
       "effect": "Active Skill Base Energy Regen +5%",
-      "dmg_multiplier": "3.5"
+      "dmg_multiplier": "3.5",
+      "pet_id": 2201,
+      "quality": 2,
+      "race_id": 2,
+      "race_name": "Specter",
+      "skill_pairs": [
+        [
+          4,
+          1
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "dmg_multiplier_raw": 5000
     },
     {
       "index": 6,
@@ -48,7 +111,18 @@
       "rarity": "Unique",
       "family_type": "Panda",
       "effect": "HP Regen +10%",
-      "dmg_multiplier": "3.818"
+      "dmg_multiplier": "3.818",
+      "pet_id": 2701,
+      "quality": 2,
+      "race_id": 7,
+      "race_name": "Panda",
+      "skill_pairs": [
+        [
+          5,
+          1
+        ]
+      ],
+      "dmg_multiplier_raw": 5000
     },
     {
       "index": 7,
@@ -56,7 +130,18 @@
       "rarity": "Unique",
       "family_type": "Deer",
       "effect": "DMG RES +5%",
-      "dmg_multiplier": "3.231"
+      "dmg_multiplier": "3.231",
+      "pet_id": 2901,
+      "quality": 2,
+      "race_id": 9,
+      "race_name": "Deer",
+      "skill_pairs": [
+        [
+          2,
+          1
+        ]
+      ],
+      "dmg_multiplier_raw": 5000
     },
     {
       "index": 8,
@@ -64,7 +149,18 @@
       "rarity": "Well",
       "family_type": "Cat",
       "effect": "After using active skills, detonates enemies, dealing 100% DMG",
-      "dmg_multiplier": "4.2"
+      "dmg_multiplier": "4.2",
+      "pet_id": 2101,
+      "quality": 3,
+      "race_id": 1,
+      "race_name": "Cat",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 9,
@@ -72,7 +168,18 @@
       "rarity": "Well",
       "family_type": "Snow Sprite",
       "effect": "Reduce enemy attack speed by 5%",
-      "dmg_multiplier": "6.3"
+      "dmg_multiplier": "6.3",
+      "pet_id": 2301,
+      "quality": 3,
+      "race_id": 3,
+      "race_name": "Snow Sprite",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 10,
@@ -80,7 +187,18 @@
       "rarity": "Well",
       "family_type": null,
       "effect": "Every 3 basic attacks deal an extra 15% DMG",
-      "dmg_multiplier": "4.5"
+      "dmg_multiplier": "4.5",
+      "pet_id": 2401,
+      "quality": 3,
+      "race_id": 4,
+      "race_name": "Cactus",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 11,
@@ -88,7 +206,18 @@
       "rarity": "Well",
       "family_type": "Chicken",
       "effect": "Increase 8% Base Basic ATK Multiplier",
-      "dmg_multiplier": "3.937"
+      "dmg_multiplier": "3.937",
+      "pet_id": 2502,
+      "quality": 3,
+      "race_id": 5,
+      "race_name": "Chicken",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 12,
@@ -96,7 +225,22 @@
       "rarity": "Well",
       "family_type": null,
       "effect": "Skill DMG +15%",
-      "dmg_multiplier": "7.887"
+      "dmg_multiplier": "7.887",
+      "pet_id": 2602,
+      "quality": 3,
+      "race_id": 6,
+      "race_name": "Sprite",
+      "skill_pairs": [
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 13,
@@ -104,7 +248,22 @@
       "rarity": "Well",
       "family_type": "Bird",
       "effect": "Attack Speed +8%",
-      "dmg_multiplier": "3.706"
+      "dmg_multiplier": "3.706",
+      "pet_id": 2607,
+      "quality": 3,
+      "race_id": 22,
+      "race_name": "Bird",
+      "skill_pairs": [
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 14,
@@ -112,7 +271,18 @@
       "rarity": "Well",
       "family_type": "Snail",
       "effect": "Reduces enemy movement speed by 20%",
-      "dmg_multiplier": "7"
+      "dmg_multiplier": "7",
+      "pet_id": 2802,
+      "quality": 3,
+      "race_id": 8,
+      "race_name": "Snail",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 15,
@@ -120,7 +290,22 @@
       "rarity": "Well",
       "family_type": "Banana",
       "effect": "Combo +5%",
-      "dmg_multiplier": "3.316"
+      "dmg_multiplier": "3.316",
+      "pet_id": 2913,
+      "quality": 3,
+      "race_id": 16,
+      "race_name": "Banana",
+      "skill_pairs": [
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 5500
     },
     {
       "index": 16,
@@ -128,7 +313,18 @@
       "rarity": "Rare",
       "family_type": "Cat",
       "effect": "After using active skills, detonates enemies, dealing 150% DMG",
-      "dmg_multiplier": "6.309"
+      "dmg_multiplier": "6.309",
+      "pet_id": 2102,
+      "quality": 4,
+      "race_id": 1,
+      "race_name": "Cat",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 6000
     },
     {
       "index": 17,
@@ -136,7 +332,22 @@
       "rarity": "Rare",
       "family_type": "Specter",
       "effect": "Active Skill Base Energy Regen +10%",
-      "dmg_multiplier": "7.887"
+      "dmg_multiplier": "7.887",
+      "pet_id": 2202,
+      "quality": 4,
+      "race_id": 2,
+      "race_name": "Specter",
+      "skill_pairs": [
+        [
+          4,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 6000
     },
     {
       "index": 18,
@@ -144,7 +355,18 @@
       "rarity": "Rare",
       "family_type": "Snow Sprite",
       "effect": "Reduce enemy attack speed by 8%",
-      "dmg_multiplier": "9.464"
+      "dmg_multiplier": "9.464",
+      "pet_id": 2302,
+      "quality": 4,
+      "race_id": 3,
+      "race_name": "Snow Sprite",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 6000
     },
     {
       "index": 19,
@@ -152,7 +374,18 @@
       "rarity": "Rare",
       "family_type": null,
       "effect": "Every 3 basic attacks deal an extra 20% DMG",
-      "dmg_multiplier": "6.76"
+      "dmg_multiplier": "6.76",
+      "pet_id": 2402,
+      "quality": 4,
+      "race_id": 4,
+      "race_name": "Cactus",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 6000
     },
     {
       "index": 20,
@@ -160,7 +393,18 @@
       "rarity": "Rare",
       "family_type": "Panda",
       "effect": "HP Regen +20%",
-      "dmg_multiplier": "8.604"
+      "dmg_multiplier": "8.604",
+      "pet_id": 2702,
+      "quality": 4,
+      "race_id": 7,
+      "race_name": "Panda",
+      "skill_pairs": [
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 6000
     },
     {
       "index": 21,
@@ -168,7 +412,18 @@
       "rarity": "Rare",
       "family_type": "Deer",
       "effect": "DMG RES +8%",
-      "dmg_multiplier": "7.28"
+      "dmg_multiplier": "7.28",
+      "pet_id": 2902,
+      "quality": 4,
+      "race_id": 9,
+      "race_name": "Deer",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 6000
     },
     {
       "index": 22,
@@ -176,7 +431,22 @@
       "rarity": "Rare",
       "family_type": null,
       "effect": "Counter +8%",
-      "dmg_multiplier": "5.258"
+      "dmg_multiplier": "5.258",
+      "pet_id": 2916,
+      "quality": 4,
+      "race_id": 17,
+      "race_name": "Toothpaste",
+      "skill_pairs": [
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 6000
     },
     {
       "index": 23,
@@ -184,7 +454,22 @@
       "rarity": "Mythic",
       "family_type": "Cat",
       "effect": "After using active skills, detonates enemies, dealing 200% DMG",
-      "dmg_multiplier": "9.464"
+      "dmg_multiplier": "9.464",
+      "pet_id": 2103,
+      "quality": 5,
+      "race_id": 1,
+      "race_name": "Cat",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 24,
@@ -192,7 +477,26 @@
       "rarity": "Mythic",
       "family_type": "Specter",
       "effect": "Active Skill Base Energy Regen +15%",
-      "dmg_multiplier": "11.83"
+      "dmg_multiplier": "11.83",
+      "pet_id": 2203,
+      "quality": 5,
+      "race_id": 2,
+      "race_name": "Specter",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 25,
@@ -200,7 +504,22 @@
       "rarity": "Mythic",
       "family_type": "Snow Sprite",
       "effect": "Reduce enemy attack speed by 10%",
-      "dmg_multiplier": "14.196"
+      "dmg_multiplier": "14.196",
+      "pet_id": 2303,
+      "quality": 5,
+      "race_id": 3,
+      "race_name": "Snow Sprite",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 26,
@@ -208,7 +527,22 @@
       "rarity": "Mythic",
       "family_type": null,
       "effect": "Every 3 basic attacks deal an extra 30% DMG",
-      "dmg_multiplier": "10.14"
+      "dmg_multiplier": "10.14",
+      "pet_id": 2403,
+      "quality": 5,
+      "race_id": 4,
+      "race_name": "Cactus",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 27,
@@ -216,7 +550,22 @@
       "rarity": "Mythic",
       "family_type": "Chicken",
       "effect": "Increase 10% Base Basic ATK Multiplier",
-      "dmg_multiplier": "8.872"
+      "dmg_multiplier": "8.872",
+      "pet_id": 2503,
+      "quality": 5,
+      "race_id": 5,
+      "race_name": "Chicken",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 28,
@@ -224,7 +573,22 @@
       "rarity": "Mythic",
       "family_type": "Sprite",
       "effect": "Skill DMG +25%",
-      "dmg_multiplier": "11.83"
+      "dmg_multiplier": "11.83",
+      "pet_id": 2603,
+      "quality": 5,
+      "race_id": 6,
+      "race_name": "Sprite",
+      "skill_pairs": [
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 29,
@@ -232,7 +596,22 @@
       "rarity": "Mythic",
       "family_type": "Bird",
       "effect": "Attack Speed +10%",
-      "dmg_multiplier": "8.351"
+      "dmg_multiplier": "8.351",
+      "pet_id": 2608,
+      "quality": 5,
+      "race_id": 22,
+      "race_name": "Bird",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 30,
@@ -240,7 +619,22 @@
       "rarity": "Mythic",
       "family_type": "Panda",
       "effect": "HP Regen +30%",
-      "dmg_multiplier": "12.905"
+      "dmg_multiplier": "12.905",
+      "pet_id": 2703,
+      "quality": 5,
+      "race_id": 7,
+      "race_name": "Panda",
+      "skill_pairs": [
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 31,
@@ -248,7 +642,22 @@
       "rarity": "Mythic",
       "family_type": "Snail",
       "effect": "Reduces enemy movement speed by 30%",
-      "dmg_multiplier": "15.773"
+      "dmg_multiplier": "15.773",
+      "pet_id": 2803,
+      "quality": 5,
+      "race_id": 8,
+      "race_name": "Snail",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 32,
@@ -256,7 +665,26 @@
       "rarity": "Mythic",
       "family_type": "Deer",
       "effect": "DMG RES +10%",
-      "dmg_multiplier": "10.92"
+      "dmg_multiplier": "10.92",
+      "pet_id": 2903,
+      "quality": 5,
+      "race_id": 9,
+      "race_name": "Deer",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 7000
     },
     {
       "index": 33,
@@ -264,7 +692,22 @@
       "rarity": "Epic",
       "family_type": "Dragon",
       "effect": "Increase Basic Attack Crit DMG by 20% and Skill Crit Rate by 8%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2012,
+      "quality": 6,
+      "race_id": 14,
+      "race_name": "Dragon",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 34,
@@ -272,7 +715,22 @@
       "rarity": "Epic",
       "family_type": "Abaddon",
       "effect": "Gain a 10-second shield equal to 8% of Max HP after battle starts. Increase ATK by 8% for 10 seconds after the shield is lost",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2026,
+      "quality": 6,
+      "race_id": 3001,
+      "race_name": "Abaddon",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 35,
@@ -280,7 +738,22 @@
       "rarity": "Epic",
       "family_type": "Davi",
       "effect": "Gain 8% Skill Crit Rate and 8% Final Skill Crit DMG for 15 seconds after battle starts",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2027,
+      "quality": 6,
+      "race_id": 3002,
+      "race_name": "Davi",
+      "skill_pairs": [
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 36,
@@ -288,7 +761,22 @@
       "rarity": "Epic",
       "family_type": "Frej",
       "effect": "Gain 8% Crit Rate and 8% Final Crit DMG for 15 seconds after battle starts",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2028,
+      "quality": 6,
+      "race_id": 3003,
+      "race_name": "Frej",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 37,
@@ -296,7 +784,22 @@
       "rarity": "Epic",
       "family_type": "Tamamo",
       "effect": "Gain 8% Pal Crit Rate and 8% Final Pal Crit DMG for 15 seconds after battle starts",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2030,
+      "quality": 6,
+      "race_id": 3005,
+      "race_name": "Tamamo",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 38,
@@ -304,7 +807,22 @@
       "rarity": "Epic",
       "family_type": "Cat",
       "effect": "After using active skills, detonates enemies, dealing 250% DMG",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2104,
+      "quality": 6,
+      "race_id": 1,
+      "race_name": "Cat",
+      "skill_pairs": [
+        [
+          3,
+          3
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 39,
@@ -312,7 +830,22 @@
       "rarity": "Epic",
       "family_type": "Specter",
       "effect": "Active Skill Base Energy Regen +20%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2204,
+      "quality": 6,
+      "race_id": 2,
+      "race_name": "Specter",
+      "skill_pairs": [
+        [
+          3,
+          3
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 40,
@@ -320,7 +853,22 @@
       "rarity": "Epic",
       "family_type": "Snow Sprite",
       "effect": "Reduce enemy attack speed by 12%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2304,
+      "quality": 6,
+      "race_id": 3,
+      "race_name": "Snow Sprite",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 41,
@@ -328,7 +876,22 @@
       "rarity": "Epic",
       "family_type": null,
       "effect": "Every 3 basic attacks deal an extra 35% DMG",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2404,
+      "quality": 6,
+      "race_id": 4,
+      "race_name": "Cactus",
+      "skill_pairs": [
+        [
+          1,
+          3
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 42,
@@ -336,7 +899,22 @@
       "rarity": "Epic",
       "family_type": "Chicken",
       "effect": "Increase 12% Base Basic ATK Multiplier",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2504,
+      "quality": 6,
+      "race_id": 5,
+      "race_name": "Chicken",
+      "skill_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 43,
@@ -344,7 +922,22 @@
       "rarity": "Epic",
       "family_type": "Sprite",
       "effect": "Skill DMG +40%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2604,
+      "quality": 6,
+      "race_id": 6,
+      "race_name": "Sprite",
+      "skill_pairs": [
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 44,
@@ -352,7 +945,22 @@
       "rarity": "Epic",
       "family_type": null,
       "effect": "Attack Speed +12%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2609,
+      "quality": 6,
+      "race_id": 22,
+      "race_name": "Bird",
+      "skill_pairs": [
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 45,
@@ -360,7 +968,26 @@
       "rarity": "Epic",
       "family_type": "Eggplant",
       "effect": "Crit Rate +10%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2611,
+      "quality": 6,
+      "race_id": 23,
+      "race_name": "Eggplant",
+      "skill_pairs": [
+        [
+          4,
+          3
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 46,
@@ -368,7 +995,22 @@
       "rarity": "Epic",
       "family_type": "Panda",
       "effect": "HP Regen +35%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2704,
+      "quality": 6,
+      "race_id": 7,
+      "race_name": "Panda",
+      "skill_pairs": [
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 47,
@@ -376,7 +1018,22 @@
       "rarity": "Epic",
       "family_type": "Snail",
       "effect": "Reduces enemy movement speed by 35%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2804,
+      "quality": 6,
+      "race_id": 8,
+      "race_name": "Snail",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 48,
@@ -384,7 +1041,22 @@
       "rarity": "Epic",
       "family_type": "Deer",
       "effect": "DMG RES +12%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2904,
+      "quality": 6,
+      "race_id": 9,
+      "race_name": "Deer",
+      "skill_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 49,
@@ -392,7 +1064,22 @@
       "rarity": "Epic",
       "family_type": null,
       "effect": "Crit DMG Bonus +20%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2912,
+      "quality": 6,
+      "race_id": 18,
+      "race_name": "Mecha Dragon",
+      "skill_pairs": [
+        [
+          1,
+          3
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 50,
@@ -400,7 +1087,26 @@
       "rarity": "Epic",
       "family_type": null,
       "effect": "Pal DMG Multiplier +15%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2922,
+      "quality": 6,
+      "race_id": 1090,
+      "race_name": "Flying Squirrel",
+      "skill_pairs": [
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          7,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 51,
@@ -408,7 +1114,26 @@
       "rarity": "Epic",
       "family_type": "B.Duck",
       "effect": "Extends all shield durations by 1.5s",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2938,
+      "quality": 6,
+      "race_id": 1099,
+      "race_name": "B.Duck",
+      "skill_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 52,
@@ -416,7 +1141,22 @@
       "rarity": "Epic",
       "family_type": "Camel",
       "effect": "Enemy Basic ATK DMG -10%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2981,
+      "quality": 6,
+      "race_id": 1081,
+      "race_name": "Camel",
+      "skill_pairs": [
+        [
+          2,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 53,
@@ -424,7 +1164,22 @@
       "rarity": "Epic",
       "family_type": "Rabbids Coming",
       "effect": "Reduce enemy Movement SPD by 15% and ATK SPD by 5%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2985,
+      "quality": 6,
+      "race_id": 1086,
+      "race_name": "Rabbids Coming",
+      "skill_pairs": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "dmg_multiplier_raw": 8000
     },
     {
       "index": 54,
@@ -432,7 +1187,22 @@
       "rarity": "Legendary",
       "family_type": "Rabbit",
       "effect": "Increase Crit Rate by 5%. Benny's attacks have a 30% chance to launch targets for 0.5 second",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2021,
+      "quality": 7,
+      "race_id": 24,
+      "race_name": "Rabbit",
+      "skill_pairs": [
+        [
+          4,
+          5
+        ],
+        [
+          6,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 55,
@@ -440,7 +1210,22 @@
       "rarity": "Legendary",
       "family_type": "Mona",
       "effect": "Increase Evasion by 10% and Boss DMG by 30%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2029,
+      "quality": 7,
+      "race_id": 3004,
+      "race_name": "Mona",
+      "skill_pairs": [
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 56,
@@ -448,7 +1233,22 @@
       "rarity": "Legendary",
       "family_type": "Cat",
       "effect": "After using active skills, detonates enemies, dealing 300% DMG",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2105,
+      "quality": 7,
+      "race_id": 1,
+      "race_name": "Cat",
+      "skill_pairs": [
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 57,
@@ -456,7 +1256,22 @@
       "rarity": "Legendary",
       "family_type": "Specter",
       "effect": "Active Skill Base Energy Regen +25%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2205,
+      "quality": 7,
+      "race_id": 2,
+      "race_name": "Specter",
+      "skill_pairs": [
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 58,
@@ -464,7 +1279,22 @@
       "rarity": "Legendary",
       "family_type": "Snow Sprite",
       "effect": "Reduce enemy attack speed by 15%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2305,
+      "quality": 7,
+      "race_id": 3,
+      "race_name": "Snow Sprite",
+      "skill_pairs": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 59,
@@ -472,7 +1302,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Every 3 basic attacks deal an extra 40% DMG",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2405,
+      "quality": 7,
+      "race_id": 4,
+      "race_name": "Cactus",
+      "skill_pairs": [
+        [
+          1,
+          4
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 60,
@@ -480,7 +1325,22 @@
       "rarity": "Legendary",
       "family_type": "Chicken",
       "effect": "Increase 15% Base Basic ATK Multiplier",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2505,
+      "quality": 7,
+      "race_id": 5,
+      "race_name": "Chicken",
+      "skill_pairs": [
+        [
+          1,
+          4
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 61,
@@ -488,7 +1348,22 @@
       "rarity": "Legendary",
       "family_type": "Sprite",
       "effect": "Skill DMG +60%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2605,
+      "quality": 7,
+      "race_id": 6,
+      "race_name": "Sprite",
+      "skill_pairs": [
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 62,
@@ -496,7 +1371,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Attack Speed +15%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2610,
+      "quality": 7,
+      "race_id": 22,
+      "race_name": "Bird",
+      "skill_pairs": [
+        [
+          4,
+          3
+        ],
+        [
+          6,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 63,
@@ -504,7 +1394,22 @@
       "rarity": "Legendary",
       "family_type": "Panda",
       "effect": "HP Regen +40%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2705,
+      "quality": 7,
+      "race_id": 7,
+      "race_name": "Panda",
+      "skill_pairs": [
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 64,
@@ -512,7 +1417,22 @@
       "rarity": "Legendary",
       "family_type": "Snail",
       "effect": "Reduces enemy movement speed by 40%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2805,
+      "quality": 7,
+      "race_id": 8,
+      "race_name": "Snail",
+      "skill_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 65,
@@ -520,7 +1440,26 @@
       "rarity": "Legendary",
       "family_type": "Deer",
       "effect": "DMG RES +15%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2905,
+      "quality": 7,
+      "race_id": 9,
+      "race_name": "Deer",
+      "skill_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          7,
+          3
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 66,
@@ -528,7 +1467,26 @@
       "rarity": "Legendary",
       "family_type": "Banana",
       "effect": "Combo +10%, Combo DMG +100%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2914,
+      "quality": 7,
+      "race_id": 16,
+      "race_name": "Banana",
+      "skill_pairs": [
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 67,
@@ -536,7 +1494,26 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Counter +10%, Counter DMG +100%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2915,
+      "quality": 7,
+      "race_id": 17,
+      "race_name": "Toothpaste",
+      "skill_pairs": [
+        [
+          2,
+          5
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 68,
@@ -544,7 +1521,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Boss DMG +30%, Boss DMG RES +10%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2920,
+      "quality": 7,
+      "race_id": 1083,
+      "race_name": "Gingerbread",
+      "skill_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 69,
@@ -552,7 +1544,22 @@
       "rarity": "Legendary",
       "family_type": "Pepe",
       "effect": "Healing +0.1%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2932,
+      "quality": 7,
+      "race_id": 1003,
+      "race_name": "Pepe",
+      "skill_pairs": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 70,
@@ -560,7 +1567,26 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Skill Crit +5%, Skill Crit DMG +10%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2933,
+      "quality": 7,
+      "race_id": 1004,
+      "race_name": "Spritefox",
+      "skill_pairs": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 71,
@@ -568,7 +1594,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Hellflame Feather's basic attacks deal extra DMG equal to 0.5% of the target's current HP",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2934,
+      "quality": 7,
+      "race_id": 1005,
+      "race_name": "Hellflame Feather",
+      "skill_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 72,
@@ -576,7 +1617,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Increases all shields' effects by 20%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2937,
+      "quality": 7,
+      "race_id": 1008,
+      "race_name": "Puppy Fervor",
+      "skill_pairs": [
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 73,
@@ -584,7 +1640,22 @@
       "rarity": "Legendary",
       "family_type": "Pirate Parrot",
       "effect": "Pal Crit DMG +75%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2939,
+      "quality": 7,
+      "race_id": 1009,
+      "race_name": "Pirate Parrot",
+      "skill_pairs": [
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 74,
@@ -592,7 +1663,22 @@
       "rarity": "Legendary",
       "family_type": "Floral Panda",
       "effect": "Base Regen +0.1%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2941,
+      "quality": 7,
+      "race_id": 1011,
+      "race_name": "Floral Panda",
+      "skill_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 75,
@@ -600,7 +1686,26 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Pal DMG +60%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2943,
+      "quality": 7,
+      "race_id": 1014,
+      "race_name": "Moon Hare",
+      "skill_pairs": [
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 76,
@@ -608,7 +1713,22 @@
       "rarity": "Legendary",
       "family_type": "Alpaca",
       "effect": "Reduces all enemies' ATK by 6%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2946,
+      "quality": 7,
+      "race_id": 25,
+      "race_name": "Alpaca",
+      "skill_pairs": [
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 77,
@@ -616,7 +1736,22 @@
       "rarity": "Legendary",
       "family_type": "Snake",
       "effect": "Reduces all enemies' Final Crit RES by 8%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2947,
+      "quality": 7,
+      "race_id": 26,
+      "race_name": "Snake",
+      "skill_pairs": [
+        [
+          2,
+          5
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 78,
@@ -624,7 +1759,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Increases all enemies' ATK SPD by 10%, but reduces their Final Basic ATK DMG, Combo DMG and Counter DMG by 15%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2948,
+      "quality": 7,
+      "race_id": 1088,
+      "race_name": "Mellow Cloud",
+      "skill_pairs": [
+        [
+          1,
+          5
+        ],
+        [
+          6,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 79,
@@ -632,7 +1782,26 @@
       "rarity": "Legendary",
       "family_type": "Blackeye",
       "effect": "Pal Ignore Evasion +20%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2982,
+      "quality": 7,
+      "race_id": 1082,
+      "race_name": "Blackeye",
+      "skill_pairs": [
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 80,
@@ -640,7 +1809,22 @@
       "rarity": "Legendary",
       "family_type": "Wolf",
       "effect": "Enemy HP Regen -10%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2983,
+      "quality": 7,
+      "race_id": 1084,
+      "race_name": "Wolf",
+      "skill_pairs": [
+        [
+          3,
+          5
+        ],
+        [
+          6,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 81,
@@ -648,7 +1832,22 @@
       "rarity": "Legendary",
       "family_type": "Mushroom Burglar",
       "effect": "Every attack or combo of 7 by Mushroom Burglar increases Character ATK by 2% and reduces all enemies' ATK by 2%, stacking up to 4 times",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2984,
+      "quality": 7,
+      "race_id": 1085,
+      "race_name": "Mushroom Burglar",
+      "skill_pairs": [
+        [
+          3,
+          4
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 82,
@@ -656,7 +1855,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Reduce all enemies' Pal DMG RES by 8%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2986,
+      "quality": 7,
+      "race_id": 1087,
+      "race_name": "Moonspirit Hound",
+      "skill_pairs": [
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 83,
@@ -664,7 +1878,26 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Adds 1500 Pal Inspire",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2987,
+      "quality": 7,
+      "race_id": 1080,
+      "race_name": "Skeleton Minion",
+      "skill_pairs": [
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     },
     {
       "index": 84,
@@ -672,7 +1905,22 @@
       "rarity": "Immortal",
       "family_type": "Dragon",
       "effect": "Increase Basic Attack Crit DMG by 50% and Skill Crit Rate by 20%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2906,
+      "quality": 8,
+      "race_id": 14,
+      "race_name": "Dragon",
+      "skill_pairs": [
+        [
+          1,
+          5
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 10000
     },
     {
       "index": 85,
@@ -680,7 +1928,26 @@
       "rarity": "Immortal",
       "family_type": "Turtle",
       "effect": "When HP is below 50%, gain a shield equal to 30% of max HP. (Cooldown: 60 seconds.)",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2907,
+      "quality": 8,
+      "race_id": 10,
+      "race_name": "Turtle",
+      "skill_pairs": [
+        [
+          2,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 10000
     },
     {
       "index": 86,
@@ -688,7 +1955,22 @@
       "rarity": "Immortal",
       "family_type": "Dog",
       "effect": "Increase counter DMG by 60%, and restore 1% of lost HP on counter",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2908,
+      "quality": 8,
+      "race_id": 12,
+      "race_name": "Dog",
+      "skill_pairs": [
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 10000
     },
     {
       "index": 87,
@@ -696,7 +1978,22 @@
       "rarity": "Immortal",
       "family_type": "Fox",
       "effect": "Extend stun duration by 30%, and reduce stunned enemies' DMG RES by 15%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2909,
+      "quality": 8,
+      "race_id": 15,
+      "race_name": "Fox",
+      "skill_pairs": [
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 10000
     },
     {
       "index": 88,
@@ -704,7 +2001,22 @@
       "rarity": "Immortal",
       "family_type": "Octopus",
       "effect": "Increase Combo DMG by 60%, and with every 3 combos, deal an extra 60% current Combo DMG",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2910,
+      "quality": 8,
+      "race_id": 11,
+      "race_name": "Octopus",
+      "skill_pairs": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 10000
     },
     {
       "index": 89,
@@ -712,7 +2024,26 @@
       "rarity": "Immortal",
       "family_type": "Lizard",
       "effect": "Increase Pal DMG by 80% and Ignore Evasion by 10%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2911,
+      "quality": 8,
+      "race_id": 13,
+      "race_name": "Lizard",
+      "skill_pairs": [
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "dmg_multiplier_raw": 10000
     },
     {
       "index": 90,
@@ -720,7 +2051,22 @@
       "rarity": "Legendary",
       "family_type": null,
       "effect": "Increases Global Crit DMG by 15%",
-      "dmg_multiplier": null
+      "dmg_multiplier": null,
+      "pet_id": 2988,
+      "quality": 7,
+      "race_id": 5004,
+      "race_name": "Fortune Envoy",
+      "skill_pairs": [
+        [
+          3,
+          5
+        ],
+        [
+          7,
+          4
+        ]
+      ],
+      "dmg_multiplier_raw": 9000
     }
   ]
 }

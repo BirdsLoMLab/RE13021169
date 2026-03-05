@@ -1,10 +1,74 @@
 # 21 — Star Heroes
 
-> Complete Star Heroes reference: all 33 heroes from LOM_Database-5.xlsx. 27 implemented, 6 not yet. See also `star_heroes_master.json` for structured JSON.
+> Complete Star Heroes reference: all 33 heroes from LOM_Database-5.xlsx + 2 config-only angels.
+> Star Heroes are the **Angel** system internally (`ConfigAngel`). See also `star_heroes_master.json`.
 
 ---
 
-## Quick Reference — All 33 Star Heroes
+## Config ID Quick Reference
+
+| # | Name | angel_id | Type | Skill IDs | Rarity | Limited |
+|---|------|----------|------|-----------|--------|---------|
+| 1 | Divine Warbringer | 30001 | 3 (Legendary) | 27021 | SSR | — |
+| 2 | Storm Dominion | 30002 | 3 (Legendary) | 27022 | SSR | — |
+| 3 | Barbarian Overlord | 30003 | 3 (Legendary) | 27024 | SSR | — |
+| 4 | Holy Defender | 30004 | 3 (Legendary) | 27023 | SSR | — |
+| 5 | Genie of Wishes | 30005 | 3 (Legendary) | 27025 | SSR | — |
+| 6 | Lord of Champions | 30007 | 3 (Legendary) | 27030 | SSR | Yes |
+| 7 | Spirit Harbinger | 20001 | 2 (Rare) | 27012 | SR | — |
+| 8 | Mentor of Wisdom | 20002 | 2 (Rare) | 27013 | SR | — |
+| 9 | Chrono Sprite | 20003 | 2 (Rare) | *(none)* | SR | — |
+| 10 | Knight of Light | 20004 | 2 (Rare) | 27015 | SR | — |
+| 11 | Beast Soul Guardian | 20005 | 2 (Rare) | 27016 | SR | — |
+| 12 | Void Guide | 20006 | 2 (Rare) | 27017,270171-9 | SR | — |
+| 13 | Defender of Order | 20007 | 2 (Rare) | 27018 | SR | — |
+| 14 | Biosphere Guardian | 20008 | 2 (Rare) | 27019 | SR | — |
+| 15 | Nature's Keeper | 20009 | 2 (Rare) | 27020 | SR | — |
+| 16 | Goddess of Victory | 20011 | 2 (Rare) | *(none)* | SR | Yes |
+| 17 | Sprite of Knowledge | 10001 | 1 (Common) | 27001 | R | — |
+| 18 | Intrepid Fowl | 10002 | 1 (Common) | 27002 | R | — |
+| 19 | Jolly Greenhorn | 10003 | 1 (Common) | 27003 | R | — |
+| 20 | Vanguard Urchin | 10004 | 1 (Common) | 27004 | R | — |
+| 21 | Faithful Guardian | 10005 | 1 (Common) | *(none)* | R | — |
+| 22 | Blossom Harbinger | 10006 | 1 (Common) | *(none)* | R | — |
+| 23 | Harvest Harbinger | 10007 | 1 (Common) | *(none)* | R | — |
+| 24 | Dome Watcher | 10008 | 1 (Common) | 27008 | R | — |
+| 25 | Valiant Soulknight | 10009 | 1 (Common) | 27009 | R | — |
+| 26 | Stoneborn Warrior | 10010 | 1 (Common) | 27010 | R | — |
+| 27 | Shadow Keeper | 10011 | 1 (Common) | 27011 | R | — |
+| 28 | Puppy Squad | 30006 | 3 (Legendary) | 270271-270280 | SSR | Yes |
+| 29 | Sakura Star Envoy | 20010 | 2 (Rare) | 27026 | SR | Yes |
+| 30 | King | 30013 | 3 (Legendary) | 27041 | SSR | Yes |
+| 31 | Hellish Blizzard | 20020 | 2 (Rare) | 27040 | SR | Yes |
+| 32 | Gold Snow Roll | 30014 | 3 (Legendary) | 27042 | SSR | Yes |
+| 33 | Leaf Fox | 20021 | 2 (Rare) | 27043 | SR | Yes |
+| — | *Anubis* | 20022 | 2 (Rare) | *(config-only)* | — | Yes |
+| — | *Zoe & Grizzbolt* | 30015 | 3 (Legendary) | *(config-only)* | — | Yes |
+
+> **Angel Types**: 1=Common (R), 2=Rare (SR), 3=Legendary (SSR)
+> **Skill IDs**: Reference `ConfigAngel_skill` table. Skills 27xxx are angel-specific battle skills.
+> **Config-only**: Anubis and Zoe & Grizzbolt exist in ConfigAngel but not in the xlsx.
+
+---
+
+## Formation System (ConfigAngel_array)
+
+Angels are placed in formation slots:
+
+| Slot | Type | Effect |
+|------|------|--------|
+| 1 | Main (type=1) | Battle skill 1 + skill 2, costs energy |
+| 2 | Main (type=2) | Battle skill 1 + skill 2, costs energy |
+| 3 | Main (type=2) | Battle skill 1 + skill 2, costs energy |
+| 4+ | Development (type=0) | Passive development effects only, no energy cost |
+
+- `pos_type` must match `angel.type` for placement
+- Shared energy pool: `all_cost1 = Σ(battle_skill1_cost + battle_skill2_cost)` vs max budget
+- Star progression unlocks skills and development effects via `ConfigAngel_star`
+
+---
+
+## Full Hero Details — All 33 Star Heroes
 
 | # | Name | Rarity | Cost | Main Type | Support Type | Limited | Impl |
 |---|------|--------|------|-----------|-------------|---------|------|
@@ -376,7 +440,59 @@
 
 ---
 
+## Skill ID → Angel Name Lookup
+
+For code reference — map `ConfigAngel_skill` IDs back to their angel:
+
+| Skill ID | Angel Name | angel_id |
+|----------|------------|----------|
+| 27001 | Sprite of Knowledge | 10001 |
+| 27002 | Intrepid Fowl | 10002 |
+| 27003 | Jolly Greenhorn | 10003 |
+| 27004 | Vanguard Urchin | 10004 |
+| 27008 | Dome Watcher | 10008 |
+| 27009 | Valiant Soulknight | 10009 |
+| 27010 | Stoneborn Warrior | 10010 |
+| 27011 | Shadow Keeper | 10011 |
+| 27012 | Spirit Harbinger | 20001 |
+| 27013 | Mentor of Wisdom | 20002 |
+| 27015 | Knight of Light | 20004 |
+| 27016 | Beast Soul Guardian | 20005 |
+| 27017 | Void Guide | 20006 |
+| 27018 | Defender of Order | 20007 |
+| 27019 | Biosphere Guardian | 20008 |
+| 27020 | Nature's Keeper | 20009 |
+| 27021 | Divine Warbringer | 30001 |
+| 27022 | Storm Dominion | 30002 |
+| 27023 | Holy Defender | 30004 |
+| 27024 | Barbarian Overlord | 30003 |
+| 27025 | Genie of Wishes | 30005 |
+| 27026 | Sakura Star Envoy | 20010 |
+| 27030 | Lord of Champions | 30007 |
+| 27040 | Hellish Blizzard | 20020 |
+| 27041 | King | 30013 |
+| 27042 | Gold Snow Roll | 30014 |
+| 27043 | Leaf Fox | 20021 |
+| 270271-280 | Puppy Squad (10 skills) | 30006 |
+
+---
+
+## Config Tables Reference
+
+| Table | Records | Purpose |
+|-------|---------|---------|
+| `ConfigAngel` | 35 | Angel definitions (id, name, type, icons) |
+| `ConfigAngel_star` | 350 | Star progression (attrs, skills, develop effects) |
+| `ConfigAngel_skill` | 310 | Battle skills (effects, coefficients, descriptions) |
+| `ConfigAngel_array` | 5+ | Formation slot definitions |
+| `ConfigAngel_develop` | — | Development slot effects |
+| `ConfigAngel_draw` | — | Gacha rates (permanent banners) |
+| `ConfigAngel_draw_time_limit` | — | Limited-time rate-up banners |
+
+---
+
 ## Data Files
 
 - **Source spreadsheet**: `battlesim/reference/LOM_Database-5.xlsx`
 - **Structured data**: `battlesim/reference/star_heroes_master.json`
+- **Config source**: `data/tables/Angel*.json` (decoded from `bundle-firstload-res`)

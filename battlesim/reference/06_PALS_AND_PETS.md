@@ -1,6 +1,6 @@
 # 06 — Pals and Pets
 
-> Complete pal reference: all 90 pals from LOM_Database-5.xlsx with family types and DMG multipliers. See also `pals_master.json` for structured JSON.
+> Complete pal reference: all 90 pals from LOM_Database-5.xlsx with family types and DMG multipliers, enriched with config data from decoded ConfigPet binary (98 pets with IDs, quality tiers, race IDs, skill pairs, and raw damage multipliers). See also `pals_master.json` for structured JSON.
 
 ---
 
@@ -400,6 +400,114 @@
 
 **Wealthy Lizard** — Family: Lizard
 - Increase Pal DMG by 80% and Ignore Evasion by 10%
+
+---
+
+
+## Config Data Quick Reference (ConfigPet Binary)
+
+> All 98 pets from decoded ConfigPet binary with IDs, quality tiers, race assignments, skill pairs, and damage multipliers.
+
+| pet_id | Name | Quality | Race | Skills | DMG Raw | DMG % |
+|--------|------|---------|------|--------|---------|-------|
+| 2011 | Sparkpaw | Epic (6) | Mouse | Detonate L2, Energy Regen L3 | 8000 | 80% |
+| 2012 | Fortune Dragon | Epic (6) | Dragon | ATK Mult L2, Slow L3 | 8000 | 80% |
+| 2021 | Benny | Legendary (7) | Rabbit | Energy Regen L5, Skill DMG L4 | 9000 | 90% |
+| 2026 | Abaddon | Epic (6) | Abaddon | ATK SPD L2, Energy Regen L3 | 8000 | 80% |
+| 2027 | Davi | Epic (6) | Davi | Detonate L3, Energy Regen L2 | 8000 | 80% |
+| 2028 | Frej | Epic (6) | Frej | ATK Mult L2, Energy Regen L3 | 8000 | 80% |
+| 2029 | Mona | Legendary (7) | Mona | Detonate L4, Energy Regen L5 | 9000 | 90% |
+| 2030 | Tamamo | Epic (6) | Tamamo | ATK SPD L2, Skill DMG L3 | 8000 | 80% |
+| 2101 | Kitten | Well (3) | Cat | Detonate L2 | 5500 | 55% |
+| 2102 | Arcane Cat | Rare (4) | Cat | Detonate L2 | 6000 | 60% |
+| 2103 | Wizard Cat | Mythic (5) | Cat | Detonate L2, Slow L2 | 7000 | 70% |
+| 2104 | Coffee Cat | Epic (6) | Cat | Detonate L3, Slow L2 | 8000 | 80% |
+| 2105 | Cat Prince | Legendary (7) | Cat | Detonate L4, Slow L3 | 9000 | 90% |
+| 2201 | Pink Hydrosprite | Unique (2) | Specter | Energy Regen L1, Utility L1 | 5000 | 50% |
+| 2202 | Nature Spirit | Rare (4) | Specter | Energy Regen L2, Utility L2 | 6000 | 60% |
+| 2203 | Aggressive Hydrosprite | Mythic (5) | Specter | Detonate L2, Energy Regen L2, Utility L2 | 7000 | 70% |
+| 2204 | Triumphant Hydrosprite | Epic (6) | Specter | Detonate L3, Slow L2 | 8000 | 80% |
+| 2205 | Warlord Hydrosprite | Legendary (7) | Specter | Detonate L4, Slow L3 | 9000 | 90% |
+| 2301 | Snow Pudding | Well (3) | Snow Sprite | ATK SPD L2 | 5500 | 55% |
+| 2302 | Snow Ball | Rare (4) | Snow Sprite | ATK SPD L2 | 6000 | 60% |
+| 2303 | Snow Sprite | Mythic (5) | Snow Sprite | ATK Mult L2, ATK SPD L2 | 7000 | 70% |
+| 2304 | Snow Goblin | Epic (6) | Snow Sprite | ATK Mult L2, ATK SPD L3 | 8000 | 80% |
+| 2305 | Snow General | Legendary (7) | Snow Sprite | ATK Mult L3, ATK SPD L4 | 9000 | 90% |
+| 2401 | Baby Cactus | Well (3) | Cactus | ATK Mult L2 | 5500 | 55% |
+| 2402 | Cub Cactus | Rare (4) | Cactus | ATK Mult L2 | 6000 | 60% |
+| 2403 | Energetic Cactus | Mythic (5) | Cactus | ATK Mult L2, Skill DMG L2 | 7000 | 70% |
+| 2404 | Floral Cactus | Epic (6) | Cactus | ATK Mult L3, Skill DMG L2 | 8000 | 80% |
+| 2405 | Cowboy Cactus | Legendary (7) | Cactus | ATK Mult L4, Skill DMG L3 | 9000 | 90% |
+| 2501 | Hatched Chick | Normal (1) | Chicken | ATK Mult L1 | 5000 | 50% |
+| 2502 | Xmas Turkey | Well (3) | Chicken | ATK Mult L2 | 5500 | 55% |
+| 2503 | Chicken Fighter | Mythic (5) | Chicken | ATK Mult L2, Detonate L2 | 7000 | 70% |
+| 2504 | Kongfu Chicken | Epic (6) | Chicken | ATK Mult L2, Skill DMG L3 | 8000 | 80% |
+| 2505 | Chicken Hood | Legendary (7) | Chicken | ATK Mult L4, Skill DMG L3 | 9000 | 90% |
+| 2601 | Flying Fox | Normal (1) | Sprite | Skill DMG L1 | 5000 | 50% |
+| 2602 | Ami | Well (3) | Sprite | Skill DMG L2, Utility L2 | 5500 | 55% |
+| 2603 | Po Kong | Mythic (5) | Sprite | Slow L2, Skill DMG L2 | 7000 | 70% |
+| 2604 | Piercer Beast | Epic (6) | Sprite | ATK Mult L3, Detonate L2 | 8000 | 80% |
+| 2605 | Fiery Tail | Legendary (7) | Sprite | ATK Mult L3, Detonate L4 | 9000 | 90% |
+| 2606 | Bird Shroom | Normal (1) | Bird | ATK SPD L1 | 5000 | 50% |
+| 2607 | Rainshade Bird | Well (3) | Bird | Energy Regen L2, Slow L2 | 5500 | 55% |
+| 2608 | Azure Bird | Mythic (5) | Bird | ATK SPD L2, Energy Regen L2 | 7000 | 70% |
+| 2609 | Caw-Caw Owl | Epic (6) | Bird | Energy Regen L2, Skill DMG L3 | 8000 | 80% |
+| 2610 | Hero Bird | Legendary (7) | Bird | Energy Regen L3, Skill DMG L4 | 9000 | 90% |
+| 2611 | Toothpick Eggplant | Epic (6) | Eggplant | Energy Regen L3, Skill DMG L2, Utility L3 | 8000 | 80% |
+| 2701 | Panda | Unique (2) | Panda | Slow L1 | 5000 | 50% |
+| 2702 | Panda Mallet | Rare (4) | Panda | Slow L2 | 6000 | 60% |
+| 2703 | Apprentice Panda | Mythic (5) | Panda | Energy Regen L2, Slow L2 | 7000 | 70% |
+| 2704 | Warrior Panda | Epic (6) | Panda | Energy Regen L2, Slow L3 | 8000 | 80% |
+| 2705 | Kongfu Master | Legendary (7) | Panda | Detonate L4, Slow L3 | 9000 | 90% |
+| 2801 | Small Yellow Snail | Normal (1) | Snail | Detonate L1, Utility L1 | 5000 | 50% |
+| 2802 | Thorn Snail | Well (3) | Snail | Detonate L2 | 5500 | 55% |
+| 2803 | Moss Snail | Mythic (5) | Snail | Detonate L2, Slow L2 | 7000 | 70% |
+| 2804 | Ice Cream Snail | Epic (6) | Snail | Detonate L2, Slow L3 | 8000 | 80% |
+| 2805 | Tipsy Snail | Legendary (7) | Snail | ATK SPD L3, Slow L4 | 9000 | 90% |
+| 2901 | Fawn | Unique (2) | Deer | ATK SPD L1 | 5000 | 50% |
+| 2902 | Stag | Rare (4) | Deer | ATK SPD L2 | 6000 | 60% |
+| 2903 | Floral Deer | Mythic (5) | Deer | ATK SPD L2, Skill DMG L2, Utility L2 | 7000 | 70% |
+| 2904 | Divine Deer | Epic (6) | Deer | ATK SPD L3, Skill DMG L2 | 8000 | 80% |
+| 2905 | Angel Deer | Legendary (7) | Deer | ATK SPD L4, Energy Regen L3, Utility L3 | 9000 | 90% |
+| 2906 | Treasure Dragon | Immortal (8) | Dragon | ATK Mult L5, Skill DMG L5 | 10000 | 100% |
+| 2907 | Hipster Tortoise | Immortal (8) | Turtle | ATK SPD L5, Energy Regen L5, Utility L5 | 10000 | 100% |
+| 2908 | Electric Pup | Immortal (8) | Dog | Detonate L5, Slow L5 | 10000 | 100% |
+| 2909 | Alpine Fox | Immortal (8) | Fox | ATK Mult L5, Slow L5 | 10000 | 100% |
+| 2910 | Pirate Octopus | Immortal (8) | Octopus | ATK SPD L5, Skill DMG L5 | 10000 | 100% |
+| 2911 | Wealthy Lizard | Immortal (8) | Lizard | Detonate L5, Energy Regen L5, Utility L5 | 10000 | 100% |
+| 2912 | Mecha Dragon | Epic (6) | Mecha Dragon | ATK Mult L3, Energy Regen L2 | 8000 | 80% |
+| 2913 | Rebellious Banana | Well (3) | Banana | Skill DMG L2, Utility L2 | 5500 | 55% |
+| 2914 | Righteous Banana | Legendary (7) | Banana | Detonate L5, Slow L4, Utility L5 | 9000 | 90% |
+| 2915 | Rainbow Guardian | Legendary (7) | Toothpaste | ATK SPD L5, Energy Regen L4, Utility L5 | 9000 | 90% |
+| 2916 | Ultra-Clean Fighter | Rare (4) | Toothpaste | Slow L2, Utility L2 | 6000 | 60% |
+| 2917 | Bernard | Legendary (7) | Bear | Detonate L4, Energy Regen L5, Utility L4 | 9000 | 90% |
+| 2918 | Bobby | Legendary (7) | Pig | ATK Mult L5, Energy Regen L4 | 9000 | 90% |
+| 2920 | Gingerbread | Legendary (7) | Gingerbread | ATK SPD L4, Skill DMG L5 | 9000 | 90% |
+| 2922 | Spark Squirrel | Epic (6) | Flying Squirrel | Detonate L2, Energy Regen L3, Utility L3 | 8000 | 80% |
+| 2932 | Pepe | Legendary (7) | Pepe | ATK SPD L5, Skill DMG L4 | 9000 | 90% |
+| 2933 | Night Spritefox | Legendary (7) | Spritefox | ATK SPD L5, Skill DMG L4, Utility L5 | 9000 | 90% |
+| 2934 | Hellflame Feather | Legendary (7) | Hellflame Feather | ATK SPD L4, Skill DMG L5 | 9000 | 90% |
+| 2937 | Puppy Fervor | Legendary (7) | Puppy Fervor | Detonate L5, Slow L4 | 9000 | 90% |
+| 2938 | B.Duck | Epic (6) | B.Duck | ATK SPD L3, Skill DMG L2, Utility L2 | 8000 | 80% |
+| 2939 | Pirate Parrot | Legendary (7) | Pirate Parrot | ATK Mult L4, Energy Regen L5 | 9000 | 90% |
+| 2941 | Floral Panda | Legendary (7) | Floral Panda | ATK SPD L4, Slow L5 | 9000 | 90% |
+| 2943 | Moon Hare | Legendary (7) | Moon Hare | ATK Mult L4, Energy Regen L5, Utility L5 | 9000 | 90% |
+| 2946 | Alpaca Bell | Legendary (7) | Alpaca | ATK Mult L5, Energy Regen L4 | 9000 | 90% |
+| 2947 | Serpent Spring | Legendary (7) | Snake | ATK SPD L5, Slow L4 | 9000 | 90% |
+| 2948 | Mellow Cloud | Legendary (7) | Mellow Cloud | ATK Mult L5, Skill DMG L4 | 9000 | 90% |
+| 2950 | Vermillion Bird | Legendary (7) | Vermillion Bird | ATK Mult L5, Skill DMG L4 | 9000 | 90% |
+| 2951 | Ephemeral Bloom | Legendary (7) | Ephemeral Bloom | ATK Mult L4, ATK SPD L5 | 9000 | 90% |
+| 2981 | Travel Camel | Epic (6) | Camel | ATK SPD L2, Energy Regen L3 | 8000 | 80% |
+| 2982 | Blackeye | Legendary (7) | Blackeye | Detonate L4, Slow L5, Utility L5 | 9000 | 90% |
+| 2983 | Moonlit Lonewolf | Legendary (7) | Wolf | Detonate L5, Skill DMG L4 | 9000 | 90% |
+| 2984 | Mushroom Burglar | Legendary (7) | Mushroom Burglar | Detonate L4, Skill DMG L5 | 9000 | 90% |
+| 2985 | Rabbids Coming | Epic (6) | Rabbids Coming | ATK Mult L3, Slow L2 | 8000 | 80% |
+| 2986 | Moonspirit Hound | Legendary (7) | Moonspirit Hound | ATK Mult L4, Slow L5 | 9000 | 90% |
+| 2987 | Skeleton Minion | Legendary (7) | Skeleton Minion | ATK Mult L4, Slow L5, Utility L5 | 9000 | 90% |
+| 2988 | Fortune Envoy | Legendary (7) | Fortune Envoy | Detonate L5, Utility L4 | 9000 | 90% |
+| 2989 | Chillet | Legendary (7) | Chillet | ATK Mult L4, Slow L5, Utility L5 | 9000 | 90% |
+| 2990 | Lamball | Epic (6) | Lamball | Detonate L3, Energy Regen L2 | 8000 | 80% |
+| 2991 | Cattiva | Epic (6) | Cattiva | ATK Mult L2, Energy Regen L3 | 8000 | 80% |
 
 ---
 
