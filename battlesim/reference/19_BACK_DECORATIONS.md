@@ -1,6 +1,6 @@
 # 19 — Back Decorations (Wings / Back Accessories)
 
-> Complete back accessory reference: all 41 back accessories from LOM_Database-5.xlsx. See also `back_accessories_master.json` for structured JSON.
+> Complete back accessory reference: 45 back accessories (41 from LOM_Database-5.xlsx + 4 config-only). Enriched with `back_id` and `skill_id` from the decoded config binary. See also `back_accessories_master.json` for structured JSON.
 
 ---
 
@@ -464,7 +464,67 @@
 
 ---
 
+## Config Binary ID Reference — back_id to skill_id (45 mappings)
+
+> Decoded from the config binary. Maps each back accessory's `back_id` to its primary `skill_id` at level 1. Names resolved via `Back_decoration.json` + `Language_en.json`.
+
+| back_id | skill_id | Name |
+|---------|----------|------|
+| 70004 | 18001 | Lustrous Plumage |
+| 70005 | 18002 | Moonlit Wisp |
+| 70006 | 18003 | Emerald Embrace |
+| 70007 | 18004 | Blade Pursuit |
+| 70009 | 70902 | Phoenix Frost |
+| 70010 | 18011 | Virtual Connection |
+| 70011 | 18008 | Celestial Surprises |
+| 70013 | 18015 | Ingredients for Dinner |
+| 70014 | 18012 | Metamorphosis |
+| 70015 | 18021 | Shell Shade |
+| 70016 | 18022 | Summer Parasol |
+| 70019 | 18027 | Ghost Behind |
+| 70020 | 18025 | Fallen Angel |
+| 70021 | 18026 | Beastbone Breeze |
+| 70022 | 18030 | Chrono Prism |
+| 70023 | 18032 | Miracle Mirage |
+| 70024 | 18033 | Till Death Apart |
+| 70025 | 18055 | Celestial Gemini |
+| 70402 | 18037 | Mirror World |
+| 70403 | 18038 | Glory Glow |
+| 70404 | 18039 | Titan's Hold |
+| 70405 | 18040 | Dawn Warwing |
+| 70406 | 18041 | Republic of Heroes |
+| 70407 | 18043 | To the Clouds |
+| 70409 | 18049 | Song of Frost and Flame |
+| 70410 | 18050 | Top-Tier Bodyguard |
+| 70411 | 18051 | Punching Storm |
+| 70412 | 18052 | Resolute Soul |
+| 70413 | 18053 | Frost Mirage |
+| 70414 | 18054 | Repose in Time |
+| 70416 | 18058 | Meow Mirage |
+| 70417 | 18059 | Rollie |
+| 70702 | 18036 | Bit Gateway |
+| 70704 | 18042 | Firework Invite |
+| 70705 | 18044 | Lunar Radiance |
+| 70803 | 18023 | Iridescent Aura |
+| 70902 | 18007 | Pepe-style Thruster |
+| 70903 | 18014 | Arackar Lock |
+| 70904 | 18904 | Trapped Wrath |
+| 70905 | 18028 | 19th Century |
+| 70907 | 18034 | Lord of Light |
+| 70908 | 18024 | Alien Dimension |
+| 70909 | 18901 | Cosmic Rescue |
+| 70910 | 18056 | Cuisine Keeper |
+| 70999 | 18029 | Frostland Specter |
+
+**Notes:**
+- `back_id` 70009 maps to skill_id `70902` (not in the 18xxx range -- may reference the Pepe-style Thruster back_id as a shared/alias skill)
+- 4 entries are new additions not in the original xlsx: Celestial Gemini (70025), Meow Mirage (70416), Rollie (70417), Cuisine Keeper (70910)
+- Some accessories have multiple sub-skills at higher skin levels (e.g., 70013 evolves 18015→18017→18018); only the level-1 primary skill_id is listed here
+
+---
+
 ## Data Files
 
 - **Source spreadsheet**: `battlesim/reference/LOM_Database-5.xlsx`
 - **Structured data**: `battlesim/reference/back_accessories_master.json`
+- **Config tables**: `data/tables/Back_skin.json`, `data/tables/Back_decoration.json`

@@ -1,48 +1,97 @@
 {
   "_source": "LOM_Database-5.xlsx",
-  "_total": 34,
+  "_total": 35,
   "avians": [
     {
       "index": 1,
       "name": "Aggressive Lemon",
       "rarity": "Normal",
-      "effect": "Regenerates 5% of lost HP every 5s"
+      "effect": "Regenerates 5% of lost HP every 5s",
+      "fly_id": 1001,
+      "skill_id": 5101,
+      "config_name": "Aggressive Lemon",
+      "unit_id": "fly_1001",
+      "quality": 1,
+      "fly_type": 1,
+      "collab_flag": 0
     },
     {
       "index": 2,
       "name": "Gleam Candle",
       "rarity": "Normal",
-      "effect": "Deals 240% AoE Skill DMG 5 times every 11s. (Triggers at the start of the battle.)"
+      "effect": "Deals 240% AoE Skill DMG 5 times every 11s. (Triggers at the start of the battle.)",
+      "fly_id": 1002,
+      "skill_id": 5102,
+      "config_name": "Gleam Candle",
+      "unit_id": "fly_1002",
+      "quality": 1,
+      "fly_type": 1,
+      "collab_flag": 0
     },
     {
       "index": 3,
       "name": "Coconut Ball",
       "rarity": "Normal",
-      "effect": "Increases ATK SPD by 5% immediately after battle starts and by 2% more for every 10% HP lost."
+      "effect": "Increases ATK SPD by 5% immediately after battle starts and by 2% more for every 10% HP lost.",
+      "fly_id": 1003,
+      "skill_id": 5103,
+      "config_name": "Coconut Ball",
+      "unit_id": "fly_1003",
+      "quality": 1,
+      "fly_type": 1,
+      "collab_flag": 0
     },
     {
       "index": 4,
       "name": "Sheep Balloon",
       "rarity": "Normal",
-      "effect": "Deals 500% of current Basic ATK AoE DMG and imprisons the target for 1s every 13s. (Triggers at the start of the battle.)"
+      "effect": "Deals 500% of current Basic ATK AoE DMG and imprisons the target for 1s every 13s. (Triggers at the start of the battle.)",
+      "fly_id": 1004,
+      "skill_id": 5104,
+      "config_name": "Sheep Balloon",
+      "unit_id": "fly_1004",
+      "quality": 1,
+      "fly_type": 1,
+      "collab_flag": 0
     },
     {
       "index": 5,
       "name": "Tomato Egg",
       "rarity": "Normal",
-      "effect": "Deals 325% of current Basic ATK AoE DMG every 12s and increases Basic ATK DMG by 30% for 5s. (Triggers at the start of the battle.)"
+      "effect": "Deals 325% of current Basic ATK AoE DMG every 12s and increases Basic ATK DMG by 30% for 5s. (Triggers at the start of the battle.)",
+      "fly_id": 1005,
+      "skill_id": 5105,
+      "config_name": "Tomato Egg",
+      "unit_id": "fly_1005",
+      "quality": 1,
+      "fly_type": 1,
+      "collab_flag": 0
     },
     {
       "index": 6,
       "name": "Smart Assistant",
       "rarity": "Normal",
-      "effect": "Increases Pal ATK SPD by 5% every 5s after battle starts, stacking up to 5 times."
+      "effect": "Increases Pal ATK SPD by 5% every 5s after battle starts, stacking up to 5 times.",
+      "fly_id": 1006,
+      "skill_id": 5106,
+      "config_name": "Smart Assistant",
+      "unit_id": "fly_1006",
+      "quality": 1,
+      "fly_type": 1,
+      "collab_flag": 0
     },
     {
       "index": 7,
       "name": "Yoghurt Cocoa",
       "rarity": "Normal",
-      "effect": "Each Pal Crit Increases its Final Crit DMG by 2%, stacking up to 5 times."
+      "effect": "Each Pal Crit Increases its Final Crit DMG by 2%, stacking up to 5 times.",
+      "fly_id": 1007,
+      "skill_id": 5107,
+      "config_name": "Yoghurt Cocoa",
+      "unit_id": "fly_1007",
+      "quality": 1,
+      "fly_type": 1,
+      "collab_flag": 0
     },
     {
       "index": 8,
@@ -50,73 +99,157 @@
       "rarity": "Normal",
       "effect": "Deals 450% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of current HP for 6s.",
       "event_exclusive": true,
-      "collaboration": "B.Duck Collab"
+      "collaboration": "B.Duck Collab",
+      "fly_id": 9001,
+      "skill_id": 5901,
+      "config_name": "Astronaut Teal",
+      "unit_id": "fly_9001",
+      "quality": 1,
+      "fly_type": 9,
+      "collab_flag": 0
     },
     {
       "index": 9,
       "name": "Impulse Penguin",
       "rarity": "Advanced",
-      "effect": "Increases Counter DMG by 4% every 10s after battle starts, stacking up to 5 times."
+      "effect": "Increases Counter DMG by 4% every 10s after battle starts, stacking up to 5 times.",
+      "fly_id": 2001,
+      "skill_id": 5201,
+      "config_name": "Impulse Penguin",
+      "unit_id": "fly_2001",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 10,
       "name": "Dense Cloud",
       "rarity": "Advanced",
-      "effect": "Deals 1400% AoE Skill DMG every 13s after battle starts and increases Energy Regen by 25% for 5s. (Triggers at the start of the battle.)"
+      "effect": "Deals 1400% AoE Skill DMG every 13s after battle starts and increases Energy Regen by 25% for 5s. (Triggers at the start of the battle.)",
+      "fly_id": 2002,
+      "skill_id": 5202,
+      "config_name": "Dense Cloud",
+      "unit_id": "fly_2002",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 11,
       "name": "3-Round Shooter",
       "rarity": "Advanced",
-      "effect": "Deals 75% extra AoE Combo DMG every 4 combos."
+      "effect": "Deals 75% extra AoE Combo DMG every 4 combos.",
+      "fly_id": 2003,
+      "skill_id": 5203,
+      "config_name": "3-Round Shooter",
+      "unit_id": "fly_2003",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 12,
       "name": "Honeypot Warrior",
       "rarity": "Advanced",
-      "effect": "Deals DMG equal to 2.5% Max HP every 5s after battle starts. (Triggers at the start of the battle.)"
+      "effect": "Deals DMG equal to 2.5% Max HP every 5s after battle starts. (Triggers at the start of the battle.)",
+      "fly_id": 2004,
+      "skill_id": 5204,
+      "config_name": "Honeypot Warrior",
+      "unit_id": "fly_2004",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 13,
       "name": "Pumpkin Witch",
       "rarity": "Advanced",
-      "effect": "Every Skill Crit deals 600% extra AoE Skill DMG."
+      "effect": "Every Skill Crit deals 600% extra AoE Skill DMG.",
+      "fly_id": 2005,
+      "skill_id": 5205,
+      "config_name": "Pumpkin Witch",
+      "unit_id": "fly_2005",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 14,
       "name": "Bell Ring",
       "rarity": "Advanced",
-      "effect": "Every Crit has a 20% chance to deal 60% extra Basic ATK DMG Bleed DMG (Ignores DMG Immunity)."
+      "effect": "Every Crit has a 20% chance to deal 60% extra Basic ATK DMG Bleed DMG (Ignores DMG Immunity).",
+      "fly_id": 2006,
+      "skill_id": 5206,
+      "config_name": "Bell Ring",
+      "unit_id": "fly_2006",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 15,
       "name": "Sunshine Bringer",
       "rarity": "Advanced",
-      "effect": "Deals 560% of current Basic ATK AoE DMG every 16s after battle starts and reduces the duration of control received by 15% for 5s. (Triggers at the start of the battle.)"
+      "effect": "Deals 560% of current Basic ATK AoE DMG every 16s after battle starts and reduces the duration of control received by 15% for 5s. (Triggers at the start of the battle.)",
+      "fly_id": 2007,
+      "skill_id": 5207,
+      "config_name": "Sunshine Bringer",
+      "unit_id": "fly_2007",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 16,
       "name": "Travelling Jellyfish",
       "rarity": "Advanced",
-      "effect": "Deals 612.5% of current Basic ATK AoE DMG every 15s after battle starts and reduces the target's ATK SPD by 20% for 5s. (Triggers at the start of the battle.)"
+      "effect": "Deals 612.5% of current Basic ATK AoE DMG every 15s after battle starts and reduces the target's ATK SPD by 20% for 5s. (Triggers at the start of the battle.)",
+      "fly_id": 2008,
+      "skill_id": 5208,
+      "config_name": "Traveling Jellyfish",
+      "unit_id": "fly_2008",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 17,
       "name": "Whirlwind Leaf",
       "rarity": "Advanced",
-      "effect": "Deals 220% extra AoE Skill DMG every 4 Basic Attacks."
+      "effect": "Deals 220% extra AoE Skill DMG every 4 Basic Attacks.",
+      "fly_id": 2009,
+      "skill_id": 5209,
+      "config_name": "Whirlwind Leaf",
+      "unit_id": "fly_2009",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 18,
       "name": "Crispy Moth",
       "rarity": "Advanced",
-      "effect": "Deals 630% of current Basic ATK AoE DMG every 17s after battle starts and stuns the target for 1s."
+      "effect": "Deals 630% of current Basic ATK AoE DMG every 17s after battle starts and stuns the target for 1s.",
+      "fly_id": 2010,
+      "skill_id": 5210,
+      "config_name": "Crispy Moth",
+      "unit_id": "fly_2010",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 19,
       "name": "Yoghurt Champ",
       "rarity": "Advanced",
-      "effect": "Each Pal Crit increases its Final Crit DMG by 2%, stacking up to 5 times. Each Pal Combo increases its Final Combo DMG by 2%, stacking up to 5 times."
+      "effect": "Each Pal Crit increases its Final Crit DMG by 2%, stacking up to 5 times. Each Pal Combo increases its Final Combo DMG by 2%, stacking up to 5 times.",
+      "fly_id": 2011,
+      "skill_id": 5211,
+      "config_name": "Yoghurt Champ",
+      "unit_id": "fly_2011",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
     },
     {
       "index": 20,
@@ -124,7 +257,14 @@
       "rarity": "Advanced",
       "effect": "Deals 675% Basic ATK AoE DMG every 16s and gains a shield equal to 10% of Max HP for 6s.",
       "event_exclusive": true,
-      "collaboration": "B.Duck Collab"
+      "collaboration": "B.Duck Collab",
+      "fly_id": 9002,
+      "skill_id": 5902,
+      "config_name": "Astronaut Pinky",
+      "unit_id": "fly_9002",
+      "quality": 2,
+      "fly_type": 9,
+      "collab_flag": 0
     },
     {
       "index": 21,
@@ -134,7 +274,14 @@
       "event_exclusive": true,
       "collaboration": "Rabbid Collab",
       "limited_breeding": true,
-      "food_required": true
+      "food_required": true,
+      "fly_id": 8001,
+      "skill_id": 5801,
+      "config_name": "Maniac Love",
+      "unit_id": "fly_8001",
+      "quality": 2,
+      "fly_type": 81,
+      "collab_flag": 1
     },
     {
       "index": 22,
@@ -144,7 +291,14 @@
       "event_exclusive": true,
       "collaboration": "Rabbid Collab",
       "limited_breeding": true,
-      "food_required": true
+      "food_required": true,
+      "fly_id": 8002,
+      "skill_id": 5802,
+      "config_name": "Dream Moment",
+      "unit_id": "fly_8002",
+      "quality": 2,
+      "fly_type": 81,
+      "collab_flag": 1
     },
     {
       "index": 23,
@@ -154,55 +308,118 @@
       "event_exclusive": true,
       "collaboration": "One-Punch Man Collab",
       "limited_breeding": true,
-      "food_required": true
+      "food_required": true,
+      "fly_id": 8101,
+      "skill_id": 5803,
+      "config_name": "Pet - Genos",
+      "unit_id": "fly_8101",
+      "quality": 2,
+      "fly_type": 82,
+      "collab_flag": 2
     },
     {
       "index": 24,
       "name": "Anubis",
       "rarity": "Rare",
-      "effect": "Deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG every 15s after battle starts and reduces the target's ATK by 15% for 5s. (Triggers at the start of the battle.)"
+      "effect": "Deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG every 15s after battle starts and reduces the target's ATK by 15% for 5s. (Triggers at the start of the battle.)",
+      "fly_id": 3001,
+      "skill_id": 5301,
+      "config_name": "Anubis",
+      "unit_id": "fly_3001",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 25,
       "name": "Midnight Firefly",
       "rarity": "Rare",
-      "effect": "Deal 240% of current Basic ATK DMG every 16s after battle starts and reduce the target's DMG RES by 15% for 5 seconds. Deal 600% Skill DMG, 240% of current Combo DMG, and 240% of current Counter DMG again after a short delay. (Triggers at start of the battle.)"
+      "effect": "Deal 240% of current Basic ATK DMG every 16s after battle starts and reduce the target's DMG RES by 15% for 5 seconds. Deal 600% Skill DMG, 240% of current Combo DMG, and 240% of current Counter DMG again after a short delay. (Triggers at start of the battle.)",
+      "fly_id": 3002,
+      "skill_id": 5302,
+      "config_name": "Midnight Firefly",
+      "unit_id": "fly_3002",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 26,
       "name": "Moonbound Spirit",
       "rarity": "Rare",
-      "effect": "Deals 300% Skill DMG, 120% current Combo DMG, and 120% current Counter DMG every 5s after battle starts, with a 50% chance to deal extra DMG equal to 3% of the target's Max HP. (Triggers at the start of the battle.)"
+      "effect": "Deals 300% Skill DMG, 120% current Combo DMG, and 120% current Counter DMG every 5s after battle starts, with a 50% chance to deal extra DMG equal to 3% of the target's Max HP. (Triggers at the start of the battle.)",
+      "fly_id": 3003,
+      "skill_id": 5303,
+      "config_name": "Moonbound Spirit",
+      "unit_id": "fly_3003",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 27,
       "name": "Horus, Sky God",
       "rarity": "Rare",
-      "effect": "Every 6s, deals 240% Skill DMG, 100% of current Combo DMG, 100% of current Counter DMG, plus an amount equal to 2% of the target's current HP. After every 3 casts, deals an additional 480% Skill DMG, 200% of current Combo DMG, and 200% of current Counter DMG and directly defeats the target if its HP is below 5%, after which dealing DMG equal to 2% of the target's Max HP per second for 3s. (Triggers at the start of the battle.)"
+      "effect": "Every 6s, deals 240% Skill DMG, 100% of current Combo DMG, 100% of current Counter DMG, plus an amount equal to 2% of the target's current HP. After every 3 casts, deals an additional 480% Skill DMG, 200% of current Combo DMG, and 200% of current Counter DMG and directly defeats the target if its HP is below 5%, after which dealing DMG equal to 2% of the target's Max HP per second for 3s. (Triggers at the start of the battle.)",
+      "fly_id": 3004,
+      "skill_id": 5304,
+      "config_name": "Horus, Sky God",
+      "unit_id": "fly_3004",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 28,
       "name": "Magic Cat",
       "rarity": "Rare",
-      "effect": "Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG and activates Feline Magic 5 times within 2s, each time reducing the cooldown of a random Active Skill by 2s. This prioritizes skills in cooldown and can be used on the same skill repeatedly. (Triggers 1s after the start of the battle.)"
+      "effect": "Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG and activates Feline Magic 5 times within 2s, each time reducing the cooldown of a random Active Skill by 2s. This prioritizes skills in cooldown and can be used on the same skill repeatedly. (Triggers 1s after the start of the battle.)",
+      "fly_id": 3005,
+      "skill_id": 5305,
+      "config_name": "Magic Cat",
+      "unit_id": "fly_3005",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 29,
       "name": "Puppy Gaze",
       "rarity": "Rare",
-      "effect": "Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG and increases Pal ATK SPD by 50% for 5s. (Triggers at the start of the battle.)"
+      "effect": "Every 15s, deals 765% Skill DMG, 305% of current Combo DMG, and 305% of current Counter DMG and increases Pal ATK SPD by 50% for 5s. (Triggers at the start of the battle.)",
+      "fly_id": 3006,
+      "skill_id": 5306,
+      "config_name": "Puppy Gaze",
+      "unit_id": "fly_3006",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 30,
       "name": "Deity of Purrs",
       "rarity": "Rare",
-      "effect": "For every 16 times healed (including HP regen, healing, active skill and healing effects of passive skills, Lifesteal of Spectral Chant excluded), deals DMG equal to 4% of current HP to targets within the range."
+      "effect": "For every 16 times healed (including HP regen, healing, active skill and healing effects of passive skills, Lifesteal of Spectral Chant excluded), deals DMG equal to 4% of current HP to targets within the range.",
+      "fly_id": 3007,
+      "skill_id": 5307,
+      "config_name": "Deity of Purrs",
+      "unit_id": "fly_3007",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 31,
       "name": "Michelle",
       "rarity": "Rare",
-      "effect": "For every 50 instances of damage taken, enemies take an additional 200% AoE DMG, 80% of current Combo AoE DMG, 80% of current Counter AoE DMG, and 2% of current HP AoE DMG and become stunned for 0.5s."
+      "effect": "For every 50 instances of damage taken, enemies take an additional 200% AoE DMG, 80% of current Combo AoE DMG, 80% of current Counter AoE DMG, and 2% of current HP AoE DMG and become stunned for 0.5s.",
+      "fly_id": 3008,
+      "skill_id": 5308,
+      "config_name": "Michelle",
+      "unit_id": "fly_3008",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 32,
@@ -210,19 +427,56 @@
       "rarity": "Rare",
       "effect": "Every 16s, deals 800% Skill DMG, 320% of current Combo DMG and 320% of current Counter DMG and gains a shield equal to 10% of Max HP for 6s, during which ATK increases by 15%.",
       "event_exclusive": true,
-      "collaboration": "B.Duck Collab"
+      "collaboration": "B.Duck Collab",
+      "fly_id": 9003,
+      "skill_id": 5903,
+      "config_name": "Astronaut B.Duck",
+      "unit_id": "fly_9003",
+      "quality": 3,
+      "fly_type": 9,
+      "collab_flag": 0
     },
     {
       "index": 33,
       "name": "Lunar Sprite",
       "rarity": "Rare",
-      "effect": "After the battle starts, the Character's DEF increases by 60% and ATK increases by 10% every 15s for 5s, during which the Character restores 3% of lost HP for every 10 basic attack or combo hits taken. (Triggers at the start of the battle.)"
+      "effect": "After the battle starts, the Character's DEF increases by 60% and ATK increases by 10% every 15s for 5s, during which the Character restores 3% of lost HP for every 10 basic attack or combo hits taken. (Triggers at the start of the battle.)",
+      "fly_id": 3012,
+      "skill_id": 5312,
+      "config_name": "Lunar Sprite",
+      "unit_id": "fly_3012",
+      "quality": 3,
+      "fly_type": 3,
+      "collab_flag": 0
     },
     {
       "index": 34,
       "name": "Dharma",
       "rarity": "Advanced",
-      "effect": "Every 20s after the battle starts, gains 3 stacks of Toughness (capped at 3), each of which increases DMG RES by 3.5%. For every 12% Max HP taken as DMG loses 1 stack of Toughness. (Triggers at the start of the battle.)"
+      "effect": "Every 20s after the battle starts, gains 3 stacks of Toughness (capped at 3), each of which increases DMG RES by 3.5%. For every 12% Max HP taken as DMG loses 1 stack of Toughness. (Triggers at the start of the battle.)",
+      "fly_id": 2016,
+      "skill_id": 5216,
+      "config_name": "Dharma",
+      "unit_id": "fly_2016",
+      "quality": 2,
+      "fly_type": 2,
+      "collab_flag": 0
+    },
+    {
+      "index": 35,
+      "name": "Daedream",
+      "rarity": "Advanced",
+      "effect": "(ConfigFly data only - effect text pending)",
+      "fly_id": 8201,
+      "skill_id": 82011,
+      "config_name": "Daedream",
+      "unit_id": "fly_8201",
+      "quality": 2,
+      "fly_type": 83,
+      "collab_flag": 3,
+      "event_exclusive": true,
+      "collaboration": "PLLD Collab"
     }
-  ]
+  ],
+  "_config_source": "data/tables/Fly.json"
 }
