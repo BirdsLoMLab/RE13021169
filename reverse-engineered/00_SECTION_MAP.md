@@ -303,7 +303,7 @@
 ### Reference & Encyclopedia (25-31)
 | Doc | Title | Key Topics |
 |-----|-------|------------|
-| 25 | Buff Encyclopedia | 46 named + 34 data-only BuffGroupTypes (76 total), 80 buff classes, damage pipeline |
+| 25 | Buff Encyclopedia | *(merged into battlesim/reference/10_BUFFS_AND_STATUS.md)* |
 | 26 | Skill Effect & Triggers | EffectTriggerType cascades, StateTrigerType, cascade flow |
 | 27 | Fate System | ConfigFate, gacha, fusion, passive skills |
 | 28 | Path to Divinity | ConfigPath_affix, talent tree, attribute caps |

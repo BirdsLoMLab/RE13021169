@@ -1,6 +1,10 @@
 # 25 — Buff Encyclopedia
 
-## Overview
+> **MERGED**: This content has been consolidated into `battlesim/reference/10_BUFFS_AND_STATUS.md` which now contains the complete buff system reference: 80 buff classes, 46 named + 34 data-only groups (76 total), mutex rules, full damage pipeline, and per-class parameter documentation.
+
+See `battlesim/reference/10_BUFFS_AND_STATUS.md` for the unified reference.
+
+## Overview (archived)
 
 The buff system is the core combat modifier framework. All damage bonuses, shields, crowd control, attribute modifications, and reactive triggers are implemented as buffs. There are **80 unique buff classes** organized into **46 named BuffGroupType categories** (76 total groups in data, including 34 unnamed data-only groups). Buffs are instantiated via the `buffMap` registry at line 332125.
 

@@ -26,7 +26,7 @@
 | 07 | `07_AVIANS.md` | All 35 avians + 102 avian affixes with full effect text (xlsx + config) |
 | 08 | `08_TALENTS.md` | Back/Wing talent trees: 120 nodes, 4 class paths, 12 final talents (config) |
 | 09 | `09_RELICS.md` | All 5 relics with combat effects |
-| 10 | `10_BUFFS_AND_STATUS.md` | 46 buff group types, mutex rules, bleed, shields, death prevention |
+| 10 | `10_BUFFS_AND_STATUS.md` | 80 buff classes, 76 buff groups, mutex rules, full damage pipeline, per-class params |
 | 11 | `11_MOUNT_SKINS.md` | All 72 mounts with combat effects, skill IDs, skin progression (xlsx + config) |
 | 12 | `12_ARTIFACT_SKINS_AND_GEMS.md` | All 43 artifacts with full effect text, skill IDs (xlsx + config) |
 | 13 | `13_EQUIPMENT.md` | Advancement, resonance, refinement, suits |
