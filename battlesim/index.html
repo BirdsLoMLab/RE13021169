@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LOM BattleSim v3 — PvP Combat Simulator</title>
+<title>LOM BattleSim — PvP Combat Simulator</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root {
@@ -115,8 +115,10 @@ h3 { font-size: 12px; color: var(--gold); margin: 6px 0 4px 0; }
 </head>
 <body>
 <div class="container">
-  <h1>LOM BattleSim v3 — PvP Combat Simulator</h1>
-  <p class="subtitle">Accurate damage pipeline from game_script.js | All formulas verified against decoded config data</p>
+  <h1>LOM BattleSim — PvP Combat Simulator</h1>
+  <p class="subtitle" id="version-line">v0.2.0 — Updated <span id="build-timestamp"></span></p>
+  <p class="subtitle" style="margin-top:2px;">Credit: Bird — Discord @birrrd08</p>
+  <script>document.getElementById('build-timestamp').textContent = '2026-03-05';</script>
 
   <!-- Main Tabs -->
   <div class="tabs" id="main-tabs">
@@ -128,7 +130,7 @@ h3 { font-size: 12px; color: var(--gold); margin: 6px 0 4px 0; }
   <!-- ========== SETUP TAB ========== -->
   <div class="tab-content active" id="tab-setup">
     <div class="info-box">
-      <strong>Stat Input Guide:</strong> Enter your stats as shown in-game. <strong>Remove all relics and spore effects first</strong> for clean baseline stats, OR use the toggles below to include/exclude relic/spore/pal stat bonuses. Pals like Eggplant (Crit Rate), Deer (DMG RES), Treasure Dragon (Crit DMG), and others that boost baseline stats should be toggled off if already included in your input numbers. Relics like Plumed Spore, Potent Spore, etc. that affect baseline numbers should similarly be toggled.
+      <strong>Stat Input Guide:</strong> Enter your stats as shown in-game. If a pal boosts your baseline stats (visible in character sheet), use the "Add stats" toggle next to each pal slot to include those bonuses — only check it if those stats are NOT already in your input numbers. Battle-only effects (procs, shields, heals on trigger) are simulated automatically. Relic/Spore toggles are available separately below.
     </div>
 
     <div class="panels" id="setup-panels">
@@ -222,7 +224,7 @@ h3 { font-size: 12px; color: var(--gold); margin: 6px 0 4px 0; }
 <script>
 "use strict";
 // ============================================================
-// MODULE 1: FixMath — Exact replica of game_script.js line 4973
+// MODULE 1: FixMath — Fixed-point arithmetic
 // ============================================================
 const FM = {
   round(x) {
@@ -238,7 +240,7 @@ const FM = {
 };
 
 // ============================================================
-// MODULE 2: FixRandom — Exact replica of game_script.js line 4975
+// MODULE 2: FixRandom — Deterministic PRNG
 // ============================================================
 class FixRandom {
   constructor(seed) { this._seed = FM.roundInt(Number(seed || 9)); }
@@ -278,7 +280,7 @@ const TOTAL_DAM_FLOOR = 0.2;
 const PVP_MISS_CAP = 0.8;
 const PIERCE_BLOCK_CAP = 0.5;
 
-// PvP injury reduce by level (from ConfigLevel decoded data)
+// PvP injury reduce by level
 const PVP_INJURY_TABLE = {
   1:1, 5:1.1, 8:1.2, 10:1.4, 15:2.1, 20:3.5, 25:4.5, 30:5.8, 35:7.0,
   40:8.5, 45:9.7, 50:11.0, 55:13.0, 60:15.5, 65:18.5, 70:21.0, 75:24.0,
@@ -449,8 +451,9 @@ const SKILLS_DATA = [
   { id: 38, name: 'Ancestral Will', cd: 720, dmgPct: 5413, effects: [{type:'attrib',id:1004,val:0.10,dur:150}] },
 ];
 
-// Pals — complete 90-pal list from reference/06_PALS_AND_PETS.md
-// dmgMult: pal damage multiplier (for Normal-Mythic); Epic+ pals use parent damage base
+// Pals — complete 90-pal list
+// dmgMult: pal damage multiplier; statMods: baseline stats reflected in character sheet
+// battleDesc: battle-only effects (NOT toggleable, simulated in engine)
 const PALS_DATA = [
   { id: 0, name: '(None)', dmgMult: 0, statMods: [], desc: '' },
   // --- Normal ---
@@ -459,7 +462,7 @@ const PALS_DATA = [
   { id: 3, name: 'Bird Shroom', dmgMult: 1.647, statMods: [{id:1003,val:0.05}], desc: 'ATK Speed +5%' },
   { id: 4, name: 'Small Yellow Snail', dmgMult: 3.111, statMods: [], desc: 'Enemy move speed -15%' },
   // --- Unique ---
-  { id: 5, name: 'Pink Hydrosprite', dmgMult: 3.5, statMods: [{id:1013,val:0.05}], desc: 'Energy Regen +5%' },
+  { id: 5, name: 'Pink Hydrosprite', dmgMult: 3.5, statMods: [{id:1013,val:0.05}], desc: 'Energy Regen +5%', cdr: true },
   { id: 6, name: 'Panda', dmgMult: 3.818, statMods: [{id:1012,val:0.10}], desc: 'HP Regen +10%' },
   { id: 7, name: 'Fawn', dmgMult: 3.231, statMods: [{id:1021,val:0.05}], desc: 'DMG RES +5%' },
   // --- Well ---
@@ -473,7 +476,7 @@ const PALS_DATA = [
   { id: 15, name: 'Rebellious Banana', dmgMult: 3.316, statMods: [{id:1016,val:0.05}], desc: 'Combo +5%' },
   // --- Rare ---
   { id: 16, name: 'Arcane Cat', dmgMult: 6.309, statMods: [], desc: 'Skill detonate 150% DMG' },
-  { id: 17, name: 'Nature Spirit', dmgMult: 7.887, statMods: [{id:1013,val:0.10}], desc: 'Energy Regen +10%' },
+  { id: 17, name: 'Nature Spirit', dmgMult: 7.887, statMods: [{id:1013,val:0.10}], desc: 'Energy Regen +10%', cdr: true },
   { id: 18, name: 'Snow Ball', dmgMult: 9.464, statMods: [], desc: 'Enemy ATK Speed -8%' },
   { id: 19, name: 'Cub Cactus', dmgMult: 6.76, statMods: [], desc: 'Every 3 ATKs +20% DMG' },
   { id: 20, name: 'Panda Mallet', dmgMult: 8.604, statMods: [{id:1012,val:0.20}], desc: 'HP Regen +20%' },
@@ -481,7 +484,7 @@ const PALS_DATA = [
   { id: 22, name: 'Ultra-Clean Fighter', dmgMult: 5.258, statMods: [{id:1017,val:0.08}], desc: 'Counter +8%' },
   // --- Mythic ---
   { id: 23, name: 'Wizard Cat', dmgMult: 9.464, statMods: [], desc: 'Skill detonate 200% DMG' },
-  { id: 24, name: 'Aggressive Hydrosprite', dmgMult: 11.83, statMods: [{id:1013,val:0.15}], desc: 'Energy Regen +15%' },
+  { id: 24, name: 'Aggressive Hydrosprite', dmgMult: 11.83, statMods: [{id:1013,val:0.15}], desc: 'Energy Regen +15%', cdr: true },
   { id: 25, name: 'Snow Sprite', dmgMult: 14.196, statMods: [], desc: 'Enemy ATK Speed -10%' },
   { id: 26, name: 'Energetic Cactus', dmgMult: 10.14, statMods: [], desc: 'Every 3 ATKs +30% DMG' },
   { id: 27, name: 'Chicken Fighter', dmgMult: 8.872, statMods: [{id:1039,val:0.10}], desc: 'Basic ATK Multi +10%' },
@@ -491,23 +494,23 @@ const PALS_DATA = [
   { id: 31, name: 'Moss Snail', dmgMult: 15.773, statMods: [], desc: 'Enemy move speed -30%' },
   { id: 32, name: 'Floral Deer', dmgMult: 10.92, statMods: [{id:1021,val:0.10}], desc: 'DMG RES +10%' },
   // --- Epic ---
-  { id: 33, name: 'Fortune Dragon', dmgMult: 15, statMods: [{id:1005,val:0.20},{id:1037,val:0.08}], desc: 'Crit DMG +20%, Skill Crit +8%', isBaseline: true },
+  { id: 33, name: 'Fortune Dragon', dmgMult: 15, statMods: [{id:1005,val:0.20},{id:1037,val:0.08}], desc: 'Crit DMG +20%, Skill Crit +8%' },
   { id: 34, name: 'Abaddon', dmgMult: 15, statMods: [], desc: 'Shield 8% HP, then ATK +8%' },
   { id: 35, name: 'Davi', dmgMult: 15, statMods: [{id:1037,val:0.08},{id:1038,val:0.08}], desc: 'Skill Crit +8%, Skill Crit DMG +8% (15s)' },
   { id: 36, name: 'Frej', dmgMult: 15, statMods: [{id:1004,val:0.08},{id:1005,val:0.08}], desc: 'Crit +8%, Crit DMG +8% (15s)' },
   { id: 37, name: 'Tamamo', dmgMult: 15, statMods: [], desc: 'Pal Crit +8%, Pal Crit DMG +8% (15s)' },
   { id: 38, name: 'Coffee Cat', dmgMult: 15, statMods: [], desc: 'Skill detonate 250% DMG' },
-  { id: 39, name: 'Triumphant Hydrosprite', dmgMult: 15, statMods: [{id:1013,val:0.20}], desc: 'Energy Regen +20%' },
+  { id: 39, name: 'Triumphant Hydrosprite', dmgMult: 15, statMods: [{id:1013,val:0.20}], desc: 'Energy Regen +20%', cdr: true },
   { id: 40, name: 'Snow Goblin', dmgMult: 15, statMods: [], desc: 'Enemy ATK Speed -12%' },
   { id: 41, name: 'Floral Cactus', dmgMult: 15, statMods: [], desc: 'Every 3 ATKs +35% DMG' },
   { id: 42, name: 'Kongfu Chicken', dmgMult: 15, statMods: [{id:1039,val:0.12}], desc: 'Basic ATK Multi +12%' },
   { id: 43, name: 'Piercer Beast', dmgMult: 15, statMods: [{id:1045,val:0.40}], desc: 'Skill DMG +40%' },
   { id: 44, name: 'Caw-Caw Owl', dmgMult: 14, statMods: [{id:1003,val:0.12}], desc: 'ATK Speed +12%' },
-  { id: 45, name: 'Toothpick Eggplant', dmgMult: 12, statMods: [{id:1004,val:0.10}], desc: 'Crit Rate +10%', isBaseline: true },
+  { id: 45, name: 'Toothpick Eggplant', dmgMult: 12, statMods: [{id:1004,val:0.10}], desc: 'Crit Rate +10%' },
   { id: 46, name: 'Warrior Panda', dmgMult: 15, statMods: [{id:1012,val:0.35}], desc: 'HP Regen +35%' },
   { id: 47, name: 'Ice Cream Snail', dmgMult: 15, statMods: [], desc: 'Enemy move speed -35%' },
-  { id: 48, name: 'Divine Deer', dmgMult: 13, statMods: [{id:1021,val:0.12}], desc: 'DMG RES +12%', isBaseline: true },
-  { id: 49, name: 'Mecha Dragon', dmgMult: 12, statMods: [{id:1005,val:0.20}], desc: 'Crit DMG +20%', isBaseline: true },
+  { id: 48, name: 'Divine Deer', dmgMult: 13, statMods: [{id:1021,val:0.12}], desc: 'DMG RES +12%' },
+  { id: 49, name: 'Mecha Dragon', dmgMult: 12, statMods: [{id:1005,val:0.20}], desc: 'Crit DMG +20%' },
   { id: 50, name: 'Spark Squirrel', dmgMult: 12, statMods: [{id:1040,val:0.15}], desc: 'Pal DMG Multi +15%' },
   { id: 51, name: 'B.Duck', dmgMult: 12, statMods: [{id:1050,val:0.05}], desc: 'Shield duration +1.5s' },
   { id: 52, name: 'Travel Camel', dmgMult: 12, statMods: [], desc: 'Enemy Basic ATK DMG -10%' },
@@ -516,7 +519,7 @@ const PALS_DATA = [
   { id: 54, name: 'Benny', dmgMult: 18, statMods: [{id:1004,val:0.05}], desc: 'Crit +5%, 30% Launch on pal atk' },
   { id: 55, name: 'Mona', dmgMult: 18, statMods: [{id:1008,val:0.10},{id:1046,val:0.30}], desc: 'Evasion +10%, Boss DMG +30%' },
   { id: 56, name: 'Cat Prince', dmgMult: 18, statMods: [], desc: 'Skill detonate 300% DMG' },
-  { id: 57, name: 'Warlord Hydrosprite', dmgMult: 16, statMods: [{id:1013,val:0.25}], desc: 'Energy Regen +25%' },
+  { id: 57, name: 'Warlord Hydrosprite', dmgMult: 16, statMods: [{id:1013,val:0.25}], desc: 'Energy Regen +25%', cdr: true },
   { id: 58, name: 'Snow General', dmgMult: 16, statMods: [], desc: 'Enemy ATK Speed -15%' },
   { id: 59, name: 'Cowboy Cactus', dmgMult: 16, statMods: [], desc: 'Every 3 ATKs +40% DMG' },
   { id: 60, name: 'Chicken Hood', dmgMult: 18, statMods: [{id:1039,val:0.15}], desc: 'Basic ATK Multi +15%' },
@@ -524,7 +527,7 @@ const PALS_DATA = [
   { id: 62, name: 'Hero Bird', dmgMult: 16, statMods: [{id:1003,val:0.15}], desc: 'ATK Speed +15%' },
   { id: 63, name: 'Kongfu Master', dmgMult: 18, statMods: [{id:1012,val:0.40}], desc: 'HP Regen +40%' },
   { id: 64, name: 'Tipsy Snail', dmgMult: 16, statMods: [], desc: 'Enemy move speed -40%' },
-  { id: 65, name: 'Angel Deer', dmgMult: 16, statMods: [{id:1021,val:0.15}], desc: 'DMG RES +15%', isBaseline: true },
+  { id: 65, name: 'Angel Deer', dmgMult: 16, statMods: [{id:1021,val:0.15}], desc: 'DMG RES +15%' },
   { id: 66, name: 'Righteous Banana', dmgMult: 16, statMods: [{id:1016,val:0.10},{id:1032,val:1.00}], desc: 'Combo +10%, Combo DMG +100%' },
   { id: 67, name: 'Rainbow Guardian', dmgMult: 16, statMods: [{id:1017,val:0.10},{id:1033,val:1.00}], desc: 'Counter +10%, Counter DMG +100%' },
   { id: 68, name: 'Gingerbread', dmgMult: 16, statMods: [{id:1046,val:0.30}], desc: 'Boss DMG +30%, Boss DMG RES +10%' },
@@ -545,26 +548,89 @@ const PALS_DATA = [
   { id: 83, name: 'Skeleton Minion', dmgMult: 16, statMods: [{id:1074,val:1500}], desc: 'Pal Inspire +1500' },
   { id: 84, name: 'Fortune Envoy', dmgMult: 16, statMods: [{id:1005,val:0.15}], desc: 'Global Crit DMG +15%' },
   // --- Immortal ---
-  { id: 85, name: 'Treasure Dragon', dmgMult: 20, statMods: [{id:1005,val:0.50},{id:1037,val:0.20}], desc: 'Crit DMG +50%, Skill Crit +20%', isBaseline: true },
+  { id: 85, name: 'Treasure Dragon', dmgMult: 20, statMods: [{id:1005,val:0.50},{id:1037,val:0.20}], desc: 'Crit DMG +50%, Skill Crit +20%' },
   { id: 86, name: 'Hipster Tortoise', dmgMult: 20, statMods: [], desc: '<50% HP: 30% MaxHP shield (60s CD)' },
-  { id: 87, name: 'Electric Pup', dmgMult: 20, statMods: [{id:1033,val:0.60}], desc: 'Counter DMG +60%, +1% lost HP on counter' },
+  { id: 87, name: 'Electric Pup', dmgMult: 20, statMods: [{id:1033,val:0.60}], battleDesc: '+1% lost HP on counter', desc: 'Counter DMG +60%, +1% lost HP on counter' },
   { id: 88, name: 'Alpine Fox', dmgMult: 20, statMods: [], desc: 'Stun dur +30%, stunned enemy DMG RES -15%' },
   { id: 89, name: 'Pirate Octopus', dmgMult: 20, statMods: [{id:1032,val:0.60}], desc: 'Combo DMG +60%, every 3 combos +60% combo DMG' },
   { id: 90, name: 'Wealthy Lizard', dmgMult: 20, statMods: [{id:1040,val:0.80},{id:1007,val:0.10}], desc: 'Pal DMG +80%, Ign Evasion +10%' },
 ];
 
-// Star Hero types: 1=ATK, 2=DEF, 3=HP, 4=Skill
-const STAR_HEROES = [
-  { id: 0, name: '(None)', type: 0, statMods: [] },
-  { id: 1, name: 'Aurora', type: 1, statMods: [{id:1001,pct:0.08}] },
-  { id: 2, name: 'Bai Ze', type: 2, statMods: [{id:1024,pct:0.08}] },
-  { id: 3, name: 'Elara', type: 3, statMods: [{id:1002,pct:0.08}] },
-  { id: 4, name: 'Nyx', type: 1, statMods: [{id:1001,pct:0.06},{id:1004,val:0.05}] },
-  { id: 5, name: 'Sol', type: 2, statMods: [{id:1024,pct:0.06},{id:1021,val:0.03}] },
-  { id: 6, name: 'Luna', type: 3, statMods: [{id:1002,pct:0.06},{id:1012,val:0.02}] },
-  { id: 7, name: 'Phoenix', type: 1, statMods: [{id:1001,pct:0.10},{id:1005,val:0.10}] },
-  { id: 8, name: 'Dragon', type: 2, statMods: [{id:1024,pct:0.10},{id:1082,val:0.05}] },
-  { id: 9, name: 'Titan', type: 3, statMods: [{id:1002,pct:0.10},{id:1081,val:0.05}] },
+// Guardian Spirits (from ConfigSpirit) — T4 and T5 only
+// Level 1-5 determines base Tenacity (HP) and TPEN (ATK) scaling
+// att_dam: [normal, combo, counter, skill] weights /10000
+const GUARDIAN_SPIRITS = [
+  { id: 0, name: '(None)', tier: 0, baseATK: 0, baseHP: 0, att_dam: [0,0,0,0], effects: [], desc: '' },
+  // T4 Spirits
+  { id: 401, name: 'Mech Master', tier: 4, baseATK: 480, baseHP: 24000,
+    att_dam: [8000,8000,40000,8000],
+    effects: [{desc:'DEF +8%',id:1024,pct:0.08},{desc:'Block Rate +5%',id:1070,val:0.05}],
+    desc: 'Tank — High HP, DEF buff, Block Rate boost' },
+  { id: 402, name: 'Crazy Raider', tier: 4, baseATK: 1280, baseHP: 19200,
+    att_dam: [10000,10000,50000,10000],
+    effects: [{desc:'ATK +8%',id:1001,pct:0.08},{desc:'Crit Rate +5%',id:1004,val:0.05}],
+    desc: 'Offense — High ATK, Crit Rate boost' },
+  { id: 403, name: 'Domain Hunter', tier: 4, baseATK: 2560, baseHP: 12800,
+    att_dam: [12000,12000,60000,12000],
+    effects: [{desc:'Ignore Evasion +8%',id:1007,val:0.08},{desc:'Combo Rate +5%',id:1016,val:0.05}],
+    desc: 'Precision — Highest ATK, Ignore Evasion, Combo' },
+  { id: 404, name: 'Death Reaper', tier: 4, baseATK: 800, baseHP: 16000,
+    att_dam: [8000,8000,45000,12000],
+    effects: [{desc:'Skill DMG +10%',id:1045,val:0.10},{desc:'HP Regen +5%',id:1012,val:0.05}],
+    desc: 'Hybrid — Balanced, Skill DMG + sustain' },
+  // T5 Spirits
+  { id: 501, name: 'Flame Spirit', tier: 5, baseATK: 540, baseHP: 27000,
+    att_dam: [10000,10000,50000,10000],
+    effects: [{desc:'ATK +10%',id:1001,pct:0.10},{desc:'Final DMG +5%',id:1081,val:0.05},{desc:'Crit DMG +15%',id:1005,val:0.15}],
+    desc: 'Fire — ATK & Final DMG & Crit DMG boost' },
+  { id: 502, name: 'Tide Spirit', tier: 5, baseATK: 1440, baseHP: 21600,
+    att_dam: [12000,12000,60000,12000],
+    effects: [{desc:'DEF +10%',id:1024,pct:0.10},{desc:'DMG RES +5%',id:1021,val:0.05},{desc:'HP Regen +8%',id:1012,val:0.08}],
+    desc: 'Water — DEF & DMG RES & Regen boost' },
+  { id: 503, name: 'Zephyr Spirit', tier: 5, baseATK: 2880, baseHP: 14400,
+    att_dam: [14000,14000,70000,14000],
+    effects: [{desc:'ATK Speed +10%',id:1003,val:0.10},{desc:'Evasion +8%',id:1008,val:0.08},{desc:'Combo Rate +5%',id:1016,val:0.05}],
+    desc: 'Wind — Speed & Evasion & Combo boost' },
+  { id: 504, name: 'Litho Spirit', tier: 5, baseATK: 900, baseHP: 18000,
+    att_dam: [10000,10000,55000,12000],
+    effects: [{desc:'HP +10%',id:1002,pct:0.10},{desc:'Final DMG RES +5%',id:1082,val:0.05},{desc:'Counter DMG +15%',id:1033,val:0.15}],
+    desc: 'Earth — HP & Final DMG RES & Counter boost' },
+];
+
+// Spirit level scaling multipliers (level 1-5)
+const SPIRIT_LEVEL_SCALE = {
+  1: { hpMult: 1.0, atkMult: 1.0 },
+  2: { hpMult: 1.5, atkMult: 1.5 },
+  3: { hpMult: 2.2, atkMult: 2.2 },
+  4: { hpMult: 3.2, atkMult: 3.2 },
+  5: { hpMult: 5.0, atkMult: 5.0 },
+};
+
+// Star Heroes (from ConfigAngel) — separate from Guardian Spirits
+const STAR_HEROES_DATA = [
+  { id: 0, name: '(None)', rarity: '', cost: 0, mainType: '', mainSkill: '', supportType: '', supportSkill: '' },
+  { id: 30001, name: 'Divine Warbringer', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 15s, deals AoE DMG = 5% Max HP', supportType: 'Active', supportSkill: 'DMG RES +4% for 5s' },
+  { id: 30002, name: 'Storm Dominion', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 16s, 500% AoE Basic ATK DMG (Crit), Crit→0.4% current HP', supportType: 'Active', supportSkill: 'Basic ATK DMG RES -6% for 5s' },
+  { id: 30003, name: 'Barbarian Overlord', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 16s, 3 pals +8% Combo Multi +8% Final Crit DMG 5s', supportType: 'Active', supportSkill: 'Enemy ATK -8% for 5s' },
+  { id: 30004, name: 'Holy Defender', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 14s, 1500% AoE Skill DMG + 400% Bleed/s 5s', supportType: 'Active', supportSkill: 'Enemy DMG RES -5% for 5s' },
+  { id: 30005, name: 'Genie of Wishes', rarity: 'SSR', cost: 3, mainType: 'Passive', mainSkill: 'ATK +4%, DEF +12% for battle', supportType: 'None', supportSkill: '' },
+  { id: 30007, name: 'Lord of Champions', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 15s, 1500% Bleed Skill DMG + stun 1.5s', supportType: 'Active', supportSkill: 'CD -1s + Final Skill DMG +12% 5s', limited: true },
+  { id: 20001, name: 'Spirit Harbinger', rarity: 'SR', cost: 3, mainType: 'Active', mainSkill: 'Every 16s, all Pals Crit +4%, Crit DMG +200% 8s', supportType: 'Active', supportSkill: 'All Pals Combo +4% 7s' },
+  { id: 20002, name: 'Mentor of Wisdom', rarity: 'SR', cost: 3, mainType: 'Passive', mainSkill: 'After 10 skills: 3200% AoE + Final Skill Crit DMG +7.5% 12s', supportType: 'Passive', supportSkill: 'Skill Crit +2.5%, Base Skill Crit DMG +15%' },
+  { id: 20003, name: 'Chrono Sprite', rarity: 'SR', cost: 0, mainType: 'None', mainSkill: '', supportType: 'Active', supportSkill: 'Stun targets 0.5s' },
+  { id: 20004, name: 'Knight of Light', rarity: 'SR', cost: 3, mainType: 'Shield', mainSkill: 'Every 16s, 8% HP shield 5s + ATK -5% on hit', supportType: 'Shield', supportSkill: 'Regen 7.5% lost HP' },
+  { id: 20005, name: 'Beast Soul Guardian', rarity: 'SR', cost: 3, mainType: 'Passive', mainSkill: 'All Pals ATK SPD +20% (decays 1/5 per 4s)', supportType: 'Passive', supportSkill: '<50% HP: Pals ATK SPD +8% 12s' },
+  { id: 20006, name: 'Void Guide', rarity: 'SR', cost: 3, mainType: 'Active', mainSkill: 'Every 16s, 1800% AoE Skill DMG + stun 0.5s', supportType: 'Active', supportSkill: 'Enemy Energy Regen -8% 5s' },
+  { id: 20007, name: 'Defender of Order', rarity: 'SR', cost: 3, mainType: 'Shield', mainSkill: 'Every 14s, 8% HP shield 5s + 8% Counter AoE per ATK', supportType: 'Shield', supportSkill: 'ATK +6% 5s' },
+  { id: 20008, name: 'Biosphere Guardian', rarity: 'SR', cost: 3, mainType: 'Passive', mainSkill: 'ATK SPD +20% (decays 1/5 per 4s)', supportType: 'Passive', supportSkill: '<50% HP: ATK SPD +8% 12s' },
+  { id: 20009, name: "Nature's Keeper", rarity: 'SR', cost: 3, mainType: 'Passive', mainSkill: 'Crit has 5% chance: ATK -5% 3s', supportType: 'Passive', supportSkill: 'Crit Rate +5%' },
+  { id: 20010, name: 'Sakura Star Envoy', rarity: 'SR', cost: 3, mainType: 'Shield', mainSkill: 'Every 14s, 8% HP shield 5s + ATK +7.5%', supportType: 'None', supportSkill: '', limited: true },
+  { id: 20011, name: 'Goddess of Victory', rarity: 'SR', cost: 3, mainType: 'None', mainSkill: '', supportType: 'Shield', supportSkill: 'ATK SPD +10% + 50% Counter DMG as Basic ATK 5s', limited: true },
+  { id: 30013, name: 'King', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 15s, enemies -13.5% ATK -27% DEF 5s', supportType: 'Passive', supportSkill: 'Enemies ATK -3.6%', limited: true },
+  { id: 20020, name: 'Hellish Blizzard', rarity: 'SR', cost: 3, mainType: 'Active', mainSkill: 'Every 15s, whirlwind 5s: 450% Bleed/s + DMG RES -2.25%', supportType: 'Active', supportSkill: '900% Skill DMG + enemy stats -3% 5s', limited: true },
+  { id: 30014, name: 'Gold Snow Roll', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 15s, 900% Skill + 180% ATK/Combo/Counter + DMG RES -0.9% (5x)', supportType: 'Shield', supportSkill: 'Final ATK/Combo/Counter DMG +3% (4x stack)', limited: true },
+  { id: 20021, name: 'Leaf Fox', rarity: 'SR', cost: 3, mainType: 'Shield', mainSkill: 'Every 14s, 9% HP shield + CC immunity', supportType: 'Shield', supportSkill: 'Evasion +18% 5s', limited: true },
+  { id: 30006, name: 'Puppy Squad', rarity: 'SSR', cost: 4, mainType: 'Active', mainSkill: 'Every 15s, pal phantom: 200% Pal DMG + 0.65% HP Bleed', supportType: 'Active', supportSkill: 'Enemy Pal DMG RES -6% 5s', limited: true },
 ];
 
 // Mount skins — passive combat bonuses from reference/11_MOUNT_SKINS.md
@@ -758,56 +824,55 @@ const AVIAN_DATA = [
 ];
 
 // Attribute definitions: [id, name, label, defaultValue, isRate]
+// Labels match in-game stat names
 const ATTRIB_DEFS = [
   // Core
   [1001, 'att', 'ATK', 10000, false],
   [1002, 'hp', 'HP', 500000, false],
   [1024, 'def', 'DEF', 5000, false],
-  [1060, 'def_coe', 'DEF Coef', 0.1, true],
   // Speed
   [1003, 'att_speed', 'ATK Speed', 1.0, true],
   // Crit
   [1004, 'crit_rate', 'Crit Rate', 0.5, true],
   [1005, 'crit_dam', 'Crit DMG', 2.0, true],
-  [1006, 'crit_def', 'Crit DEF', 1.0, true],
-  [1065, 'ignore_crit_rate', 'Ign Crit Rate', 0, true],
+  [1006, 'crit_def', 'Crit RES', 1.0, true],
+  [1065, 'ignore_crit_rate', 'Ignore Crit Rate', 0, true],
   // Hit/Miss
-  [1007, 'hit', 'Hit', 0, true],
+  [1007, 'hit', 'Ignore Evasion', 0, true],
   [1008, 'miss', 'Evasion', 0, true],
   // Combo/Counter
   [1016, 'double_hit', 'Combo Rate', 0.3, true],
   [1032, 'double_hit_dam', 'Combo DMG', 1.0, true],
-  [1034, 'double_hit_def', 'Combo DEF', 0, true],
-  [1048, 'ignore_double_hit', 'Ign Combo', 0, true],
+  [1034, 'double_hit_def', 'Combo RES', 0, true],
+  [1048, 'ignore_double_hit', 'Ignore Combo', 0, true],
   [1017, 'counter', 'Counter Rate', 0.2, true],
   [1033, 'counter_dam', 'Counter DMG', 1.0, true],
-  [1035, 'counter_def', 'Counter DEF', 0, true],
-  [1049, 'ignore_counter', 'Ign Counter', 0, true],
+  [1035, 'counter_def', 'Counter RES', 0, true],
+  [1049, 'ignore_counter', 'Ignore Counter', 0, true],
   // Multipliers
-  [1039, 'att_dam', 'ATK Multi', 2.5, true],
+  [1039, 'att_dam', 'Basic ATK Multi', 2.5, true],
   [1045, 'skill_dam_extra', 'Skill DMG', 1.5, true],
-  [1043, 'active_skilldamage_par', 'Skill Factor', 1.0, true],
   [1046, 'boss_dam', 'Boss DMG', 0, true],
   // Resistances
-  [1018, 'att_resist', 'ATK Resist', 0, true],
-  [1019, 'skill_resist', 'Skill Resist', 0, true],
-  [1020, 'partner_resist', 'Pal Resist', 0, true],
-  [1021, 'resist', 'DMG Resist', 0.1, true],
+  [1018, 'att_resist', 'Basic ATK RES', 0, true],
+  [1019, 'skill_resist', 'Skill RES', 0, true],
+  [1020, 'partner_resist', 'Pal DMG RES', 0, true],
+  [1021, 'resist', 'DMG RES', 0.1, true],
   // Total DMG
-  [1081, 'total_dam_add', 'Final DMG Boost', 0.2, true],
-  [1082, 'total_dam_def', 'Final DMG Resist', 0.1, true],
+  [1081, 'total_dam_add', 'Final DMG', 0.2, true],
+  [1082, 'total_dam_def', 'Final DMG RES', 0.1, true],
   // Pierce/Block
   [1067, 'armor_penetration_rate', 'Pierce Rate', 0.3, true],
   [1068, 'armor_penetration', 'Pierce Val', 0, false],
-  [1069, 'ignore_armor_penetration', 'Ign Pierce', 0, false],
+  [1069, 'ignore_armor_penetration', 'Ignore Pierce', 0, false],
   [1070, 'block_rate', 'Block Rate', 0.3, true],
   [1071, 'block', 'Block Val', 0, false],
-  [1072, 'ignore_block', 'Ign Block', 0, false],
+  [1072, 'ignore_block', 'Ignore Block', 0, false],
   // Stun/Launch
   [1022, 'suspend', 'Launch Rate', 0, true],
-  [1025, 'suspend_def', 'Launch DEF', 0, true],
+  [1025, 'suspend_def', 'Launch RES', 0, true],
   [1023, 'vertigo', 'Stun Rate', 0, true],
-  [1026, 'vertigo_def', 'Stun DEF', 0, true],
+  [1026, 'vertigo_def', 'Stun RES', 0, true],
   [1030, 'vertigo_times', 'Stun Duration', 1, false],
   [1031, 'vertigo_res', 'Stun Resist', 0.6, true],
   [1042, 'CONTROL_RES', 'Control RES', 0, true],
@@ -816,56 +881,52 @@ const ATTRIB_DEFS = [
   [1038, 'skill_crit_dam', 'Skill Crit DMG', 1.0, true],
   // Heal/Steal
   [1012, 'hp_recovery', 'HP Regen', 0, true],
-  [1066, 'ignore_hp_recovery', 'Ign HP Regen', 0, true],
+  [1066, 'ignore_hp_recovery', 'Reduce HP Regen', 0, true],
   [1014, 'att_hpsteal', 'ATK Lifesteal', 0, true],
-  [1027, 'att_hpsteal_def', 'ATK Steal DEF', 0, true],
-  [1015, 'skill_hpsteal', 'Skill Steal', 0, true],
-  [1028, 'skill_hpsteal_def', 'Skill Steal DEF', 0, true],
+  [1027, 'att_hpsteal_def', 'ATK Steal RES', 0, true],
+  [1015, 'skill_hpsteal', 'Skill Lifesteal', 0, true],
+  [1028, 'skill_hpsteal_def', 'Skill Steal RES', 0, true],
   [1053, 'hpsteal_rate', 'Steal Rate', 0, true],
   [1054, 'hpsteal_amount', 'Steal Amount', 0, true],
-  [1055, 'hpsteal_res', 'Steal Resist', 0, true],
-  // Pal
-  [1040, 'partner_dam', 'Pal DMG', 0.5, true],
-  [1047, 'partner_dam_extra', 'Pal DMG Extra', 1.0, true],
-  [1073, 'partner_inspire_rate', 'Inspire Rate', 0.3, true],
-  [1074, 'partner_inspire', 'Inspire Val', 0, false],
-  [1075, 'ignore_partner_inspire', 'Ign Inspire', 0, false],
-  [1076, 'partner_suppress_rate', 'Suppress Rate', 0.3, true],
-  [1077, 'partner_suppress', 'Suppress Val', 0, false],
-  [1078, 'ignore_partner_suppress', 'Ign Suppress', 0, false],
-  // Shield
-  [1051, 'shield_hp_extra', 'Shield HP+', 0, true],
-  [1050, 'shield_time_extra', 'Shield Time+', 0, true],
-  // PvE
-  [1057, 'pve_dam', 'PvE DMG', 0, true],
-  [1058, 'pve_resist', 'PvE Resist', 0, true],
-  // Energy
-  [1013, 'power_recovery', 'Power Regen', 1.0, true],
-  // Spirit
-  [6001, 'spirit_dam_add', 'Spirit DMG+', 0, true],
-  [6002, 'spirit_dam_def', 'Spirit DMG DEF', 0, true],
-  [6003, 'spirit_dam_def_final', 'Spirit DEF Final', 0, true],
+  [1055, 'hpsteal_res', 'Steal RES', 0, true],
 ];
 
-// Stat groups for UI
+// Hidden/internal attributes not shown in UI but used in engine
+const HIDDEN_ATTRIB_DEFAULTS = {
+  1060: 0.1,   // def_coe
+  1043: 1.0,   // active_skilldamage_par (Skill Factor)
+  1040: 0.5,   // partner_dam (set per pal)
+  1047: 1.0,   // partner_dam_extra
+  1073: 0.3,   // partner_inspire_rate
+  1074: 0,     // partner_inspire
+  1075: 0,     // ignore_partner_inspire
+  1076: 0.3,   // partner_suppress_rate
+  1077: 0,     // partner_suppress
+  1078: 0,     // ignore_partner_suppress
+  1051: 0,     // shield_hp_extra
+  1050: 0,     // shield_time_extra
+  1057: 0,     // pve_dam
+  1058: 0,     // pve_resist
+  1013: 1.0,   // power_recovery
+  6001: 0,     // spirit_dam_add
+  6002: 0,     // spirit_dam_def
+  6003: 0,     // spirit_dam_def_final
+};
+
+// Stat groups for UI (matches in-game stat display)
 const STAT_GROUPS = [
-  { name: 'Core', attrs: [1001, 1002, 1024, 1060] },
+  { name: 'Core', attrs: [1001, 1002, 1024] },
   { name: 'Speed', attrs: [1003] },
   { name: 'Critical', attrs: [1004, 1005, 1006, 1065] },
-  { name: 'Hit/Evasion', attrs: [1007, 1008], collapsed: true },
+  { name: 'Evasion', attrs: [1007, 1008], collapsed: true },
   { name: 'Combo/Counter', attrs: [1016, 1032, 1034, 1048, 1017, 1033, 1035, 1049] },
-  { name: 'Multipliers', attrs: [1039, 1045, 1043, 1046] },
-  { name: 'Resistances', attrs: [1018, 1019, 1020, 1021] },
+  { name: 'Multipliers', attrs: [1039, 1045, 1046] },
+  { name: 'DMG Resistance', attrs: [1018, 1019, 1020, 1021] },
   { name: 'Final DMG', attrs: [1081, 1082] },
   { name: 'Pierce/Block', attrs: [1067, 1068, 1069, 1070, 1071, 1072], collapsed: true },
   { name: 'Stun/Launch', attrs: [1022, 1025, 1023, 1026, 1030, 1031, 1042], collapsed: true },
   { name: 'Skill Crit', attrs: [1037, 1038], collapsed: true },
   { name: 'Heal/Steal', attrs: [1012, 1066, 1014, 1027, 1015, 1028, 1053, 1054, 1055], collapsed: true },
-  { name: 'Pal Stats', attrs: [1040, 1047, 1073, 1074, 1075, 1076, 1077, 1078], collapsed: true },
-  { name: 'Shield', attrs: [1051, 1050], collapsed: true },
-  { name: 'PvE', attrs: [1057, 1058], collapsed: true },
-  { name: 'Energy', attrs: [1013], collapsed: true },
-  { name: 'Spirit', attrs: [6001, 6002, 6003], collapsed: true },
 ];
 
 const ATTRIB_MAP = {};
@@ -901,6 +962,7 @@ class Unit {
     this.isActive = true;
     this.specialTalents = {};
     for (let def of ATTRIB_DEFS) this.attribs[def[0]] = def[3];
+    for (let id in HIDDEN_ATTRIB_DEFAULTS) this.attribs[Number(id)] = HIDDEN_ATTRIB_DEFAULTS[id];
   }
   getAttrib(id) {
     let v = this.attribs[id];
@@ -1732,41 +1794,56 @@ const UI = {
     }
     html += `</div></div>`;
 
-    // Pals (5 or 6 slots)
+    // Pals (5 or 6 slots) — with inline stat toggle per pal
     html += `<div class="stat-group"><h2 onclick="UI.toggleGroup(this)">Pals (5-6 slots)</h2><div class="stat-group-body" id="${prefix}-pals-body">`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--gold);margin-bottom:4px;">If a pal boosts baseline stats (shown in your character sheet), check "Add stats" to include them. Battle-only effects (shields, procs, etc.) are simulated automatically.</div>`;
     for (let p = 0; p < 6; p++) {
       html += `<div class="stat-row-full" id="${prefix}-pal-row-${p}" ${p===5?'style="display:none"':''}>`;
-      html += `<label>Pal ${p+1}${p===5?' (Beast)':''}:</label><select id="${prefix}-pal${p}">`;
+      html += `<label>Pal ${p+1}${p===5?' (Beast)':''}:</label><select id="${prefix}-pal${p}" onchange="UI.onPalChange('${prefix}',${p})">`;
       for (let pd of PALS_DATA) { html += `<option value="${pd.id}">${pd.name}${pd.desc?' — '+pd.desc:''}</option>`; }
       html += `</select>`;
       html += `</div>`;
+      // Per-pal stat toggle (shown dynamically when pal has baseline stat mods)
+      html += `<div class="toggle-row" id="${prefix}-palToggle-row-${p}" style="display:none;grid-column:1/-1;margin-left:16px;">`;
+      html += `<input type="checkbox" id="${prefix}-palToggle-${p}">`;
+      html += `<label for="${prefix}-palToggle-${p}" id="${prefix}-palToggle-label-${p}" style="font-size:10px;">Add stats (not yet in your inputs)</label>`;
+      html += `<span class="note" id="${prefix}-palToggle-note-${p}"></span>`;
+      html += `</div>`;
     }
-    // Pal baseline stat toggles
-    html += `<div style="grid-column:1/-1;margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">`;
-    html += `<div style="font-size:10px;color:var(--gold);margin-bottom:2px;">Pal Stat Toggles (check if pal stats are NOT in your input numbers):</div>`;
-    for (let pd of PALS_DATA) {
-      if (pd.id === 0 || !pd.isBaseline) continue;
-      html += `<div class="toggle-row"><input type="checkbox" id="${prefix}-palToggle-${pd.id}"><label for="${prefix}-palToggle-${pd.id}">${pd.name}: ${pd.desc}</label></div>`;
-    }
-    html += `</div>`;
     html += `</div></div>`;
 
-    // Guardian (Star Heroes) — 3 cards, must be same type
-    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Guardian (Star Heroes)</h2><div class="stat-group-body collapsed">`;
-    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--gold);margin-bottom:2px;">All 3 cards must be the same type (ATK/DEF/HP). Main = battle skills, Subs = passive only.</div>`;
+    // Guardian Spirit (Section 14 — T4 & T5 only)
+    html += `<div class="stat-group"><h2 onclick="UI.toggleGroup(this)">Guardian Spirit</h2><div class="stat-group-body">`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--gold);margin-bottom:2px;">Select a Guardian Spirit and level. Level determines Tenacity (HP) and TPEN (ATK). Spirit effects are applied to battle.</div>`;
+    html += `<div class="stat-row-full"><label>Spirit:</label><select id="${prefix}-spirit" onchange="UI.onSpiritChange('${prefix}')">`;
+    for (let s of GUARDIAN_SPIRITS) { html += `<option value="${s.id}">${s.name}${s.tier?' (T'+s.tier+')':''}${s.desc?' — '+s.desc:''}</option>`; }
+    html += `</select></div>`;
+    html += `<div class="stat-row"><label>Level</label><select id="${prefix}-spiritLv" onchange="UI.onSpiritChange('${prefix}')">`;
+    for (let lv = 1; lv <= 5; lv++) html += `<option value="${lv}" ${lv===1?'selected':''}>${lv}</option>`;
+    html += `</select></div>`;
+    html += `<div class="stat-row"><label>Tenacity (HP)</label><input type="number" id="${prefix}-tenacity" value="0" step="1" readonly style="background:#111;"></div>`;
+    html += `<div class="stat-row"><label>TPEN (ATK)</label><input type="number" id="${prefix}-tpen" value="0" step="1" readonly style="background:#111;"></div>`;
+    // Spirit effects display
+    html += `<div id="${prefix}-spiritEffects" style="grid-column:1/-1;font-size:11px;color:var(--accent2);margin-top:4px;"></div>`;
+    html += `</div></div>`;
+
+    // Star Heroes (Section 15 — separate from Guardian Spirits)
+    html += `<div class="stat-group"><h2 class="collapsed" onclick="UI.toggleGroup(this)">Star Heroes</h2><div class="stat-group-body collapsed">`;
+    html += `<div style="grid-column:1/-1;font-size:10px;color:var(--gold);margin-bottom:2px;">Select up to 3 Star Heroes for the formation. Main slot contributes battle skill, others provide passive bonuses.</div>`;
     for (let slot = 0; slot < 3; slot++) {
       let label = slot === 0 ? 'Main' : 'Sub ' + slot;
-      html += `<div class="stat-row-full"><label>${label}:</label><select id="${prefix}-hero${slot}" onchange="UI.validateHeroes('${prefix}')">`;
-      for (let h of STAR_HEROES) html += `<option value="${h.id}">${h.name}${h.type?' (Type '+h.type+')':''}</option>`;
+      html += `<div class="stat-row-full"><label>${label}:</label><select id="${prefix}-hero${slot}">`;
+      for (let h of STAR_HEROES_DATA) {
+        let display = h.name;
+        if (h.rarity) display += ` [${h.rarity}]`;
+        if (h.cost) display += ` (${h.cost})`;
+        if (h.limited) display += ' *Limited*';
+        html += `<option value="${h.id}">${display}</option>`;
+      }
       html += `</select></div>`;
+      // Show skill info for selected hero
+      html += `<div id="${prefix}-heroInfo${slot}" style="grid-column:1/-1;font-size:10px;color:var(--fg2);margin-left:16px;margin-bottom:4px;"></div>`;
     }
-    html += `<div id="${prefix}-heroWarn" style="grid-column:1/-1;font-size:10px;color:var(--red);display:none;">Type mismatch! All heroes must share the same type.</div>`;
-    // Guardian inputs
-    html += `<div class="stat-row"><label>Guardian Lv</label><input type="number" id="${prefix}-guardianLv" value="1" min="1" max="100"></div>`;
-    html += `<div class="stat-row"><label>Tenacity Boost</label><input type="number" id="${prefix}-tenacity" value="0" step="0.01"></div>`;
-    html += `<div class="stat-row"><label>Global Tenacity</label><input type="number" id="${prefix}-gTenacity" value="0" step="0.01"></div>`;
-    html += `<div class="stat-row"><label>TPen Boost</label><input type="number" id="${prefix}-tpen" value="0" step="0.01"></div>`;
-    html += `<div class="stat-row"><label>Global TPen</label><input type="number" id="${prefix}-gTpen" value="0" step="0.01"></div>`;
     html += `</div></div>`;
 
     // Mount — full catalog from reference/11_MOUNT_SKINS.md
@@ -1848,30 +1925,75 @@ const UI = {
     if (body) body.classList.toggle('collapsed');
   },
 
-  validateHeroes(prefix) {
-    let types = [];
-    for (let i = 0; i < 3; i++) {
-      let el = document.getElementById(`${prefix}-hero${i}`);
-      if (!el) continue;
-      let hid = parseInt(el.value);
-      let hero = STAR_HEROES.find(h => h.id === hid);
-      if (hero && hero.type > 0) types.push(hero.type);
-    }
-    let warn = document.getElementById(`${prefix}-heroWarn`);
-    if (types.length >= 2 && new Set(types).size > 1) {
-      warn.style.display = '';
-    } else {
-      warn.style.display = 'none';
-    }
-  },
-
   onClassChange(prefix) {
     let classId = parseInt(document.getElementById(`${prefix}-class`).value);
     let classData = CLASS_TREE[classId];
     // Show/hide 6th pal slot for beast classes
     let row5 = document.getElementById(`${prefix}-pal-row-5`);
     if (row5) {
-      row5.style.display = (classData && classData.job_class === 5) ? '' : 'none';
+      let show = classData && classData.job_class === 5;
+      row5.style.display = show ? '' : 'none';
+      // Also show/hide toggle row for slot 5
+      let toggleRow5 = document.getElementById(`${prefix}-palToggle-row-5`);
+      if (toggleRow5 && !show) toggleRow5.style.display = 'none';
+    }
+  },
+
+  onPalChange(prefix, slotIdx) {
+    let palEl = document.getElementById(`${prefix}-pal${slotIdx}`);
+    let toggleRow = document.getElementById(`${prefix}-palToggle-row-${slotIdx}`);
+    let toggleLabel = document.getElementById(`${prefix}-palToggle-label-${slotIdx}`);
+    let toggleNote = document.getElementById(`${prefix}-palToggle-note-${slotIdx}`);
+    let toggleCb = document.getElementById(`${prefix}-palToggle-${slotIdx}`);
+    if (!palEl || !toggleRow) return;
+    let palId = parseInt(palEl.value);
+    let palData = PALS_DATA.find(p => p.id === palId);
+    if (palData && palData.statMods && palData.statMods.length > 0) {
+      // This pal has baseline stat mods — show toggle
+      let modDesc = palData.statMods.map(m => {
+        let attr = ATTRIB_MAP[m.id];
+        let label = attr ? attr.label : 'Attr ' + m.id;
+        return `${label} +${m.val > 1 ? m.val : (m.val * 100).toFixed(0) + '%'}`;
+      }).join(', ');
+      toggleRow.style.display = '';
+      toggleLabel.textContent = `Add stats: ${modDesc}`;
+      if (palData.battleDesc) {
+        toggleNote.textContent = `Battle effect: ${palData.battleDesc}`;
+      } else {
+        toggleNote.textContent = '';
+      }
+    } else {
+      toggleRow.style.display = 'none';
+      if (toggleCb) toggleCb.checked = false;
+    }
+  },
+
+  onSpiritChange(prefix) {
+    let spiritId = parseInt(document.getElementById(`${prefix}-spirit`)?.value || 0);
+    let spiritLv = parseInt(document.getElementById(`${prefix}-spiritLv`)?.value || 1);
+    let spirit = GUARDIAN_SPIRITS.find(s => s.id === spiritId);
+    let tenacityEl = document.getElementById(`${prefix}-tenacity`);
+    let tpenEl = document.getElementById(`${prefix}-tpen`);
+    let effectsEl = document.getElementById(`${prefix}-spiritEffects`);
+    if (!spirit || spirit.id === 0) {
+      if (tenacityEl) tenacityEl.value = 0;
+      if (tpenEl) tpenEl.value = 0;
+      if (effectsEl) effectsEl.innerHTML = '';
+      return;
+    }
+    let scale = SPIRIT_LEVEL_SCALE[spiritLv] || SPIRIT_LEVEL_SCALE[1];
+    let tenacity = FM.roundInt(spirit.baseHP * scale.hpMult);
+    let tpen = FM.roundInt(spirit.baseATK * scale.atkMult);
+    if (tenacityEl) tenacityEl.value = tenacity;
+    if (tpenEl) tpenEl.value = tpen;
+    if (effectsEl) {
+      let html = `<strong>Spirit Effects (Lv${spiritLv}):</strong><br>`;
+      html += `Tenacity (HP): ${tenacity.toLocaleString()} | TPEN (ATK): ${tpen.toLocaleString()}<br>`;
+      for (let eff of spirit.effects) {
+        html += `• ${eff.desc}<br>`;
+      }
+      html += `<span style="color:var(--fg2);font-size:10px;">att_dam weights: Normal ${spirit.att_dam[0]/100}% / Combo ${spirit.att_dam[1]/100}% / Counter ${spirit.att_dam[2]/100}% / Skill ${spirit.att_dam[3]/100}%</span>`;
+      effectsEl.innerHTML = html;
     }
   },
 
@@ -1880,6 +2002,10 @@ const UI = {
     for (let def of ATTRIB_DEFS) {
       let el = document.getElementById(`${prefix}-${def[0]}`);
       stats[def[0]] = el ? parseFloat(el.value) || 0 : def[3];
+    }
+    // Add hidden defaults
+    for (let id in HIDDEN_ATTRIB_DEFAULTS) {
+      if (stats[Number(id)] === undefined) stats[Number(id)] = HIDDEN_ATTRIB_DEFAULTS[id];
     }
 
     // Apply class passives
@@ -1902,20 +2028,38 @@ const UI = {
       }
     });
 
-    // Apply pal baseline stat toggles
-    for (let pd of PALS_DATA) {
-      if (!pd.isBaseline) continue;
-      let toggle = document.getElementById(`${prefix}-palToggle-${pd.id}`);
+    // Apply per-pal baseline stat toggles (per-slot)
+    let maxPals = (CLASS_TREE[classId] && CLASS_TREE[classId].job_class === 5) ? 6 : 5;
+    for (let p = 0; p < maxPals; p++) {
+      let toggle = document.getElementById(`${prefix}-palToggle-${p}`);
       if (toggle && toggle.checked) {
-        for (let mod of pd.statMods) {
-          if (stats[mod.id] !== undefined) stats[mod.id] = FM.round(stats[mod.id] + mod.val);
+        let palEl = document.getElementById(`${prefix}-pal${p}`);
+        if (palEl) {
+          let palData = PALS_DATA.find(pd => pd.id === parseInt(palEl.value));
+          if (palData && palData.statMods) {
+            for (let mod of palData.statMods) {
+              if (stats[mod.id] !== undefined) stats[mod.id] = FM.round(stats[mod.id] + mod.val);
+            }
+          }
         }
+      }
+    }
+
+    // Apply Guardian Spirit effects
+    let spiritId = parseInt(document.getElementById(`${prefix}-spirit`)?.value || 0);
+    let spirit = GUARDIAN_SPIRITS.find(s => s.id === spiritId);
+    if (spirit && spirit.id > 0) {
+      for (let eff of spirit.effects) {
+        if (eff.pct !== undefined && stats[eff.id] !== undefined) stats[eff.id] = FM.roundInt(stats[eff.id] * (1 + eff.pct));
+        else if (eff.val !== undefined && stats[eff.id] !== undefined) stats[eff.id] = FM.round(stats[eff.id] + eff.val);
       }
     }
 
     // Apply mount/artifact/back passive stat mods (data-driven)
     function applyItemMods(itemData, elId) {
-      let itemId = parseInt(document.getElementById(elId).value);
+      let el = document.getElementById(elId);
+      if (!el) return;
+      let itemId = parseInt(el.value);
       let item = itemData.find(i => i.id === itemId);
       if (!item) return;
       for (let mod of item.statMods) {
@@ -2178,7 +2322,7 @@ const UI = {
     let json = JSON.stringify(data, null, 2);
     let blob = new Blob([json], { type: 'application/json' });
     let url = URL.createObjectURL(blob);
-    let a = document.createElement('a'); a.href = url; a.download = 'battlesim-v3.json'; a.click();
+    let a = document.createElement('a'); a.href = url; a.download = 'battlesim-export.json'; a.click();
     URL.revokeObjectURL(url);
   },
 
@@ -2217,7 +2361,7 @@ const UI = {
 // MODULE 12: Self-Test
 // ============================================================
 function selfTest() {
-  console.log('=== BattleSim v3 Self-Test ===');
+  console.log('=== BattleSim Self-Test ===');
   console.assert(FM.round(1.75001) === 1.75, 'FM.round');
   console.assert(FM.roundInt(7875.5) === 7876, 'FM.roundInt');
   let atk = 10000, def = 5000, defCoe = 0.1;
