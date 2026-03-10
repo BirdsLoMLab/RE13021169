@@ -1,7 +1,7 @@
 # 44 — Gacha & Event Item Probability Investigation
 
 > **Sources:** game_script_pretty.js lines 6354-6442, 10817-10926, 11408-11445, 11519-11535, 12182-12500, 224570-224623, 292666-292682, 348994-348997; data/tables/Countdown_box.json, Mount_draw.json, Spirit_draw_prob.json, Double_probabillity.json, Ippon_matsu_prob.json; data/schemas/ConfigCountdown_box.json, ConfigMount_draw.json, ConfigDouble_probabillity.json, ConfigSpirit_draw_prob.json, ConfigIppon_matsu_prob.json
-> **Key Discovery:** The Countdown Box system ships two separate weight columns — `cli_weight` (displayed to the player) and `serv_weight` (used server-side for actual draws). Rare items show up to 150% higher odds in the UI than reality. All monetized draws are server-authoritative.
+> **Key Discovery:** The Countdown Box system ships two separate weight columns — `cli_weight` (displayed to the player) and `serv_weight` (used server-side for actual draws). Rare items show ~65% higher odds in the UI than reality. All monetized draws are server-authoritative.
 
 ---
 
@@ -25,19 +25,19 @@ From `data/tables/Countdown_box.json`:
 
 | ID | Reward | cli_weight | serv_weight | Displayed Prob | Real Prob | Inflation |
 |----|--------|-----------|------------|----------------|-----------|-----------|
-| 1 | 1017 ×140 | 15 | 10 | 16.67% | 17.86% | — |
-| 2 | 1008 ×40 | 15 | 10 | 16.67% | 17.86% | — |
-| 3 | 1084 ×40 | 15 | 10 | 16.67% | 17.86% | — |
-| 4 | 1114 ×20 | 15 | 10 | 16.67% | 17.86% | — |
-| 5 | 1164 ×40 | 15 | 10 | 16.67% | 17.86% | — |
-| 6 | Currency ×2000 | 10 | 10 | 11.11% | 17.86% | — |
-| 7 | **1330 ×2** | **5** | **2** | **5.56%** | **3.57%** | **+55%** |
-| 8 | **1331 ×5** | **5** | **2** | **5.56%** | **3.57%** | **+55%** |
-| 9 | **1025 ×1** | **5** | **2** | **5.56%** | **3.57%** | **+55%** |
+| 1 | 1017 ×140 | 15 | 10 | 15.00% | 15.15% | — |
+| 2 | 1008 ×40 | 15 | 10 | 15.00% | 15.15% | — |
+| 3 | 1084 ×40 | 15 | 10 | 15.00% | 15.15% | — |
+| 4 | 1114 ×20 | 15 | 10 | 15.00% | 15.15% | — |
+| 5 | 1164 ×40 | 15 | 10 | 15.00% | 15.15% | — |
+| 6 | Currency ×2000 | 10 | 10 | 10.00% | 15.15% | — |
+| 7 | **1330 ×2** | **5** | **2** | **5.00%** | **3.03%** | **+65%** |
+| 8 | **1331 ×5** | **5** | **2** | **5.00%** | **3.03%** | **+65%** |
+| 9 | **1025 ×1** | **5** | **2** | **5.00%** | **3.03%** | **+65%** |
 
-**Total cli_weight = 90, Total serv_weight = 56**
+**Total cli_weight = 100, Total serv_weight = 66**
 
-The rare items (IDs 7-9) appear **55% more likely** in the UI than they actually are on the server. Meanwhile, the common items (IDs 1-5) appear slightly *less* likely than reality in the UI — the weight redistribution makes rare items look more attainable while common items look less dominant.
+The rare items (IDs 7-9) appear **~65% more likely** in the UI than they actually are on the server. Meanwhile, the common items (IDs 1-5) appear slightly *less* likely than reality in the UI — the weight redistribution makes rare items look more attainable while common items look less dominant.
 
 ### Client Code Proof
 
@@ -342,7 +342,7 @@ Since pity counters are **activity-specific** (not global), there's no "carry-ov
 
 The Countdown Box proves the game inflates displayed odds. If this pattern exists server-side for other systems (where only a single `weight` ships to the client), players calibrate expectations against inflated numbers and then feel "unlucky" when reality doesn't match.
 
-With 0.25%-0.70% featured item rates across most systems, even "honest" odds produce long dry streaks. A player seeing "5.56%" displayed but experiencing 3.57% real odds will feel 55% more unlucky than they "should."
+With 0.25%-0.70% featured item rates across most systems, even "honest" odds produce long dry streaks. A player seeing "5.00%" displayed but experiencing 3.03% real odds will feel ~65% more unlucky than they "should."
 
 **3. Server-Side Opacity**
 
@@ -423,7 +423,7 @@ Uses a seeded PRNG for deterministic replay — same seed always produces same s
 
 | Finding | Evidence |
 |---------|----------|
-| **Displayed odds ≠ real odds** (Countdown Box) | `cli_weight` vs `serv_weight` fields, client only reads `cli_weight` |
+| **Displayed odds ≠ real odds** (Countdown Box, ~65% inflation on rares) | `cli_weight` vs `serv_weight` fields, client only reads `cli_weight` |
 | **All monetized draws are server-authoritative** | Client sends request, server returns pre-computed `drop_id_list[]` |
 | **Pity systems exist and are per-account** | `must_info` tracking, `guaranteed` fields in draw configs |
 | **Limited items get replaced after obtaining** | `replace_info` tracking, `reward_replace` fields |
