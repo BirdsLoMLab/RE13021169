@@ -323,6 +323,7 @@
 | 38 | Animation Speed Exploit | Weapon/artifact skin animation timing, first-hit advantage, artifact override trap |
 | 39 | Clone & HP-Threshold Triggers | Clone Strike init (no passives), Rampage talent mechanics, Phoenix mount interaction |
 | 40 | Heroic Descent Deep Dive | Unit 4001 spirit mechanics, skill_dam_extra->att_dam conversion, UnitCallDamageAdd, vs Clone Strike comparison, Prophet synergy |
+| 43 | Snail Pal Speed Reduction Deep Dive | Buff 10003 CTR-group classification, multiplicative speed formula, motorcycle mount interaction, Beastmaster enhancement, speed cascade |
 
 ### Meta (97-99)
 | Doc | Title |
