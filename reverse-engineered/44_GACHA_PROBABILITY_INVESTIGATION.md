@@ -1,11 +1,25 @@
 # 44 — Gacha & Event Item Probability Investigation
 
-> **Sources:** game_script_pretty.js lines 6354-6442, 10817-10926, 11408-11445, 11519-11535, 12182-12500, 224570-224623, 292666-292682, 348994-348997; data/tables/Countdown_box.json, Mount_draw.json, Spirit_draw_prob.json, Double_probabillity.json, Ippon_matsu_prob.json; data/schemas/ConfigCountdown_box.json, ConfigMount_draw.json, ConfigDouble_probabillity.json, ConfigSpirit_draw_prob.json, ConfigIppon_matsu_prob.json
-> **Key Discovery:** The Countdown Box system ships two separate weight columns — `cli_weight` (displayed to the player) and `serv_weight` (used server-side for actual draws). Rare items show ~65% higher odds in the UI than reality. All monetized draws are server-authoritative.
+> **Sources:** game_script_pretty.js lines 6354-6442, 10817-10926, 11408-11445, 11519-11535, 12182-12500, 224570-224623, 292666-292682, 348994-348997; data/tables/Countdown_box.json, Mount_draw.json, Spirit_draw_prob.json, Double_probabillity.json, Ippon_matsu_prob.json, Star_rain_draw.json, Star_rain_draw_guaranteed.json, Season_ship_draw.json, Season_ship_draw_guaranteed.json, Season_draw_guaranteed.json; data/schemas/ConfigCountdown_box.json, ConfigMount_draw.json, ConfigDouble_probabillity.json, ConfigSpirit_draw_prob.json, ConfigIppon_matsu_prob.json, ConfigStar_rain_draw.json, ConfigSeason_ship_draw.json, ConfigSeason_draw_guaranteed.json
+> **Key Discovery:** The Countdown Box system ships two separate weight columns — `cli_weight` (displayed to the player) and `serv_weight` (used server-side for actual draws). Rare items show ~65% higher odds in the UI than reality. All monetized draws are server-authoritative. Three distinct draw archetypes exist: the Countdown Box (blind box mini-game), Event Draws / Star Rain (flat weights with hard pity), and Starlight / Season Ship Draw (escalating pyramid guarantee).
 
 ---
 
-## 1. The Smoking Gun: Countdown Box Dual Weights
+## 1. Draw System Archetypes
+
+The game has three distinct draw system architectures:
+
+| Archetype | In-Game Name | Mechanism | Weight Model | Pity Model |
+|-----------|-------------|-----------|-------------|------------|
+| **Blind Box** | Countdown Box | Draw-without-replacement, 7 of 9 items placed per round | Dual weights (`cli_weight` / `serv_weight`) — **proven odds inflation** | None (finite pool) |
+| **Event Draw** | Star Rain / Event Pulls | Weighted draw with unlimited commons + limited rares | Single `weight` column, static display | Hard pity at fixed thresholds (e.g. 500, 1000) |
+| **Pyramid** | Starlight / Season Ship Draw | Weighted draw with paired items (whole + fragment) | Single `weight` column | Escalating pyramid — pool narrows at each tier until guaranteed jackpot at top |
+
+---
+
+## 2. The Smoking Gun: Countdown Box Dual Weights
+
+The Countdown Box is a **blind box mini-game** within seasonal events (e.g. Christmas / `ActivityChristma25`). It is NOT a main gacha banner — the stakes are relatively modest (materials, currency, minor items). Players open 7 mystery boxes per round from a pool of 9 possible items.
 
 ### Schema
 
@@ -82,7 +96,134 @@ The client exclusively uses `cli_weight` for display. `serv_weight` is shipped i
 
 ---
 
-## 2. All Monetized Draws Are Server-Authoritative
+## 3. Event Draws (Star Rain)
+
+The main event pull system. Unlimited common items always available; limited items form a separate pool that resets once all are obtained. Hard pity guarantees at fixed thresholds.
+
+### Structure (Example: Event 4084)
+
+**Display-only entries** (`goods_icon=999`, `reward=[999,1]`) — shown in UI but not real rewards:
+
+| id | percentage | weight | limited | Purpose |
+|----|-----------|--------|---------|---------|
+| 408401 | 300 (3%) | 5 | 0 | Star diamond pool share display |
+| 408402 | 800 (8%) | 1 | 30 | Star diamond pool share display |
+| 408403 | 1800 (18%) | 1 | 50 | Star diamond pool share display |
+
+The `percentage` field is NOT a pull probability — it's a star diamond pool accumulation share (`percentage/10000 * sum_star`).
+
+**Actual reward items** (`goods_icon=0`):
+
+| id | reward | weight | guaranteed | limited | quality | Role |
+|----|--------|--------|------------|---------|---------|------|
+| 408404 | artifact | 10 | **1000** | 300 | 4 | Grand prize |
+| 408405 | secondary | 25 | **500** | 120 | 1 | Secondary grand prize (jackpot) |
+| 408406 | tertiary | 15 | **699** | 200 | 5 | Third tier |
+| 408407 | limited common | 100 | 0 | 40 | 1 | Limited pool |
+| 408408 | limited common | 100 | 0 | 40 | 1 | Limited pool |
+| 408409 | currency ×2 | 500 | 0 | 0 | 2 | Unlimited common |
+| 408410 | currency ×1 | 1000 | 0 | 0 | 2 | Unlimited common |
+| 408411-414 | materials/gold | 1600-3013 | 0 | 0 | 2-3 | Unlimited common |
+
+### Probability Display
+
+The **Rate Details page** (RatioView in `ActivityChristma25TurnRatioView.ts`) calculates displayed probability as:
+
+```javascript
+// Total weight across all items in the pool
+g += m.weight;
+
+// Per-quality-tier display
+this.txtWeight1.string = (n/g*100).toFixed(2) + "%"  // quality 5
+this.txtWeight2.string = (r/g*100).toFixed(2) + "%"  // quality 1,4,6
+this.txtWeight3.string = (c/g*100).toFixed(2) + "%"  // quality 2
+this.txtWeight4.string = (d/g*100).toFixed(2) + "%"  // quality 3
+
+// Per-item display
+this.txtRatio.string = (t.weight/g*100).toFixed(2) + "%"
+```
+
+This is a **static calculation from config weights** — it does NOT change based on pull count. Only one `weight` column exists (no cli/serv split).
+
+### Pity System
+
+Hard pity only. The `must_info` counter tracks per-item pull counts. When the counter reaches `guaranteed`, the server forces the drop. The UI shows remaining pulls:
+
+```javascript
+var C = must_info[rerwardList[t].cfg_id] || 0;
+if (a.guaranteed - C > 0) {
+    // Display: "X pulls until guaranteed"
+}
+```
+
+No evidence of soft pity (gradually increasing rates as you approach the threshold).
+
+### Limited Items & Pool Reset
+
+When all limited items in a tier are obtained, the `reward_replace` field specifies substitute rewards. The `replace_info` map tracks which items have been replaced per account. The `stage_info` map tracks how many times each limited item has been obtained against its `num` (max copies per stage).
+
+---
+
+## 4. Starlight (Season Ship Draw) — The Pyramid
+
+A draw system with paired items (whole item + fragment) organized in quality tiers. The guaranteed system forms a **pyramid** that narrows the reward pool at each level until only the jackpot remains.
+
+### Item Table
+
+From `Season_ship_draw.json`:
+
+| quality | whole item | weight | fragment | weight | limited (whole/frag) |
+|---------|-----------|--------|----------|--------|---------------------|
+| 6 (top) | 280013 ×1 | 20 | 280014 ×5 | 100 | 120 / 80 |
+| 6 | 280009 ×1 | 20 | 280010 ×5 | 100 | 120 / 80 |
+| 6 | 280011 ×1 | 20 | 280012 ×5 | 100 | 120 / 80 |
+| 5 | 280005 ×1 | 50 | 280006 ×5 | 250 | 50 / 40 |
+| 4 | 280007 ×1 | 100 | 280008 ×5 | 500 | 40 / 30 |
+| 3 | 280001 ×1 | 200 | 280002 ×5 | 1000 | 30 / 20 |
+| 2 | 280019 ×1 | 400 | 280020 ×5 | 2000 | 20 / 10 |
+| 1 (bottom) | 280017 ×1 | 840 | 280018 ×5 | 4300 | 0 / 0 |
+
+Schema fields: `id`, `reward`, `weight`, `is_jackpot`, `limited`, `quality`, `fragment`.
+
+### The Pyramid Guarantee
+
+From `Season_ship_draw_guaranteed.json` — the pool narrows as you climb:
+
+| Threshold | Reward Pool | Weights | Pattern |
+|-----------|------------|---------|---------|
+| 100 pulls | items 5, 7, 9, 11 | 500, 1000, 3500, 5000 | Wide pool, mostly common (item 11 = 50%) |
+| 200 pulls | items 3, 5, 7, 9 | 500, 1000, 3500, 5000 | Shifts rarer (item 9 = 50%) |
+| 300 pulls | items 3, 5, 7 | 3000, 3000, 4000 | Narrower, more balanced |
+| 400 pulls | items 3, 5 | 5000, 5000 | 50/50 between two rare items |
+| **500 pulls** | **item 1 only** | **10000** | **Guaranteed jackpot (100%)** |
+
+Each tier removes the most common option from the previous tier and reweights toward rarer items. At 500 pulls, only the jackpot remains.
+
+### Season Draw Guaranteed — Nested Inner Pyramid
+
+From `Season_draw_guaranteed.json` (type=1, season_type=1), a **10-pull cycle** escalates within the larger structure:
+
+| Threshold | Reward Pool | Pattern |
+|-----------|------------|---------|
+| 10, 20, 40, 50, 70 | 5 common items (equal weight) | Base tier |
+| 30, 60, 80, 90 | 4 mid-tier items (equal weight) | Mid tier |
+| **100** | **2 rarest items (50/50)** | **Peak of inner pyramid** |
+
+And the type=2 outer pyramid (season_type=0):
+
+| Threshold | Reward Pool | Weights | Pattern |
+|-----------|------------|---------|---------|
+| 100 | items 31, 33, 35, 37 | 500, 1000, 3500, 5000 | Wide, mostly common |
+| 200 | items 29, 31, 33, 35 | 500, 1000, 3500, 5000 | Shifts rarer |
+| 300 | items 29, 31, 33 | 3000, 3000, 4000 | Narrower |
+| 400 | items 29, 31 | 5000, 5000 | 50/50 |
+| **500** | items 23, 25, 27 | 3333, 3333, 3334 | Equal chance at top tier |
+
+This creates a **double pyramid**: a small 10-pull cycle that peaks at pull 100, nested inside a larger 100-pull cycle that peaks at pull 500. Each level narrows the pool toward rarer rewards.
+
+---
+
+## 5. All Monetized Draws Are Server-Authoritative
 
 ### Client-Server Flow
 
@@ -141,7 +282,7 @@ These are used for:
 
 ---
 
-## 3. Per-Account Pity & Tracking: `must_info`, `replace_info`
+## 6. Per-Account Pity & Tracking: `must_info`, `replace_info`
 
 ### Data Structure
 
@@ -203,7 +344,7 @@ This is purely cosmetic — a scrolling banner showing recent jackpot winners. I
 
 ---
 
-## 4. Guaranteed/Pity System Tables
+## 7. Guaranteed/Pity System Tables
 
 ### Mount Draw Guaranteed
 
@@ -263,7 +404,7 @@ The rarest item (30022 ×1) has 0.25% rate with pity at 121 pulls. Second rarest
 
 ---
 
-## 5. Complete Gacha System Inventory
+## 8. Complete Gacha System Inventory
 
 ### Systems with `weight` field (single weight — same for display and draw)
 
@@ -307,7 +448,7 @@ The rarest item (30022 ×1) has 0.25% rate with pity at 121 pulls. Second rarest
 
 ---
 
-## 6. Account-Level Luck Modifiers: What We Found (and Didn't)
+## 9. Account-Level Luck Modifiers: What We Found (and Didn't)
 
 ### No Client-Side Evidence
 
@@ -356,7 +497,7 @@ The server *could* apply any modifier — spend-based, time-based, account-based
 
 ---
 
-## 7. The $100 Pack Efficiency Question
+## 10. The $100 Pack Efficiency Question
 
 ### How Pack Purchases Interact with Draws
 
@@ -382,7 +523,7 @@ However, since draws are server-authoritative, the server *could* theoretically 
 
 ---
 
-## 8. Technical Reference: Weighted Random Algorithm
+## 11. Technical Reference: Weighted Random Algorithm
 
 ### Standard Implementation (used across all client-side draws)
 
@@ -417,7 +558,7 @@ Uses a seeded PRNG for deterministic replay — same seed always produces same s
 
 ---
 
-## 9. Summary of Findings
+## 12. Summary of Findings
 
 ### Confirmed
 
@@ -445,7 +586,7 @@ The game **provably lies about odds** in at least one system (Countdown Box). Th
 
 ---
 
-## 10. File References
+## 13. File References
 
 ### Data Tables
 - `/home/user/RE13021169/data/tables/Countdown_box.json` — **Dual weight smoking gun**
@@ -456,6 +597,12 @@ The game **provably lies about odds** in at least one system (Countdown Box). Th
 - `/home/user/RE13021169/data/tables/Star_rain_draw.json` — Star rain event gacha
 - `/home/user/RE13021169/data/tables/Mount_draw_guaranteed.json` — Mount pity thresholds
 - `/home/user/RE13021169/data/tables/Mount_draw_cumulative_times.json` — Mount spend milestones
+- `/home/user/RE13021169/data/tables/Star_rain_draw.json` — Event draw items (weights, guaranteed, limited)
+- `/home/user/RE13021169/data/tables/Star_rain_draw_guaranteed.json` — Event draw pity thresholds
+- `/home/user/RE13021169/data/tables/Star_rain_draw_times.json` — Event draw cumulative milestones
+- `/home/user/RE13021169/data/tables/Season_ship_draw.json` — Starlight items (paired whole + fragment)
+- `/home/user/RE13021169/data/tables/Season_ship_draw_guaranteed.json` — Starlight pyramid guarantee
+- `/home/user/RE13021169/data/tables/Season_draw_guaranteed.json` — Season draw nested pyramid guarantee
 
 ### Schemas
 - `/home/user/RE13021169/data/schemas/ConfigCountdown_box.json` — Dual weight schema
@@ -463,6 +610,9 @@ The game **provably lies about odds** in at least one system (Countdown Box). Th
 - `/home/user/RE13021169/data/schemas/ConfigDouble_probabillity.json` — Double draw schema
 - `/home/user/RE13021169/data/schemas/ConfigIppon_matsu_prob.json` — Ippon Matsu schema
 - `/home/user/RE13021169/data/schemas/ConfigSpirit_draw_prob.json` — Spirit prob schema
+- `/home/user/RE13021169/data/schemas/ConfigStar_rain_draw.json` — Star Rain / Event draw schema (23 fields)
+- `/home/user/RE13021169/data/schemas/ConfigSeason_ship_draw.json` — Starlight / Season Ship draw schema
+- `/home/user/RE13021169/data/schemas/ConfigSeason_draw_guaranteed.json` — Season draw guarantee schema
 
 ### Game Script
 - `game_script_pretty.js:11424` — `cli_weight` accumulation for UI
@@ -472,3 +622,12 @@ The game **provably lies about odds** in at least one system (Countdown Box). Th
 - `game_script_pretty.js:12424-12443` — Per-account draw state initialization
 - `game_script_pretty.js:292674` — Seeded `getWeightRandIndex` (battle)
 - `game_script_pretty.js:348994` — `Math.random()` `getWeightRandIndex` (minigames)
+
+### Game Script (Event & Starlight Systems)
+- `game_script.js:149` — `ActivityChristma25BlindBoxPreView.ts` — Countdown Box UI (blind box mini-game, uses `cli_weight`)
+- `game_script.js:151` — `ActivityChristma25BlindBoxView.ts` — Countdown Box interaction (7 boxes, open to reveal)
+- `game_script.js:231` — `ActivityChristma25TurnRatioView.ts` — Event draw rate details page (static `weight/totalWeight` display)
+- `game_script.js:235` — `ActivityChristma25TurnView.ts` — Main event draw view (Star Rain), pity display, lottery animation
+- `game_script.js:233` — `ActivityChristma25TurnTipsView.ts` — Grand prize selection (reward_replace chooser)
+- `game_script.js:4459` — `ConfigStar_rain_draw.ts` — Star Rain draw config class (23 fields)
+- `game_script.js:4345-4357` — `ConfigSeason_ship_draw*.ts` — Starlight config classes
