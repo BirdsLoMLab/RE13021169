@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoM Battle Simulator - Alpha 5.1</title>
+    <title>LoM Battle Simulator - Alpha 6.0</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
@@ -707,8 +707,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Legend of Mushroom Battle Simulator <span class="alpha-badge">ALPHA 5.1</span></h1>
-            <p>120-Second PvP Battle Simulation | Screenshot Import (OCR) | HP Tracking | Feb 20, 2026</p>
+            <h1>Legend of Mushroom Battle Simulator <span class="alpha-badge">ALPHA 6.0</span></h1>
+            <p>120-Second PvP Battle Simulation | Screenshot Import (OCR) | HP Tracking | Mar 21, 2026</p>
         </div>
 
         <div class="content">
@@ -864,6 +864,10 @@
                     <div class="input-group">
                         <label for="playerDEF">DEF (Millions)</label>
                         <input type="number" id="playerDEF" value="5500" step="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="playerDefCoe">DEF Coeff</label>
+                        <input type="number" id="playerDefCoe" value="0" step="0.01">
                     </div>
                     <div class="input-group">
                         <label for="playerATKSPD">ATK SPD</label>
@@ -1023,12 +1027,118 @@
                     </div>
                 </div>
 
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerPierceBlock')">Pierce / Block</div>
+                <div id="playerPierceBlock" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label for="playerArmorPen">Armor Pen</label>
+                            <input type="number" id="playerArmorPen" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerIgnoreArmorPen">Ignore Armor Pen</label>
+                            <input type="number" id="playerIgnoreArmorPen" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerArmorPenRate">Armor Pen Rate</label>
+                            <input type="number" id="playerArmorPenRate" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerBlock">Block</label>
+                            <input type="number" id="playerBlock" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerIgnoreBlock">Ignore Block</label>
+                            <input type="number" id="playerIgnoreBlock" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerBlockRate">Block Rate</label>
+                            <input type="number" id="playerBlockRate" value="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerSuppressInspire')">Suppress / Inspire</div>
+                <div id="playerSuppressInspire" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label for="playerInspire">Inspire</label>
+                            <input type="number" id="playerInspire" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerIgnoreInspire">Ignore Inspire</label>
+                            <input type="number" id="playerIgnoreInspire" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerInspireRate">Inspire Rate</label>
+                            <input type="number" id="playerInspireRate" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerSuppress">Suppress</label>
+                            <input type="number" id="playerSuppress" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerIgnoreSuppress">Ignore Suppress</label>
+                            <input type="number" id="playerIgnoreSuppress" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerSuppressRate">Suppress Rate</label>
+                            <input type="number" id="playerSuppressRate" value="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerFinalDmg')">Final DMG / Lifesteal</div>
+                <div id="playerFinalDmg" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label for="playerFinalDMG">Final DMG Add</label>
+                            <input type="number" id="playerFinalDMG" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerFinalDMGDEF">Final DMG DEF</label>
+                            <input type="number" id="playerFinalDMGDEF" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerAtkLifesteal">ATK Lifesteal</label>
+                            <input type="number" id="playerAtkLifesteal" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerAtkLifestealDef">ATK Lifesteal DEF</label>
+                            <input type="number" id="playerAtkLifestealDef" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerSkillLifesteal">Skill Lifesteal</label>
+                            <input type="number" id="playerSkillLifesteal" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="playerSkillLifestealDef">Skill Lifesteal DEF</label>
+                            <input type="number" id="playerSkillLifestealDef" value="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerSustain')">Sustain</div>
                 <div id="playerSustain" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
                             <label for="playerRegen">Regeneration %/sec</label>
                             <input type="number" id="playerRegen" value="9.5" step="0.1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerDeathPrev')">Death Prevention</div>
+                <div id="playerDeathPrev" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label><input type="checkbox" id="playerImmuneDeathAvailable"> Immune Death</label>
+                        </div>
+                        <div class="input-group">
+                            <label><input type="checkbox" id="playerRemakeHPAvailable"> Remake HP</label>
+                        </div>
+                        <div class="input-group">
+                            <label for="playerRemakeHPPercent">Remake HP %</label>
+                            <input type="number" id="playerRemakeHPPercent" value="30" step="1">
                         </div>
                     </div>
                 </div>
@@ -1074,6 +1184,10 @@
                     <div class="input-group">
                         <label for="enemyDEF">DEF (Millions)</label>
                         <input type="number" id="enemyDEF" value="5500" step="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="enemyDefCoe">DEF Coeff</label>
+                        <input type="number" id="enemyDefCoe" value="0" step="0.01">
                     </div>
                     <div class="input-group">
                         <label for="enemyATKSPD">ATK SPD</label>
@@ -1233,12 +1347,118 @@
                     </div>
                 </div>
 
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemyPierceBlock')">Pierce / Block</div>
+                <div id="enemyPierceBlock" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label for="enemyArmorPen">Armor Pen</label>
+                            <input type="number" id="enemyArmorPen" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyIgnoreArmorPen">Ignore Armor Pen</label>
+                            <input type="number" id="enemyIgnoreArmorPen" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyArmorPenRate">Armor Pen Rate</label>
+                            <input type="number" id="enemyArmorPenRate" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyBlock">Block</label>
+                            <input type="number" id="enemyBlock" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyIgnoreBlock">Ignore Block</label>
+                            <input type="number" id="enemyIgnoreBlock" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyBlockRate">Block Rate</label>
+                            <input type="number" id="enemyBlockRate" value="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemySuppressInspire')">Suppress / Inspire</div>
+                <div id="enemySuppressInspire" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label for="enemyInspire">Inspire</label>
+                            <input type="number" id="enemyInspire" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyIgnoreInspire">Ignore Inspire</label>
+                            <input type="number" id="enemyIgnoreInspire" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyInspireRate">Inspire Rate</label>
+                            <input type="number" id="enemyInspireRate" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemySuppress">Suppress</label>
+                            <input type="number" id="enemySuppress" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyIgnoreSuppress">Ignore Suppress</label>
+                            <input type="number" id="enemyIgnoreSuppress" value="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemySuppressRate">Suppress Rate</label>
+                            <input type="number" id="enemySuppressRate" value="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemyFinalDmg')">Final DMG / Lifesteal</div>
+                <div id="enemyFinalDmg" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label for="enemyFinalDMG">Final DMG Add</label>
+                            <input type="number" id="enemyFinalDMG" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyFinalDMGDEF">Final DMG DEF</label>
+                            <input type="number" id="enemyFinalDMGDEF" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyAtkLifesteal">ATK Lifesteal</label>
+                            <input type="number" id="enemyAtkLifesteal" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyAtkLifestealDef">ATK Lifesteal DEF</label>
+                            <input type="number" id="enemyAtkLifestealDef" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemySkillLifesteal">Skill Lifesteal</label>
+                            <input type="number" id="enemySkillLifesteal" value="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="enemySkillLifestealDef">Skill Lifesteal DEF</label>
+                            <input type="number" id="enemySkillLifestealDef" value="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemySustain')">Sustain</div>
                 <div id="enemySustain" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
                             <label for="enemyRegen">Regeneration %/sec</label>
                             <input type="number" id="enemyRegen" value="9.5" step="0.1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemyDeathPrev')">Death Prevention</div>
+                <div id="enemyDeathPrev" class="collapse-content collapsed">
+                    <div class="input-grid input-grid-4">
+                        <div class="input-group">
+                            <label><input type="checkbox" id="enemyImmuneDeathAvailable"> Immune Death</label>
+                        </div>
+                        <div class="input-group">
+                            <label><input type="checkbox" id="enemyRemakeHPAvailable"> Remake HP</label>
+                        </div>
+                        <div class="input-group">
+                            <label for="enemyRemakeHPPercent">Remake HP %</label>
+                            <input type="number" id="enemyRemakeHPPercent" value="30" step="1">
                         </div>
                     </div>
                 </div>
@@ -2107,6 +2327,7 @@
                 hp: parseFloat(document.getElementById(prefix + 'HP').value) * 1e9,
                 maxHP: parseFloat(document.getElementById(prefix + 'HP').value) * 1e9,
                 def: parseFloat(document.getElementById(prefix + 'DEF').value) * 1e6,
+                defCoe: parseFloat(document.getElementById(prefix + 'DefCoe').value) || 0,
                 atkSpd: parseFloat(document.getElementById(prefix + 'ATKSPD').value),
                 
                 basicATKMult: parseFloat(document.getElementById(prefix + 'BasicATKMult').value),
@@ -2145,8 +2366,37 @@
                 ignoreLaunch: parseFloat(document.getElementById(prefix + 'IgnoreLaunch').value),
                 ignoreRegen: parseFloat(document.getElementById(prefix + 'IgnoreRegen').value),
 
+                // Pierce/Block
+                armorPen: parseFloat(document.getElementById(prefix + 'ArmorPen').value) || 0,
+                ignoreArmorPen: parseFloat(document.getElementById(prefix + 'IgnoreArmorPen').value) || 0,
+                armorPenRate: parseFloat(document.getElementById(prefix + 'ArmorPenRate').value) || 0,
+                block: parseFloat(document.getElementById(prefix + 'Block').value) || 0,
+                ignoreBlock: parseFloat(document.getElementById(prefix + 'IgnoreBlock').value) || 0,
+                blockRate: parseFloat(document.getElementById(prefix + 'BlockRate').value) || 0,
+
+                // Suppress/Inspire
+                inspire: parseFloat(document.getElementById(prefix + 'Inspire').value) || 0,
+                ignoreInspire: parseFloat(document.getElementById(prefix + 'IgnoreInspire').value) || 0,
+                inspireRate: parseFloat(document.getElementById(prefix + 'InspireRate').value) || 0,
+                suppress: parseFloat(document.getElementById(prefix + 'Suppress').value) || 0,
+                ignoreSuppress: parseFloat(document.getElementById(prefix + 'IgnoreSuppress').value) || 0,
+                suppressRate: parseFloat(document.getElementById(prefix + 'SuppressRate').value) || 0,
+
+                // Final DMG / Lifesteal
+                finalDMG: parseFloat(document.getElementById(prefix + 'FinalDMG').value) || 0,
+                finalDMGDEF: parseFloat(document.getElementById(prefix + 'FinalDMGDEF').value) || 0,
+                atkLifesteal: parseFloat(document.getElementById(prefix + 'AtkLifesteal').value) || 0,
+                atkLifestealDef: parseFloat(document.getElementById(prefix + 'AtkLifestealDef').value) || 0,
+                skillLifesteal: parseFloat(document.getElementById(prefix + 'SkillLifesteal').value) || 0,
+                skillLifestealDef: parseFloat(document.getElementById(prefix + 'SkillLifestealDef').value) || 0,
+
                 regen: parseFloat(document.getElementById(prefix + 'Regen').value),
                 cdr: parseFloat(document.getElementById(prefix + 'TalentEnergyRegen').value) || 0,
+
+                // Death Prevention
+                immuneDeathAvailable: document.getElementById(prefix + 'ImmuneDeathAvailable').checked,
+                remakeHPAvailable: document.getElementById(prefix + 'RemakeHPAvailable').checked,
+                remakeHPPercent: (parseFloat(document.getElementById(prefix + 'RemakeHPPercent').value) || 30) / 100,
 
                 // Talents - Final (checkboxes)
                 talentAscension: document.getElementById(prefix + 'TalentAscension').checked,
@@ -2266,39 +2516,87 @@
         }
 
         // ============================================
+        // FIXMATH ROUNDING (matches game engine n.round / n.roundInt)
+        // ============================================
+        function fmRound(x) { return Math.round(x * 1e4) / 1e4; }
+        function fmRoundInt(x) { return Math.round(x); }
+
+        // ============================================
         // DAMAGE CALCULATIONS
         // ============================================
 
-        function calcBasicATKDamage(attacker, defender, pvpFactor) {
-            const atkMinusDef = Math.max(1, attacker.atk - defender.def);
-            let dmg = atkMinusDef * (attacker.basicATKMult / 100);
-            dmg *= (1 - defender.basicATKRES / 100);
-            dmg *= (1 - defender.dmgRES / 100);
-            return dmg / pvpFactor;
+        // Pierce/Block system (game: calArmorAndBlock)
+        function calArmorAndBlock(defender, attacker, resist) {
+            const pen = attacker.armorPen, ignorePen = defender.ignoreArmorPen;
+            const blk = defender.block, ignoreBlk = attacker.ignoreBlock;
+            let penWeight = 0, blkWeight = 0;
+            if (pen > ignorePen) penWeight = fmRoundInt(1e4 * attacker.armorPenRate);
+            if (blk > ignoreBlk) blkWeight = fmRoundInt(1e4 * defender.blockRate);
+            if (penWeight <= 0 && blkWeight <= 0) return resist;
+            const r = Math.floor(Math.random() * 1e4);
+            if (penWeight > 0 && r <= penWeight) {
+                return fmRound(resist - Math.min(0.5, (pen - ignorePen) / 1e4));
+            } else if (r <= penWeight + blkWeight) {
+                return fmRound(resist + Math.min(0.5, (blk - ignoreBlk) / 1e4));
+            }
+            return resist;
         }
 
-        function calcComboDamage(attacker, defender, pvpFactor) {
-            const atkMinusDef = Math.max(1, attacker.atk - defender.def);
-            let dmg = atkMinusDef * (attacker.comboMult / 100);
-            dmg *= (1 - defender.comboRES / 100);
-            dmg *= (1 - defender.dmgRES / 100);
-            return dmg / pvpFactor;
+        // Suppress/Inspire system for pal damage (game: calSuppressAndInspire)
+        // BUG PRESERVED: inspire check uses suppressRate, suppress uses inspireRate (swapped in game)
+        function calSuppressAndInspire(defender, attacker, resist) {
+            const insp = attacker.inspire, ignoreInsp = defender.ignoreInspire;
+            const supp = defender.suppress, ignoreSupp = attacker.ignoreSuppress;
+            let inspWeight = 0, suppWeight = 0;
+            if (insp > ignoreInsp) inspWeight = fmRoundInt(1e4 * attacker.suppressRate);
+            if (supp > ignoreSupp) suppWeight = fmRoundInt(1e4 * defender.inspireRate);
+            if (inspWeight <= 0 && suppWeight <= 0) return resist;
+            const r = Math.floor(Math.random() * 1e4);
+            if (inspWeight > 0 && r <= inspWeight) {
+                return fmRound(resist - Math.min(0.5, (insp - ignoreInsp) / 1e4));
+            } else if (r <= inspWeight + suppWeight) {
+                return fmRound(resist + Math.min(0.5, (supp - ignoreSupp) / 1e4));
+            }
+            return resist;
         }
 
-        function calcCounterDamage(attacker, defender, pvpFactor) {
-            const atkMinusDef = Math.max(1, attacker.atk - defender.def);
-            let dmg = atkMinusDef * (attacker.counterMult / 100);
-            dmg *= (1 - defender.counterRES / 100);
-            dmg *= (1 - defender.dmgRES / 100);
-            return dmg / pvpFactor;
+        // Universal damage resist layer (game: calHurt)
+        function calHurt(dmg, defender) {
+            const resist = defender.dmgRES / 100;
+            dmg = fmRoundInt(dmg * fmRound(1 - resist));
+            return Math.max(1, dmg);
         }
 
-        function calcSkillDamage(attacker, defender, skillDmgPercent, pvpFactor) {
-            const atkMinusDef = Math.max(1, attacker.atk - defender.def);
-            let dmg = atkMinusDef * (skillDmgPercent / 100) * (attacker.skillDMG / 100);
-            dmg *= (1 - defender.skillRES / 100);
-            dmg *= (1 - defender.dmgRES / 100);
-            return dmg / pvpFactor;
+        function calcBasicATKDamage(attacker, defender) {
+            const atkMinusDef = Math.max(1, fmRoundInt(attacker.atk - defender.def * (1 + defender.defCoe)));
+            let dmg = fmRoundInt(atkMinusDef * fmRound(attacker.basicATKMult / 100));
+            const resist = calArmorAndBlock(defender, attacker, defender.basicATKRES / 100);
+            dmg = fmRoundInt(dmg * fmRound(1 - resist));
+            return calHurt(dmg, defender);
+        }
+
+        function calcComboDamage(attacker, defender) {
+            const atkMinusDef = Math.max(1, fmRoundInt(attacker.atk - defender.def * (1 + defender.defCoe)));
+            let dmg = fmRoundInt(atkMinusDef * fmRound(attacker.comboMult / 100));
+            const resist = calArmorAndBlock(defender, attacker, defender.comboRES / 100);
+            dmg = fmRoundInt(dmg * fmRound(1 - resist));
+            return calHurt(dmg, defender);
+        }
+
+        function calcCounterDamage(attacker, defender) {
+            const atkMinusDef = Math.max(1, fmRoundInt(attacker.atk - defender.def * (1 + defender.defCoe)));
+            let dmg = fmRoundInt(atkMinusDef * fmRound(attacker.counterMult / 100));
+            const resist = calArmorAndBlock(defender, attacker, defender.counterRES / 100);
+            dmg = fmRoundInt(dmg * fmRound(1 - resist));
+            return calHurt(dmg, defender);
+        }
+
+        function calcSkillDamage(attacker, defender, skillDmgPercent) {
+            const atkMinusDef = Math.max(1, fmRoundInt(attacker.atk - defender.def * (1 + defender.defCoe)));
+            let dmg = fmRoundInt(atkMinusDef * fmRound(skillDmgPercent / 100) * fmRound(attacker.skillDMG / 100));
+            const resist = calArmorAndBlock(defender, attacker, defender.skillRES / 100);
+            dmg = fmRoundInt(dmg * fmRound(1 - resist));
+            return calHurt(dmg, defender);
         }
 
         // HP-Based Damage Calculation (per Yuko's PDF)
@@ -2306,16 +2604,16 @@
         function calcHPDamage(attacker, defender, targetHP, hpPercent, isMaxHP, pvpFactor) {
             // Step 1: Calculate raw HP damage × PvP factor
             let hpDmg = targetHP * (hpPercent / 100) * pvpFactor;
-            
+
             // Step 2: Calculate basic ATK damage (no resistances, no crit) for min/max caps
-            const atkMinusDef = Math.max(1, attacker.atk - defender.def);
+            const atkMinusDef = Math.max(1, fmRoundInt(attacker.atk - defender.def * (1 + defender.defCoe)));
             const basicATKDmg = atkMinusDef * (attacker.basicATKMult / 100);
-            
+
             // Step 3: Calculate min and max caps
             const minDmg = basicATKDmg * 0.8;
             const maxMult = isMaxHP ? 100 : 50; // 100× for max HP, 50× for current HP
             const maxDmg = basicATKDmg * maxMult;
-            
+
             // Step 4: Clamp HP damage to min/max
             let finalDmg;
             if (hpDmg <= minDmg) {
@@ -2325,7 +2623,7 @@
             } else {
                 finalDmg = hpDmg;
             }
-            
+
             // Step 5: Divide by PvP factor for final damage
             return finalDmg / pvpFactor;
         }
@@ -2383,7 +2681,7 @@
             const pvpFactor = PVP_FACTORS[avgLevel] || 471.70;
 
             const DURATION = 120;
-            const TIME_STEP = 0.01;
+            const TIME_STEP = 1/30;
             const SAMPLE_RATE = 0.25;
 
             let time = 0;
@@ -2601,15 +2899,24 @@
                 }
             }
 
-            function dealDamage(target, amount, isTargetPlayer) {
+            function dealDamage(target, amount, isTargetPlayer, attacker) {
                 // Immunity check
                 const immuneUntil = isTargetPlayer ? playerImmuneUntil : enemyImmuneUntil;
                 if (immuneUntil > time) return { total: 0, shielded: 0 };
 
+                // Final DMG multiplier (game: total_dam_add / total_dam_def)
+                if (attacker) {
+                    const totalMult = Math.max(fmRound(1 + attacker.finalDMG - target.finalDMGDEF), 0.20);
+                    amount = fmRoundInt(amount * totalMult);
+                }
+
+                // PvP reduction (moved from individual damage functions)
+                amount = Math.max(1, fmRoundInt(amount / pvpFactor));
+
                 // DMG taken debuff (Smoke Bomb)
                 const dmgTakenUntil = isTargetPlayer ? playerDmgTakenUntil : enemyDmgTakenUntil;
                 const dmgTakenAdd = isTargetPlayer ? playerDmgTakenAdd : enemyDmgTakenAdd;
-                if (dmgTakenUntil > time) amount *= (1 + dmgTakenAdd / 100);
+                if (dmgTakenUntil > time) amount = fmRoundInt(amount * (1 + dmgTakenAdd / 100));
 
                 const originalAmount = amount;
                 let shieldAbsorbed = 0;
@@ -2627,12 +2934,26 @@
                 }
 
                 target.hp = Math.max(0, target.hp - amount);
-                
+
+                // Death prevention chain (game priority: TIME_REVERSAL → REMAKE_HP → IMMUNE_DEATH)
+                if (target.hp <= 0) {
+                    const who = isTargetPlayer ? 'Player' : 'Enemy';
+                    if (target.remakeHPAvailable) {
+                        target.hp = target.maxHP * target.remakeHPPercent;
+                        target.remakeHPAvailable = false;
+                        log(`${who} REMAKE HP! Restored to ${(target.remakeHPPercent * 100).toFixed(0)}%`, 'buff');
+                    } else if (target.immuneDeathAvailable) {
+                        target.hp = 1;
+                        target.immuneDeathAvailable = false;
+                        log(`${who} IMMUNE DEATH! Survived at 1 HP`, 'buff');
+                    }
+                }
+
                 // Return object with details for logging
-                return { 
-                    dealt: amount, 
+                return {
+                    dealt: amount,
                     shielded: shieldAbsorbed,
-                    total: originalAmount 
+                    total: originalAmount
                 };
             }
 
@@ -2744,17 +3065,17 @@
 
                   if (playerCCUntil <= time) {
                     const effectiveEvasion = Math.max(0, enemy.evasion - player.ignoreEvasion);
-                    const evasionChance = Math.pow(effectiveEvasion / 100, 0.9) * 100;
+                    const evasionChance = Math.min(Math.pow(effectiveEvasion, 0.9), 80);
 
                     if (!roll(evasionChance)) {
-                        let dmg = calcBasicATKDamage(player, enemy, pvpFactor);
+                        let dmg = calcBasicATKDamage(player, enemy);
                         // Spirit Necklace: basic ATK +15% during Blitz Assault immunity
                         if (player.relicNecklace === 'spirit' && playerImmuneUntil > time) {
                             dmg *= (1 + 0.15 * playerPotentMult);
                         }
                         const isCrit = roll(player.critRate - enemy.ignoreCrit);
                         if (isCrit) dmg = applyCrit(dmg, player, enemy);
-                        const result = dealDamage(enemy, dmg);
+                        const result = dealDamage(enemy, dmg, false, player);
                         player.totalDamageDealt += result.total;
                         player.dmgBasicATK += result.total;
                         const sn = result.shielded > 0 ? ` (${formatNumber(result.shielded)} blocked)` : '';
@@ -2763,7 +3084,7 @@
                         // Hunter passive 1: basic ATK deals 1% target current HP
                         if (player.class === 'hunter') {
                             const hpDmg = calcHPDamage(player, enemy, enemy.hp, 1, false, pvpFactor);
-                            const hpRes = dealDamage(enemy, hpDmg);
+                            const hpRes = dealDamage(enemy, hpDmg, false, player);
                             player.totalDamageDealt += hpRes.total;
                             player.dmgBasicATK += hpRes.total;
                             if (hpRes.total > 0) log(`  → Hunter HP DMG: ${formatNumber(hpRes.total)} [1% Cur HP]`, 'damage');
@@ -2781,6 +3102,15 @@
                             log(`  → Terminal Strike! Enemy wounded (heal -50% for 1s)`, 'damage');
                         }
 
+                        // ATK Lifesteal (basic ATK)
+                        if (player.atkLifesteal > 0 && result.dealt > 0) {
+                            const stealRate = Math.max(0, fmRound(player.atkLifesteal - enemy.atkLifestealDef));
+                            if (stealRate > 0) {
+                                const healed = heal(player, fmRoundInt(result.dealt * stealRate));
+                                if (healed > 0) log(`  ← Player Lifesteal: ${formatNumber(healed)}`, 'heal');
+                            }
+                        }
+
                         // Healing Rate: % chance per basic ATK to heal (Healing Amount % max HP)
                         if (player.healingRate > 0 && player.healingAmount > 0 && roll(player.healingRate)) {
                             const healed = heal(player, player.maxHP * (player.healingAmount / 100));
@@ -2791,11 +3121,11 @@
                         if (enemy.class === 'warbringer') {
                             const savedCRES = player.counterRES;
                             if (playerCounterRESDebuff > time) player.counterRES = clamp(player.counterRES - 40, -100, 80);
-                            let aoeDmg = calcCounterDamage(enemy, player, pvpFactor) * 0.20;
+                            let aoeDmg = calcCounterDamage(enemy, player) * 0.20;
                             player.counterRES = savedCRES;
                             const aoeCrit = roll(enemy.critRate - player.ignoreCrit);
                             if (aoeCrit) aoeDmg = applyCrit(aoeDmg, enemy, player);
-                            const aoeRes = dealDamage(player, aoeDmg, true);
+                            const aoeRes = dealDamage(player, aoeDmg, true, enemy);
                             enemy.totalDamageDealt += aoeRes.total;
                             enemy.dmgWarbringerAoE += aoeRes.total;
                             if (aoeRes.total > 0) log(`  ← Enemy AoE Counter: ${formatNumber(aoeRes.total)}${aoeCrit ? ' CRIT!' : ''} [20%]`, 'damage');
@@ -2820,11 +3150,11 @@
                             if (playerBoneforgeActive > time) {
                                 enemy.comboRES = clamp(enemy.comboRES - 40, -100, 80);
                             }
-                            let comboDmg = calcComboDamage(player, enemy, pvpFactor);
+                            let comboDmg = calcComboDamage(player, enemy);
                             enemy.comboRES = savedEnemyComboRES;
                             const comboCrit = roll(player.critRate - enemy.ignoreCrit);
                             if (comboCrit) comboDmg = applyCrit(comboDmg, player, enemy);
-                            const comboResult = dealDamage(enemy, comboDmg);
+                            const comboResult = dealDamage(enemy, comboDmg, false, player);
                             player.totalDamageDealt += comboResult.total;
                             player.dmgCombo += comboResult.total;
                             player.comboCount++;
@@ -2841,11 +3171,11 @@
                             if (enemy.class === 'warbringer') {
                                 const savedCRES = player.counterRES;
                                 if (playerCounterRESDebuff > time) player.counterRES = clamp(player.counterRES - 40, -100, 80);
-                                let aoeDmg = calcCounterDamage(enemy, player, pvpFactor) * 0.20;
+                                let aoeDmg = calcCounterDamage(enemy, player) * 0.20;
                                 player.counterRES = savedCRES;
                                 const aoeCrit = roll(enemy.critRate - player.ignoreCrit);
                                 if (aoeCrit) aoeDmg = applyCrit(aoeDmg, enemy, player);
-                                const aoeRes = dealDamage(player, aoeDmg, true);
+                                const aoeRes = dealDamage(player, aoeDmg, true, enemy);
                                 enemy.totalDamageDealt += aoeRes.total;
                                 enemy.dmgWarbringerAoE += aoeRes.total;
                                 if (aoeRes.total > 0) log(`  ← Enemy AoE Counter: ${formatNumber(aoeRes.total)}${aoeCrit ? ' CRIT!' : ''} [20%]`, 'damage');
@@ -2877,11 +3207,11 @@
                         if (playerCounterRESDebuff > time) {
                             player.counterRES = clamp(player.counterRES - 40, -100, 80);
                         }
-                        let counterDmg = calcCounterDamage(enemy, player, pvpFactor);
+                        let counterDmg = calcCounterDamage(enemy, player);
                         player.counterRES = savedPlayerCounterRES;
                         const counterCrit = roll(enemy.critRate - player.ignoreCrit);
                         if (counterCrit) counterDmg = applyCrit(counterDmg, enemy, player);
-                        const counterResult = dealDamage(player, counterDmg, true);
+                        const counterResult = dealDamage(player, counterDmg, true, enemy);
                         enemy.totalDamageDealt += counterResult.total;
                         enemy.dmgCounter += counterResult.total;
                         const csn = counterResult.shielded > 0 ? ` (${formatNumber(counterResult.shielded)} blocked)` : '';
@@ -2891,7 +3221,7 @@
                         // Sage class skill: +1% HP counter bonus (separate log)
                         if (enemyBladesReunionActive > time) {
                             const hpBonusDmg = calcHPDamage(enemy, player, enemy.hp, 1, false, pvpFactor);
-                            const hpResult = dealDamage(player, hpBonusDmg, true);
+                            const hpResult = dealDamage(player, hpBonusDmg, true, enemy);
                             enemy.totalDamageDealt += hpResult.total;
                             enemy.dmgSageClassSkillHP += hpResult.total;
                             log(`  ← Enemy Sage Class Skill HP: ${formatNumber(hpResult.total)} [1% Cur HP]`, 'damage');
@@ -2900,7 +3230,7 @@
                         // Punch Counter affix (separate log)
                         if (enemy.affixPunchCounter && roll(50)) {
                             const pcDmg = calcHPDamage(enemy, player, enemy.hp, enemy.affixPunchCounterHP, false, pvpFactor);
-                            const pcResult = dealDamage(player, pcDmg, true);
+                            const pcResult = dealDamage(player, pcDmg, true, enemy);
                             enemy.totalDamageDealt += pcResult.total;
                             enemy.dmgPunchCounter += pcResult.total;
                             enemy.punchCounterCount++;
@@ -2928,17 +3258,17 @@
 
                   if (enemyCCUntil <= time) {
                     const effectiveEvasion = Math.max(0, player.evasion - enemy.ignoreEvasion);
-                    const evasionChance = Math.pow(effectiveEvasion / 100, 0.9) * 100;
+                    const evasionChance = Math.min(Math.pow(effectiveEvasion, 0.9), 80);
 
                     if (!roll(evasionChance)) {
-                        let dmg = calcBasicATKDamage(enemy, player, pvpFactor);
+                        let dmg = calcBasicATKDamage(enemy, player);
                         // Spirit Necklace: basic ATK +15% during Blitz Assault immunity
                         if (enemy.relicNecklace === 'spirit' && enemyImmuneUntil > time) {
                             dmg *= (1 + 0.15 * enemyPotentMult);
                         }
                         const isCrit = roll(enemy.critRate - player.ignoreCrit);
                         if (isCrit) dmg = applyCrit(dmg, enemy, player);
-                        const result = dealDamage(player, dmg, true);
+                        const result = dealDamage(player, dmg, true, enemy);
                         enemy.totalDamageDealt += result.total;
                         enemy.dmgBasicATK += result.total;
                         const sn = result.shielded > 0 ? ` (${formatNumber(result.shielded)} blocked)` : '';
@@ -2947,7 +3277,7 @@
                         // Hunter passive 1: basic ATK deals 1% target current HP
                         if (enemy.class === 'hunter') {
                             const hpDmg = calcHPDamage(enemy, player, player.hp, 1, false, pvpFactor);
-                            const hpRes = dealDamage(player, hpDmg, true);
+                            const hpRes = dealDamage(player, hpDmg, true, enemy);
                             enemy.totalDamageDealt += hpRes.total;
                             enemy.dmgBasicATK += hpRes.total;
                             if (hpRes.total > 0) log(`  → Hunter HP DMG: ${formatNumber(hpRes.total)} [1% Cur HP]`, 'damage');
@@ -2964,6 +3294,15 @@
                             log(`  → Terminal Strike! Player wounded (heal -50% for 1s)`, 'damage');
                         }
 
+                        // ATK Lifesteal (basic ATK)
+                        if (enemy.atkLifesteal > 0 && result.dealt > 0) {
+                            const stealRate = Math.max(0, fmRound(enemy.atkLifesteal - player.atkLifestealDef));
+                            if (stealRate > 0) {
+                                const healed = heal(enemy, fmRoundInt(result.dealt * stealRate));
+                                if (healed > 0) log(`  ← Enemy Lifesteal: ${formatNumber(healed)}`, 'heal');
+                            }
+                        }
+
                         // Healing Rate: % chance per basic ATK to heal (Healing Amount % max HP)
                         if (enemy.healingRate > 0 && enemy.healingAmount > 0 && roll(enemy.healingRate)) {
                             const healed = heal(enemy, enemy.maxHP * (enemy.healingAmount / 100));
@@ -2974,11 +3313,11 @@
                         if (player.class === 'warbringer') {
                             const savedCRES = enemy.counterRES;
                             if (enemyCounterRESDebuff > time) enemy.counterRES = clamp(enemy.counterRES - 40, -100, 80);
-                            let aoeDmg = calcCounterDamage(player, enemy, pvpFactor) * 0.20;
+                            let aoeDmg = calcCounterDamage(player, enemy) * 0.20;
                             enemy.counterRES = savedCRES;
                             const aoeCrit = roll(player.critRate - enemy.ignoreCrit);
                             if (aoeCrit) aoeDmg = applyCrit(aoeDmg, player, enemy);
-                            const aoeRes = dealDamage(enemy, aoeDmg);
+                            const aoeRes = dealDamage(enemy, aoeDmg, false, player);
                             player.totalDamageDealt += aoeRes.total;
                             player.dmgWarbringerAoE += aoeRes.total;
                             if (aoeRes.total > 0) log(`  ← Player AoE Counter: ${formatNumber(aoeRes.total)}${aoeCrit ? ' CRIT!' : ''} [20%]`, 'damage');
@@ -3003,11 +3342,11 @@
                             if (enemyBoneforgeActive > time) {
                                 player.comboRES = clamp(player.comboRES - 40, -100, 80);
                             }
-                            let comboDmg = calcComboDamage(enemy, player, pvpFactor);
+                            let comboDmg = calcComboDamage(enemy, player);
                             player.comboRES = savedPlayerComboRES;
                             const comboCrit = roll(enemy.critRate - player.ignoreCrit);
                             if (comboCrit) comboDmg = applyCrit(comboDmg, enemy, player);
-                            const comboResult = dealDamage(player, comboDmg, true);
+                            const comboResult = dealDamage(player, comboDmg, true, enemy);
                             enemy.totalDamageDealt += comboResult.total;
                             enemy.dmgCombo += comboResult.total;
                             enemy.comboCount++;
@@ -3024,11 +3363,11 @@
                             if (player.class === 'warbringer') {
                                 const savedCRES = enemy.counterRES;
                                 if (enemyCounterRESDebuff > time) enemy.counterRES = clamp(enemy.counterRES - 40, -100, 80);
-                                let aoeDmg = calcCounterDamage(player, enemy, pvpFactor) * 0.20;
+                                let aoeDmg = calcCounterDamage(player, enemy) * 0.20;
                                 enemy.counterRES = savedCRES;
                                 const aoeCrit = roll(player.critRate - enemy.ignoreCrit);
                                 if (aoeCrit) aoeDmg = applyCrit(aoeDmg, player, enemy);
-                                const aoeRes = dealDamage(enemy, aoeDmg);
+                                const aoeRes = dealDamage(enemy, aoeDmg, false, player);
                                 player.totalDamageDealt += aoeRes.total;
                                 player.dmgWarbringerAoE += aoeRes.total;
                                 if (aoeRes.total > 0) log(`  ← Player AoE Counter: ${formatNumber(aoeRes.total)}${aoeCrit ? ' CRIT!' : ''} [20%]`, 'damage');
@@ -3060,11 +3399,11 @@
                         if (enemyCounterRESDebuff > time) {
                             enemy.counterRES = clamp(enemy.counterRES - 40, -100, 80);
                         }
-                        let counterDmg = calcCounterDamage(player, enemy, pvpFactor);
+                        let counterDmg = calcCounterDamage(player, enemy);
                         enemy.counterRES = savedEnemyCounterRES;
                         const counterCrit = roll(player.critRate - enemy.ignoreCrit);
                         if (counterCrit) counterDmg = applyCrit(counterDmg, player, enemy);
-                        const counterResult = dealDamage(enemy, counterDmg);
+                        const counterResult = dealDamage(enemy, counterDmg, false, player);
                         player.totalDamageDealt += counterResult.total;
                         player.dmgCounter += counterResult.total;
                         const csn = counterResult.shielded > 0 ? ` (${formatNumber(counterResult.shielded)} blocked)` : '';
@@ -3074,7 +3413,7 @@
                         // Sage class skill: +1% HP counter bonus (separate log)
                         if (playerBladesReunionActive > time) {
                             const hpBonusDmg = calcHPDamage(player, enemy, player.hp, 1, false, pvpFactor);
-                            const hpResult = dealDamage(enemy, hpBonusDmg);
+                            const hpResult = dealDamage(enemy, hpBonusDmg, false, player);
                             player.totalDamageDealt += hpResult.total;
                             player.dmgSageClassSkillHP += hpResult.total;
                             log(`  ← Player Sage Class Skill HP: ${formatNumber(hpResult.total)} [1% Cur HP]`, 'damage');
@@ -3083,7 +3422,7 @@
                         // Punch Counter affix (separate log)
                         if (player.affixPunchCounter && roll(50)) {
                             const pcDmg = calcHPDamage(player, enemy, player.hp, player.affixPunchCounterHP, false, pvpFactor);
-                            const pcResult = dealDamage(enemy, pcDmg);
+                            const pcResult = dealDamage(enemy, pcDmg, false, player);
                             player.totalDamageDealt += pcResult.total;
                             player.dmgPunchCounter += pcResult.total;
                             player.punchCounterCount++;
@@ -3112,13 +3451,13 @@
                     const buffDur = 8 * playerNoSpeedingMult * (enemy.relicSpore === 'thorny' ? 0.80 : 1);
                     playerBladesReunionActive = time + buffDur;
                     enemyCounterRESDebuff = time + buffDur;
-                    let skillDmg = calcSkillDamage(player, enemy, 12580, pvpFactor);
+                    let skillDmg = calcSkillDamage(player, enemy, 12580);
                     const skillCrit = roll(player.skillCrit);
                     if (skillCrit) {
                         const skillCritMult = Math.max(1.5, player.skillCritDMG / enemy.critRES);
-                        skillDmg *= skillCritMult;
+                        skillDmg = fmRoundInt(Math.pow(fmRoundInt(skillDmg * skillCritMult), 0.98));
                     }
-                    const skillResult = dealDamage(enemy, skillDmg);
+                    const skillResult = dealDamage(enemy, skillDmg, false, player);
                     player.totalDamageDealt += skillResult.total;
                     player.dmgClassSkill += skillResult.total;
                     const sn = skillResult.shielded > 0 ? ` (${formatNumber(skillResult.shielded)} blocked)` : '';
@@ -3126,7 +3465,7 @@
                     skillEvents.player.push({ name: 'Blades Reunion', id: 'class', start: time, end: time + buffDur });
                     if (player.affixWindTear) {
                         const wtDmg = calcHPDamage(player, enemy, enemy.hp, player.affixWindTearHP, false, pvpFactor);
-                        const wtResult = dealDamage(enemy, wtDmg);
+                        const wtResult = dealDamage(enemy, wtDmg, false, player);
                         player.totalDamageDealt += wtResult.total;
                         player.dmgWindTear += wtResult.total;
                         player.windTearCount++;
@@ -3144,13 +3483,13 @@
                     // Energy lock: add 4s to all enemy skill CDs
                     enemy.activeSkills.forEach(sk => { sk._cd += 4; });
                     enemyClassSkillCD += 4;
-                    let skillDmg = calcSkillDamage(player, enemy, 14161, pvpFactor);
+                    let skillDmg = calcSkillDamage(player, enemy, 14161);
                     const skillCrit = roll(player.skillCrit);
                     if (skillCrit) {
                         const skillCritMult = Math.max(1.5, player.skillCritDMG / enemy.critRES);
-                        skillDmg *= skillCritMult;
+                        skillDmg = fmRoundInt(Math.pow(fmRoundInt(skillDmg * skillCritMult), 0.98));
                     }
-                    const skillResult = dealDamage(enemy, skillDmg);
+                    const skillResult = dealDamage(enemy, skillDmg, false, player);
                     player.totalDamageDealt += skillResult.total;
                     player.dmgClassSkill += skillResult.total;
                     const sn = skillResult.shielded > 0 ? ` (${formatNumber(skillResult.shielded)} blocked)` : '';
@@ -3158,7 +3497,7 @@
                     skillEvents.player.push({ name: 'Piercing Boneforge', id: 'class', start: time, end: time + buffDur });
                     if (player.affixWindTear) {
                         const wtDmg = calcHPDamage(player, enemy, enemy.hp, player.affixWindTearHP, false, pvpFactor);
-                        const wtResult = dealDamage(enemy, wtDmg);
+                        const wtResult = dealDamage(enemy, wtDmg, false, player);
                         player.totalDamageDealt += wtResult.total;
                         player.dmgWindTear += wtResult.total;
                         player.windTearCount++;
@@ -3173,13 +3512,13 @@
                     const buffDur = 8 * enemyNoSpeedingMult * (player.relicSpore === 'thorny' ? 0.80 : 1);
                     enemyBladesReunionActive = time + buffDur;
                     playerCounterRESDebuff = time + buffDur;
-                    let skillDmg = calcSkillDamage(enemy, player, 12580, pvpFactor);
+                    let skillDmg = calcSkillDamage(enemy, player, 12580);
                     const skillCrit = roll(enemy.skillCrit);
                     if (skillCrit) {
                         const skillCritMult = Math.max(1.5, enemy.skillCritDMG / player.critRES);
-                        skillDmg *= skillCritMult;
+                        skillDmg = fmRoundInt(Math.pow(fmRoundInt(skillDmg * skillCritMult), 0.98));
                     }
-                    const skillResult = dealDamage(player, skillDmg, true);
+                    const skillResult = dealDamage(player, skillDmg, true, enemy);
                     enemy.totalDamageDealt += skillResult.total;
                     enemy.dmgClassSkill += skillResult.total;
                     const sn = skillResult.shielded > 0 ? ` (${formatNumber(skillResult.shielded)} blocked)` : '';
@@ -3187,7 +3526,7 @@
                     skillEvents.enemy.push({ name: 'Blades Reunion', id: 'class', start: time, end: time + buffDur });
                     if (enemy.affixWindTear) {
                         const wtDmg = calcHPDamage(enemy, player, player.hp, enemy.affixWindTearHP, false, pvpFactor);
-                        const wtResult = dealDamage(player, wtDmg, true);
+                        const wtResult = dealDamage(player, wtDmg, true, enemy);
                         enemy.totalDamageDealt += wtResult.total;
                         enemy.dmgWindTear += wtResult.total;
                         enemy.windTearCount++;
@@ -3205,13 +3544,13 @@
                     // Energy lock: add 4s to all player skill CDs
                     player.activeSkills.forEach(sk => { sk._cd += 4; });
                     playerClassSkillCD += 4;
-                    let skillDmg = calcSkillDamage(enemy, player, 14161, pvpFactor);
+                    let skillDmg = calcSkillDamage(enemy, player, 14161);
                     const skillCrit = roll(enemy.skillCrit);
                     if (skillCrit) {
                         const skillCritMult = Math.max(1.5, enemy.skillCritDMG / player.critRES);
-                        skillDmg *= skillCritMult;
+                        skillDmg = fmRoundInt(Math.pow(fmRoundInt(skillDmg * skillCritMult), 0.98));
                     }
-                    const skillResult = dealDamage(player, skillDmg, true);
+                    const skillResult = dealDamage(player, skillDmg, true, enemy);
                     enemy.totalDamageDealt += skillResult.total;
                     enemy.dmgClassSkill += skillResult.total;
                     const sn = skillResult.shielded > 0 ? ` (${formatNumber(skillResult.shielded)} blocked)` : '';
@@ -3219,7 +3558,7 @@
                     skillEvents.enemy.push({ name: 'Piercing Boneforge', id: 'class', start: time, end: time + buffDur });
                     if (enemy.affixWindTear) {
                         const wtDmg = calcHPDamage(enemy, player, player.hp, enemy.affixWindTearHP, false, pvpFactor);
-                        const wtResult = dealDamage(player, wtDmg, true);
+                        const wtResult = dealDamage(player, wtDmg, true, enemy);
                         enemy.totalDamageDealt += wtResult.total;
                         enemy.dmgWindTear += wtResult.total;
                         enemy.windTearCount++;
@@ -3242,13 +3581,13 @@
                     playerShatterAxeATK = bonusATK;
                     recalcPlayerATK();
                     playerBuffs.push({ expires: time + buffDur, undo: () => { player.def -= bonusDEF; playerShatterAxeATK = 0; recalcPlayerATK(); }});
-                    let skillDmg = calcSkillDamage(player, enemy, 12580, pvpFactor);
+                    let skillDmg = calcSkillDamage(player, enemy, 12580);
                     const skillCrit = roll(player.skillCrit);
                     if (skillCrit) {
                         const skillCritMult = Math.max(1.5, player.skillCritDMG / enemy.critRES);
-                        skillDmg *= skillCritMult;
+                        skillDmg = fmRoundInt(Math.pow(fmRoundInt(skillDmg * skillCritMult), 0.98));
                     }
-                    const skillResult = dealDamage(enemy, skillDmg);
+                    const skillResult = dealDamage(enemy, skillDmg, false, player);
                     player.totalDamageDealt += skillResult.total;
                     player.dmgClassSkill += skillResult.total;
                     const sn = skillResult.shielded > 0 ? ` (${formatNumber(skillResult.shielded)} blocked)` : '';
@@ -3256,7 +3595,7 @@
                     skillEvents.player.push({ name: 'Shattering Axe', id: 'class', start: time, end: time + buffDur });
                     if (player.affixWindTear) {
                         const wtDmg = calcHPDamage(player, enemy, enemy.hp, player.affixWindTearHP, false, pvpFactor);
-                        const wtResult = dealDamage(enemy, wtDmg);
+                        const wtResult = dealDamage(enemy, wtDmg, false, player);
                         player.totalDamageDealt += wtResult.total;
                         player.dmgWindTear += wtResult.total;
                         player.windTearCount++;
@@ -3277,13 +3616,13 @@
                     enemyShatterAxeATK = bonusATK;
                     recalcEnemyATK();
                     enemyBuffs.push({ expires: time + buffDur, undo: () => { enemy.def -= bonusDEF; enemyShatterAxeATK = 0; recalcEnemyATK(); }});
-                    let skillDmg = calcSkillDamage(enemy, player, 12580, pvpFactor);
+                    let skillDmg = calcSkillDamage(enemy, player, 12580);
                     const skillCrit = roll(enemy.skillCrit);
                     if (skillCrit) {
                         const skillCritMult = Math.max(1.5, enemy.skillCritDMG / player.critRES);
-                        skillDmg *= skillCritMult;
+                        skillDmg = fmRoundInt(Math.pow(fmRoundInt(skillDmg * skillCritMult), 0.98));
                     }
-                    const skillResult = dealDamage(player, skillDmg, true);
+                    const skillResult = dealDamage(player, skillDmg, true, enemy);
                     enemy.totalDamageDealt += skillResult.total;
                     enemy.dmgClassSkill += skillResult.total;
                     const sn = skillResult.shielded > 0 ? ` (${formatNumber(skillResult.shielded)} blocked)` : '';
@@ -3291,7 +3630,7 @@
                     skillEvents.enemy.push({ name: 'Shattering Axe', id: 'class', start: time, end: time + buffDur });
                     if (enemy.affixWindTear) {
                         const wtDmg = calcHPDamage(enemy, player, player.hp, enemy.affixWindTearHP, false, pvpFactor);
-                        const wtResult = dealDamage(player, wtDmg, true);
+                        const wtResult = dealDamage(player, wtDmg, true, enemy);
                         enemy.totalDamageDealt += wtResult.total;
                         enemy.dmgWindTear += wtResult.total;
                         enemy.windTearCount++;
@@ -3335,23 +3674,31 @@
                         if (attacker.relicStatue === 'cage' && CAGE_STATUE_IDS.includes(sk.id)) dmgPct *= (1 + 0.30 * potMult);
                         if (attacker.relicStatue === 'crystal' && CRYSTAL_STATUE_IDS.includes(sk.id)) dmgPct *= (1 + 0.30 * potMult);
                         if (dmgPct > 0) {
-                            let sDmg = calcSkillDamage(attacker, defender, dmgPct, pvpFactor);
+                            let sDmg = calcSkillDamage(attacker, defender, dmgPct);
                             const sCrit = roll(attacker.skillCrit);
                             if (sCrit) {
                                 const m = Math.max(1.5, attacker.skillCritDMG / defender.critRES);
-                                sDmg *= m;
+                                sDmg = fmRoundInt(Math.pow(fmRoundInt(sDmg * m), 0.98));
                             }
-                            const sRes = dealDamage(defender, sDmg, isDefenderPlayer);
+                            const sRes = dealDamage(defender, sDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += sRes.total;
                             attacker.dmgActiveSkills += sRes.total;
                             const sn = sRes.shielded > 0 ? ` (${formatNumber(sRes.shielded)} blocked)` : '';
                             log(`${attacker === player ? 'Player' : 'Enemy'} ${sk.name}: ${formatNumber(sRes.total)}${sn}${sCrit ? ' CRIT!' : ''}`, 'skill');
+                            // Skill Lifesteal
+                            if (attacker.skillLifesteal > 0 && sRes.dealt > 0) {
+                                const stealRate = Math.max(0, fmRound(attacker.skillLifesteal - defender.skillLifestealDef));
+                                if (stealRate > 0) {
+                                    const healed = heal(attacker, fmRoundInt(sRes.dealt * stealRate));
+                                    if (healed > 0) log(`  ← ${who} Skill Lifesteal: ${formatNumber(healed)}`, 'heal');
+                                }
+                            }
                         }
 
                         // --- Wind Tear on active skill ---
                         if (attacker.affixWindTear) {
                             const wtDmg = calcHPDamage(attacker, defender, defender.hp, attacker.affixWindTearHP, false, pvpFactor);
-                            const wtRes = dealDamage(defender, wtDmg, isDefenderPlayer);
+                            const wtRes = dealDamage(defender, wtDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += wtRes.total;
                             attacker.dmgWindTear += wtRes.total;
                             attacker.windTearCount++;
@@ -3363,8 +3710,8 @@
                         // --- Thundercaller Kite: deal 1705% DMG after active skill ---
                         if (attacker.relicKite) {
                             const kitePct = 1705 * potMult;
-                            let kiteDmg = calcSkillDamage(attacker, defender, kitePct, pvpFactor);
-                            const kiteRes = dealDamage(defender, kiteDmg, isDefenderPlayer);
+                            let kiteDmg = calcSkillDamage(attacker, defender, kitePct);
+                            const kiteRes = dealDamage(defender, kiteDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += kiteRes.total;
                             attacker.dmgActiveSkills += kiteRes.total;
                             log(`  → ${who} Kite: ${formatNumber(kiteRes.total)} [${kitePct.toFixed(0)}%]`, 'skill');
@@ -3415,7 +3762,7 @@
                             const dmgResStacks = Math.floor(defender.dmgRES / h.per);
                             const totalPct = h.basePercent + dmgResStacks * h.perDmgResPercent;
                             const hpDmg = calcHPDamage(attacker, defender, defender.maxHP, totalPct, true, pvpFactor);
-                            const hpRes = dealDamage(defender, hpDmg, isDefenderPlayer);
+                            const hpRes = dealDamage(defender, hpDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += hpRes.total;
                             attacker.dmgHpDot += hpRes.total;
                             log(`  → ${who} Dragonic HP: ${formatNumber(hpRes.total)} [${totalPct}% Max HP]`, 'damage');
@@ -3569,8 +3916,8 @@
                         // Tick DoT
                         if (sk._dotEnd > time && sk._dotNext <= time) {
                             sk._dotNext = time + (sk.dot ? sk.dot.interval : 1);
-                            let dotDmg = calcSkillDamage(attacker, defender, sk._dotTickPct, pvpFactor);
-                            const dotRes = dealDamage(defender, dotDmg, isDefenderPlayer);
+                            let dotDmg = calcSkillDamage(attacker, defender, sk._dotTickPct);
+                            const dotRes = dealDamage(defender, dotDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += dotRes.total;
                             attacker.dmgDot += dotRes.total;
                             log(`${who} ${sk.name} DoT: ${formatNumber(dotRes.total)}`, 'damage');
@@ -3580,7 +3927,7 @@
                             sk._hpDotNext = time + sk.hpDot.interval;
                             const hpSrc = sk.hpDot.isMaxHP ? defender.maxHP : defender.hp;
                             const hpDmg = calcHPDamage(attacker, defender, hpSrc, sk.hpDot.percent, sk.hpDot.isMaxHP, pvpFactor);
-                            const hpRes = dealDamage(defender, hpDmg, isDefenderPlayer);
+                            const hpRes = dealDamage(defender, hpDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += hpRes.total;
                             attacker.dmgHpDot += hpRes.total;
                             log(`${who} ${sk.name} HP DoT: ${formatNumber(hpRes.total)} [${sk.hpDot.percent}% Max HP]`, 'damage');
@@ -3588,13 +3935,13 @@
                         // Tick Clone
                         if (sk.clone && sk._cloneEnd > time && sk._cloneNextAtk <= time) {
                             sk._cloneNextAtk = time + 1 / 3;
-                            let cloneDmg = calcSkillDamage(attacker, defender, sk.clone.dmgPercent, pvpFactor);
+                            let cloneDmg = calcSkillDamage(attacker, defender, sk.clone.dmgPercent);
                             // Storm Necklace: Clone DMG +30%
                             if (attacker.relicNecklace === 'storm') {
                                 const pm = attacker === player ? playerPotentMult : enemyPotentMult;
                                 cloneDmg *= (1 + 0.30 * pm);
                             }
-                            const cloneRes = dealDamage(defender, cloneDmg, isDefenderPlayer);
+                            const cloneRes = dealDamage(defender, cloneDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += cloneRes.total;
                             attacker.dmgClone += cloneRes.total;
                             log(`${who} Clone ATK: ${formatNumber(cloneRes.total)}`, 'damage');
@@ -3685,7 +4032,7 @@
                     const isMax = (AVIANS[player.avian] || AVIANS.none).isMaxHP !== false;
                     const sourceHP = isMax ? player.maxHP : player.hp;
                     const avianDmg = calcHPDamage(player, enemy, sourceHP, player.avianHPPercent, isMax, pvpFactor);
-                    const avianResult = dealDamage(enemy, avianDmg);
+                    const avianResult = dealDamage(enemy, avianDmg, false, player);
                     player.totalDamageDealt += avianResult.total;
                     player.dmgAvian += avianResult.total;
                     player.avianCount++;
@@ -3697,7 +4044,7 @@
                     const isMax = (AVIANS[enemy.avian] || AVIANS.none).isMaxHP !== false;
                     const sourceHP = isMax ? enemy.maxHP : enemy.hp;
                     const avianDmg = calcHPDamage(enemy, player, sourceHP, enemy.avianHPPercent, isMax, pvpFactor);
-                    const avianResult = dealDamage(player, avianDmg, true);
+                    const avianResult = dealDamage(player, avianDmg, true, enemy);
                     enemy.totalDamageDealt += avianResult.total;
                     enemy.dmgAvian += avianResult.total;
                     enemy.avianCount++;
@@ -3709,7 +4056,7 @@
                 if (playerAvianType === 'healcount' && player.avianHPPercent > 0 && player.healCount >= 16) {
                     player.healCount -= 16;
                     const avianDmg = calcHPDamage(player, enemy, player.hp, player.avianHPPercent, false, pvpFactor);
-                    const avianResult = dealDamage(enemy, avianDmg);
+                    const avianResult = dealDamage(enemy, avianDmg, false, player);
                     player.totalDamageDealt += avianResult.total;
                     player.dmgAvian += avianResult.total;
                     player.avianCount++;
@@ -3719,7 +4066,7 @@
                 if (enemyAvianType === 'healcount' && enemy.avianHPPercent > 0 && enemy.healCount >= 16) {
                     enemy.healCount -= 16;
                     const avianDmg = calcHPDamage(enemy, player, enemy.hp, enemy.avianHPPercent, false, pvpFactor);
-                    const avianResult = dealDamage(player, avianDmg, true);
+                    const avianResult = dealDamage(player, avianDmg, true, enemy);
                     enemy.totalDamageDealt += avianResult.total;
                     enemy.dmgAvian += avianResult.total;
                     enemy.avianCount++;
@@ -3834,15 +4181,18 @@
                 }
 
                 // General regen (ticks every 1s, affected by PvP healing reduction)
+                // Fix 12: ignoreRegen comes from opponent, not self
                 if (player.regen > 0 && time >= playerNextGeneralRegen) {
                     playerNextGeneralRegen = time + 1;
-                    const healed = heal(player, player.maxHP * (player.regen / 100));
-                    if (healed > 0) log(`[Heal] Player Regen: ${formatNumber(healed)} (${player.regen}%)`, 'heal');
+                    const effectiveRegen = Math.max(0, player.regen - enemy.ignoreRegen);
+                    const healed = heal(player, player.maxHP * (effectiveRegen / 100));
+                    if (healed > 0) log(`[Heal] Player Regen: ${formatNumber(healed)} (${effectiveRegen.toFixed(1)}%)`, 'heal');
                 }
                 if (enemy.regen > 0 && time >= enemyNextGeneralRegen) {
                     enemyNextGeneralRegen = time + 1;
-                    const healed = heal(enemy, enemy.maxHP * (enemy.regen / 100));
-                    if (healed > 0) log(`[Heal] Enemy Regen: ${formatNumber(healed)} (${enemy.regen}%)`, 'heal');
+                    const effectiveRegen = Math.max(0, enemy.regen - player.ignoreRegen);
+                    const healed = heal(enemy, enemy.maxHP * (effectiveRegen / 100));
+                    if (healed > 0) log(`[Heal] Enemy Regen: ${formatNumber(healed)} (${effectiveRegen.toFixed(1)}%)`, 'heal');
                 }
 
                 sampleHP();
