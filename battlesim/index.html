@@ -862,10 +862,8 @@ const ATTRIB_DEFS = [
   [1081, 'total_dam_add', 'Final DMG', 0.2, true],
   [1082, 'total_dam_def', 'Final DMG RES', 0.1, true],
   // Pierce/Block
-  [1067, 'armor_penetration_rate', 'Pierce Rate', 0.3, true],
-  [1068, 'armor_penetration', 'Pierce Val', 0, false],
+  [1068, 'armor_penetration', 'Pierce', 0, false],
   [1069, 'ignore_armor_penetration', 'Ignore Pierce', 0, false],
-  [1070, 'block_rate', 'Block Rate', 0.3, true],
   [1071, 'block', 'Block Val', 0, false],
   [1072, 'ignore_block', 'Ignore Block', 0, false],
   // Stun/Launch
@@ -882,13 +880,11 @@ const ATTRIB_DEFS = [
   // Heal/Steal
   [1012, 'hp_recovery', 'HP Regen', 0, true],
   [1066, 'ignore_hp_recovery', 'Reduce HP Regen', 0, true],
-  [1014, 'att_hpsteal', 'ATK Lifesteal', 0, true],
-  [1027, 'att_hpsteal_def', 'ATK Steal RES', 0, true],
-  [1015, 'skill_hpsteal', 'Skill Lifesteal', 0, true],
-  [1028, 'skill_hpsteal_def', 'Skill Steal RES', 0, true],
-  [1053, 'hpsteal_rate', 'Steal Rate', 0, true],
-  [1054, 'hpsteal_amount', 'Steal Amount', 0, true],
-  [1055, 'hpsteal_res', 'Steal RES', 0, true],
+  // Pal Inspire / Pal DMG
+  [1074, 'partner_inspire', 'Pal Inspire', 0, false],
+  [1075, 'ignore_partner_inspire', 'Ignore Pal Inspire', 0, false],
+  [1077, 'partner_suppress', 'Pal DMG', 0, false],
+  [1078, 'ignore_partner_suppress', 'Pal RES', 0, false],
 ];
 
 // Hidden/internal attributes not shown in UI but used in engine
@@ -898,11 +894,16 @@ const HIDDEN_ATTRIB_DEFAULTS = {
   1040: 0.5,   // partner_dam (set per pal)
   1047: 1.0,   // partner_dam_extra
   1073: 0.3,   // partner_inspire_rate
-  1074: 0,     // partner_inspire
-  1075: 0,     // ignore_partner_inspire
   1076: 0.3,   // partner_suppress_rate
-  1077: 0,     // partner_suppress
-  1078: 0,     // ignore_partner_suppress
+  1067: 0.3,   // armor_penetration_rate (Pierce Rate)
+  1070: 0.3,   // block_rate (Block Rate)
+  1014: 0,     // att_hpsteal (ATK Lifesteal)
+  1027: 0,     // att_hpsteal_def (ATK Steal RES)
+  1015: 0,     // skill_hpsteal (Skill Lifesteal)
+  1028: 0,     // skill_hpsteal_def (Skill Steal RES)
+  1053: 0,     // hpsteal_rate (Steal Rate)
+  1054: 0,     // hpsteal_amount (Steal Amount)
+  1055: 0,     // hpsteal_res (Steal RES)
   1051: 0,     // shield_hp_extra
   1050: 0,     // shield_time_extra
   1057: 0,     // pve_dam
@@ -923,10 +924,11 @@ const STAT_GROUPS = [
   { name: 'Multipliers', attrs: [1039, 1045, 1046] },
   { name: 'DMG Resistance', attrs: [1018, 1019, 1020, 1021] },
   { name: 'Final DMG', attrs: [1081, 1082] },
-  { name: 'Pierce/Block', attrs: [1067, 1068, 1069, 1070, 1071, 1072], collapsed: true },
+  { name: 'Pierce/Block', attrs: [1068, 1069, 1071, 1072], collapsed: true },
+  { name: 'Pal Inspire / Pal DMG', attrs: [1074, 1075, 1077, 1078], collapsed: true },
   { name: 'Stun/Launch', attrs: [1022, 1025, 1023, 1026, 1030, 1031, 1042], collapsed: true },
   { name: 'Skill Crit', attrs: [1037, 1038], collapsed: true },
-  { name: 'Heal/Steal', attrs: [1012, 1066, 1014, 1027, 1015, 1028, 1053, 1054, 1055], collapsed: true },
+  { name: 'Heal/Steal', attrs: [1012, 1066], collapsed: true },
 ];
 
 const ATTRIB_MAP = {};
