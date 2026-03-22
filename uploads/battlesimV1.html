@@ -2117,8 +2117,8 @@
               desc: '2098% DMG, +50% per cast (max 3 stacks)', exclusive: true,
               stacking: { bonusPercent: 50, maxStacks: 3 } },
             { id: 33, name: 'Dragonic Resonance', cd: 15, dmgPercent: 3731,  rarity: 'Immortal',
-              desc: '3731% DMG + 2% target max HP + 1% per 10% DMGRES', exclusive: true,
-              hpBurst: { basePercent: 2, perDmgResPercent: 1, per: 10, source: 'target' } },
+              desc: '3731% DMG + 2% target max HP + 1% per 10% own DMGRES', exclusive: true,
+              hpBurst: { basePercent: 2, perDmgResPercent: 1, per: 10, source: 'self' } },
             { id: 34, name: 'Worldly Snare',      cd: 24, dmgPercent: 5413,  rarity: 'Immortal',
               desc: '5413% DMG, +10% Crit Rate, per 1% Crit → +3% CritDMG 5s', exclusive: true,
               selfBuff: { stat: 'critScaling', critRateBonus: 10, critDmgPer1Pct: 3, duration: 5 } },
@@ -3706,7 +3706,7 @@
                         // --- HP Burst (Dragonic Resonance) ---
                         if (sk.hpBurst) {
                             const h = sk.hpBurst;
-                            const dmgResStacks = Math.floor(defender.dmgRES / h.per);
+                            const dmgResStacks = Math.floor(attacker.dmgRES / h.per);
                             const totalPct = h.basePercent + dmgResStacks * h.perDmgResPercent;
                             const hpDmg = calcHPDamage(attacker, defender, defender.maxHP, totalPct, true, pvpFactor);
                             const hpRes = dealDamage(defender, hpDmg, isDefenderPlayer, attacker);
