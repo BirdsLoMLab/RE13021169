@@ -2421,6 +2421,7 @@
                 critCount: 0,
                 counterCount: 0,
                 evadeCount: 0,
+                counterEvadeCount: 0,
                 comboCount: 0,
                 classSkillCount: 0,
                 activeSkillCount: 0,
@@ -3152,6 +3153,7 @@
                         const counterEvadeChance = Math.min(Math.pow(Math.max(0, player.evasion - enemy.ignoreEvasion), 0.9), 80);
                         if (roll(counterEvadeChance)) {
                             player.evadeCount++;
+                            player.counterEvadeCount++;
                             log(`  ← Enemy Counter: EVADED`, 'damage');
                         } else {
                             const savedPlayerCounterRES = player.counterRES;
@@ -3354,6 +3356,7 @@
                         const counterEvadeChance = Math.min(Math.pow(Math.max(0, enemy.evasion - player.ignoreEvasion), 0.9), 80);
                         if (roll(counterEvadeChance)) {
                             enemy.evadeCount++;
+                            enemy.counterEvadeCount++;
                             log(`  ← Player Counter: EVADED`, 'damage');
                         } else {
                             const savedEnemyCounterRES = enemy.counterRES;
@@ -4261,7 +4264,7 @@
                 ].filter(c => c[1] > 0);
 
                 // Compute actual rates
-                const totalEnemyAttempts = opponentStats.basicATKCount + stats.evadeCount;
+                const totalEnemyAttempts = opponentStats.basicATKCount + (stats.evadeCount - stats.counterEvadeCount) + opponentStats.counterCount;
                 const rates = [];
                 if (stats.critCount > 0 || stats.basicATKCount > 0) {
                     rates.push(['Actual Crit Rate', stats.basicATKCount > 0 ? (stats.critCount / stats.basicATKCount * 100).toFixed(1) + '%' : '0%']);
