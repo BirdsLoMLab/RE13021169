@@ -2411,7 +2411,14 @@
                 dmgDot: 0,
                 dmgHpDot: 0,
                 dmgClone: 0,
+                dmgSHClassPassive: 0,
+                // Per-skill tracking
+                perSkillDmg: {},
+                perSkillHpDmg: {},
+                perSkillCount: {},
                 // Counts
+                basicATKCount: 0,
+                critCount: 0,
                 counterCount: 0,
                 evadeCount: 0,
                 comboCount: 0,
@@ -3010,10 +3017,11 @@
                             dmg *= (1 + 0.15 * playerPotentMult);
                         }
                         const isCrit = roll(player.critRate - enemy.ignoreCrit);
-                        if (isCrit) dmg = applyCrit(dmg, player, enemy);
+                        if (isCrit) { dmg = applyCrit(dmg, player, enemy); player.critCount++; }
                         const result = dealDamage(enemy, dmg, false, player);
                         player.totalDamageDealt += result.total;
                         player.dmgBasicATK += result.total;
+                        player.basicATKCount++;
                         const sn = result.shielded > 0 ? ` (${formatNumber(result.shielded)} blocked)` : '';
                         log(`Player Basic ATK: ${formatNumber(result.total)}${sn}${isCrit ? ' CRIT!' : ''}`, isCrit ? 'crit' : 'damage');
 
@@ -3022,7 +3030,7 @@
                             const hpDmg = calcHPDamage(player, enemy, enemy.hp, 1, false, pvpFactor);
                             const hpRes = dealDamage(enemy, hpDmg, false, player);
                             player.totalDamageDealt += hpRes.total;
-                            player.dmgBasicATK += hpRes.total;
+                            player.dmgSHClassPassive += hpRes.total;
                             if (hpRes.total > 0) log(`  → Hunter HP DMG: ${formatNumber(hpRes.total)} [1% Cur HP]`, 'damage');
                         }
                         // Hunter passive 2: after crit, ATK +40% for 1s
@@ -3203,10 +3211,11 @@
                             dmg *= (1 + 0.15 * enemyPotentMult);
                         }
                         const isCrit = roll(enemy.critRate - player.ignoreCrit);
-                        if (isCrit) dmg = applyCrit(dmg, enemy, player);
+                        if (isCrit) { dmg = applyCrit(dmg, enemy, player); enemy.critCount++; }
                         const result = dealDamage(player, dmg, true, enemy);
                         enemy.totalDamageDealt += result.total;
                         enemy.dmgBasicATK += result.total;
+                        enemy.basicATKCount++;
                         const sn = result.shielded > 0 ? ` (${formatNumber(result.shielded)} blocked)` : '';
                         log(`Enemy Basic ATK: ${formatNumber(result.total)}${sn}${isCrit ? ' CRIT!' : ''}`, isCrit ? 'crit' : 'damage');
 
@@ -3215,7 +3224,7 @@
                             const hpDmg = calcHPDamage(enemy, player, player.hp, 1, false, pvpFactor);
                             const hpRes = dealDamage(player, hpDmg, true, enemy);
                             enemy.totalDamageDealt += hpRes.total;
-                            enemy.dmgBasicATK += hpRes.total;
+                            enemy.dmgSHClassPassive += hpRes.total;
                             if (hpRes.total > 0) log(`  → Hunter HP DMG: ${formatNumber(hpRes.total)} [1% Cur HP]`, 'damage');
                         }
                         // Hunter passive 2: after crit, ATK +40% for 1s
@@ -3589,6 +3598,7 @@
                         }
                         sk._cd = time + Math.max(1, sk.cd * cdMult);
                         attacker.activeSkillCount++;
+                        attacker.perSkillCount[sk.name] = (attacker.perSkillCount[sk.name] || 0) + 1;
 
                         // Compute statue duration multiplier for buffs/debuffs/CC
                         let statDurMult = 1;
@@ -3619,6 +3629,7 @@
                             const sRes = dealDamage(defender, sDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += sRes.total;
                             attacker.dmgActiveSkills += sRes.total;
+                            attacker.perSkillDmg[sk.name] = (attacker.perSkillDmg[sk.name] || 0) + sRes.total;
                             const sn = sRes.shielded > 0 ? ` (${formatNumber(sRes.shielded)} blocked)` : '';
                             log(`${attacker === player ? 'Player' : 'Enemy'} ${sk.name}: ${formatNumber(sRes.total)}${sn}${sCrit ? ' CRIT!' : ''}`, 'skill');
                             // Skill Lifesteal
@@ -3701,6 +3712,7 @@
                             const hpRes = dealDamage(defender, hpDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += hpRes.total;
                             attacker.dmgHpDot += hpRes.total;
+                            attacker.perSkillHpDmg[sk.name] = (attacker.perSkillHpDmg[sk.name] || 0) + hpRes.total;
                             log(`  → ${who} Dragonic HP: ${formatNumber(hpRes.total)} [${totalPct}% Max HP]`, 'damage');
                         }
 
@@ -3856,6 +3868,7 @@
                             const dotRes = dealDamage(defender, dotDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += dotRes.total;
                             attacker.dmgDot += dotRes.total;
+                            attacker.perSkillDmg[sk.name] = (attacker.perSkillDmg[sk.name] || 0) + dotRes.total;
                             log(`${who} ${sk.name} DoT: ${formatNumber(dotRes.total)}`, 'damage');
                         }
                         // Tick HP% DoT (Blade Pierce)
@@ -3866,6 +3879,7 @@
                             const hpRes = dealDamage(defender, hpDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += hpRes.total;
                             attacker.dmgHpDot += hpRes.total;
+                            attacker.perSkillHpDmg[sk.name] = (attacker.perSkillHpDmg[sk.name] || 0) + hpRes.total;
                             log(`${who} ${sk.name} HP DoT: ${formatNumber(hpRes.total)} [${sk.hpDot.percent}% Max HP]`, 'damage');
                         }
                         // Tick Clone
@@ -3880,6 +3894,7 @@
                             const cloneRes = dealDamage(defender, cloneDmg, isDefenderPlayer, attacker);
                             attacker.totalDamageDealt += cloneRes.total;
                             attacker.dmgClone += cloneRes.total;
+                            attacker.perSkillDmg[sk.name] = (attacker.perSkillDmg[sk.name] || 0) + cloneRes.total;
                             log(`${who} Clone ATK: ${formatNumber(cloneRes.total)}`, 'damage');
                         }
                         // Tick Heal (Nature's Renewal)
@@ -4181,43 +4196,85 @@
             document.getElementById('resultEnemyHeals').textContent = enemy.healProcs;
 
             // Per-source damage breakdown
-            function buildBreakdown(who, stats) {
+            function buildBreakdown(who, stats, opponentStats) {
                 const classSkillName = stats.class === 'hunter' ? 'Piercing Boneforge' :
                                       stats.class === 'warbringer' ? 'Shattering Axe' : 'Blades Reunion';
+
+                // Build per-skill active skill breakdown (combine skill dmg + HP dmg)
+                const perSkillNames = [...new Set([...Object.keys(stats.perSkillDmg), ...Object.keys(stats.perSkillHpDmg)])];
+                const perSkillRows = perSkillNames.map(name => {
+                    const skillDmg = stats.perSkillDmg[name] || 0;
+                    const hpDmg = stats.perSkillHpDmg[name] || 0;
+                    return [name, skillDmg + hpDmg];
+                }).filter(r => r[1] > 0).sort((a, b) => b[1] - a[1]);
+
+                // Per-skill count breakdown
+                const perSkillCountRows = Object.entries(stats.perSkillCount).filter(r => r[1] > 0).sort((a, b) => b[1] - a[1]);
+
+                // Total active skills dmg including all sources (skill + DoTs + HP DoTs + Clone)
+                const totalActiveSkillsDmg = stats.dmgActiveSkills + stats.dmgDot + stats.dmgHpDot + stats.dmgClone;
+
                 const sources = [
                     ['Basic ATK', stats.dmgBasicATK],
+                    ['SH Class Passive HP% Dmg', stats.dmgSHClassPassive],
                     ['Combo', stats.dmgCombo],
                     ['Counter', stats.dmgCounter],
                     [stats.class === 'sage' ? 'Sage Class Skill HP' : 'Hunter HP (1% Cur)', stats.dmgSageClassSkillHP],
                     ['Punch Counter', stats.dmgPunchCounter],
                     [`Class Skill (${classSkillName})`, stats.dmgClassSkill],
                     ['Warbringer AoE Counter', stats.dmgWarbringerAoE],
-                    ['Active Skills', stats.dmgActiveSkills],
-                    ['Skill DoTs', stats.dmgDot],
-                    ['HP% DoTs', stats.dmgHpDot],
-                    ['Clone', stats.dmgClone],
+                    ['Active Skills', totalActiveSkillsDmg, true],
                     ['Wind Tear', stats.dmgWindTear],
                     ['Avian', stats.dmgAvian]
                 ].filter(s => s[1] > 0);
 
                 const counts = [
+                    ['Basic ATKs', stats.basicATKCount],
+                    ['Crits', stats.critCount],
+                    ['Evasions', stats.evadeCount],
                     ['Counters', stats.counterCount],
                     ['Combos', stats.comboCount],
-                    ['Evades', stats.evadeCount],
                     ['Class Skills', stats.classSkillCount],
-                    ['Active Skills', stats.activeSkillCount],
+                    ['Active Skills', stats.activeSkillCount, true],
                     ['Avian Procs', stats.avianCount],
                     ['Punch Counters', stats.punchCounterCount],
                     ['Wind Tears', stats.windTearCount],
                     ['Terminal Strikes', stats.terminalStrikeCount]
                 ].filter(c => c[1] > 0);
 
+                // Compute actual rates
+                const totalEnemyAttempts = opponentStats.basicATKCount + stats.evadeCount;
+                const rates = [];
+                if (stats.critCount > 0 || stats.basicATKCount > 0) {
+                    rates.push(['Actual Crit Rate', stats.basicATKCount > 0 ? (stats.critCount / stats.basicATKCount * 100).toFixed(1) + '%' : '0%']);
+                }
+                if (stats.evadeCount > 0 || totalEnemyAttempts > 0) {
+                    rates.push(['Actual Evasion Rate', totalEnemyAttempts > 0 ? (stats.evadeCount / totalEnemyAttempts * 100).toFixed(1) + '%' : '0%']);
+                }
+                if (stats.comboCount > 0 || stats.basicATKCount > 0) {
+                    rates.push(['Actual Combo Rate', stats.basicATKCount > 0 ? (stats.comboCount / stats.basicATKCount * 100).toFixed(1) + '%' : '0%']);
+                }
+                if (stats.counterCount > 0 || totalEnemyAttempts > 0) {
+                    rates.push(['Actual Counter Rate', totalEnemyAttempts > 0 ? (stats.counterCount / totalEnemyAttempts * 100).toFixed(1) + '%' : '0%']);
+                }
+
                 let html = `<div style="background:#1a1a2e;border-radius:8px;padding:15px;">`;
                 html += `<h4 style="color:${who === 'Player' ? '#51cf66' : '#ff6b6b'};margin-bottom:10px;">${who}</h4>`;
                 html += `<table style="width:100%;color:#ccc;font-size:0.85em;">`;
                 html += `<tr style="border-bottom:1px solid #333;"><th style="text-align:left;padding:4px;">Source</th><th style="text-align:right;padding:4px;">Damage</th></tr>`;
-                sources.forEach(([name, val]) => {
-                    html += `<tr><td style="padding:3px 4px;">${name}</td><td style="text-align:right;padding:3px 4px;">${formatNumber(val)}</td></tr>`;
+                sources.forEach(([name, val, hasDropdown]) => {
+                    if (hasDropdown && name === 'Active Skills' && perSkillRows.length > 0) {
+                        html += `<tr><td colspan="2" style="padding:0;">`;
+                        html += `<details style="margin:0;"><summary style="padding:3px 4px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;">`;
+                        html += `<span>Active Skills ▾</span><span>${formatNumber(val)}</span></summary>`;
+                        html += `<table style="width:100%;color:#999;font-size:0.95em;margin-left:12px;">`;
+                        perSkillRows.forEach(([sName, sVal]) => {
+                            html += `<tr><td style="padding:2px 4px;">↳ ${sName}</td><td style="text-align:right;padding:2px 4px;">${formatNumber(sVal)}</td></tr>`;
+                        });
+                        html += `</table></details></td></tr>`;
+                    } else {
+                        html += `<tr><td style="padding:3px 4px;">${name}</td><td style="text-align:right;padding:3px 4px;">${formatNumber(val)}</td></tr>`;
+                    }
                 });
                 html += `<tr style="border-top:1px solid #555;font-weight:bold;"><td style="padding:3px 4px;">Total</td><td style="text-align:right;padding:3px 4px;">${formatNumber(stats.totalDamageDealt)}</td></tr>`;
                 html += `</table>`;
@@ -4225,10 +4282,53 @@
                 if (counts.length > 0) {
                     html += `<table style="width:100%;color:#aaa;font-size:0.8em;margin-top:10px;border-top:1px solid #333;">`;
                     for (let i = 0; i < counts.length; i += 2) {
+                        const c0 = counts[i];
+                        const c1 = i + 1 < counts.length ? counts[i + 1] : null;
+                        // Check if either cell needs a dropdown
+                        if (c0[2] && c0[0] === 'Active Skills' && perSkillCountRows.length > 0) {
+                            html += `<tr><td colspan="4" style="padding:0;">`;
+                            html += `<details style="margin:0;"><summary style="padding:2px 4px;cursor:pointer;">Active Skills: ${c0[1]} ▾</summary>`;
+                            html += `<table style="width:100%;color:#888;font-size:0.95em;margin-left:12px;">`;
+                            perSkillCountRows.forEach(([sName, sCount]) => {
+                                html += `<tr><td style="padding:1px 4px;">↳ ${sName}</td><td style="text-align:right;padding:1px 4px;">${sCount}</td></tr>`;
+                            });
+                            html += `</table></details></td></tr>`;
+                            if (c1) {
+                                html += `<tr><td style="padding:2px 4px;">${c1[0]}</td><td style="text-align:right;padding:2px 4px;">${c1[1]}</td><td></td><td></td></tr>`;
+                            }
+                        } else {
+                            html += `<tr>`;
+                            html += `<td style="padding:2px 4px;">${c0[0]}</td><td style="text-align:right;padding:2px 4px;">${c0[1]}</td>`;
+                            if (c1) {
+                                if (c1[2] && c1[0] === 'Active Skills' && perSkillCountRows.length > 0) {
+                                    html += `<td></td><td></td></tr>`;
+                                    html += `<tr><td colspan="4" style="padding:0;">`;
+                                    html += `<details style="margin:0;"><summary style="padding:2px 4px;cursor:pointer;">Active Skills: ${c1[1]} ▾</summary>`;
+                                    html += `<table style="width:100%;color:#888;font-size:0.95em;margin-left:12px;">`;
+                                    perSkillCountRows.forEach(([sName, sCount]) => {
+                                        html += `<tr><td style="padding:1px 4px;">↳ ${sName}</td><td style="text-align:right;padding:1px 4px;">${sCount}</td></tr>`;
+                                    });
+                                    html += `</table></details></td></tr>`;
+                                    continue;
+                                }
+                                html += `<td style="padding:2px 4px 2px 12px;">${c1[0]}</td><td style="text-align:right;padding:2px 4px;">${c1[1]}</td>`;
+                            } else {
+                                html += `<td></td><td></td>`;
+                            }
+                            html += `</tr>`;
+                        }
+                    }
+                    html += `</table>`;
+                }
+
+                // Actual rates section
+                if (rates.length > 0) {
+                    html += `<table style="width:100%;color:#aaa;font-size:0.8em;margin-top:6px;border-top:1px solid #333;">`;
+                    for (let i = 0; i < rates.length; i += 2) {
                         html += `<tr>`;
-                        html += `<td style="padding:2px 4px;">${counts[i][0]}</td><td style="text-align:right;padding:2px 4px;">${counts[i][1]}</td>`;
-                        if (i + 1 < counts.length) {
-                            html += `<td style="padding:2px 4px 2px 12px;">${counts[i+1][0]}</td><td style="text-align:right;padding:2px 4px;">${counts[i+1][1]}</td>`;
+                        html += `<td style="padding:2px 4px;">${rates[i][0]}</td><td style="text-align:right;padding:2px 4px;">${rates[i][1]}</td>`;
+                        if (i + 1 < rates.length) {
+                            html += `<td style="padding:2px 4px 2px 12px;">${rates[i+1][0]}</td><td style="text-align:right;padding:2px 4px;">${rates[i+1][1]}</td>`;
                         } else {
                             html += `<td></td><td></td>`;
                         }
@@ -4236,12 +4336,13 @@
                     }
                     html += `</table>`;
                 }
+
                 html += `</div>`;
                 return html;
             }
 
             document.getElementById('damageBreakdown').innerHTML =
-                buildBreakdown('Player', player) + buildBreakdown('Enemy', enemy);
+                buildBreakdown('Player', player, enemy) + buildBreakdown('Enemy', enemy, player);
 
             // Battle log
             document.getElementById('showFullLog').checked = false;
