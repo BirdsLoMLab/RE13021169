@@ -2276,7 +2276,7 @@
                 bossDMG: parseFloat(document.getElementById(prefix + 'BossDMG').value),
 
                 combo: clamp(parseFloat(document.getElementById(prefix + 'Combo').value), 0, 100),
-                counter: clamp(parseFloat(document.getElementById(prefix + 'Counter').value), 0, 100),
+                counter: Math.max(0, parseFloat(document.getElementById(prefix + 'Counter').value)),
                 critRate: clamp(parseFloat(document.getElementById(prefix + 'CritRate').value), 0, 100),
                 skillCrit: parseFloat(document.getElementById(prefix + 'SkillCrit').value),
                 stun: clamp(parseFloat(document.getElementById(prefix + 'Stun').value), 0, 100),
@@ -2567,8 +2567,8 @@
                 finalDmg = hpDmg;
             }
 
-            // Step 5: Divide by PvP factor for final damage
-            return finalDmg / pvpFactor;
+            // Step 5: Return with pvpFactor still baked in — dealDamage() divides once
+            return finalDmg;
         }
 
         function applyCrit(baseDmg, attacker, defender) {
@@ -3147,47 +3147,56 @@
                     const effectiveCounter = Math.max(0, enemy.counter - player.ignoreCounter);
                     if (roll(effectiveCounter)) {
                         enemy.counterCount++;
-                        const savedPlayerCounterRES = player.counterRES;
-                        if (playerCounterRESDebuff > time) {
-                            player.counterRES = clamp(player.counterRES - 40, -100, 80);
-                        }
-                        let counterDmg = calcCounterDamage(enemy, player);
-                        player.counterRES = savedPlayerCounterRES;
-                        const counterCrit = roll(enemy.critRate - player.ignoreCrit);
-                        if (counterCrit) counterDmg = applyCrit(counterDmg, enemy, player);
-                        const counterResult = dealDamage(player, counterDmg, true, enemy);
-                        enemy.totalDamageDealt += counterResult.total;
-                        enemy.dmgCounter += counterResult.total;
-                        const csn = counterResult.shielded > 0 ? ` (${formatNumber(counterResult.shielded)} blocked)` : '';
-                        const dn = playerCounterRESDebuff > time ? ' [RES-40%]' : '';
-                        log(`  ← Enemy Counter: ${formatNumber(counterResult.total)}${csn}${counterCrit ? ' CRIT!' : ''}${dn}`, counterCrit ? 'crit' : 'damage');
 
-                        // Sage class skill: +1% HP counter bonus (separate log)
-                        if (enemyBladesReunionActive > time) {
-                            const hpBonusDmg = calcHPDamage(enemy, player, enemy.hp, 1, false, pvpFactor);
-                            const hpResult = dealDamage(player, hpBonusDmg, true, enemy);
-                            enemy.totalDamageDealt += hpResult.total;
-                            enemy.dmgSageClassSkillHP += hpResult.total;
-                            log(`  ← Enemy Sage Class Skill HP: ${formatNumber(hpResult.total)} [1% Cur HP]`, 'damage');
+                        // Evasion check on counter attack (same formula as basic ATK)
+                        const counterEvadeChance = Math.min(Math.pow(Math.max(0, player.evasion - enemy.ignoreEvasion), 0.9), 80);
+                        if (roll(counterEvadeChance)) {
+                            player.evadeCount++;
+                            log(`  ← Enemy Counter: EVADED`, 'damage');
+                        } else {
+                            const savedPlayerCounterRES = player.counterRES;
+                            if (playerCounterRESDebuff > time) {
+                                player.counterRES = clamp(player.counterRES - 40, -100, 80);
+                            }
+                            let counterDmg = calcCounterDamage(enemy, player);
+                            player.counterRES = savedPlayerCounterRES;
+                            const counterCrit = roll(enemy.critRate - player.ignoreCrit);
+                            if (counterCrit) counterDmg = applyCrit(counterDmg, enemy, player);
+                            const counterResult = dealDamage(player, counterDmg, true, enemy);
+                            enemy.totalDamageDealt += counterResult.total;
+                            enemy.dmgCounter += counterResult.total;
+                            const csn = counterResult.shielded > 0 ? ` (${formatNumber(counterResult.shielded)} blocked)` : '';
+                            const dn = playerCounterRESDebuff > time ? ' [RES-40%]' : '';
+                            log(`  ← Enemy Counter: ${formatNumber(counterResult.total)}${csn}${counterCrit ? ' CRIT!' : ''}${dn}`, counterCrit ? 'crit' : 'damage');
+
+                            // Sage class skill: +1% HP counter bonus (separate log)
+                            if (enemyBladesReunionActive > time) {
+                                const hpBonusDmg = calcHPDamage(enemy, player, enemy.hp, 1, false, pvpFactor);
+                                const hpResult = dealDamage(player, hpBonusDmg, true, enemy);
+                                enemy.totalDamageDealt += hpResult.total;
+                                enemy.dmgSageClassSkillHP += hpResult.total;
+                                log(`  ← Enemy Sage Class Skill HP: ${formatNumber(hpResult.total)} [1% Cur HP]`, 'damage');
+                            }
+
+                            // Punch Counter affix (separate log)
+                            if (enemy.affixPunchCounter && roll(50)) {
+                                const pcDmg = calcHPDamage(enemy, player, enemy.hp, enemy.affixPunchCounterHP, false, pvpFactor);
+                                const pcResult = dealDamage(player, pcDmg, true, enemy);
+                                enemy.totalDamageDealt += pcResult.total;
+                                enemy.dmgPunchCounter += pcResult.total;
+                                enemy.punchCounterCount++;
+                                log(`  ← Enemy Punch Counter: ${formatNumber(pcResult.total)} [${enemy.affixPunchCounterHP}% Cur HP]`, 'damage');
+                            }
                         }
 
-                        // Punch Counter affix (separate log)
-                        if (enemy.affixPunchCounter && roll(50)) {
-                            const pcDmg = calcHPDamage(enemy, player, enemy.hp, enemy.affixPunchCounterHP, false, pvpFactor);
-                            const pcResult = dealDamage(player, pcDmg, true, enemy);
-                            enemy.totalDamageDealt += pcResult.total;
-                            enemy.dmgPunchCounter += pcResult.total;
-                            enemy.punchCounterCount++;
-                            log(`  ← Enemy Punch Counter: ${formatNumber(pcResult.total)} [${enemy.affixPunchCounterHP}% Cur HP]`, 'damage');
-                        }
-
+                        // Robo Pup heals on counter TRIGGER (even if evaded)
                         if (enemy.hasElectricPup) {
                             const lostHP = enemy.maxHP - enemy.hp;
                             const healed = heal(enemy, lostHP * 0.01);
                             if (healed > 0) log(`  ← Enemy Pup heal: ${formatNumber(healed)}`, 'heal');
                         }
 
-                        // Counter Rejuvenation talent
+                        // Counter Rejuvenation talent (triggers on counter proc)
                         if (enemy.talentCounterRejuv > 0 && enemy.counterCount % 5 === 0) {
                             const healed = heal(enemy, enemy.maxHP * (enemy.talentCounterRejuv / 100));
                             if (healed > 0) log(`  ← Enemy Counter Rejuv: ${formatNumber(healed)}`, 'heal');
@@ -3340,47 +3349,56 @@
                     const effectiveCounter = Math.max(0, player.counter - enemy.ignoreCounter);
                     if (roll(effectiveCounter)) {
                         player.counterCount++;
-                        const savedEnemyCounterRES = enemy.counterRES;
-                        if (enemyCounterRESDebuff > time) {
-                            enemy.counterRES = clamp(enemy.counterRES - 40, -100, 80);
-                        }
-                        let counterDmg = calcCounterDamage(player, enemy);
-                        enemy.counterRES = savedEnemyCounterRES;
-                        const counterCrit = roll(player.critRate - enemy.ignoreCrit);
-                        if (counterCrit) counterDmg = applyCrit(counterDmg, player, enemy);
-                        const counterResult = dealDamage(enemy, counterDmg, false, player);
-                        player.totalDamageDealt += counterResult.total;
-                        player.dmgCounter += counterResult.total;
-                        const csn = counterResult.shielded > 0 ? ` (${formatNumber(counterResult.shielded)} blocked)` : '';
-                        const dn = enemyCounterRESDebuff > time ? ' [RES-40%]' : '';
-                        log(`  ← Player Counter: ${formatNumber(counterResult.total)}${csn}${counterCrit ? ' CRIT!' : ''}${dn}`, counterCrit ? 'crit' : 'damage');
 
-                        // Sage class skill: +1% HP counter bonus (separate log)
-                        if (playerBladesReunionActive > time) {
-                            const hpBonusDmg = calcHPDamage(player, enemy, player.hp, 1, false, pvpFactor);
-                            const hpResult = dealDamage(enemy, hpBonusDmg, false, player);
-                            player.totalDamageDealt += hpResult.total;
-                            player.dmgSageClassSkillHP += hpResult.total;
-                            log(`  ← Player Sage Class Skill HP: ${formatNumber(hpResult.total)} [1% Cur HP]`, 'damage');
+                        // Evasion check on counter attack (same formula as basic ATK)
+                        const counterEvadeChance = Math.min(Math.pow(Math.max(0, enemy.evasion - player.ignoreEvasion), 0.9), 80);
+                        if (roll(counterEvadeChance)) {
+                            enemy.evadeCount++;
+                            log(`  ← Player Counter: EVADED`, 'damage');
+                        } else {
+                            const savedEnemyCounterRES = enemy.counterRES;
+                            if (enemyCounterRESDebuff > time) {
+                                enemy.counterRES = clamp(enemy.counterRES - 40, -100, 80);
+                            }
+                            let counterDmg = calcCounterDamage(player, enemy);
+                            enemy.counterRES = savedEnemyCounterRES;
+                            const counterCrit = roll(player.critRate - enemy.ignoreCrit);
+                            if (counterCrit) counterDmg = applyCrit(counterDmg, player, enemy);
+                            const counterResult = dealDamage(enemy, counterDmg, false, player);
+                            player.totalDamageDealt += counterResult.total;
+                            player.dmgCounter += counterResult.total;
+                            const csn = counterResult.shielded > 0 ? ` (${formatNumber(counterResult.shielded)} blocked)` : '';
+                            const dn = enemyCounterRESDebuff > time ? ' [RES-40%]' : '';
+                            log(`  ← Player Counter: ${formatNumber(counterResult.total)}${csn}${counterCrit ? ' CRIT!' : ''}${dn}`, counterCrit ? 'crit' : 'damage');
+
+                            // Sage class skill: +1% HP counter bonus (separate log)
+                            if (playerBladesReunionActive > time) {
+                                const hpBonusDmg = calcHPDamage(player, enemy, player.hp, 1, false, pvpFactor);
+                                const hpResult = dealDamage(enemy, hpBonusDmg, false, player);
+                                player.totalDamageDealt += hpResult.total;
+                                player.dmgSageClassSkillHP += hpResult.total;
+                                log(`  ← Player Sage Class Skill HP: ${formatNumber(hpResult.total)} [1% Cur HP]`, 'damage');
+                            }
+
+                            // Punch Counter affix (separate log)
+                            if (player.affixPunchCounter && roll(50)) {
+                                const pcDmg = calcHPDamage(player, enemy, player.hp, player.affixPunchCounterHP, false, pvpFactor);
+                                const pcResult = dealDamage(enemy, pcDmg, false, player);
+                                player.totalDamageDealt += pcResult.total;
+                                player.dmgPunchCounter += pcResult.total;
+                                player.punchCounterCount++;
+                                log(`  ← Player Punch Counter: ${formatNumber(pcResult.total)} [${player.affixPunchCounterHP}% Cur HP]`, 'damage');
+                            }
                         }
 
-                        // Punch Counter affix (separate log)
-                        if (player.affixPunchCounter && roll(50)) {
-                            const pcDmg = calcHPDamage(player, enemy, player.hp, player.affixPunchCounterHP, false, pvpFactor);
-                            const pcResult = dealDamage(enemy, pcDmg, false, player);
-                            player.totalDamageDealt += pcResult.total;
-                            player.dmgPunchCounter += pcResult.total;
-                            player.punchCounterCount++;
-                            log(`  ← Player Punch Counter: ${formatNumber(pcResult.total)} [${player.affixPunchCounterHP}% Cur HP]`, 'damage');
-                        }
-
+                        // Robo Pup heals on counter TRIGGER (even if evaded)
                         if (player.hasElectricPup) {
                             const lostHP = player.maxHP - player.hp;
                             const healed = heal(player, lostHP * 0.01);
                             if (healed > 0) log(`  ← Player Pup heal: ${formatNumber(healed)}`, 'heal');
                         }
 
-                        // Counter Rejuvenation talent
+                        // Counter Rejuvenation talent (triggers on counter proc)
                         if (player.talentCounterRejuv > 0 && player.counterCount % 5 === 0) {
                             const healed = heal(player, player.maxHP * (player.talentCounterRejuv / 100));
                             if (healed > 0) log(`  ← Player Counter Rejuv: ${formatNumber(healed)}`, 'heal');
