@@ -1031,16 +1031,12 @@
                 <div id="playerPierceBlock" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
-                            <label for="playerArmorPen">Armor Pen</label>
+                            <label for="playerArmorPen">Pierce</label>
                             <input type="number" id="playerArmorPen" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="playerIgnoreArmorPen">Ignore Armor Pen</label>
+                            <label for="playerIgnoreArmorPen">Ignore Pierce</label>
                             <input type="number" id="playerIgnoreArmorPen" value="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="playerArmorPenRate">Armor Pen Rate</label>
-                            <input type="number" id="playerArmorPenRate" value="0" step="0.01">
                         </div>
                         <div class="input-group">
                             <label for="playerBlock">Block</label>
@@ -1050,44 +1046,32 @@
                             <label for="playerIgnoreBlock">Ignore Block</label>
                             <input type="number" id="playerIgnoreBlock" value="0" step="1">
                         </div>
-                        <div class="input-group">
-                            <label for="playerBlockRate">Block Rate</label>
-                            <input type="number" id="playerBlockRate" value="0" step="0.01">
-                        </div>
                     </div>
                 </div>
 
-                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerSuppressInspire')">Suppress / Inspire</div>
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerSuppressInspire')">Pal Inspire / Pal DMG</div>
                 <div id="playerSuppressInspire" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
-                            <label for="playerInspire">Inspire</label>
+                            <label for="playerInspire">Pal Inspire</label>
                             <input type="number" id="playerInspire" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="playerIgnoreInspire">Ignore Inspire</label>
+                            <label for="playerIgnoreInspire">Ignore Pal Inspire</label>
                             <input type="number" id="playerIgnoreInspire" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="playerInspireRate">Inspire Rate</label>
-                            <input type="number" id="playerInspireRate" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="playerSuppress">Suppress</label>
+                            <label for="playerSuppress">Pal DMG</label>
                             <input type="number" id="playerSuppress" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="playerIgnoreSuppress">Ignore Suppress</label>
+                            <label for="playerIgnoreSuppress">Pal RES</label>
                             <input type="number" id="playerIgnoreSuppress" value="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="playerSuppressRate">Suppress Rate</label>
-                            <input type="number" id="playerSuppressRate" value="0" step="0.01">
                         </div>
                     </div>
                 </div>
 
-                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerFinalDmg')">Final DMG / Lifesteal</div>
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('playerFinalDmg')">Final DMG</div>
                 <div id="playerFinalDmg" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
@@ -1097,22 +1081,6 @@
                         <div class="input-group">
                             <label for="playerFinalDMGDEF">Final DMG DEF</label>
                             <input type="number" id="playerFinalDMGDEF" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="playerAtkLifesteal">ATK Lifesteal</label>
-                            <input type="number" id="playerAtkLifesteal" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="playerAtkLifestealDef">ATK Lifesteal DEF</label>
-                            <input type="number" id="playerAtkLifestealDef" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="playerSkillLifesteal">Skill Lifesteal</label>
-                            <input type="number" id="playerSkillLifesteal" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="playerSkillLifestealDef">Skill Lifesteal DEF</label>
-                            <input type="number" id="playerSkillLifestealDef" value="0" step="0.01">
                         </div>
                     </div>
                 </div>
@@ -1351,16 +1319,12 @@
                 <div id="enemyPierceBlock" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
-                            <label for="enemyArmorPen">Armor Pen</label>
+                            <label for="enemyArmorPen">Pierce</label>
                             <input type="number" id="enemyArmorPen" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="enemyIgnoreArmorPen">Ignore Armor Pen</label>
+                            <label for="enemyIgnoreArmorPen">Ignore Pierce</label>
                             <input type="number" id="enemyIgnoreArmorPen" value="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="enemyArmorPenRate">Armor Pen Rate</label>
-                            <input type="number" id="enemyArmorPenRate" value="0" step="0.01">
                         </div>
                         <div class="input-group">
                             <label for="enemyBlock">Block</label>
@@ -1370,44 +1334,32 @@
                             <label for="enemyIgnoreBlock">Ignore Block</label>
                             <input type="number" id="enemyIgnoreBlock" value="0" step="1">
                         </div>
-                        <div class="input-group">
-                            <label for="enemyBlockRate">Block Rate</label>
-                            <input type="number" id="enemyBlockRate" value="0" step="0.01">
-                        </div>
                     </div>
                 </div>
 
-                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemySuppressInspire')">Suppress / Inspire</div>
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemySuppressInspire')">Pal Inspire / Pal DMG</div>
                 <div id="enemySuppressInspire" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
-                            <label for="enemyInspire">Inspire</label>
+                            <label for="enemyInspire">Pal Inspire</label>
                             <input type="number" id="enemyInspire" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="enemyIgnoreInspire">Ignore Inspire</label>
+                            <label for="enemyIgnoreInspire">Ignore Pal Inspire</label>
                             <input type="number" id="enemyIgnoreInspire" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="enemyInspireRate">Inspire Rate</label>
-                            <input type="number" id="enemyInspireRate" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="enemySuppress">Suppress</label>
+                            <label for="enemySuppress">Pal DMG</label>
                             <input type="number" id="enemySuppress" value="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="enemyIgnoreSuppress">Ignore Suppress</label>
+                            <label for="enemyIgnoreSuppress">Pal RES</label>
                             <input type="number" id="enemyIgnoreSuppress" value="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="enemySuppressRate">Suppress Rate</label>
-                            <input type="number" id="enemySuppressRate" value="0" step="0.01">
                         </div>
                     </div>
                 </div>
 
-                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemyFinalDmg')">Final DMG / Lifesteal</div>
+                <div class="subsection-title collapsible collapsed" onclick="toggleCollapse('enemyFinalDmg')">Final DMG</div>
                 <div id="enemyFinalDmg" class="collapse-content collapsed">
                     <div class="input-grid input-grid-4">
                         <div class="input-group">
@@ -1417,22 +1369,6 @@
                         <div class="input-group">
                             <label for="enemyFinalDMGDEF">Final DMG DEF</label>
                             <input type="number" id="enemyFinalDMGDEF" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="enemyAtkLifesteal">ATK Lifesteal</label>
-                            <input type="number" id="enemyAtkLifesteal" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="enemyAtkLifestealDef">ATK Lifesteal DEF</label>
-                            <input type="number" id="enemyAtkLifestealDef" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="enemySkillLifesteal">Skill Lifesteal</label>
-                            <input type="number" id="enemySkillLifesteal" value="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label for="enemySkillLifestealDef">Skill Lifesteal DEF</label>
-                            <input type="number" id="enemySkillLifestealDef" value="0" step="0.01">
                         </div>
                     </div>
                 </div>
@@ -2369,26 +2305,26 @@
                 // Pierce/Block
                 armorPen: parseFloat(document.getElementById(prefix + 'ArmorPen').value) || 0,
                 ignoreArmorPen: parseFloat(document.getElementById(prefix + 'IgnoreArmorPen').value) || 0,
-                armorPenRate: parseFloat(document.getElementById(prefix + 'ArmorPenRate').value) || 0,
+                armorPenRate: 0.3,  // hidden default
                 block: parseFloat(document.getElementById(prefix + 'Block').value) || 0,
                 ignoreBlock: parseFloat(document.getElementById(prefix + 'IgnoreBlock').value) || 0,
-                blockRate: parseFloat(document.getElementById(prefix + 'BlockRate').value) || 0,
+                blockRate: 0.3,  // hidden default
 
-                // Suppress/Inspire
+                // Pal Inspire / Pal DMG
                 inspire: parseFloat(document.getElementById(prefix + 'Inspire').value) || 0,
                 ignoreInspire: parseFloat(document.getElementById(prefix + 'IgnoreInspire').value) || 0,
-                inspireRate: parseFloat(document.getElementById(prefix + 'InspireRate').value) || 0,
+                inspireRate: 0.3,  // hidden default
                 suppress: parseFloat(document.getElementById(prefix + 'Suppress').value) || 0,
                 ignoreSuppress: parseFloat(document.getElementById(prefix + 'IgnoreSuppress').value) || 0,
-                suppressRate: parseFloat(document.getElementById(prefix + 'SuppressRate').value) || 0,
+                suppressRate: 0.3,  // hidden default
 
-                // Final DMG / Lifesteal
+                // Final DMG
                 finalDMG: parseFloat(document.getElementById(prefix + 'FinalDMG').value) || 0,
                 finalDMGDEF: parseFloat(document.getElementById(prefix + 'FinalDMGDEF').value) || 0,
-                atkLifesteal: parseFloat(document.getElementById(prefix + 'AtkLifesteal').value) || 0,
-                atkLifestealDef: parseFloat(document.getElementById(prefix + 'AtkLifestealDef').value) || 0,
-                skillLifesteal: parseFloat(document.getElementById(prefix + 'SkillLifesteal').value) || 0,
-                skillLifestealDef: parseFloat(document.getElementById(prefix + 'SkillLifestealDef').value) || 0,
+                atkLifesteal: 0,  // hidden default
+                atkLifestealDef: 0,  // hidden default
+                skillLifesteal: 0,  // hidden default
+                skillLifestealDef: 0,  // hidden default
 
                 regen: parseFloat(document.getElementById(prefix + 'Regen').value),
                 cdr: parseFloat(document.getElementById(prefix + 'TalentEnergyRegen').value) || 0,
