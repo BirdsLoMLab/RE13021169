@@ -833,7 +833,7 @@
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="playerClass">Class</label>
-                        <select id="playerClass">
+                        <select id="playerClass" onchange="updateClassInfo('player')">
                             <option value="sage">Martial Sage</option>
                             <option value="hunter">Sacred Hunter</option>
                             <option value="warbringer">Warbringer</option>
@@ -845,8 +845,8 @@
                     </div>
                 </div>
 
-                <div class="info-box info">
-                    <strong>Martial Sage:</strong> DEF, Counter, DMG RES, Shield specialist. 
+                <div class="info-box info" id="playerClassInfo">
+                    <strong>Martial Sage:</strong> DEF, Counter, DMG RES, Shield specialist.
                     <br><strong>Active:</strong> Blades Reunion (15s CD) - 12580% AoE DMG, -40% Counter DMG RES for 8s, counters deal +1% player current HP.
                     <br><strong>Passives:</strong> Restore 8% Max HP every 5s | Shield (8% Max HP) every 10s for 5s
                 </div>
@@ -864,10 +864,6 @@
                     <div class="input-group">
                         <label for="playerDEF">DEF (Millions)</label>
                         <input type="number" id="playerDEF" value="5500" step="100">
-                    </div>
-                    <div class="input-group">
-                        <label for="playerDefCoe">DEF Coeff</label>
-                        <input type="number" id="playerDefCoe" value="0" step="0.01">
                     </div>
                     <div class="input-group">
                         <label for="playerATKSPD">ATK SPD</label>
@@ -1127,7 +1123,7 @@
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="enemyClass">Class</label>
-                        <select id="enemyClass">
+                        <select id="enemyClass" onchange="updateClassInfo('enemy')">
                             <option value="sage">Martial Sage</option>
                             <option value="hunter">Sacred Hunter</option>
                             <option value="warbringer">Warbringer</option>
@@ -1137,6 +1133,12 @@
                         <label for="enemyLevel">Level</label>
                         <input type="number" id="enemyLevel" value="200" min="1" max="220">
                     </div>
+                </div>
+
+                <div class="info-box info" id="enemyClassInfo">
+                    <strong>Martial Sage:</strong> DEF, Counter, DMG RES, Shield specialist.
+                    <br><strong>Active:</strong> Blades Reunion (15s CD) - 12580% AoE DMG, -40% Counter DMG RES for 8s, counters deal +1% player current HP.
+                    <br><strong>Passives:</strong> Restore 8% Max HP every 5s | Shield (8% Max HP) every 10s for 5s
                 </div>
 
                 <div class="section-title">Core Stats</div>
@@ -1152,10 +1154,6 @@
                     <div class="input-group">
                         <label for="enemyDEF">DEF (Millions)</label>
                         <input type="number" id="enemyDEF" value="5500" step="100">
-                    </div>
-                    <div class="input-group">
-                        <label for="enemyDefCoe">DEF Coeff</label>
-                        <input type="number" id="enemyDefCoe" value="0" step="0.01">
                     </div>
                     <div class="input-group">
                         <label for="enemyATKSPD">ATK SPD</label>
@@ -2146,6 +2144,24 @@
             event.target.classList.add('active');
         }
 
+        const CLASS_INFO = {
+            sage: `<strong>Martial Sage:</strong> DEF, Counter, DMG RES, Shield specialist.
+                    <br><strong>Active:</strong> Blades Reunion (15s CD) - 12580% AoE DMG, -40% Counter DMG RES for 8s, counters deal +1% player current HP.
+                    <br><strong>Passives:</strong> Restore 8% Max HP every 5s | Shield (8% Max HP) every 10s for 5s`,
+            hunter: `<strong>Sacred Hunter:</strong> ATK, Crit, HP% DMG specialist.
+                    <br><strong>Active:</strong> Piercing Boneforge (15s CD) - 14161% DMG, -40% Combo RES for 8s, Energy Lock 4s.
+                    <br><strong>Passives:</strong> Basic ATK deals 1% target current HP | After crit, ATK +40% for 1s`,
+            warbringer: `<strong>Warbringer:</strong> ATK, DEF swap, AoE Counter specialist.
+                    <br><strong>Active:</strong> Shatter Axe (15s CD) - 12580% DMG, Counter RES -40% for 8s, stat swap (+0.15 DEF per ATK, +0.75 ATK per DEF).
+                    <br><strong>Passives:</strong> AoE counter (20%) when hit | ATK scales with HP loss (3% per 10% lost)`
+        };
+
+        function updateClassInfo(side) {
+            const cls = document.getElementById(side === 'player' ? 'playerClass' : 'enemyClass').value;
+            const el = document.getElementById(side === 'player' ? 'playerClassInfo' : 'enemyClassInfo');
+            if (el && CLASS_INFO[cls]) el.innerHTML = CLASS_INFO[cls];
+        }
+
         function toggleCollapse(id) {
             const el = document.getElementById(id);
             const title = el.previousElementSibling;
@@ -2263,7 +2279,7 @@
                 hp: parseFloat(document.getElementById(prefix + 'HP').value) * 1e9,
                 maxHP: parseFloat(document.getElementById(prefix + 'HP').value) * 1e9,
                 def: parseFloat(document.getElementById(prefix + 'DEF').value) * 1e6,
-                defCoe: parseFloat(document.getElementById(prefix + 'DefCoe').value) || 0,
+                defCoe: 0,
                 atkSpd: parseFloat(document.getElementById(prefix + 'ATKSPD').value),
                 
                 basicATKMult: parseFloat(document.getElementById(prefix + 'BasicATKMult').value),
