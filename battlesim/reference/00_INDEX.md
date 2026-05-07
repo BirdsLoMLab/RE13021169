@@ -38,7 +38,8 @@
 | 19 | `19_BACK_DECORATIONS.md` | All 45 back accessories with full effect text, skill IDs, skin progression (xlsx + config) |
 | 20 | `20_SPECIAL_MECHANICS.md` | 0.98 exponent, clones, speed cascade, animation exploit |
 | 21 | *(merged into 15_ANGELS.md)* | — |
-| — | `bosses_master.json` | PvE boss database: 100 story chapters, World Boss (100 lvls), Dark Trial (200 stages), GvE League (160), Palu World Boss, Reversion War, Activity bosses, Alchemy/Magic-Theater. Stats incl. crit_def, miss/hit, resistances. |
+| 22 | `22_PVE_BOSSES.md` | PvE boss reference: scaling tables for story chapters, World Boss, Dark Trial, Palu, Activity bosses, etc. |
+| — | `bosses_master.json` | Structured PvE boss database (full data backing 22_PVE_BOSSES.md) |
 
 ## Key Constants Quick Reference
 
