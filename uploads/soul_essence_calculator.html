@@ -191,7 +191,7 @@
     <div class="statgrid" id="statGrid"></div>
 
     <div class="note">
-      <b>Final = HP Total &times; (Base HP Total % &divide; 100) &times; (1 + Global% &divide; 100)</b> &mdash; the three in-game numbers that make the final.<br>
+      <b>Final = HP Total &times; (1 + Base HP Total % &divide; 100) &times; (1 + Global% &divide; 100)</b> &mdash; the three in-game numbers that make the final (same formula as the Stat Calculator).<br>
       &bull; <b>HP Total</b> &mdash; flat total (Initial Attributes + Equip + Adventure + Enchant + Avian &hellip; all fold into this).<br>
       &bull; <b>Base HP Total %</b> &mdash; the big base multiplier row from the game (e.g. 2308.6k%).<br>
       &bull; <b>Global % (minus all from souls)</b> &mdash; your Global % with the soul share removed. <b>The soul gain lands here:</b> the tool adds the HP/ATK/DEF soul&rsquo;s global back in to get <b>Global % (total)</b>, so Final moves live as those soul levels change.<br>
@@ -398,16 +398,16 @@ function recalc(){
     warn.textContent=`⚠ Over budget by ${fmt(-left)} essence — lower some soul levels`;
   } else { warn.classList.add("hide"); warn.textContent=""; }
 
-  // --- final stats (matches in-game breakdown) ---
+  // --- final stats (matches in-game breakdown & the Stat Calculator tab) ---
   //  Global % (total) = (Global % minus souls) + (soul global %)   <- souls feed here
-  //  Final X = X Total * (Base X Total % / 100) * (1 + Global% total / 100)
+  //  Final X = X Total * (1 + Base X Total % / 100) * (1 + Global% total / 100)
   STATS.forEach(s=>{
     const totalFlat   = numVal("t"+s.k);
     const baseTotalPct= numVal("b"+s.k);
     const globNoSoul  = numVal("g"+s.k);
     const soulPct     = soulPrimaryPct(s.i);
     const globTotal   = globNoSoul + soulPct;
-    const finalV = totalFlat * (baseTotalPct/100) * (1 + globTotal/100);
+    const finalV = totalFlat * (1 + baseTotalPct/100) * (1 + globTotal/100);
     document.getElementById("soul"+s.k).textContent = "+"+soulPct.toFixed(2)+"%";
     document.getElementById("gtot"+s.k).textContent = fmtBig(globTotal)+"%";
     const fEl=document.getElementById("final"+s.k);
