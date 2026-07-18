@@ -191,10 +191,11 @@
     <div class="statgrid" id="statGrid"></div>
 
     <div class="note">
-      <b>Final = HP Total &times; (Base HP Total % &divide; 100)</b>, matching the in-game breakdown.<br>
-      &bull; <b>HP Total</b> &mdash; your flat total (Initial Attributes + Equip + Adventure + Enchant + Avian + &hellip;).<br>
-      &bull; <b>Global % (minus all from souls)</b> &mdash; your in-game <i>Base HP Total %</i> with the soul contribution removed.<br>
-      &bull; The tool adds the soul&rsquo;s global back in to show <b>Base HP Total %</b>, then computes <b>Final</b>. Soul globals: HP&larr;HP soul, ATK&larr;ATK soul, DEF&larr;DEF soul. Inputs accept k/m/b/t suffixes. Remaining turns <span style="color:var(--bad);font-weight:800">red</span> if the set costs more essence than you own.
+      <b>Final = HP Total &times; (Base HP Total % &divide; 100) &times; (1 + Global% &divide; 100)</b> &mdash; the three in-game numbers that make the final.<br>
+      &bull; <b>HP Total</b> &mdash; flat total (Initial Attributes + Equip + Adventure + Enchant + Avian &hellip; all fold into this).<br>
+      &bull; <b>Base HP Total %</b> &mdash; the big base multiplier row from the game (e.g. 2308.6k%).<br>
+      &bull; <b>Global % (minus all from souls)</b> &mdash; your Global % with the soul share removed. <b>The soul gain lands here:</b> the tool adds the HP/ATK/DEF soul&rsquo;s global back in to get <b>Global % (total)</b>, so Final moves live as those soul levels change.<br>
+      Inputs accept k/m/b/t suffixes; hover a Final for the exact number. Remaining turns <span style="color:var(--bad);font-weight:800">red</span> if the set costs more essence than you own.
     </div>
   </div>
 
@@ -218,6 +219,16 @@ function fmtBig(n){
   if(a>=1e9)  return cut(n/1e9,"B");
   if(a>=1e6)  return cut(n/1e6,"M");
   if(a>=1e3)  return cut(n/1e3,"K");
+  return (Math.round(n*100)/100).toLocaleString("en-US");
+}
+// final-stat format that caps at B like the in-game display (e.g. 4156.2B)
+function fmtFinal(n){
+  if(!isFinite(n)) return "0";
+  const a=Math.abs(n);
+  const cut=(v,suf)=>v.toFixed(v>=100?1:2).replace(/\.?0+$/,"")+suf;
+  if(a>=1e9) return cut(n/1e9,"B");
+  if(a>=1e6) return cut(n/1e6,"M");
+  if(a>=1e3) return cut(n/1e3,"K");
   return (Math.round(n*100)/100).toLocaleString("en-US");
 }
 // parse a number that may carry a k/m/b/t/q suffix or commas
@@ -335,17 +346,19 @@ statGrid.innerHTML=STATS.map(s=>`
     <div class="sk">${s.k}</div>
     <div class="field"><label>${s.k} Total</label>
       <input type="text" inputmode="decimal" id="t${s.k}" value="0" placeholder="e.g. 22276k"></div>
+    <div class="field"><label>Base ${s.k} Total %</label>
+      <input type="text" inputmode="decimal" id="b${s.k}" value="0" placeholder="e.g. 2308.6k"></div>
     <div class="field"><label>Global % (minus all from souls)</label>
-      <input type="text" inputmode="decimal" id="g${s.k}" value="0" placeholder="e.g. 2308397.5"></div>
+      <input type="text" inputmode="decimal" id="g${s.k}" value="0" placeholder="e.g. 505.64"></div>
     <div class="out">
       <div class="r"><span>${s.k} soul global</span><b class="soul" id="soul${s.k}">+0%</b></div>
-      <div class="r"><span>Base ${s.k} Total %</span><b id="base${s.k}">0%</b></div>
+      <div class="r"><span>Global ${s.k} % (total)</span><b id="gtot${s.k}">0%</b></div>
     </div>
     <div class="final"><div class="fk">FINAL ${s.k}</div><div class="fv" id="final${s.k}" title="">0</div></div>
   </div>`).join("");
 
 function numVal(id){ return parseNum(document.getElementById(id).value); }
-["owned"].concat(STATS.flatMap(s=>["t"+s.k,"g"+s.k])).forEach(id=>{
+["owned"].concat(STATS.flatMap(s=>["t"+s.k,"b"+s.k,"g"+s.k])).forEach(id=>{
   document.getElementById(id).addEventListener("input", recalc);
 });
 
@@ -386,18 +399,19 @@ function recalc(){
   } else { warn.classList.add("hide"); warn.textContent=""; }
 
   // --- final stats (matches in-game breakdown) ---
-  //  Base X Total % = (Global % minus souls) + (soul global %)
-  //  Final X        = X Total * Base X Total % / 100
+  //  Global % (total) = (Global % minus souls) + (soul global %)   <- souls feed here
+  //  Final X = X Total * (Base X Total % / 100) * (1 + Global% total / 100)
   STATS.forEach(s=>{
-    const totalFlat = numVal("t"+s.k);
-    const globNoSoul = numVal("g"+s.k);
-    const soulPct = soulPrimaryPct(s.i);
-    const basePct = globNoSoul + soulPct;
-    const finalV = totalFlat * basePct / 100;
+    const totalFlat   = numVal("t"+s.k);
+    const baseTotalPct= numVal("b"+s.k);
+    const globNoSoul  = numVal("g"+s.k);
+    const soulPct     = soulPrimaryPct(s.i);
+    const globTotal   = globNoSoul + soulPct;
+    const finalV = totalFlat * (baseTotalPct/100) * (1 + globTotal/100);
     document.getElementById("soul"+s.k).textContent = "+"+soulPct.toFixed(2)+"%";
-    document.getElementById("base"+s.k).textContent = fmtBig(basePct)+"%";
+    document.getElementById("gtot"+s.k).textContent = fmtBig(globTotal)+"%";
     const fEl=document.getElementById("final"+s.k);
-    fEl.textContent = fmtBig(finalV);
+    fEl.textContent = fmtFinal(finalV);
     fEl.title = Math.round(finalV).toLocaleString("en-US");
   });
 }
