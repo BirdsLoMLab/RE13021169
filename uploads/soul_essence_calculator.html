@@ -72,6 +72,10 @@
   }
   .lvl input::-webkit-outer-spin-button,.lvl input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   .lvl .cap{font-size:8px;color:#b7996f;align-self:center;margin-left:1px}
+  .soul .cost{margin-top:6px;font-size:10.5px;font-weight:700;color:#f0d089;
+    background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:3px 4px;line-height:1.15}
+  .soul .cost b{color:#fff}
+  .soul .cost.max b{color:#8fe0a0}
 
   /* ---- Tabs + panels (parchment) ---- */
   .tabs{display:flex;gap:8px;justify-content:center;margin-bottom:-3px;position:relative;z-index:2}
@@ -123,13 +127,20 @@
     min-height:16px;transition:opacity .15s}
   .warn.hide{opacity:0}
 
-  .finalrow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
-  @media(max-width:560px){.finalrow{grid-template-columns:1fr}}
-  .fstat{background:linear-gradient(180deg,#fff,#f3e6c6);border:2px solid var(--parch-line);border-radius:12px;padding:12px;text-align:center}
-  .fstat .k{font-size:12px;font-weight:900;color:var(--gold-dk);letter-spacing:.5px}
-  .fstat .v{font-size:26px;font-weight:900;color:var(--ink);margin:4px 0 2px}
-  .fstat .d{font-size:11px;color:var(--ink-soft);font-weight:700}
-  .fstat .d b{color:var(--pink-dk)}
+  .statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.statgrid{grid-template-columns:1fr}}
+  .scard{background:linear-gradient(180deg,#fff,#f3e6c6);border:2px solid var(--parch-line);border-radius:12px;padding:12px}
+  .scard .sk{font-size:15px;font-weight:900;color:var(--gold-dk);letter-spacing:.5px;text-align:center;margin-bottom:8px;
+    border-bottom:1px solid var(--parch-line);padding-bottom:6px}
+  .scard .field{margin-bottom:8px}
+  .scard .field label{font-size:11px}
+  .scard .out{background:rgba(0,0,0,.04);border:1px solid var(--parch-line);border-radius:8px;padding:7px 9px;margin:8px 0}
+  .scard .out .r{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;font-weight:700;color:var(--ink-soft);padding:1px 0}
+  .scard .out .r b{font-weight:900;color:var(--ink)}
+  .scard .out .r b.soul{color:var(--pink-dk)}
+  .scard .final{text-align:center;margin-top:4px}
+  .scard .final .fk{font-size:11px;font-weight:800;color:var(--gold-dk);letter-spacing:.4px}
+  .scard .final .fv{font-size:25px;font-weight:900;color:var(--ink);line-height:1.05;margin-top:2px;word-break:break-all}
   .note{font-size:11px;color:#8a6a44;margin-top:12px;line-height:1.5}
   .note code{background:rgba(0,0,0,.06);padding:1px 4px;border-radius:4px}
   .foot{text-align:center;color:#c9ad84;font-size:11px;margin-top:18px}
@@ -162,44 +173,28 @@
 
   <!-- SET BUILDER -->
   <div class="panel hide" id="panelSet">
-    <div class="grid2">
-      <div>
-        <div class="card" style="margin-bottom:14px">
-          <div class="rowlabel">Soul Essence Budget</div>
-          <div class="field">
-            <label>Total Soul Essence you own</label>
-            <input type="text" inputmode="numeric" id="owned" placeholder="e.g. 2500000" value="">
-          </div>
-          <div class="money">
-            <div class="stat owned"><div class="k">Owned</div><div class="v" id="mOwned">0</div></div>
-            <div class="stat used"><div class="k">Used by set</div><div class="v" id="mUsed">0</div></div>
-            <div class="stat left" id="leftBox"><div class="k">Remaining</div><div class="v" id="mLeft">0</div></div>
-          </div>
-          <div class="warn hide" id="warn"></div>
-        </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="rowlabel">Soul Essence Budget</div>
+      <div class="field">
+        <label>Total Soul Essence you own <small style="font-weight:600;text-transform:none;color:#9a7c52">(accepts 2.5m, 900k, etc.)</small></label>
+        <input type="text" inputmode="numeric" id="owned" placeholder="e.g. 2.5m" value="">
       </div>
-      <div>
-        <div class="card">
-          <div class="rowlabel">Base Stats &amp; Globals <small style="font-weight:600;text-transform:none;color:#9a7c52">(globals = everything EXCEPT souls)</small></div>
-          <div class="grid2" style="gap:8px">
-            <div class="field"><label>Base HP</label><input type="text" inputmode="numeric" id="baseHP" value="0"></div>
-            <div class="field"><label>Global HP % (no souls)</label><input type="text" inputmode="decimal" id="glbHP" value="0"></div>
-            <div class="field"><label>Base ATK</label><input type="text" inputmode="numeric" id="baseATK" value="0"></div>
-            <div class="field"><label>Global ATK % (no souls)</label><input type="text" inputmode="decimal" id="glbATK" value="0"></div>
-            <div class="field"><label>Base DEF</label><input type="text" inputmode="numeric" id="baseDEF" value="0"></div>
-            <div class="field"><label>Global DEF % (no souls)</label><input type="text" inputmode="decimal" id="glbDEF" value="0"></div>
-          </div>
-        </div>
+      <div class="money">
+        <div class="stat owned"><div class="k">Owned</div><div class="v" id="mOwned">0</div></div>
+        <div class="stat used"><div class="k">Used by set</div><div class="v" id="mUsed">0</div></div>
+        <div class="stat left" id="leftBox"><div class="k">Remaining</div><div class="v" id="mLeft">0</div></div>
       </div>
+      <div class="warn hide" id="warn"></div>
     </div>
-    <div class="card" style="margin-top:14px">
-      <div class="rowlabel">Live Final Stats (base &times; [1 + (your global + soul global)])</div>
-      <div class="finalrow" id="finalRow"></div>
-    </div>
+
+    <div class="rowlabel" style="margin:2px 4px 8px">Final Stats <small style="font-weight:600;text-transform:none;color:#9a7c52">&mdash; soul globals update live with the soul levels above</small></div>
+    <div class="statgrid" id="statGrid"></div>
+
     <div class="note">
-      Final&nbsp;=&nbsp;Base &times; (1 + (YourGlobal% + SoulGlobal%) / 100). The soul global updates live as you move the HP / ATK / DEF soul levels above.
-      Soul globals: <b>Global HP</b> &larr; HP soul, <b>Global ATK</b> &larr; ATK soul, <b>Global DEF</b> &larr; DEF soul.
-      Remaining turns <span style="color:var(--bad);font-weight:800">red</span> and blocks if the set costs more essence than you own.
+      <b>Final = HP Total &times; (Base HP Total % &divide; 100)</b>, matching the in-game breakdown.<br>
+      &bull; <b>HP Total</b> &mdash; your flat total (Initial Attributes + Equip + Adventure + Enchant + Avian + &hellip;).<br>
+      &bull; <b>Global % (minus all from souls)</b> &mdash; your in-game <i>Base HP Total %</i> with the soul contribution removed.<br>
+      &bull; The tool adds the soul&rsquo;s global back in to show <b>Base HP Total %</b>, then computes <b>Final</b>. Soul globals: HP&larr;HP soul, ATK&larr;ATK soul, DEF&larr;DEF soul. Inputs accept k/m/b/t suffixes. Remaining turns <span style="color:var(--bad);font-weight:800">red</span> if the set costs more essence than you own.
     </div>
   </div>
 
@@ -213,6 +208,26 @@ const MAX = DATA.maxLevel;            // 100
 const QNAME = {1:"Common",2:"Uncommon",3:"Rare",4:"Epic",5:"Legendary",6:"Mythic"};
 const QCOL  = {1:"#7f8a52",2:"#3f8f4e",3:"#3273b8",4:"#7a45c4",5:"#d0862a",6:"#c92f7e"};
 const fmt = n => Math.round(n).toLocaleString("en-US");
+// compact K/M/B/T format for large game-style numbers
+function fmtBig(n){
+  if(!isFinite(n)) return "0";
+  const a=Math.abs(n);
+  const cut=(v,suf)=>{ let s=v.toFixed(2).replace(/\.?0+$/,""); return s+suf; };
+  if(a>=1e15) return cut(n/1e15,"Q");
+  if(a>=1e12) return cut(n/1e12,"T");
+  if(a>=1e9)  return cut(n/1e9,"B");
+  if(a>=1e6)  return cut(n/1e6,"M");
+  if(a>=1e3)  return cut(n/1e3,"K");
+  return (Math.round(n*100)/100).toLocaleString("en-US");
+}
+// parse a number that may carry a k/m/b/t/q suffix or commas
+function parseNum(str){
+  str=String(str).trim().replace(/,/g,"").replace(/\s+/g,"");
+  const m=str.match(/^(-?[0-9]*\.?[0-9]+)([kmbtq])?$/i);
+  if(!m) return parseFloat(str.replace(/[^0-9.\-]/g,""))||0;
+  const mult={k:1e3,m:1e6,b:1e9,t:1e12,q:1e15}[(m[2]||"").toLowerCase()]||1;
+  return (parseFloat(m[1])||0)*mult;
+}
 
 // state: per soul {level, quality}
 const state = DATA.souls.map(s => ({level:1, quality: Math.max(...s.qualities)})); // default Mythic
@@ -222,6 +237,11 @@ function essenceForSoul(q, level){
   const e = DATA.expend[q]; let t=0;
   for(let L=1; L<level; L++) t += e[L-1];   // e[0] = cost L1->L2
   return t;
+}
+// essence to upgrade a soul from its current level to the next (0 if maxed)
+function nextCost(q, level){
+  if(level>=MAX) return null;
+  return DATA.expend[q][level-1];   // expend[0] = Lv1->Lv2
 }
 // primary global % (basis points /100) for a soul at (q, level)
 function soulPrimaryPct(idx){
@@ -251,7 +271,8 @@ DATA.souls.forEach((s, idx) => {
       <button data-i="${idx}" data-op="inc">+</button>
       <button class="clr" data-i="${idx}" data-op="clr">CLR</button>
     </div>
-    <div class="cap" style="text-align:center;font-size:8px;color:#b7996f;margin-top:3px">Lv 1&ndash;${MAX}</div>`;
+    <div class="cap" style="text-align:center;font-size:8px;color:#b7996f;margin-top:3px">Lv 1&ndash;${MAX}</div>
+    <div class="cost" data-i="${idx}">&nbsp;</div>`;
   grid.appendChild(cell);
 });
 // init quality selects to Mythic default + colour
@@ -305,21 +326,44 @@ document.querySelectorAll(".tab").forEach(t=>{
   });
 });
 
-/* ---------- number field parsing for set builder ---------- */
-function numVal(id){ return parseFloat(String(document.getElementById(id).value).replace(/[^0-9.]/g,""))||0; }
-["owned","baseHP","glbHP","baseATK","glbATK","baseDEF","glbDEF"].forEach(id=>{
+/* ---------- set builder: build the 3 final-stat cards ---------- */
+const HP_I=0, ATK_I=4, DEF_I=5;   // soul indices feeding HP/ATK/DEF globals
+const STATS=[{k:"HP",i:HP_I},{k:"ATK",i:ATK_I},{k:"DEF",i:DEF_I}];
+const statGrid=document.getElementById("statGrid");
+statGrid.innerHTML=STATS.map(s=>`
+  <div class="scard">
+    <div class="sk">${s.k}</div>
+    <div class="field"><label>${s.k} Total</label>
+      <input type="text" inputmode="decimal" id="t${s.k}" value="0" placeholder="e.g. 22276k"></div>
+    <div class="field"><label>Global % (minus all from souls)</label>
+      <input type="text" inputmode="decimal" id="g${s.k}" value="0" placeholder="e.g. 2308397.5"></div>
+    <div class="out">
+      <div class="r"><span>${s.k} soul global</span><b class="soul" id="soul${s.k}">+0%</b></div>
+      <div class="r"><span>Base ${s.k} Total %</span><b id="base${s.k}">0%</b></div>
+    </div>
+    <div class="final"><div class="fk">FINAL ${s.k}</div><div class="fv" id="final${s.k}" title="">0</div></div>
+  </div>`).join("");
+
+function numVal(id){ return parseNum(document.getElementById(id).value); }
+["owned"].concat(STATS.flatMap(s=>["t"+s.k,"g"+s.k])).forEach(id=>{
   document.getElementById(id).addEventListener("input", recalc);
 });
 
 /* ---------- master recalc ---------- */
-const HP_I=0, ATK_I=4, DEF_I=5;
 function recalc(){
-  // --- essence calculator ---
+  // --- essence calculator + per-soul dynamic upgrade cost ---
   let total=0; const bd=[];
   DATA.souls.forEach((s,i)=>{
     const cost=essenceForSoul(state[i].quality, state[i].level);
     total+=cost;
     bd.push({label:s.label, q:state[i].quality, lvl:state[i].level, cost});
+    // live "next level" cost on the soul card
+    const cEl=grid.querySelector(`.cost[data-i="${i}"]`);
+    if(cEl){
+      const nc=nextCost(state[i].quality, state[i].level);
+      if(nc===null){ cEl.classList.add("max"); cEl.innerHTML=`Lv.${MAX} &middot; <b>MAX</b>`; }
+      else{ cEl.classList.remove("max"); cEl.innerHTML=`Lv.${state[i].level}&rarr;${state[i].level+1}: <b>${fmt(nc)}</b> &#128142;`; }
+    }
   });
   document.getElementById("essTotal").textContent=fmt(total);
   document.getElementById("essBreak").innerHTML = bd.map(x=>
@@ -341,19 +385,21 @@ function recalc(){
     warn.textContent=`⚠ Over budget by ${fmt(-left)} essence — lower some soul levels`;
   } else { warn.classList.add("hide"); warn.textContent=""; }
 
-  // --- final stats ---
-  const rows=[
-    {k:"HP",  base:numVal("baseHP"),  glob:numVal("glbHP"),  soul:soulPrimaryPct(HP_I)},
-    {k:"ATK", base:numVal("baseATK"), glob:numVal("glbATK"), soul:soulPrimaryPct(ATK_I)},
-    {k:"DEF", base:numVal("baseDEF"), glob:numVal("glbDEF"), soul:soulPrimaryPct(DEF_I)},
-  ];
-  document.getElementById("finalRow").innerHTML = rows.map(r=>{
-    const mult = 1 + (r.glob + r.soul)/100;
-    const finalV = r.base*mult;
-    return `<div class="fstat"><div class="k">${r.k}</div>
-      <div class="v">${fmt(finalV)}</div>
-      <div class="d">soul global <b>+${r.soul.toFixed(2)}%</b> &middot; total +${(r.glob+r.soul).toFixed(2)}%</div></div>`;
-  }).join("");
+  // --- final stats (matches in-game breakdown) ---
+  //  Base X Total % = (Global % minus souls) + (soul global %)
+  //  Final X        = X Total * Base X Total % / 100
+  STATS.forEach(s=>{
+    const totalFlat = numVal("t"+s.k);
+    const globNoSoul = numVal("g"+s.k);
+    const soulPct = soulPrimaryPct(s.i);
+    const basePct = globNoSoul + soulPct;
+    const finalV = totalFlat * basePct / 100;
+    document.getElementById("soul"+s.k).textContent = "+"+soulPct.toFixed(2)+"%";
+    document.getElementById("base"+s.k).textContent = fmtBig(basePct)+"%";
+    const fEl=document.getElementById("final"+s.k);
+    fEl.textContent = fmtBig(finalV);
+    fEl.title = Math.round(finalV).toLocaleString("en-US");
+  });
 }
 recalc();
 </script>
