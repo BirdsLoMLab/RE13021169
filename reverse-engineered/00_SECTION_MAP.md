@@ -326,7 +326,7 @@
 | 43 | Snail Pal Speed Reduction Deep Dive | Buff 10003 CTR-group classification, multiplicative speed formula, motorcycle mount interaction, Beastmaster enhancement, speed cascade |
 | 44 | Gacha & Event Probability Investigation | cli_weight vs serv_weight smoking gun, server-authoritative draws, pity/must_info system, 30+ gacha system inventory, account luck analysis |
 | 45 | Pal DMG/Crit/Combo Deep Dive | partner_dam/crit/combo interactions |
-| 46 | **Config Tables Master Reference** | Decode pipeline (FilePack v5, XOR key 24455), schema system, table joins & attribute-ID convention, attribute model, damage/stat formulas, progression tables, worked examples, and the **complete catalog of all 909 tables**. Also shipped as **DOCX + PDF** guides (`CONFIG_TABLES_MASTER_REFERENCE.docx` / `.pdf`). |
+| 46 | **Config Tables Master Reference** | Decode pipeline (FilePack v5, XOR key 24455), schema system, table joins & attribute-ID convention, attribute model, damage/stat formulas, progression tables, worked examples, and the **complete catalog of all 908 tables**. Also shipped as **DOCX + PDF** guides (`CONFIG_TABLES_MASTER_REFERENCE.docx` / `.pdf`). |
 
 ### Meta (97-99)
 | Doc | Title |
