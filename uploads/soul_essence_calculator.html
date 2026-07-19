@@ -135,6 +135,17 @@
     border-bottom:1px solid var(--parch-line);padding-bottom:6px}
   .scard .field{margin-bottom:8px}
   .scard .field label{font-size:11px}
+  .scard .field label small{font-weight:600;color:#9a7c52}
+  .scard .minus{display:flex;justify-content:space-between;align-items:baseline;
+    background:rgba(226,67,154,.10);border:1px dashed rgba(180,31,116,.4);border-radius:8px;
+    padding:6px 9px;margin:2px 0 8px;font-size:11.5px;font-weight:700;color:var(--ink-soft)}
+  .scard .minus b{font-weight:900;color:var(--pink-dk)}
+  .finalhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 4px 8px;flex-wrap:wrap}
+  .mathbtn{border:2px solid #23140b;border-radius:9px;cursor:pointer;font-weight:900;font-size:11.5px;
+    letter-spacing:.4px;padding:7px 12px;color:#3a2410;
+    background:linear-gradient(180deg,#f6d98a,#dcae4c);box-shadow:0 2px 0 #9a7020;white-space:nowrap}
+  .mathbtn:active{transform:translateY(1px);box-shadow:0 1px 0 #9a7020}
+  .mathbtn.on{color:#fff;background:linear-gradient(180deg,#e368ad,#b41f74);box-shadow:0 2px 0 #7a1550}
   .scard .out{background:rgba(0,0,0,.04);border:1px solid var(--parch-line);border-radius:8px;padding:7px 9px;margin:8px 0}
   .scard .out .r{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;font-weight:700;color:var(--ink-soft);padding:1px 0}
   .scard .out .r b{font-weight:900;color:var(--ink)}
@@ -188,7 +199,10 @@
       <div class="warn hide" id="warn"></div>
     </div>
 
-    <div class="rowlabel" style="margin:2px 4px 8px">Final Stats <small style="font-weight:600;text-transform:none;color:#9a7c52">&mdash; soul globals update live with the soul levels above</small></div>
+    <div class="finalhead">
+      <div class="rowlabel" style="margin:0">Final Stats <small style="font-weight:600;text-transform:none;color:#9a7c52">&mdash; soul globals update live with the soul levels above</small></div>
+      <button type="button" id="mathHard" class="mathbtn" title="Let the tool subtract your soul global for you">MATH IS HARD</button>
+    </div>
     <div class="statgrid" id="statGrid"></div>
 
     <div class="note">
@@ -196,6 +210,7 @@
       &bull; <b>HP Total</b> &mdash; flat total (Initial Attributes + Equip + Adventure + Enchant + Avian &hellip; all fold into this).<br>
       &bull; <b>Base HP Total %</b> &mdash; the big base multiplier row from the game (e.g. 2308.6k%).<br>
       &bull; <b>Global % (minus all from souls)</b> &mdash; your Global % with the soul share removed. <b>The soul gain lands here:</b> the tool adds the HP/ATK/DEF soul&rsquo;s global back in to get <b>Global % (total)</b>, so Final moves live as those soul levels change.<br>
+      Hate subtracting? Hit <b>MATH IS HARD</b> and just enter your <i>total</i> Global % and your <i>current</i> Global % from souls &mdash; the tool works out the minus-souls value for you.<br>
       Inputs accept k/m/b/t suffixes; hover a Final for the exact number. Remaining turns <span style="color:var(--bad);font-weight:800">red</span> if the set costs more essence than you own.
     </div>
   </div>
@@ -350,8 +365,17 @@ statGrid.innerHTML=STATS.map(s=>`
       <input type="text" inputmode="decimal" id="t${s.k}" value="0" placeholder="e.g. 22276k"></div>
     <div class="field"><label>Base ${s.k} Total %</label>
       <input type="text" inputmode="decimal" id="b${s.k}" value="0" placeholder="e.g. 2308.6k"></div>
-    <div class="field"><label>Global % (minus all from souls)</label>
-      <input type="text" inputmode="decimal" id="g${s.k}" value="0" placeholder="e.g. 505.64"></div>
+    <div class="gwrap gnormal" data-k="${s.k}">
+      <div class="field"><label>Global % (minus all from souls)</label>
+        <input type="text" inputmode="decimal" id="g${s.k}" value="0" placeholder="e.g. 505.64"></div>
+    </div>
+    <div class="gwrap ghard" data-k="${s.k}" style="display:none">
+      <div class="field"><label>Total Global % <small>(your current, incl. souls)</small></label>
+        <input type="text" inputmode="decimal" id="gt${s.k}" value="0" placeholder="e.g. 708.14"></div>
+      <div class="field"><label>Current Global % from souls</label>
+        <input type="text" inputmode="decimal" id="gs${s.k}" value="0" placeholder="e.g. 202.5"></div>
+      <div class="minus"><span>Global % (minus souls)</span><b id="gm${s.k}">0%</b></div>
+    </div>
     <div class="out">
       <div class="r"><span>${s.k} soul global</span><b class="soul" id="soul${s.k}">+0%</b></div>
       <div class="r"><span>Global ${s.k} % (total)</span><b id="gtot${s.k}">0%</b></div>
@@ -360,8 +384,20 @@ statGrid.innerHTML=STATS.map(s=>`
   </div>`).join("");
 
 function numVal(id){ return parseNum(document.getElementById(id).value); }
-["owned"].concat(STATS.flatMap(s=>["t"+s.k,"b"+s.k,"g"+s.k])).forEach(id=>{
+["owned"].concat(STATS.flatMap(s=>["t"+s.k,"b"+s.k,"g"+s.k,"gt"+s.k,"gs"+s.k])).forEach(id=>{
   document.getElementById(id).addEventListener("input", recalc);
+});
+
+/* ---------- "MATH IS HARD" toggle: derive the minus-souls global by subtraction ---------- */
+let hardMode = false;
+const mathBtn = document.getElementById("mathHard");
+mathBtn.addEventListener("click", ()=>{
+  hardMode = !hardMode;
+  mathBtn.classList.toggle("on", hardMode);
+  mathBtn.textContent = hardMode ? "MATH IS EASY ✓" : "MATH IS HARD";
+  document.querySelectorAll(".gnormal").forEach(el=> el.style.display = hardMode ? "none" : "");
+  document.querySelectorAll(".ghard").forEach(el=>   el.style.display = hardMode ? "" : "none");
+  recalc();
 });
 
 /* ---------- master recalc ---------- */
@@ -406,7 +442,15 @@ function recalc(){
   STATS.forEach(s=>{
     const totalFlat   = numVal("t"+s.k);
     const baseTotalPct= numVal("b"+s.k);
-    const globNoSoul  = numVal("g"+s.k);
+    // Global % excluding souls: typed directly, or (in MATH IS HARD mode) derived
+    // as (your total global) - (your current global from souls).
+    let globNoSoul;
+    if(hardMode){
+      globNoSoul = numVal("gt"+s.k) - numVal("gs"+s.k);
+      document.getElementById("gm"+s.k).textContent = fmtBig(globNoSoul)+"%";
+    } else {
+      globNoSoul = numVal("g"+s.k);
+    }
     const soulPct     = soulPrimaryPct(s.i);
     const globTotal   = globNoSoul + soulPct;
     const finalV = totalFlat * (1 + baseTotalPct/100) * (1 + globTotal/100);
