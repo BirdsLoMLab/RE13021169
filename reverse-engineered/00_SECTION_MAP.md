@@ -327,6 +327,7 @@
 | 44 | Gacha & Event Probability Investigation | cli_weight vs serv_weight smoking gun, server-authoritative draws, pity/must_info system, 30+ gacha system inventory, account luck analysis |
 | 45 | Pal DMG/Crit/Combo Deep Dive | partner_dam/crit/combo interactions |
 | 46 | **Config Tables Master Reference** | Decode pipeline (FilePack v5, XOR key 24455), schema system, table joins & attribute-ID convention, attribute model, damage/stat formulas, progression tables, worked examples, and the **complete catalog of all 908 tables**. Also shipped as **DOCX + PDF** guides (`CONFIG_TABLES_MASTER_REFERENCE.docx` / `.pdf`). |
+| 47 | Class Skill Duration Reduction Deep Dive | Sacred Hunter pause_cd freeze (base 4s) and its four counters: No Speeding/Speed Disruption (attr 1061 `skillbuff_time_all` debuff, shared buff 230040), Thorny Spore relic 4035 & Dawn Warwing (SKILL_BUFFTIME_ADD group 360, explicit class-skill lists). Full stacking math; corrects relic 4035 naming and 34's "no counter exists" claim. |
 
 ### Meta (97-99)
 | Doc | Title |
