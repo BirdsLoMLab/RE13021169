@@ -32,6 +32,8 @@ Reverse-engineering project for **Legend of Mushroom** (LOM) PvP battle mechanic
 - `data/constants/` — battle_constants.json, pvp_constants.json, attribute_caps.json
 - `data/tables/` — large config tables (.gitignored)
 - Python utilities at repo root: `decode_config_data.py`, `extract_constants.py`, `extract_enums.py`, etc.
+- `fetch_live_assets.py` — mirrors the live web client (scripts, config tables, bundles) from https://lom.joynetgame.com/ by walking the Cocos bootstrap chain (index.html → settings.json → bundle config.json). Output goes to `uploads/live_YYYYMMDD/`, then run `decode_config_data.py` on it. **Must be run from a machine with open internet** — the remote Claude sandbox egress policy blocks joynetgame.com hosts.
+- `lom.joynetgame.com.zip` + `uploads/bundle-firstload-res.zip` — site capture from 2026-02-28 (hot-update manifest inside bundle-LoadingView reports client 1.0.762).
 
 ## User Preferences
 - Credit: "Bird → Discord @birrrd08"
