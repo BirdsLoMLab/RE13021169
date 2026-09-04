@@ -11,6 +11,7 @@ Pipeline per table:
   3. Parse records: count(4B BE) + [str_len(2B BE) + JSON_string] × count
   4. Map positional arrays to named fields using schemas
   5. De-XOR protected numeric fields: value ^ CONFIG_KEY(24455)
+  6. Decode BigNumber arrays: nums[0]^534862510 (+ higher limbs × 1e9^i)
 
 Usage:
   python3 decode_config_data.py uploads/20260228
@@ -21,11 +22,27 @@ import argparse
 import glob
 import json
 import os
+import re
 import struct
 import sys
 import zlib
 
 CONFIG_KEY = 24455
+# BigNumber.ts: _nums[0] ^ BIGNUM_KEY + sum((_nums[i] ^ BIGNUM_KEY) * 1e9**i)
+BIGNUM_KEY = 534862510
+BIGNUM_BASE = 10**9
+
+
+def decode_bignum(nums):
+    """Decode a BigNumber array ([a] or [a, b, ...]) to a Python int."""
+    if not isinstance(nums, list) or not nums:
+        return nums
+    value = int(nums[0]) ^ BIGNUM_KEY
+    mult = BIGNUM_BASE
+    for n in nums[1:]:
+        value += (int(n) ^ BIGNUM_KEY) * mult
+        mult *= BIGNUM_BASE
+    return value
 
 
 def find_config_binary(base_path):
@@ -109,6 +126,14 @@ def load_schema(schema_dir, table_name):
         f"Config{table_name.lower()}.json",
         f"Config{table_name.replace('_', '')}.json",
     ]
+    # Sharded tables (MainUnit1..MainUnit100, Chapter1..Chapter100) share the
+    # schema of their base name (ConfigMainUnit / ConfigChapter).
+    base = re.sub(r"\d+$", "", table_name)
+    if base != table_name:
+        candidates.append(f"Config{base}.json")
+    # Language packs have no Config class; they are plain [id, text] pairs.
+    if table_name.startswith("Language"):
+        return {"fields": [{"name": "id", "index": 0}, {"name": "text", "index": 1}]}
     for candidate in candidates:
         path = os.path.join(schema_dir, candidate)
         if os.path.exists(path):
@@ -136,6 +161,9 @@ def apply_schema(records, schema):
                 # De-XOR protected numeric fields
                 if field.get("xor") and isinstance(val, (int, float)) and not isinstance(val, bool):
                     val = int(val) ^ CONFIG_KEY
+                # Decode BigNumber arrays (att/def/hp on units, damage fields, etc.)
+                elif field.get("type") == "bignum" and isinstance(val, list):
+                    val = decode_bignum(val)
                 obj[field["name"]] = val
 
         # Include any extra positional values beyond schema
