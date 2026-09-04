@@ -7,3 +7,7 @@ data/tables/
 # Upload archives and extracted data (large files, processed locally)
 uploads/*.7z
 uploads/*/
+
+# Python bytecode
+__pycache__/
+*.pyc
