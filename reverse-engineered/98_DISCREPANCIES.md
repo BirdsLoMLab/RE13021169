@@ -160,3 +160,27 @@ Miss/evasion uses `(100 × evasion)^0.9 / 100` with a PvP cap of 80%.
 - **Mutex 5 (Refresh per Caster):** Like 4 but resets duration instead of rejecting
 - **Pre-mutex:** Control immunity check, IGNORE_BUFFIDS blocking, CONTROL_RES duration reduction, shield_time_extra extension
 - **Type 0 (Instant):** Execute + destroy immediately, never tracked
+
+### U10. Attribute Debuffs vs Control Immunity — **DOC 43 CONTRADICTED BY CODE**
+Doc 43 (§5) states the snail slow (buff 10003, group 3 = CTR) is blocked outright by `notControlled` /
+`invincible`, and that cleanse targets group 4 rather than group 3.
+
+`SkillRunner.addBuff` (game_script.js @17059152) gates control immunity on the buff's **action string**, not
+its group:
+```javascript
+var C = ["dizz", "ban_skil", "throw_hit", "bound", "ban_act"];        // SkillRunner.ts @17051640
+if ((t.statectr.notControlled > 0 || t.statectr.invincible > 0) && C.includes(s.action)) return null;
+```
+`"attrib"` is not in `C`, so **no attribute buff or debuff — DEF reduction, snail slow, anything using the
+`attrib` action — is blocked by CC immunity.** `CONTROL_RES` (1042) likewise only shortens `"dizz"` and
+`"ban_act"` durations.
+
+Group is still meaningful elsewhere: `Buff.config` setter (@8501296) assigns `buffType = config.group`, and
+`BuffClear` (@8535706) with `param1 == 0` calls `buffCtr.removeBuff(n)`, which matches on `buffType` — so a
+cleanse *can* wipe an entire group. `param1 == 1` instead calls `stopBuffById(n)`, matching a specific id.
+
+**Resolution needed:** re-verify doc 43 §5 against a capture that includes `data/tables/Buff.json`. The
+immunity claim appears to be wrong as written; the cleanse claim is partly right (group-based removal exists,
+but it is opt-in per cleanse effect, not an automatic group-4-only rule). See
+[47_DEF_REDUCTION_DEEP_DIVE.md](47_DEF_REDUCTION_DEEP_DIVE.md) §4.
+

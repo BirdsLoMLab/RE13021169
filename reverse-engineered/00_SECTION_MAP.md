@@ -327,6 +327,7 @@
 | 44 | Gacha & Event Probability Investigation | cli_weight vs serv_weight smoking gun, server-authoritative draws, pity/must_info system, 30+ gacha system inventory, account luck analysis |
 | 45 | Pal DMG/Crit/Combo Deep Dive | partner_dam/crit/combo interactions |
 | 46 | **Config Tables Master Reference** | Decode pipeline (FilePack v5, XOR key 24455), schema system, table joins & attribute-ID convention, attribute model, damage/stat formulas, progression tables, worked examples, and the **complete catalog of all 908 tables**. Also shipped as **DOCX + PDF** guides (`CONFIG_TABLES_MASTER_REFERENCE.docx` / `.pdf`). |
+| 47 | DEF Reduction Deep Dive | Where "-X% DEF" lands: MetaAttrib `_time` on attr 1024, additive multiplicative pool, no lower clamp (negative DEF becomes attacker ATK), mutex stacking rules, CC immunity does NOT block attrib debuffs, pierce vs DEF reduction |
 
 ### Meta (97-99)
 | Doc | Title |
