@@ -6,6 +6,9 @@
 > alongside a pal **Deploy Effect: "Reduce all enemies' DEF by 24%"** and a support reply stating there is
 > **no stacking cap** on DEF reduction in PvP or PvE.
 >
+> **Config data:** all 908 tables decoded from `uploads/bundle-firstload-res.zip` via
+> `decode_config_data.py` (733,618 records → `data/tables/`, gitignored). `Buff.json` = 2,476 rows.
+>
 > **Sources (all byte offsets into `game_script.js`, the 18 MB minified bundle in this repo, 2026-02-28 capture):**
 > `MetaAttrib.ts` @13543031 · `BuffAttrib.ts` @8511078 · `BuffAttribContinue.ts` @8515461 ·
 > `BuffAttribCondition.ts` @8512748 · `BuffAttribConvert.ts` @8517832 · `SkillRunner.addBuff` @17059152 ·
@@ -26,6 +29,9 @@
    DEF can reach 0 and go **negative**.
 5. Negative DEF is not a no-op — in `normalHurt` the term is `max(roundInt(ATK − DEF×(1+def_coe)), 1)`,
    so a negative DEF **adds** to the attacker's effective ATK.
+6. "No stacking cap" is true **across different sources** and false within one: of the 11 DEF reductions in
+   this build, only one is `mutex 0` (free stacking). The flagship PvP one — Star Hero **King** (30013),
+   27%→54% by star — is `mutex 1`, i.e. a second copy *replaces* the first. See §4b.
 
 ---
 
@@ -87,9 +93,34 @@ So the full in-battle DEF expression is:
 DEF = min( roundInt( roundInt(FinalDEF + Σflat) × (1 + Σpercent) + Σpost ), up_limit )
 ```
 
-- `up_limit` for `def` (1024) is **0 = uncapped**. The only attribute with a battle cap in
-  `data/constants/attribute_caps.json` is **1008** (`miss`, 8000 = 80%).
+- `up_limit` for `def` (1024) is **0 = uncapped** (`Attribute.json`: `{"id":1024,"key":"def","num_type":1,"up_limit":0,"add_type":0}`).
 - **No `Math.max(0, …)` exists in this path.** Negative results pass straight through.
+
+### Which attributes actually are capped
+
+`MetaAttrib` reads `ConfigAttribute.up_limit`. Eleven attributes have a non-zero value — none of them DEF:
+
+| ID | key | up_limit | = |
+|---|---|---|---|
+| 1014 / 1015 | att_hpsteal / skill_hpsteal | 10000 | 100% |
+| 1018 / 1019 / 1020 / 1021 | att_resist / skill_resist / partner_resist / resist | 8000 | 80% |
+| 1034 / 1035 | double_hit_def / counter_def | 8000 | 80% |
+| 1042 | control_res | 10000 | 100% |
+| 1052 | boss_def | 8000 | 80% |
+| 1059 | season_cannon_att_def | 6000 | 60% |
+
+Note this is a **different mechanism** from the `battle_up_limit: [[1008, 8000]]` global in
+`data/constants/attribute_caps.json`. That one never reaches `MetaAttrib` — it is applied in `checkHit`
+(@12446261) as a cap on the computed *evasion probability*, and only outside PvE:
+
+```javascript
+var u = round(Global.battle_up_limit[0][1] / 1e4);        // 0.8
+...
+1 != configChapter_type.getDataByKey(c).pve && (m = Math.min(s, u));   // PvP only
+```
+
+So `miss` (1008) is capped as a rolled probability, not as a stat, and `03_ATTRIBUTES.md`'s "only capped
+attribute" line understates the real `up_limit` list above.
 
 ---
 
@@ -200,6 +231,85 @@ not DEF reduction — see [08_PIERCE_BLOCK_INSPIRE_SUPPRESS.md](08_PIERCE_BLOCK_
 
 ---
 
+## 4b. Every DEF modifier that exists in this build (verified against Buff.json)
+
+`Buff.json`, 2,476 rows. Buffs whose `action` is in the attrib family (`attrib` 891, `attrib_continue` 17,
+`attrib_condition` 21, `attrib_convert` 9) and whose `param1 == 1024`:
+
+| Mode | Count |
+|---|---|
+| `attrib`, `param2=2` (multiplicative), `param3 > 0` — DEF **buffs** | 41 |
+| `attrib`, `param2=2` (multiplicative), `param3 < 0` — DEF **reductions** | **11** |
+| `attrib`, `param2=1` (flat), positive | 1 |
+| `attrib_condition`, positive | 1 |
+
+All 11 reductions share `param2=2, param3=-1`, i.e. magnitude comes entirely from `skillPar`:
+
+| buff | mutex | add_max | group | source | self or enemy |
+|---|---|---|---|---|---|
+| 50489 | 3 | 7 | 504 | skills 51373-75 "Divine Champion" (artifact-tier skill, 3 levels) | self (ATK-for-DEF trade) |
+| 50666 | 3 | 6 | 4 | **Mount 407**, skin skill 5061 "Thunder Rush" | **self** — "Afterwards, DEF is reduced by ##7% while ATK increases by ##8%, stacking up to 6 times" |
+| 51182 | 3 | 5 | 4 | **Artifact 21**, skin level 10 skill 51182 "Duck Swirl Strike" | self |
+| 51572 | 3 | 15 | 4 | not referenced by any skill effect in this build | — |
+| 90002 | 2 | 0 | 401 | skills 10001-10014 "Family GvG Win Streak Buff" | enemy (mode penalty) |
+| 100002 | 2 | 0 | 401 | skills 13001-13105 / 15001-15005 / 31001-31005 "Parking Defense / Plunder / Capture Minions Debuff" — "ATK and DEF -##1%" (15/35/55/75/95%) | enemy (mode penalty) |
+| 190008 | 2 | 0 | 401 | skills 20003-20012 "Seasonal Win Streak Debuff" — 15% → 90% by streak | self (win-streak handicap) |
+| 240156 | 1 | 0 | 4 | skill 24039 "Lovestruck Prank" | enemy |
+| 249009 | 1 | 0 | 4 | effect 249082 (no skill reference in this build) | — |
+| 270268 | 1 | 0 | 4 | **Angel 30013 "King"**, skill 27041 | **enemy** |
+| 4155020 | **0** | 0 | 4 | skill 4155238 (event) | enemy |
+
+### The one real PvP enemy-DEF debuff: Star Hero "King" (30013)
+
+```
+Skill 27041 → effect 270411 → buffGroup entry [1, 270268, 4, 5]
+                                  ^buffId        ^par ^duration(s)
+desc 700023165: "Every 15s after the battle starts, all enemies lose ##1% ATK and ##2% DEF
+                 for 5s (cannot be cleansed)."
+```
+
+| Star | ATK − | DEF − |
+|---|---|---|
+| 1 | 13.5% | **27%** |
+| 5 | 19.5% | 39% |
+| 10 | 27% | **54%** |
+
+**Buff 270268 is `mutex 1` (replace).** Two instances of *this* buff never coexist — a second application
+calls `stopBuffById` on the first. So the "no stacking cap" answer is right across *different* sources and
+wrong if read as "two Kings stack". Of the 11, only **4155020** is `mutex 0` (unlimited free stacking);
+four are `mutex 3` (hard-capped at `add_max` 5/6/7/15, all self-inflicted); three are `mutex 1` (replace);
+three are `mutex 2` (one instance, ever).
+
+### skillPar is XOR-encoded — and decodes exactly
+
+`Skill_level.skillCoefficient` is protected with the standard config key **24455**, and decodes to the
+value in /10000. Verified against the display params:
+
+```
+King L1 : raw [23233, 21771] ^ 24455 = [1350, 2700] → 13.5%, 27%   (desc_parm [13.5, 27]) ✓
+King L10: raw [21771, 19103] ^ 24455 = [2700, 5400] → 27%,   54%   (desc_parm [27, 54])   ✓
+```
+
+That decoded value *is* the `skillPar` handed to `addBuff`, so the chain
+`skillCoefficient ^ 24455 / 10000 → getSkillFactAttrValue → × param3(-1) → addMultiples` is closed end to end.
+
+### About the 24% in the screenshot
+
+**No string matching "Reduce all enemies' DEF by 24%" exists in this build's `Language_en.json`.** The
+closest verified effect is King's 27%→54%. The screenshot is dated 2026-10-09, roughly seven months after
+the 2026-02-28 config capture, so the effect is almost certainly content added since. Everything above about
+*where* the number lands still applies; only the specific source and its `mutex` are unconfirmed for it.
+
+### A note on effect chains
+
+Some descriptions bundle effects from several skills. The Guardian line
+("reduce all enemies' ATK, DEF, ATK SPD, Energy Regen and Pal ATK SPD by ##3%", desc 405621, skill 300602)
+resolves through `addbuff_to_target` → buff 300013, which targets **1082 `total_dam_def`**, not 1024 — i.e.
+the "Final DMG RES" half of the text. Tracing a DEF debuff always means following the buff chain to a
+`param1 == 1024` leaf, not trusting the English blurb.
+
+---
+
 ## 5. What happens at 0 DEF — and below
 
 `HurtUtil.normalHurt` (@12441031):
@@ -236,11 +346,12 @@ does not multiply their way out of a stacked debuff; they can only out-add it.
   hit lands on the floor of 1 before multipliers, and the first DEF debuff that pushes the target below your
   ATK is worth vastly more than the previous ones. Against a 4.72 B Final DEF wall, DEF reduction is doing
   nothing at all until your ATK is in range — then it is doing everything.
-- **Unverified here:** the specific buff ids / `mutex` values for individual DEF-reduction effects. Those live
-  in `data/tables/Buff.json`, which is `.gitignore`d and absent from this clone, and the config binary is not
-  in `lom.joynetgame.com.zip` (assets only). Re-run `decode_config_data.py` against a capture that includes
-  `bundle-firstload-res` to confirm whether any given pal/mount/artifact DEF debuff is `mutex 0` (free
-  stacking from multiple copies) or `mutex 1/2/4/5` (one per id or per caster).
-- Whether a given in-game line reads "DEF" or "Final DEF" (e.g. the Angel support skill "increases Final DEF
-  by 8%") does not appear to correspond to a separate attribute — there is only 1024 — but confirming which
-  `param2` mode each uses also needs Buff.json.
+- **Verified since first draft:** buff ids, `mutex` and `add_max` for every DEF modifier in the build — see
+  §4b. Decode with `python3 decode_config_data.py <capture> --output data/tables`; the capture lives at
+  `uploads/bundle-firstload-res.zip` (the 12 MB `config/datas` blob is in there, not in
+  `lom.joynetgame.com.zip`, which is assets only).
+- **Still open:** whatever source produces the 24% figure in the screenshot postdates this capture, so its
+  `mutex` is unknown. If it is `mutex 1` like King's, a second copy replaces rather than stacks.
+- Whether a line reads "DEF" or "Final DEF" (e.g. the Angel support skill "increases Final DEF by 8%") does
+  not correspond to separate attributes — DEF is only 1024. "Final DMG RES" is a genuinely different
+  attribute, 1082 `total_dam_def`.

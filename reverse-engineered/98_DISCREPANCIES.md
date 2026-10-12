@@ -184,3 +184,24 @@ immunity claim appears to be wrong as written; the cleanse claim is partly right
 but it is opt-in per cleanse effect, not an automatic group-4-only rule). See
 [47_DEF_REDUCTION_DEEP_DIVE.md](47_DEF_REDUCTION_DEEP_DIVE.md) §4.
 
+### U11. Attribute Caps — 03_ATTRIBUTES.md understates the `up_limit` list
+`03_ATTRIBUTES.md` ("Caps Summary") presents `miss` (1008) as the only capped attribute, and
+`data/constants/attribute_caps.json` records only `battle_up_limit: [[1008, 8000]]`.
+
+Decoded `Attribute.json` shows `MetaAttrib._calculateValue` enforces `ConfigAttribute.up_limit` on **eleven**
+attributes, and 1008 is not among them:
+
+| ID | key | up_limit |
+|---|---|---|
+| 1014 / 1015 | att_hpsteal / skill_hpsteal | 10000 (100%) |
+| 1018 / 1019 / 1020 / 1021 | att_resist / skill_resist / partner_resist / resist | 8000 (80%) |
+| 1034 / 1035 | double_hit_def / counter_def | 8000 (80%) |
+| 1042 | control_res | 10000 (100%) |
+| 1052 | boss_def | 8000 (80%) |
+| 1059 | season_cannon_att_def | 6000 (60%) |
+
+The 1008 global is a separate mechanism applied in `checkHit` (game_script.js @12446261) to the rolled
+evasion *probability*, PvP only (`1 != chapter_type.pve`), never to the stat. Both facts are true; the docs
+conflate them. `def` (1024) is `up_limit: 0` under either mechanism.
+See [47_DEF_REDUCTION_DEEP_DIVE.md](47_DEF_REDUCTION_DEEP_DIVE.md) §2.
+
